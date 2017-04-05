@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:mongo="http://www.mojo.com/schema/mojo/mongo-adapter"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:redis="http://www.mojo.com/schema/mojo/redis-adapter"
+       xmlns:time="http://www.mojo.com/schema/mojo/time-server-config"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+       http://www.mojo.com/schema/mojo/mongo-adapter
+        http://www.mojo.com/schema/mojo/mongo-adapter.xsd
+        http://www.mojo.com/schema/mojo/redis-adapter
+        http://www.mojo.com/schema/mojo/redis-adapter.xsd
+        http://www.mojo.com/schema/mojo/time-server-config
+        http://www.mojo.com/schema/mojo/time-server-config.xsd">
+
+    <bean class="pro.mojo.spring.SpringContext"></bean>
+
+    <mongo:MongoAdapter id="tuhao-p2p" hostname="localhost" port="27017" username="root" password="root" dbname="tuhao" poolsize="50" blocksize="50"/>
+
+    <mongo:MongoAdapter id="tuhao-log" hostname="localhost" port="27017" username="root" password="root" dbname="tuhao" poolsize="50" blocksize="50"/>
+
+    <redis:RedisAdapter id="redis-lock" hostname="localhost" port="6379" password=""/>
+
+    <redis:RedisAdapter id="redis-queue" hostname="localhost" port="6379" password=""></redis:RedisAdapter>
+
+    <redis:RedisAdapter id="redis-cache" hostname="localhost" port="6379" password=""></redis:RedisAdapter>
+
+    <redis:RedisAdapter id="redis-data" hostname="localhost" port="6379" password=""></redis:RedisAdapter>
+
+    <time:TimeServer id="timeServer" timeKey="server:time" redisAdapterId="redis-data"/>
+
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <!--连接耗尽时是否阻塞, false报异常,ture阻塞直到超时, 默认true-->
+        <property name="blockWhenExhausted" value="true"></property>
+        <!-- 设置的逐出策略类名, 默认DefaultEvictionPolicy(当连接超过最大空闲时间,或连接数超过最大空闲连接数) -->
+        <property name="evictionPolicyClassName" value="org.apache.commons.pool2.impl.DefaultEvictionPolicy"></property>
+        <!-- 是否启用pool的jmx管理功能, 默认true -->
+        <property name="jmxEnabled" value="true"></property>
+        <!-- MBean ObjectName = new ObjectName("org.apache.commons.pool2:type=GenericObjectPool,name=" + "pool" + i); 默 认为"pool" -->
+        <property name="jmxNamePrefix" value="pool"></property>
+        <!-- 是否启用后进先出, 默认true -->
+        <property name="lifo" value="true"></property>
+        <!-- 最大空闲连接数, 默认8个 -->
+        <property name="maxIdle" value="256"></property>
+        <!-- 最大连接数, 默认8个 -->
+        <property name="maxTotal" value="2000"></property>
+        <!-- 获取连接时的最大等待毫秒数(如果设置为阻塞时BlockWhenExhausted),如果超时就抛异常, 小于零:阻塞不确定的时间,  默认-1 -->
+        <property name="maxWaitMillis" value="5000"></property>
+        <!-- 逐出连接的最小空闲时间 默认1800000毫秒(30分钟) -->
+        <property name="minEvictableIdleTimeMillis" value="2000"></property>
+        <!-- 最小空闲连接数, 默认0 -->
+        <property name="minIdle" value="0"></property>
+        <!-- 每次逐出检查时 逐出的最大数目 如果为负数就是 : 1/abs(n), 默认3 -->
+        <property name="NumTestsPerEvictionRun" value="3"></property>
+        <!-- 对象空闲多久后逐出, 当空闲时间>该值 且 空闲连接>最大空闲数 时直接逐出,不再根据MinEvictableIdleTimeMillis判断  (默认逐出策略) -->
+        <property name="softMinEvictableIdleTimeMillis" value="2000"></property>
+        <!-- 在获取连接的时候检查有效性, 默认false -->
+        <property name="testOnBorrow" value="true"></property>
+        <!-- 在空闲时检查有效性, 默认false -->
+        <property name="testWhileIdle" value="true"></property>
+        <property name="testOnReturn" value="true"></property>
+        <!-- 逐出扫描的时间间隔(毫秒) 如果为负数,则不运行逐出线程, 默认-1 -->
+        <property name="timeBetweenEvictionRunsMillis" value="-1"></property>
+    </bean>
+
+</beans>

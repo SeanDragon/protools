@@ -1,0 +1,3 @@
+http\://www.mojo.com/schema/mojo/mongo-adapter.xsd=META-INF/mongo-adapter.xsd
+http\://www.mojo.com/schema/mojo/redis-adapter.xsd=META-INF/redis-adapter.xsd
+http\://www.mojo.com/schema/mojo/time-server-config.xsd=META-INF/time-server-config.xsd

@@ -1,6 +1,7 @@
 package pro.tools;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
@@ -23,7 +24,8 @@ import java.security.SecureRandom;
  * @version 1.0
  */
 public final class security {
-    private final static Logger log = Logger.getLogger(security.class);
+    //private final static Logger log = (security.class);
+    private final static Logger log = LoggerFactory.getLogger(security.class);
     /**
      * MD5 加密
      * @param str string

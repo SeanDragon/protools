@@ -2,7 +2,8 @@ package pro.tools;
 
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
@@ -20,7 +21,7 @@ import java.security.spec.X509EncodedKeySpec;
  * @author sam
  */
 public class sign {
-    private final static Logger log = Logger.getLogger(sign.class);
+    private final static Logger log = LoggerFactory.getLogger(sign.class);
     private static final sign rsaHelper = new sign();
     // 签名对象
     private Signature signature;
@@ -108,11 +109,11 @@ public class sign {
             rsa.update(signByte);
             return b64encode(rsa.sign());
         } catch (NoSuchAlgorithmException ex) {
-            log.error(ex);
+            log.error(tools.toException(ex));
         } catch (InvalidKeyException in) {
             log.error("Invalid Key file.Please check the key file path" + in.getCause());
         } catch (Exception se) {
-            log.error(se);
+            log.error(tools.toException(se));
         }
         return null;
     }

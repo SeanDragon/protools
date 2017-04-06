@@ -6,7 +6,8 @@ import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.params.HttpMethodParams;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -30,7 +31,7 @@ import java.util.Map;
  * @version 1.0
  */
 public final class http {
-    private final static Logger log = Logger.getLogger(http.class);
+    private final static Logger log = LoggerFactory.getLogger(http.class);
     /**
      * 向指定URL发送GET方法的请求
      * @param url 发送请求的URL

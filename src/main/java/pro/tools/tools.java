@@ -1,6 +1,8 @@
 package pro.tools;
 
-import org.apache.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -17,7 +19,7 @@ import java.util.regex.Pattern;
  * @version 1.0
  */
 public final class tools {
-    private final static Logger log = Logger.getLogger(tools.class);
+    private final static Logger log = LoggerFactory.getLogger(tools.class);
     /**
      * 检测是否是移动设备访问
      * @param userAgent 浏览器标识

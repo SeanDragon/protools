@@ -1,5 +1,5 @@
-# groupId:pro.cg
-# artifactId:mojo
+# groupId:pro.tools
+# artifactId:protools
 # version:2.0
 
 ## mojo快速开发开具包提供的主要功能分类

@@ -7,23 +7,17 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
-import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
-import org.bson.Document;
-import pro.mojo.mongo.query.QueryUtil;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pro.tools.annotation.NoExpose;
 
 import java.io.*;
-import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -32,7 +26,7 @@ import java.util.Random;
  * 辅助类
  */
 public class convert {
-    private final static Logger log = Logger.getLogger(convert.class);
+    private final static Logger log = LoggerFactory.getLogger(convert.class);
     /**
      * 字符串编码
      *
@@ -93,136 +87,6 @@ public class convert {
         return map;
     }
 
-    /**
-     * @return 返回 map
-     */
-    public static Map ModelToMap(Object model){
-        Map map = new HashMap();
-        try {
-            Class clazz = model.getClass();
-            for (Field f : clazz.getDeclaredFields()) {
-                f.setAccessible(true);
-                Object o = f.get(model);
-                if (o != null) {
-                    if (QueryUtil.isBasicType(o)) {
-                        map.put(f.getName(), o);
-                    }else if(QueryUtil.isListType(o)){
-                        List l1 = null;
-                        List l2 = (List)o;
-                        if (o instanceof LinkedList){
-                            l1 = new LinkedList<>();
-                        }else{
-                            l1 = new ArrayList<>();
-                        }
-                        for(Object item1 : l2){
-                            if (QueryUtil.isNotCommonType(item1)){
-                                l1.add(ModelToMap(item1));
-                            }else {
-                                l1.add(item1);
-                            }
-                        }
-                        map.put(f.getName(),l1);
-                    }else{
-                        map.put(f.getName(),ModelToMap(o));
-                    }
-                }
-                f.setAccessible(false);
-            }
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return map;
-    }
-
-    /**
-     * @return 返回 model
-     */
-    public static <T> T MapToModel(Map map, Class<T> clazz){
-        T t = null;
-        try {
-            t = clazz.newInstance();
-            for (Field f : clazz.getDeclaredFields()) {
-                String fname = f.getName();
-                if (map.containsKey(fname) && map.get(fname) != null) {
-                    f.setAccessible(true);
-                    Object fieldObj = f.get(t);
-                    Object mapObj = map.get(f.getName());
-//        System.err.println(String.format("fname:%s, fvalue:%s, mapvalue:%s, param:%s",fname,fieldObj,mapObj, f.getGenericType() instanceof ParameterizedType));
-                    Class fclz = f.getType();
-                    if (QueryUtil.isBasicType(mapObj)) {
-                        f.set(t, mapObj);
-                    }else if (QueryUtil.isMapType(mapObj)){
-                        f.set(t, MapToModel((Map)mapObj, fclz));
-                    }else if(QueryUtil.isListType(mapObj)){
-                        Type fc = f.getGenericType();
-                        if(fc instanceof ParameterizedType) {
-                            ParameterizedType pt = (ParameterizedType) fc;
-                            if (pt.getActualTypeArguments().length < 1)
-                                continue;
-                            Class genericClazz = (Class) pt.getActualTypeArguments()[0];
-                            List l1 = null;
-                            List l2 = (List) mapObj;
-                            if (mapObj instanceof LinkedList) {
-                                l1 = new LinkedList<>();
-                            } else {
-                                l1 = new ArrayList<>();
-                            }
-                            Object newObj = genericClazz.newInstance();
-                            if (QueryUtil.isBasicType(newObj)) {
-                                for (Object item1 : l2) {
-                                    l1.add(item1);
-                                }
-                            }else if (QueryUtil.isNotCommonType(newObj)){
-                                for(Object item1 : l2){
-                                    l1.add(MapToModel((Map)item1,genericClazz));
-                                }
-                            }
-                            f.set(t,l1);
-                        }
-                    }else {
-                        f.set(t, mapObj);
-                    }
-                    f.setAccessible(false);
-                }
-            }
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return t;
-    }
-
-    /**
-     * 将模型进行BSON编码
-     * @param model
-     * @return
-     */
-    public final static String ModelToBson(Object model){
-        if (model == null)
-            return "{}";
-        Document doc = new Document(ModelToMap(model));
-        return doc.toJson();
-    }
-
-    public final static <T> T BsonToModel(String bson, Class<T> classOfT){
-        Document document = Document.parse(bson);
-//        return (T)DBObjectToModel(new BasicDBObject(document),classOfT);
-        return MapToModel(document, classOfT);
-    }
-
-    public static <T> List<T> BsonToModelList(String bson, Class<T> tClass){
-        if (StringUtils.isBlank(bson) || bson.equals("[]")) {
-            return null;
-        }
-        List<String> lstsfs = jsonToArrayList(bson);
-        List<T> lst = new ArrayList<T>();
-
-        for (String str : lstsfs) {
-            // 使用JSON作为传输
-            T o = BsonToModel(str, tClass);
-            lst.add(o);
-        }
-        return lst;
-    }
 
     /**
      * 将模型进行JSON编码
@@ -349,46 +213,6 @@ public class convert {
         }
         return arrayList;
     }
-
-    public static <T> T DBObjectToModel(DBObject dbo, Class<T> classOfT){
-//        String json = DBObjectToJson((BasicDBObject) dbo);
-        T t = null;
-        try{
-            t = MapToModel(dbo.toMap(),classOfT);
-        }catch (Exception e){
-
-        }
-        return t;
-    }
-
-    public static <T extends DBObject> T ModelToDBObject(Object model){
-        String json = ModelToJson(model);
-        return JsonToDBObject(json);
-    }
-
-    /**
-     * JSON to DBObject
-     * @param json JSON String
-     * @return DBObject
-     */
-    public static <T extends DBObject> T JsonToDBObject(String json){
-        try {
-            return (T)BasicDBObject.parse(json);
-        }catch (Exception e){
-            log.error(pro.tools.tools.toException(e));
-            return null;
-        }
-    }
-
-    /**
-     * DBObject to JSON
-     * @param obj DBObject
-     * @return JSON String
-     */
-    public static String DBObjectToJson(BasicDBObject obj){
-        return obj.toJson();
-    }
-
     /**对象转byte[]
      * @param obj
      * @return

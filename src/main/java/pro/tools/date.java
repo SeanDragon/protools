@@ -1,7 +1,8 @@
 package pro.tools;
 
-import org.apache.log4j.Logger;
-import pro.mojo.redis.time.TimeClient;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -16,22 +17,28 @@ import java.util.Date;
  * @version 1.0
  */
 public final class date {
-    private final static Logger log = Logger.getLogger(date.class);
+    private final static Logger log = LoggerFactory.getLogger(date.class);
+
+    /**
+     * @return
+     */
+    public static Date getNowTime() {
+        return new Date();
+    }
 
     /**
      * 获得当前时间
      * @return 返回当前时间
      */
-    public static String getNowTime() {
-        return getNowTime("yyyy-MM-dd HH:mm:ss.S");
+    public static String getNowTimeStr() {
+        return getNowTimeStr("yyyy-MM-dd HH:mm:ss.S");
     }
 
     /**
      * ==============Other Base===================
      */
-
-    public static String getNowTime(String format) {
-        return toFormat(format, TimeClient.timeClient.getDate());
+    public static String getNowTimeStr(String format) {
+        return toFormat(format, getNowTime());
     }
 
     public static String toFormat(Date date){
@@ -282,7 +289,7 @@ public final class date {
      * @return 返回最大日期
      */
     public static Date maxDate(){
-        Date date = TimeClient.timeClient.getDate();
+        Date date = getNowTime();
         return maxDate(getYear(date),getMonth(date),getDay(date));
     }
 
@@ -322,7 +329,7 @@ public final class date {
      * @return 返回最小日期
      */
     public static Date minDate(){
-        Date date = TimeClient.timeClient.getDate();
+        Date date = getNowTime();
         return minDate(getYear(date),getMonth(date),getDay(date));
     }
 

@@ -2,8 +2,6 @@ package pro.tools;
 
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
@@ -20,8 +18,7 @@ import java.security.spec.X509EncodedKeySpec;
  *
  * @author sam
  */
-public class sign {
-    private final static Logger log = LoggerFactory.getLogger(sign.class);
+public final class sign {
     private static final sign rsaHelper = new sign();
     // 签名对象
     private Signature signature;
@@ -32,7 +29,7 @@ public class sign {
         try {
             signature = Signature.getInstance("SHA1withRSA");
         } catch (NoSuchAlgorithmException nsa) {
-            log.error("" + nsa.getMessage());
+
         }
     }
 
@@ -69,10 +66,10 @@ public class sign {
             EncodedKeySpec privateKeySpec = new PKCS8EncodedKeySpec(privateKeyBytes);
             return keyFactory.generatePrivate(privateKeySpec);
         } catch (InvalidKeySpecException e) {
-            log.error("Invalid Key Specs. Not valid Key files." + e.getCause());
+
             return null;
         } catch (NoSuchAlgorithmException e) {
-            log.error("There is no such algorithm. Please check the JDK ver." + e.getCause());
+
             return null;
         }
     }
@@ -84,10 +81,10 @@ public class sign {
             EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(publicKeyBytes);
             return keyFactory.generatePublic(publicKeySpec);
         } catch (InvalidKeySpecException e) {
-            log.error("Invalid Key Specs. Not valid Key files." + e.getCause());
+
             return null;
         } catch (NoSuchAlgorithmException e) {
-            log.error("There is no such algorithm. Please check the JDK ver." + e.getCause());
+
             return null;
         }
     }
@@ -109,11 +106,11 @@ public class sign {
             rsa.update(signByte);
             return b64encode(rsa.sign());
         } catch (NoSuchAlgorithmException ex) {
-            log.error(tools.toException(ex));
+
         } catch (InvalidKeyException in) {
-            log.error("Invalid Key file.Please check the key file path" + in.getCause());
+
         } catch (Exception se) {
-            log.error(tools.toException(se));
+
         }
         return null;
     }
@@ -135,9 +132,9 @@ public class sign {
             signature.update(dataByte);
             return signature.verify(signByte);
         } catch (SignatureException e) {
-            log.error(pro.tools.tools.toException(e));
+
         } catch (Exception e) {
-            log.error(pro.tools.tools.toException(e));
+
         }
         return false;
     }
@@ -162,7 +159,7 @@ public class sign {
         try {
             return new BASE64Decoder().decodeBuffer(data);
         } catch (Exception e) {
-            log.error(pro.tools.tools.toException(e));
+
         }
         return null;
     }
@@ -239,7 +236,7 @@ public class sign {
             pubkey = getPubKeyString(puk);
             prikey = getPriKeyString(prk);
         } catch (Exception e) {
-            log.error(pro.tools.tools.toException(e));
+
         }
     }
 

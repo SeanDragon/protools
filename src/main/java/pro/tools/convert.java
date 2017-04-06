@@ -1,32 +1,22 @@
 package pro.tools;
 
 
-import com.google.gson.ExclusionStrategy;
-import com.google.gson.FieldAttributes;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import pro.tools.annotation.NoExpose;
 
 import java.io.*;
 import java.lang.reflect.Type;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 /**
  * 辅助类
  */
 public class convert {
-    private final static Logger log = LoggerFactory.getLogger(convert.class);
+
     /**
      * 字符串编码
      *
@@ -39,7 +29,7 @@ public class convert {
         try {
             sReturnCode = URLEncoder.encode(sStr, sEnc);
         } catch (UnsupportedEncodingException e) {
-            log.error(pro.tools.tools.toException(e));
+
         }
         return sReturnCode;
     }
@@ -63,10 +53,11 @@ public class convert {
 
     /**
      * 将Map进行JSON编码
+     *
      * @param map
      * @return
      */
-    public final static String MapToJson(Map map){
+    public final static String MapToJson(Map map) {
         if (map == null)
             return "{}";
         Gson gson = new Gson();
@@ -76,10 +67,11 @@ public class convert {
 
     /**
      * 将Map进行JSON编码
+     *
      * @param json
      * @return
      */
-    public final static Map JsonToMap(String json){
+    public final static Map JsonToMap(String json) {
         if (json == null)
             return new HashMap<>();
         Gson gson = new Gson();
@@ -182,17 +174,19 @@ public class convert {
 
     /**
      * 把json数组转换成泛型T为类型的ArrayList
-     * @param json Json数组
+     *
+     * @param json  Json数组
      * @param clazz 泛型类型的class
-     * @param <T>  泛型类型
+     * @param <T>   泛型类型
      * @return 返回ArrayList<T>
      */
-    public static <T> ArrayList<T> jsonToArrayList(String json, Class<T> clazz){
-        Type type = new TypeToken<ArrayList<JsonObject>>(){}.getType();
+    public static <T> ArrayList<T> jsonToArrayList(String json, Class<T> clazz) {
+        Type type = new TypeToken<ArrayList<JsonObject>>() {
+        }.getType();
         ArrayList<JsonObject> jsonObjects = new Gson().fromJson(json, type);
 
         ArrayList<T> arrayList = new ArrayList<>();
-        for (JsonObject jsonObject : jsonObjects){
+        for (JsonObject jsonObject : jsonObjects) {
             arrayList.add(new Gson().fromJson(jsonObject, clazz));
         }
         return arrayList;
@@ -200,25 +194,30 @@ public class convert {
 
     /**
      * 把json数组转换成String类型的ArrayList
+     *
      * @param json json数组
      * @return 返回ArrayList<String>
      */
-    public static ArrayList<String> jsonToArrayList(String json){
-        Type type = new TypeToken<ArrayList<JsonObject>>(){}.getType();
+    public static ArrayList<String> jsonToArrayList(String json) {
+        Type type = new TypeToken<ArrayList<JsonObject>>() {
+        }.getType();
         ArrayList<JsonObject> jsonObjects = new Gson().fromJson(json, type);
 
         ArrayList<String> arrayList = new ArrayList<>();
-        for (JsonObject jsonObject : jsonObjects){
+        for (JsonObject jsonObject : jsonObjects) {
             arrayList.add(jsonObject.toString());
         }
         return arrayList;
     }
-    /**对象转byte[]
+
+    /**
+     * 对象转byte[]
+     *
      * @param obj
      * @return
      * @throws IOException
      */
-    public static<T> byte[] objectToBytes(T obj) throws Exception{
+    public static <T> byte[] objectToBytes(T obj) throws Exception {
         ByteArrayOutputStream bo = new ByteArrayOutputStream();
         ObjectOutputStream oo = new ObjectOutputStream(bo);
         oo.writeObject(obj);
@@ -228,12 +227,14 @@ public class convert {
         return bytes;
     }
 
-    /**byte[]转对象
+    /**
+     * byte[]转对象
+     *
      * @param bytes
      * @return
      * @throws Exception
      */
-    public static Object bytesToObject(byte[] bytes) throws Exception{
+    public static Object bytesToObject(byte[] bytes) throws Exception {
         ByteArrayInputStream in = new ByteArrayInputStream(bytes);
         ObjectInputStream sIn = new ObjectInputStream(in);
         return sIn.readObject();
@@ -272,7 +273,7 @@ public class convert {
                 lst.add(str);
             }
         } catch (Exception e) {
-            log.error(pro.tools.tools.toException(e));
+
         }
         return lst;
     }
@@ -314,7 +315,7 @@ public class convert {
             }
         } catch (Exception e) {
             stateInt = 0;
-            log.error(pro.tools.tools.toException(e));
+
         }
 
         return stateInt;
@@ -377,7 +378,7 @@ public class convert {
 
             } catch (Exception e) {
                 stateInt = 0;
-                log.error(pro.tools.tools.toException(e));
+
             } finally {
             }
         }
@@ -396,7 +397,7 @@ public class convert {
             byte[] by = saveToBytesByImg(file);
             result = byte2hex(by);
         } catch (Exception e) {
-            log.error(pro.tools.tools.toException(e));
+
         }
         return result;
     }
@@ -417,7 +418,7 @@ public class convert {
             fis.close();
             bis.close();
         } catch (Exception e) {
-            log.error(pro.tools.tools.toException(e));
+
         }
         return by;
     }
@@ -455,7 +456,7 @@ public class convert {
             }
             return result.toString();
         } catch (Exception e) {
-            log.error(pro.tools.tools.toException(e));
+
             return null;
         }
     }

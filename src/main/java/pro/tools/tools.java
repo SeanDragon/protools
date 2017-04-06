@@ -1,9 +1,6 @@
 package pro.tools;
 
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Enumeration;
@@ -19,7 +16,7 @@ import java.util.regex.Pattern;
  * @version 1.0
  */
 public final class tools {
-    private final static Logger log = LoggerFactory.getLogger(tools.class);
+
     /**
      * 检测是否是移动设备访问
      * @param userAgent 浏览器标识
@@ -78,7 +75,7 @@ public final class tools {
             }
             return Integer.valueOf(result.toString());
         }catch (Exception e){
-            log.error(pro.tools.tools.toException(e));
+
         }
         return 0;
     }
@@ -100,7 +97,7 @@ public final class tools {
             }
             return result.toString();
         }catch (Exception e){
-            log.error(pro.tools.tools.toException(e));
+
         }
         return "";
     }
@@ -139,15 +136,15 @@ public final class tools {
                     f.setAccessible(false);
                 }
             } catch (InstantiationException e) {
-                log.error(toException(e));
+
             } catch (InvocationTargetException e) {
-                log.error(toException(e));
+
             } catch (NoSuchMethodException e) {
-                log.error(toException(e));
+
             } catch (IllegalAccessException e) {
-                log.error(toException(e));
+
             } catch (NoSuchFieldException e) {
-                log.error(toException(e));
+
             }
         }
 
@@ -171,7 +168,7 @@ public final class tools {
 //            f.setAccessible(false);
 //        }
 
-        //log.info(object.toString()+" - properties");
+
     }
 
     public static String toException(Exception e){

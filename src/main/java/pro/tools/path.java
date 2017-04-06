@@ -8,7 +8,7 @@ import java.io.File;
  * 2： getAbslutlyPath() 获取绝对路径，但可能包含 ".." 或 "." 字符，例如D:\otherPath\..\path\abc.txt <br>
  * 3： getCanonicalPath() 获取绝对路径，但不包含 ".." 或 "." 字符，例如 D:\path\abc.txt
  */
-public class path {
+public final class path {
 
     private static String webRootPath;
     private static String rootClassPath;

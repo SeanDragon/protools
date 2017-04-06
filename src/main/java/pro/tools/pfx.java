@@ -6,21 +6,8 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringReader;
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidKeyException;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
-import java.security.PublicKey;
-import java.security.UnrecoverableKeyException;
+import java.io.*;
+import java.security.*;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
@@ -144,9 +131,9 @@ public final class pfx {
             }
             return new String(destBytes, RsaConst.ENCODE);
         } catch (UnsupportedEncodingException e) {
-//			//log.error("解密内容不是正确的UTF8格式:", e);
+
         } catch (Exception e) {
-//			//log.error("解密内容异常", e);
+
         }
 
         return null;
@@ -252,7 +239,7 @@ public final class pfx {
             }
             return new String(destBytes, RsaConst.ENCODE);
         } catch (UnsupportedEncodingException e) {
-//			//log.error("解密内容不是正确的UTF8格式:", e);
+
         }
         return null;
     }
@@ -286,15 +273,15 @@ public final class pfx {
             return encryptedData;
 
         } catch (NoSuchAlgorithmException e) {
-//			//log.error("公钥算法-不存在的解密算法:", e);
+
         } catch (NoSuchPaddingException e) {
-//			//log.error("公钥算法-无效的补位算法:", e);
+
         } catch (IllegalBlockSizeException e) {
-//			//log.error("公钥算法-无效的块大小:", e);
+
         } catch (BadPaddingException e) {
-//			//log.error("公钥算法-补位算法异常:", e);
+
         } catch (InvalidKeyException e) {
-//			//log.error("公钥算法-无效的私钥:", e);
+
         }
         return null;
     }
@@ -323,15 +310,15 @@ public final class pfx {
             }
             return decryptData;
         } catch (NoSuchAlgorithmException e) {
-//			//log.error("私钥算法-不存在的解密算法:", e);
+
         } catch (NoSuchPaddingException e) {
-            //log.error("私钥算法-无效的补位算法:", e);
+
         } catch (IllegalBlockSizeException e) {
-            //log.error("私钥算法-无效的块大小:", e);
+
         } catch (BadPaddingException e) {
-            //log.error("私钥算法-补位算法异常:", e);
+
         } catch (InvalidKeyException e) {
-            //log.error("私钥算法-无效的私钥:", e);
+
         }
         return null;
     }
@@ -395,8 +382,6 @@ public final class pfx {
     }
 
 
-    //import com.jweb.//log.Logger;
-
     /**
      * <b>公私钥读取工具</b><br>
      * <br>
@@ -417,9 +402,9 @@ public final class pfx {
                 pubKeyStream.read(reads);
                 return getPublicKeyByText(new String(reads));
             } catch (FileNotFoundException e) {
-                // //log.error("公钥文件不存在:", e);
+
             } catch (IOException e) {
-                // log.error("公钥文件读取失败:", e);
+
             } finally {
                 if (pubKeyStream != null) {
                     try {
@@ -452,7 +437,7 @@ public final class pfx {
                 Certificate certificate = certificateFactory.generateCertificate(new ByteArrayInputStream(new BASE64Decoder().decodeBuffer(keyBuffer.toString())));
                 return certificate.getPublicKey();
             } catch (Exception e) {
-                // log.error("解析公钥内容失败:", e);
+
             }
             return null;
         }
@@ -472,8 +457,8 @@ public final class pfx {
                 priKeyStream.read(reads);
                 return getPrivateKeyByStream(reads, priKeyPass);
             } catch (Exception e) {
-                //tuhao.database.Database.insertLog("1",e.getMessage());
-                // log.error("解析文件，读取私钥失败:", e);
+
+
             } finally {
                 if (priKeyStream != null) {
                     try {
@@ -506,21 +491,21 @@ public final class pfx {
                 }
                 return (PrivateKey) ks.getKey(keyAlias, charPriKeyPass);
             } catch (IOException e) {
-                //tuhao.database.Database.insertLog("2",e.getMessage());
+
                 // 加密失败
-                // log.error("解析文件，读取私钥失败:", e);
+
             } catch (KeyStoreException e) {
-                //tuhao.database.Database.insertLog("3",e.getMessage());
-                // log.error("私钥存储异常:", e);
+
+
             } catch (NoSuchAlgorithmException e) {
-                //tuhao.database.Database.insertLog("4",e.getMessage());
-                // log.error("不存在的解密算法:", e);
+
+
             } catch (CertificateException e) {
-                //tuhao.database.Database.insertLog("5",e.getMessage());
-                // log.error("证书异常:", e);
+
+
             } catch (UnrecoverableKeyException e) {
-                //tuhao.database.Database.insertLog("6",e.getMessage());
-                // log.error("不可恢复的秘钥异常", e);
+
+
             }
             return null;
         }

@@ -1,9 +1,6 @@
 package pro.tools;
 
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,7 +14,7 @@ import java.util.Date;
  * @version 1.0
  */
 public final class date {
-    private final static Logger log = LoggerFactory.getLogger(date.class);
+
 
     /**
      * @return
@@ -81,7 +78,7 @@ public final class date {
         try {
             dt = df.parse(dateStr);
         } catch (ParseException e) {
-            log.error(pro.tools.tools.toException(e));
+
         }
         return dt;
     }

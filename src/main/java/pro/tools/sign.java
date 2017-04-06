@@ -1,4 +1,4 @@
-package pro.cg;
+package pro.tools;
 
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -21,10 +21,9 @@ import java.security.spec.X509EncodedKeySpec;
  */
 public class sign {
     private final static Logger log = Logger.getLogger(sign.class);
+    private static final sign rsaHelper = new sign();
     // 签名对象
     private Signature signature;
-    private static final sign rsaHelper = new sign();
-
     private String pubkey;
     private String prikey;
 
@@ -38,6 +37,28 @@ public class sign {
 
     public static sign instance() {
         return rsaHelper;
+    }
+
+    /**
+     * 得到私钥字符串（经过base64编码）
+     *
+     * @return
+     */
+    public static String getPriKeyString(PrivateKey key) throws Exception {
+        byte[] keyBytes = key.getEncoded();
+        String s = (new BASE64Encoder()).encode(keyBytes);
+        return s;
+    }
+
+    /**
+     * 得到公钥字符串（经过base64编码）
+     *
+     * @return
+     */
+    public static String getPubKeyString(PublicKey key) throws Exception {
+        byte[] keyBytes = key.getEncoded();
+        String s = (new BASE64Encoder()).encode(keyBytes);
+        return s;
     }
 
     private PrivateKey getPrivateKey(String privateKeyStr) {
@@ -113,9 +134,9 @@ public class sign {
             signature.update(dataByte);
             return signature.verify(signByte);
         } catch (SignatureException e) {
-            log.error(pro.cg.tools.toException(e));
+            log.error(pro.tools.tools.toException(e));
         } catch (Exception e) {
-            log.error(pro.cg.tools.toException(e));
+            log.error(pro.tools.tools.toException(e));
         }
         return false;
     }
@@ -140,7 +161,7 @@ public class sign {
         try {
             return new BASE64Decoder().decodeBuffer(data);
         } catch (Exception e) {
-            log.error(pro.cg.tools.toException(e));
+            log.error(pro.tools.tools.toException(e));
         }
         return null;
     }
@@ -201,28 +222,6 @@ public class sign {
     }
 
     /**
-     * 得到私钥字符串（经过base64编码）
-     *
-     * @return
-     */
-    public static String getPriKeyString(PrivateKey key) throws Exception {
-        byte[] keyBytes = key.getEncoded();
-        String s = (new BASE64Encoder()).encode(keyBytes);
-        return s;
-    }
-
-    /**
-     * 得到公钥字符串（经过base64编码）
-     *
-     * @return
-     */
-    public static String getPubKeyString(PublicKey key) throws Exception {
-        byte[] keyBytes = key.getEncoded();
-        String s = (new BASE64Encoder()).encode(keyBytes);
-        return s;
-    }
-
-    /**
      * 生成密钥 自动产生RSA1024位密钥
      *
      * @throws NoSuchAlgorithmException
@@ -239,7 +238,7 @@ public class sign {
             pubkey = getPubKeyString(puk);
             prikey = getPriKeyString(prk);
         } catch (Exception e) {
-            log.error(pro.cg.tools.toException(e));
+            log.error(pro.tools.tools.toException(e));
         }
     }
 

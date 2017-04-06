@@ -1,6 +1,5 @@
-package pro.cg;
+package pro.tools;
 
-import com.sun.org.apache.xalan.internal.xsltc.compiler.util.ResultTreeType;
 import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
@@ -9,6 +8,12 @@ import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.log4j.Logger;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
@@ -17,13 +22,6 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
 import java.util.List;
 import java.util.Map;
-
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
 
 /**
  * HTTP 请求封装
@@ -66,7 +64,7 @@ public final class http {
                 result += line;
             }
         } catch (Exception e) {
-            log.error(pro.cg.tools.toException(e) + "发送GET请求出现异常！");
+            log.error(pro.tools.tools.toException(e) + "发送GET请求出现异常！");
         }
         // 使用finally块来关闭输入流
         finally {
@@ -75,7 +73,7 @@ public final class http {
                     in.close();
                 }
             } catch (Exception e2) {
-                log.error(pro.cg.tools.toException(e2));
+                log.error(pro.tools.tools.toException(e2));
             }
         }
         return result;
@@ -115,7 +113,7 @@ public final class http {
                 result += line;
             }
         } catch (Exception e) {
-            log.error(pro.cg.tools.toException(e) + "发送 POST 请求出现异常！" );
+            log.error(pro.tools.tools.toException(e) + "发送 POST 请求出现异常！");
         }
         // 使用finally块来关闭输出流、输入流
         finally {
@@ -127,51 +125,10 @@ public final class http {
                     in.close();
                 }
             } catch (IOException ex) {
-                log.error(pro.cg.tools.toException(ex));
+                log.error(pro.tools.tools.toException(ex));
             }
         }
         return result;
-    }
-
-    /**
-     * TrustAnyTrustManager
-     */
-    private static class TrustAnyTrustManager implements X509TrustManager {
-        /**
-         * TrustAnyTrustManager
-         * @param chain X509Certificate[]
-         * @param authType String
-         */
-        public void checkClientTrusted(X509Certificate[] chain, String authType) {
-        }
-
-        /**
-         * checkServerTrusted
-         * @param chain X509Certificate[]
-         * @param authType String
-         */
-        public void checkServerTrusted(X509Certificate[] chain, String authType) {
-        }
-
-        /**
-         * getAcceptedIssuers
-         * @return X509Certificate[]
-         */
-        public X509Certificate[] getAcceptedIssuers() {
-            return new X509Certificate[] {};
-        }
-    }
-
-    private static class TrustAnyHostnameVerifier implements HostnameVerifier {
-        /**
-         * verify
-         * @param hostname String
-         * @param session SSLSession
-         * @return boolean
-         */
-        public boolean verify(String hostname, SSLSession session) {
-            return true;
-        }
     }
 
     /**
@@ -246,7 +203,7 @@ public final class http {
                 os.write(bs, 0, len);
             }
         }catch(Exception e){
-            log.error(pro.cg.tools.toException(e));
+            log.error(pro.tools.tools.toException(e));
         }finally {
             try {
                 if (is != null)
@@ -254,19 +211,10 @@ public final class http {
                 if (os != null)
                     os.close();
             }catch(Exception e){
-                log.error(pro.cg.tools.toException(e));
+                log.error(pro.tools.tools.toException(e));
             }
         }
         return t;
-    }
-
-    public static class ResultStatus{
-        public ResultStatus(){
-            statusCode = "";
-            result = "";
-        }
-        public String statusCode;
-        public String result;
     }
 
     /**
@@ -334,11 +282,11 @@ public final class http {
             }
             catch (HttpException e){
                 // 发生致命的异常，可能是协议不对或者返回的内容有问题
-                log.error(pro.cg.tools.toException(e) + " - Please check your provided http address!");
+                log.error(pro.tools.tools.toException(e) + " - Please check your provided http address!");
             }
             catch (IOException e){
                 // 发生网络异常
-                log.error(pro.cg.tools.toException(e));
+                log.error(pro.tools.tools.toException(e));
             }
             finally{
                 // 释放连接
@@ -346,7 +294,7 @@ public final class http {
             }
         }
         catch (Exception ex){
-            log.error(pro.cg.tools.toException(ex));
+            log.error(pro.tools.tools.toException(ex));
         }
         if (result == null){
             result = "";
@@ -360,6 +308,61 @@ public final class http {
         rs.result = result;
 
         return rs;
+    }
+
+    /**
+     * TrustAnyTrustManager
+     */
+    private static class TrustAnyTrustManager implements X509TrustManager {
+        /**
+         * TrustAnyTrustManager
+         *
+         * @param chain    X509Certificate[]
+         * @param authType String
+         */
+        public void checkClientTrusted(X509Certificate[] chain, String authType) {
+        }
+
+        /**
+         * checkServerTrusted
+         *
+         * @param chain    X509Certificate[]
+         * @param authType String
+         */
+        public void checkServerTrusted(X509Certificate[] chain, String authType) {
+        }
+
+        /**
+         * getAcceptedIssuers
+         *
+         * @return X509Certificate[]
+         */
+        public X509Certificate[] getAcceptedIssuers() {
+            return new X509Certificate[]{};
+        }
+    }
+
+    private static class TrustAnyHostnameVerifier implements HostnameVerifier {
+        /**
+         * verify
+         *
+         * @param hostname String
+         * @param session  SSLSession
+         * @return boolean
+         */
+        public boolean verify(String hostname, SSLSession session) {
+            return true;
+        }
+    }
+
+    public static class ResultStatus {
+        public String statusCode;
+        public String result;
+
+        public ResultStatus() {
+            statusCode = "";
+            result = "";
+        }
     }
 
 //    /**

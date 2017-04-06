@@ -1,4 +1,4 @@
-package pro.cg;
+package pro.tools;
 
 import org.apache.log4j.Logger;
 import pro.mojo.redis.time.TimeClient;
@@ -17,21 +17,7 @@ import java.util.Date;
  */
 public final class date {
     private final static Logger log = Logger.getLogger(date.class);
-    public final class format {
-        /**
-         * 日期格式为 yyyy-MM-dd
-         */
-        public static final String ymd = "yyyy-MM-dd";
-        /**
-         * 日期格式为 yyyy-MM-dd HH:mm:ss.SSS
-         */
-        public static final String hms = "yyyy-MM-dd HH:mm:ss.SSS";
-        /**
-         * 日期格式为 yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
-         */
-        public static final String iso = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
-    }
-    /** ==============Other Base=================== */
+
     /**
      * 获得当前时间
      * @return 返回当前时间
@@ -39,16 +25,25 @@ public final class date {
     public static String getNowTime() {
         return getNowTime("yyyy-MM-dd HH:mm:ss.S");
     }
+
+    /**
+     * ==============Other Base===================
+     */
+
     public static String getNowTime(String format) {
         return toFormat(format, TimeClient.timeClient.getDate());
     }
+
     public static String toFormat(Date date){
         return toFormat(format.hms,date);
     }
+
     public static String toFormat(String format, Date date){
         return new SimpleDateFormat(format).format(date);
     }
+
     public static String toISODate(Date date){return toFormat(format.iso,date);}
+
     public static Date string2Date(String strDate, String pattern) {
         if (strDate == null || strDate.equals("")) {
             throw new RuntimeException("str date null");
@@ -79,7 +74,7 @@ public final class date {
         try {
             dt = df.parse(dateStr);
         } catch (ParseException e) {
-            log.error(pro.cg.tools.toException(e));
+            log.error(pro.tools.tools.toException(e));
         }
         return dt;
     }
@@ -204,6 +199,7 @@ public final class date {
         calendar.set(Calendar.MINUTE,(calendar.get(Calendar.MINUTE) + minute));
         return calendar.getTime();
     }
+
     /**
      * 把一个日期增加指定小时
      * @param date 日期
@@ -216,6 +212,7 @@ public final class date {
         calendar.set(Calendar.HOUR_OF_DAY,(calendar.get(Calendar.HOUR_OF_DAY) + hour));
         return calendar.getTime();
     }
+
     /**
      * 把一个日期增加指定天数
      * @param date 日期
@@ -288,9 +285,11 @@ public final class date {
         Date date = TimeClient.timeClient.getDate();
         return maxDate(getYear(date),getMonth(date),getDay(date));
     }
+
     public static Date maxDate(int year){
         return maxDate(year, 12);
     }
+
     public static Date maxDate(int year, int month){
         Calendar c = Calendar.getInstance();
         c.set(Calendar.YEAR,year);
@@ -302,6 +301,7 @@ public final class date {
         c.set(Calendar.MILLISECOND, 999);
         return c.getTime();
     }
+
     public static Date maxDate(int year, int month, int day){
         Calendar c = Calendar.getInstance();
         c.set(Calendar.YEAR,year);
@@ -325,9 +325,11 @@ public final class date {
         Date date = TimeClient.timeClient.getDate();
         return minDate(getYear(date),getMonth(date),getDay(date));
     }
+
     public static Date minDate(int year){
         return minDate(year, 1);
     }
+
     public static Date minDate(int year, int month){
         Calendar c = Calendar.getInstance();
         c.set(Calendar.YEAR,year);
@@ -339,6 +341,7 @@ public final class date {
         c.set(Calendar.MILLISECOND, 0);
         return c.getTime();
     }
+
     public static Date minDate(int year, int month, int day){
         Calendar c = Calendar.getInstance();
         c.set(Calendar.YEAR,year);
@@ -349,5 +352,20 @@ public final class date {
         c.set(Calendar.SECOND, 0);
         c.set(Calendar.MILLISECOND, 0);
         return c.getTime();
+    }
+
+    public final class format {
+        /**
+         * 日期格式为 yyyy-MM-dd
+         */
+        public static final String ymd = "yyyy-MM-dd";
+        /**
+         * 日期格式为 yyyy-MM-dd HH:mm:ss.SSS
+         */
+        public static final String hms = "yyyy-MM-dd HH:mm:ss.SSS";
+        /**
+         * 日期格式为 yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
+         */
+        public static final String iso = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
     }
 }

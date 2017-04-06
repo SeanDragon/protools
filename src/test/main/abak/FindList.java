@@ -64,7 +64,7 @@ public class FindList {
         finder.limit(_perPageCount);
         cursor = finder.iterator();
         while(cursor.hasNext())
-            list.add((T)pro.cg.convert.JsonToModel(cursor.next().toJson(),clazz));
+            list.add((T)pro.tools.convert.JsonToModel(cursor.next().toJson(),clazz));
 
         if (cursor != null) {
             cursor.close();
@@ -87,7 +87,7 @@ public class FindList {
         List<T> list = new LinkedList<>();
         cursor = finder.iterator();
         while(cursor.hasNext())
-            list.add((T)pro.cg.convert.JsonToModel(cursor.next().toJson(),clz));
+            list.add((T)pro.tools.convert.JsonToModel(cursor.next().toJson(),clz));
         if (cursor != null) {
             cursor.close();
             cursor = null;

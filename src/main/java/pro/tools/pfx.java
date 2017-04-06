@@ -1,4 +1,4 @@
-package pro.cg;
+package pro.tools;
 
 import sun.misc.BASE64Decoder;
 
@@ -6,8 +6,21 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-import java.io.*;
-import java.security.*;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringReader;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.UnrecoverableKeyException;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
@@ -71,7 +84,7 @@ public final class pfx {
             return null;
         }
 
-        return pro.cg.format.byte2Hex(destBytes);
+        return pro.tools.format.byte2Hex(destBytes);
 
     }
 
@@ -84,7 +97,7 @@ public final class pfx {
      * @return
      */
     public static String decryptByPriPfxFile(String src, String pfxPath, String priKeyPass) {
-        if (pro.cg.format.isEmpty(src) || pro.cg.format.isEmpty(pfxPath)) {
+        if (pro.tools.format.isEmpty(src) || pro.tools.format.isEmpty(pfxPath)) {
             return null;
         }
         PrivateKey privateKey = RsaReadUtil.getPrivateKeyFromFile(pfxPath, priKeyPass);
@@ -103,7 +116,7 @@ public final class pfx {
      * @return
      */
     public static String decryptByPriPfxStream(String src, byte[] pfxBytes, String priKeyPass) {
-        if (pro.cg.format.isEmpty(src)) {
+        if (pro.tools.format.isEmpty(src)) {
             return null;
         }
         PrivateKey privateKey = RsaReadUtil.getPrivateKeyByStream(pfxBytes, priKeyPass);
@@ -121,11 +134,11 @@ public final class pfx {
      * @return
      */
     public static String decryptByPrivateKey(String src, PrivateKey privateKey) {
-        if (pro.cg.format.isEmpty(src)) {
+        if (pro.tools.format.isEmpty(src)) {
             return null;
         }
         try {
-            byte[] destBytes = rsaByPrivateKey(pro.cg.format.hex2Bytes(src), privateKey, Cipher.DECRYPT_MODE);
+            byte[] destBytes = rsaByPrivateKey(pro.tools.format.hex2Bytes(src), privateKey, Cipher.DECRYPT_MODE);
             if (destBytes == null) {
                 return null;
             }
@@ -189,7 +202,7 @@ public final class pfx {
         if (destBytes == null) {
             return null;
         }
-        return pro.cg.format.byte2Hex(destBytes);
+        return pro.tools.format.byte2Hex(destBytes);
 
     }
 
@@ -233,7 +246,7 @@ public final class pfx {
     public static String decryptByPublicKey(String src, PublicKey publicKey) {
 
         try {
-            byte[] destBytes = rsaByPublicKey(pro.cg.format.hex2Bytes(src), publicKey, Cipher.DECRYPT_MODE);
+            byte[] destBytes = rsaByPublicKey(pro.tools.format.hex2Bytes(src), publicKey, Cipher.DECRYPT_MODE);
             if (destBytes == null) {
                 return null;
             }
@@ -360,7 +373,7 @@ public final class pfx {
         if (array == null) {
             return null;
         }
-        return (byte[]) array.clone();
+        return array.clone();
     }
 
     private static final class RsaConst {
@@ -489,7 +502,7 @@ public final class pfx {
                 Enumeration<String> aliasEnum = ks.aliases();
                 String keyAlias = null;
                 if (aliasEnum.hasMoreElements()) {
-                    keyAlias = (String) aliasEnum.nextElement();
+                    keyAlias = aliasEnum.nextElement();
                 }
                 return (PrivateKey) ks.getKey(keyAlias, charPriKeyPass);
             } catch (IOException e) {

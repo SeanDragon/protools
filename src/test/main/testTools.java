@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import pro.cg.date;
+import pro.tools.date;
 import pro.mojo.redis.dao.IRedisAdapter;
 import pro.mojo.redis.dao.RedisAdapter;
 import pro.mojo.redis.dao.RedisHost;
@@ -91,7 +91,7 @@ public class testTools {
                 byte[] bytes = ju.rpop(redisKey);
                 if (bytes == null)
                     continue;
-                Object obj = pro.cg.convert.bytesToObject(bytes);
+                Object obj = pro.tools.convert.bytesToObject(bytes);
 //                if (!(obj instanceof TaskInterface))
 //                    continue;
                 TaskInterface t1 = (TaskInterface) obj;
@@ -114,7 +114,7 @@ public class testTools {
             Thread.sleep(1000);
             byte[] redisKey = "Queue:loan".getBytes();
             TaskInterface t1 = new TaskObject(System.currentTimeMillis(), "content thread1");
-            ju.lpush(redisKey, pro.cg.convert.objectToBytes(t1));
+            ju.lpush(redisKey, pro.tools.convert.objectToBytes(t1));
         }
 
     }
@@ -126,7 +126,7 @@ public class testTools {
             Thread.sleep(1000);
             byte[] redisKey = "Queue:loan".getBytes();
             TaskInterface t1 = new TaskObject(System.currentTimeMillis(), "content thread2");
-            ju.lpush(redisKey, pro.cg.convert.objectToBytes(t1));
+            ju.lpush(redisKey, pro.tools.convert.objectToBytes(t1));
         }
     }
 
@@ -179,7 +179,7 @@ public class testTools {
 
     @Test
     public void test1(){
-        System.err.println(pro.cg.security.MD5("admin@9819"));
+        System.err.println(pro.tools.security.MD5("admin@9819"));
     }
 
     @Test
@@ -187,19 +187,19 @@ public class testTools {
         Map<String,String> map = new HashMap<>();
         map.put("a","");
         map.put("b",null);
-        System.err.println(pro.cg.convert.MapToJson(map));
+        System.err.println(pro.tools.convert.MapToJson(map));
     }
 
     @Test
     public void test3(){
         Gson gson = new Gson();
         String data  = "[{\"value\":1,\"text\":\"11\",\"homePage\":1},{\"value\":2,\"text\":\"22\",\"homePage\":2}]";
-//        List<UserTypeModel> userTypeModelList = pro.cg.convert.JsonToModelList(data, UserTypeModel.class);
+//        List<UserTypeModel> userTypeModelList = pro.tools.convert.JsonToModelList(data, UserTypeModel.class);
 //        System.out.println(userTypeModelList);
 
-        List<UserTypeModel> list = pro.cg.convert.jsonToArrayList(data, UserTypeModel.class);
+        List<UserTypeModel> list = pro.tools.convert.jsonToArrayList(data, UserTypeModel.class);
         for(UserTypeModel utm : list ){
-            System.out.println(pro.cg.convert.ModelToBson(utm));
+            System.out.println(pro.tools.convert.ModelToBson(utm));
         }
     }
 
@@ -211,7 +211,7 @@ public class testTools {
 
     @Test
     public void testTime(){
-        Date d = pro.cg.date.maxDate();
-        System.err.println(pro.cg.date.toFormat(d));
+        Date d = pro.tools.date.maxDate();
+        System.err.println(pro.tools.date.toFormat(d));
     }
 }

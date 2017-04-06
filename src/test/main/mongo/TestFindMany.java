@@ -45,7 +45,7 @@ public class TestFindMany extends SpringTest{
         FastModel query = new FastModel();
         List<FastModel> list = adapter.collection("collection1").findMany("{}").getList();
         for(FastModel tm : list){
-            System.err.println(pro.cg.convert.ModelToJson(tm));
+            System.err.println(pro.tools.convert.ModelToJson(tm));
         }
     }
 
@@ -73,8 +73,8 @@ public class TestFindMany extends SpringTest{
         map.put("name","name");
         map.put("count",1234);
         FastModel query = new FastModel();
-        pro.cg.convert.MapToModel(map,query.getClass());
-        System.err.println(pro.cg.convert.ModelToJson(query));
+        pro.tools.convert.MapToModel(map,query.getClass());
+        System.err.println(pro.tools.convert.ModelToJson(query));
     }
 
     @Test

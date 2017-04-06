@@ -1,27 +1,32 @@
-package pro.cg;
+package pro.tools;
 
 
-import java.io.*;
-import java.lang.reflect.Field;
-import java.lang.reflect.GenericArrayType;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.util.*;
-
-import com.google.gson.*;
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.bson.BsonDocument;
 import org.bson.Document;
-import org.bson.conversions.Bson;
-import org.bson.types.ObjectId;
-import pro.cg.annotation.NoExpose;
 import pro.mojo.mongo.query.QueryUtil;
+import pro.tools.annotation.NoExpose;
+
+import java.io.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 /**
  * 辅助类
@@ -40,7 +45,7 @@ public class convert {
         try {
             sReturnCode = URLEncoder.encode(sStr, sEnc);
         } catch (UnsupportedEncodingException e) {
-            log.error(pro.cg.tools.toException(e));
+            log.error(pro.tools.tools.toException(e));
         }
         return sReturnCode;
     }
@@ -201,7 +206,7 @@ public class convert {
     public final static <T> T BsonToModel(String bson, Class<T> classOfT){
         Document document = Document.parse(bson);
 //        return (T)DBObjectToModel(new BasicDBObject(document),classOfT);
-        return (T)MapToModel(document,classOfT);
+        return MapToModel(document, classOfT);
     }
 
     public static <T> List<T> BsonToModelList(String bson, Class<T> tClass){
@@ -240,8 +245,7 @@ public class convert {
                         // 这里作判断，决定要不要排除该字段,return true为排除
 //                    if ("finalField".equals(f.getName())) return true; //按字段名排除
                         NoExpose noexpose = f.getAnnotation(NoExpose.class);
-                        if (noexpose != null) return true; //按注解排除
-                        return false;
+                        return noexpose != null;
                     }
 
                     @Override
@@ -276,8 +280,7 @@ public class convert {
                         // 这里作判断，决定要不要排除该字段,return true为排除
 //                    if ("finalField".equals(f.getName())) return true; //按字段名排除
                         NoExpose noexpose = f.getAnnotation(NoExpose.class);
-                        if (noexpose != null) return true; //按注解排除
-                        return false;
+                        return noexpose != null;
                     }
 
                     @Override
@@ -372,7 +375,7 @@ public class convert {
         try {
             return (T)BasicDBObject.parse(json);
         }catch (Exception e){
-            log.error(pro.cg.tools.toException(e));
+            log.error(pro.tools.tools.toException(e));
             return null;
         }
     }
@@ -445,7 +448,7 @@ public class convert {
                 lst.add(str);
             }
         } catch (Exception e) {
-            log.error(pro.cg.tools.toException(e));
+            log.error(pro.tools.tools.toException(e));
         }
         return lst;
     }
@@ -487,7 +490,7 @@ public class convert {
             }
         } catch (Exception e) {
             stateInt = 0;
-            log.error(pro.cg.tools.toException(e));
+            log.error(pro.tools.tools.toException(e));
         }
 
         return stateInt;
@@ -550,7 +553,7 @@ public class convert {
 
             } catch (Exception e) {
                 stateInt = 0;
-                log.error(pro.cg.tools.toException(e));
+                log.error(pro.tools.tools.toException(e));
             } finally {
             }
         }
@@ -569,7 +572,7 @@ public class convert {
             byte[] by = saveToBytesByImg(file);
             result = byte2hex(by);
         } catch (Exception e) {
-            log.error(pro.cg.tools.toException(e));
+            log.error(pro.tools.tools.toException(e));
         }
         return result;
     }
@@ -590,7 +593,7 @@ public class convert {
             fis.close();
             bis.close();
         } catch (Exception e) {
-            log.error(pro.cg.tools.toException(e));
+            log.error(pro.tools.tools.toException(e));
         }
         return by;
     }
@@ -628,7 +631,7 @@ public class convert {
             }
             return result.toString();
         } catch (Exception e) {
-            log.error(pro.cg.tools.toException(e));
+            log.error(pro.tools.tools.toException(e));
             return null;
         }
     }

@@ -1,10 +1,12 @@
-package pro.cg;
+package pro.tools;
 
 import org.apache.log4j.Logger;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.util.*;
+import java.util.Enumeration;
+import java.util.Random;
+import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -48,11 +50,7 @@ public final class tools {
             //PC端访问，返回false
             //测试环境返回 true
             //为方便后期阅读和修改, 保持if结构
-            if (true){
-                return true;
-            }else{
-                return false;
-            }
+            return true;
         }
     }
 
@@ -78,7 +76,7 @@ public final class tools {
             }
             return Integer.valueOf(result.toString());
         }catch (Exception e){
-            log.error(pro.cg.tools.toException(e));
+            log.error(pro.tools.tools.toException(e));
         }
         return 0;
     }
@@ -100,7 +98,7 @@ public final class tools {
             }
             return result.toString();
         }catch (Exception e){
-            log.error(pro.cg.tools.toException(e));
+            log.error(pro.tools.tools.toException(e));
         }
         return "";
     }

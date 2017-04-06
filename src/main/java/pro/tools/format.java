@@ -1,8 +1,12 @@
-package pro.cg;
+package pro.tools;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -63,7 +67,7 @@ public final class format {
      * @return 为空返回true, 否则返回false
      */
     public static boolean isEmpty(Object arg) {
-        return toStringTrim(arg).length() == 0 ? true : false;
+        return toStringTrim(arg).length() == 0;
     }
 
     /**
@@ -183,10 +187,7 @@ public final class format {
      * @return 返回转换后的Boolean
      */
     public static boolean toBoolean(String bool) {
-        if (isEmpty(bool) || (!bool.equals("1") && !bool.equalsIgnoreCase("true") && !bool.equalsIgnoreCase("ok")))
-            return false;
-        else
-            return true;
+        return !(isEmpty(bool) || (!bool.equals("1") && !bool.equalsIgnoreCase("true") && !bool.equalsIgnoreCase("ok")));
     }
 
     /**
@@ -363,23 +364,6 @@ public final class format {
     }
 
     /** ============== END =================== */
-    /**
-     * 金额格式
-     */
-    public static class MoneyType {
-        /**
-         * 保留2位有效数字，整数位每3位逗号隔开 （默认）
-         */
-        public static final String DECIMAL = "#,##0.00";
-        /**
-         * 保留2位有效数字
-         */
-        public static final String DECIMAL_2 = "0.00";
-        /**
-         * 保留4位有效数字
-         */
-        public static final String DECIMAL_4 = "0.0000";
-    }
 
     /**
      * 判断是否为数字
@@ -407,6 +391,24 @@ public final class format {
             }
         }
         return true;
+    }
+
+    /**
+     * 金额格式
+     */
+    public static class MoneyType {
+        /**
+         * 保留2位有效数字，整数位每3位逗号隔开 （默认）
+         */
+        public static final String DECIMAL = "#,##0.00";
+        /**
+         * 保留2位有效数字
+         */
+        public static final String DECIMAL_2 = "0.00";
+        /**
+         * 保留4位有效数字
+         */
+        public static final String DECIMAL_4 = "0.0000";
     }
 
 }

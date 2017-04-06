@@ -60,7 +60,7 @@ public class FindOne {
             host.release();
         if (document == null)
             return null;
-        return (T)pro.cg.convert.JsonToModel(document.toJson(),clz);
+        return (T)pro.tools.convert.JsonToModel(document.toJson(),clz);
     }
 
     public FindOne fields(String jsonFields){

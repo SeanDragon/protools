@@ -1,15 +1,6 @@
 package mongo;
 
-import com.mongodb.client.model.Filters;
-import org.bson.Document;
-import org.bson.types.ObjectId;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import pro.mojo.mongo.dao.MongoAdapter;
 import pro.mojo.mongo.dao.Update;
 
 import java.util.LinkedList;
@@ -32,7 +23,7 @@ public class TestUpdate extends SpringTest{
 
         AccountModel one = adapter.findOne(query);
 
-        System.err.println("[find]"+pro.cg.convert.ModelToBson(one));
+        System.err.println("[find]"+pro.tools.convert.ModelToBson(one));
 
         SmallModel sm = new SmallModel();
         sm.setName("a");

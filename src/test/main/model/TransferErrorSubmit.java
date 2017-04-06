@@ -198,6 +198,6 @@ public class TransferErrorSubmit implements Serializable {
 
     @Override
     public String toString() {
-        return pro.cg.convert.ModelToJson(this);
+        return pro.tools.convert.ModelToJson(this);
     }
 }

@@ -4,7 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import pro.cg.date;
+import pro.tools.date;
 import pro.mojo.redis.dao.RedisAdapter;
 import pro.mojo.redis.time.TimeClient;
 import redis.clients.jedis.Jedis;

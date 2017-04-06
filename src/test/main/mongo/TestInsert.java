@@ -104,7 +104,7 @@ public class TestInsert extends SpringTest{
 //        model.setCount(1234l);
         model.setState(true);
         model.setDate(so.nowDate());
-        Document doc = new Document(pro.cg.convert.ModelToMap(model));
+        Document doc = new Document(pro.tools.convert.ModelToMap(model));
         System.err.println(doc.toJson());
     }
 }

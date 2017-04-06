@@ -1,4 +1,4 @@
-package pro.cg;
+package pro.tools;
 
 import org.apache.log4j.Logger;
 import sun.misc.BASE64Decoder;
@@ -91,7 +91,7 @@ public final class security {
     /**
      * 解密
      */
-    public static String Base64Decode(String str) throws UnsupportedEncodingException, IOException {
+    public static String Base64Decode(String str) throws IOException {
 //		str = str.replaceAll(" ", "+");
         return new String(new BASE64Decoder().decodeBuffer(str), "UTF-8");
     }

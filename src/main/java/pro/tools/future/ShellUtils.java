@@ -45,7 +45,7 @@ public class ShellUtils {
         StringBuilder errorMsg = null;
 
         try {
-            process = Runtime.getRuntime().exec(SystemConstant.isWindows ? "cmd" : "sh");
+            process = Runtime.getRuntime().exec(SystemConstant.IS_WINDOWS ? "cmd" : "sh");
             try (DataOutputStream os = new DataOutputStream(process.getOutputStream())) {
                 for (String command : commands) {
                     if (command == null) continue;
@@ -60,8 +60,8 @@ public class ShellUtils {
                 e.printStackTrace();
             }
             if (isNeedResultMsg) {
-                try (BufferedReader successResult = new BufferedReader(new InputStreamReader(process.getInputStream(), "UTF-8"));
-                     BufferedReader errorResult = new BufferedReader(new InputStreamReader(process.getErrorStream(), "UTF-8"))) {
+                try (BufferedReader successResult = new BufferedReader(new InputStreamReader(process.getInputStream(), SystemConstant.DEFAULT_CHARSET));
+                     BufferedReader errorResult = new BufferedReader(new InputStreamReader(process.getErrorStream(), SystemConstant.DEFAULT_CHARSET))) {
                     successMsg = new StringBuilder();
                     errorMsg = new StringBuilder();
                     String s;

@@ -1,21 +1,34 @@
 package pro.tools;
 
-
-import com.google.gson.*;
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pro.tools.annotation.NoExpose;
 
 import java.io.*;
 import java.lang.reflect.Type;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+
+import static pro.tools.tools.toException;
 
 /**
  * 辅助类
  */
 public class convert {
+
+    private static final Logger LOG = LoggerFactory.getLogger(convert.class);
 
     /**
      * 字符串编码
@@ -29,7 +42,7 @@ public class convert {
         try {
             sReturnCode = URLEncoder.encode(sStr, sEnc);
         } catch (UnsupportedEncodingException e) {
-
+            LOG.error(toException(e));
         }
         return sReturnCode;
     }

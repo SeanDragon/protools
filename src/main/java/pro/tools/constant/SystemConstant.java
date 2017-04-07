@@ -1,6 +1,7 @@
 package pro.tools.constant;
 
 
+import io.netty.util.CharsetUtil;
 import pro.tools.future.SystemUtils;
 
 /**
@@ -9,6 +10,6 @@ import pro.tools.future.SystemUtils;
  * @author sd
  */
 public class SystemConstant {
-    public static final boolean isWindows = SystemUtils.isWindows();
-
+    public static final boolean IS_WINDOWS = SystemUtils.isWindows();
+    public static final String DEFAULT_CHARSET = CharsetUtil.UTF_8.displayName();
 }

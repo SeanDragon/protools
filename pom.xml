@@ -21,8 +21,9 @@
 
     <licenses>
         <license>
-            <name>The Apache License, Version 2.0</name>
+            <name>Apache License 2.0</name>
             <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
         </license>
     </licenses>
 
@@ -78,30 +79,6 @@
             <version>2.7</version>
         </dependency>
 
-        <!--log-->
-        <!--<dependency>-->
-        <!--<groupId>log4j</groupId>-->
-        <!--<artifactId>log4j</artifactId>-->
-        <!--<version>${log4j.version}</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--<groupId>org.slf4j</groupId>-->
-        <!--<artifactId>slf4j-api</artifactId>-->
-        <!--<version>${slf4j.version}</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--<groupId>org.slf4j</groupId>-->
-        <!--<artifactId>slf4j-log4j12</artifactId>-->
-        <!--<version>${slf4j.version}</version>-->
-        <!--</dependency>-->
-
-        <!--http-->
-        <dependency>
-            <groupId>commons-httpclient</groupId>
-            <artifactId>commons-httpclient</artifactId>
-            <version>3.1</version>
-        </dependency>
-
         <!--util-->
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -109,7 +86,7 @@
             <version>21.0</version>
         </dependency>
 
-        <!--http2-->
+        <!--http-->
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty</artifactId>
@@ -118,7 +95,7 @@
         <dependency>
             <groupId>com.ning</groupId>
             <artifactId>async-http-client</artifactId>
-            <version>1.9.32</version>
+            <version>1.9.40</version>
         </dependency>
     </dependencies>
 

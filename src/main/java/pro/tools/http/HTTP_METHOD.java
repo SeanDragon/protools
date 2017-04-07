@@ -1,4 +1,4 @@
-package pro.tools.http2;
+package pro.tools.http;
 
 public enum HTTP_METHOD {
     GET,

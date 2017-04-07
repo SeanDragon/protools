@@ -1,10 +1,9 @@
 package sd;
 
 import org.junit.Test;
-import pro.tools.http2.HTTP_METHOD;
-import pro.tools.http2.HttpRequest;
-import pro.tools.http2.HttpResponse;
-import pro.tools.http2.http2;
+import pro.tools.http.HttpReceive;
+import pro.tools.http.HttpSend;
+import pro.tools.http.HttpUtils;
 
 /**
  * http测试
@@ -13,16 +12,41 @@ import pro.tools.http2.http2;
  *         Create By 2017-04-07 9:30
  */
 public class Test_20170407 {
-    @Test
-    public void test1() {
-        HttpRequest httpRequest = new HttpRequest("https://www.zhihu.com/", null, HTTP_METHOD.POST);
-        HttpResponse httpResponse = http2.sendHttp(httpRequest);
-        if (httpResponse.isHaveError()) {
-            System.out.println(httpResponse.getErrMsg());
+    public boolean connect() {
+        long l = System.currentTimeMillis();
+        HttpSend httpSend = new HttpSend("http://a/5.com", null);
+        //HttpSend httpSend = new HttpSend("http://m.tuhaolicai.cc/public/index", null);
+        //HttpSend httpSend = new HttpSend("https://apio.caiyunapp.com/v2/Dz=JqbrtH7cP8SKd/121.6544,25.1552/realtime.json", null);
+        //httpSend.setConnectTimeout(50);
+        //httpSend.setResponseTimeout(50);
+        HttpReceive httpReceive = HttpUtils.sendHttp(httpSend);
+        if (httpReceive.isHaveError()) {
+            System.out.println(httpReceive.getErrMsg());
+            return false;
         } else {
-            System.out.println(httpResponse.getStatusCode());
-            System.out.println(httpResponse.getStatusText());
-            System.out.println(httpResponse.getResponseBody());
+            //System.out.println(httpReceive.getResponse().isRedirected());
+            System.out.println(httpReceive.getStatusCode());
+            //System.out.println(httpReceive.getStatusText());
+            //String responseBody = httpReceive.getResponseBody();
+            //System.out.println(responseBody);
+            return true;
         }
+
+        //long x = System.currentTimeMillis() - l;
+        //System.out.println(x / 1000);
+    }
+
+    @Test
+    public void test2() {
+        long l = System.currentTimeMillis();
+
+        final int[] falseCount = {0};
+        for (int i = 0; i < 100; i++) {
+            falseCount[0] += connect() ? 0 : 1;
+        }
+
+        System.out.println(falseCount[0]);
+
+        System.out.println(System.currentTimeMillis() - l);
     }
 }

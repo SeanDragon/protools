@@ -1,6 +1,8 @@
-package pro.tools.http2;
+package pro.tools.http;
 
+import com.ning.http.client.Response;
 import com.ning.http.client.cookie.Cookie;
+import com.sun.istack.internal.Nullable;
 
 import java.util.List;
 
@@ -10,19 +12,20 @@ import java.util.List;
  * @author SeanDragon
  *         Create By 2017-04-07 9:06
  */
-public final class HttpResponse {
+public final class HttpReceive {
     private boolean haveError;
     private String errMsg;
     private int statusCode;
     private String statusText;
     private String responseBody;
     private List<Cookie> responseCookieList;
+    private Response response;
 
     public boolean isHaveError() {
         return haveError;
     }
 
-    public HttpResponse setHaveError(boolean haveError) {
+    public HttpReceive setHaveError(boolean haveError) {
         this.haveError = haveError;
         return this;
     }
@@ -31,7 +34,7 @@ public final class HttpResponse {
         return errMsg;
     }
 
-    public HttpResponse setErrMsg(String errMsg) {
+    public HttpReceive setErrMsg(String errMsg) {
         this.errMsg = errMsg;
         return this;
     }
@@ -40,7 +43,7 @@ public final class HttpResponse {
         return statusCode;
     }
 
-    public HttpResponse setStatusCode(int statusCode) {
+    public HttpReceive setStatusCode(int statusCode) {
         this.statusCode = statusCode;
         return this;
     }
@@ -49,7 +52,7 @@ public final class HttpResponse {
         return statusText;
     }
 
-    public HttpResponse setStatusText(String statusText) {
+    public HttpReceive setStatusText(String statusText) {
         this.statusText = statusText;
         return this;
     }
@@ -58,7 +61,7 @@ public final class HttpResponse {
         return responseBody;
     }
 
-    public HttpResponse setResponseBody(String responseBody) {
+    public HttpReceive setResponseBody(String responseBody) {
         this.responseBody = responseBody;
         return this;
     }
@@ -67,8 +70,18 @@ public final class HttpResponse {
         return responseCookieList;
     }
 
-    public HttpResponse setResponseCookieList(List<Cookie> responseCookieList) {
+    public HttpReceive setResponseCookieList(List<Cookie> responseCookieList) {
         this.responseCookieList = responseCookieList;
+        return this;
+    }
+
+    @Nullable
+    public Response getResponse() {
+        return response;
+    }
+
+    public HttpReceive setResponse(Response response) {
+        this.response = response;
         return this;
     }
 }

@@ -24,25 +24,25 @@ public class http2 {
     /**
      * 用于请求http
      *
-     * @param requestBody 里面包含请求的信息
+     * @param httpRequest 里面包含请求的信息
      * @return 响应的信息
      */
-    public static ResponseBody sendHttp(RequestBody requestBody) {
+    public static HttpResponse sendHttp(HttpRequest httpRequest) {
 
-        ResponseBody responseBody = new ResponseBody();
-        responseBody.setHaveError(true);
+        HttpResponse httpResponse = new HttpResponse();
+        httpResponse.setHaveError(true);
 
-        String url = requestBody.getUrl();
+        String url = httpRequest.getUrl();
         if (!validURI(url)) {
-            if (requestBody.isNeedErrMsg()) {
-                responseBody.setErrMsg("不是一个有效的URL");
+            if (httpRequest.isNeedErrMsg()) {
+                httpResponse.setErrMsg("不是一个有效的URL");
             }
-            return responseBody;
+            return httpResponse;
         }
-        Map<String, Object> param = requestBody.getParam();
-        List<Cookie> cookies = requestBody.getCookieList();
-        Map<String, Object> headers = requestBody.getHeaders();
-        HTTP_METHOD method = requestBody.getMethod();
+        Map<String, Object> param = httpRequest.getParam();
+        List<Cookie> cookies = httpRequest.getCookieList();
+        Map<String, Object> headers = httpRequest.getHeaders();
+        HTTP_METHOD method = httpRequest.getMethod();
 
         AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
         AsyncHttpClient.BoundRequestBuilder requestBuilder = null;
@@ -70,6 +70,7 @@ public class http2 {
             }
         }
 
+        requestBuilder.addHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
         if (headers != null) {
             for (Map.Entry<String, Object> oneHeader : headers.entrySet()) {
                 requestBuilder.addHeader(oneHeader.getKey(), oneHeader.getValue().toString());
@@ -85,30 +86,32 @@ public class http2 {
         ListenableFuture<Response> future = requestBuilder.execute();
 
         try {
-            Response response = future.get(requestBody.getTimeout(), requestBody.getTimeUnit());
+            Response response = future.get(httpRequest.getTimeout(), httpRequest.getTimeUnit());
             List<Cookie> responseCookies = response.getCookies();
-            responseBody.setResponseCookieList(responseCookies);
-            responseBody.setStatusCode(response.getStatusCode());
-            responseBody.setStatusText(response.getStatusText());
-            if (requestBody.isNeedMsg()) {
-                responseBody.setResponseBody(response.getResponseBody());
+            httpResponse.setResponseCookieList(responseCookies);
+            httpResponse.setStatusCode(response.getStatusCode());
+            httpResponse.setStatusText(response.getStatusText());
+            if (httpRequest.isNeedMsg()) {
+                String responseBody = response.getResponseBody();
+                responseBody = new String(responseBody.getBytes(), "utf8");
+                httpResponse.setResponseBody(responseBody);
             }
 
-            responseBody.setHaveError(false);
+            httpResponse.setHaveError(false);
 
         } catch (InterruptedException | ExecutionException e) {
-            responseBody.setErrMsg("访问URL失败!");
+            httpResponse.setErrMsg("访问URL失败!");
         } catch (TimeoutException e) {
-            responseBody.setErrMsg("设置超时时间失败!");
+            httpResponse.setErrMsg("设置超时时间失败!");
         } catch (IOException e) {
-            responseBody.setErrMsg("获取返回内容失败!");
+            httpResponse.setErrMsg("获取返回内容失败!");
         }
 
-        if (!requestBody.isNeedErrMsg()) {
-            responseBody.setErrMsg("");
+        if (!httpRequest.isNeedErrMsg()) {
+            httpResponse.setErrMsg("");
         }
 
-        return responseBody;
+        return httpResponse;
     }
 
     private static boolean validURI(String url) {

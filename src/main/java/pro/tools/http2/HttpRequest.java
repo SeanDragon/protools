@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-public final class RequestBody {
+public final class HttpRequest {
     private String url;                 //访问的url
     private Map<String, Object> param;  //参数
     private boolean needMsg = true;     //是否需要返回结果
@@ -17,10 +17,10 @@ public final class RequestBody {
     private long timeout = 10;          //超时时间
     private TimeUnit timeUnit = TimeUnit.SECONDS;//时间单位
 
-    public RequestBody() {
+    public HttpRequest() {
     }
 
-    public RequestBody(String url, Map<String, Object> param, HTTP_METHOD method) {
+    public HttpRequest(String url, Map<String, Object> param, HTTP_METHOD method) {
         this.url = url;
         this.param = param;
         this.method = method;
@@ -30,7 +30,7 @@ public final class RequestBody {
         return url;
     }
 
-    public RequestBody setUrl(String url) {
+    public HttpRequest setUrl(String url) {
         this.url = url;
         return this;
     }
@@ -39,7 +39,7 @@ public final class RequestBody {
         return param;
     }
 
-    public RequestBody setParam(Map<String, Object> param) {
+    public HttpRequest setParam(Map<String, Object> param) {
         this.param = param;
         return this;
     }
@@ -48,7 +48,7 @@ public final class RequestBody {
         return needMsg;
     }
 
-    public RequestBody setNeedMsg(boolean needMsg) {
+    public HttpRequest setNeedMsg(boolean needMsg) {
         this.needMsg = needMsg;
         return this;
     }
@@ -57,7 +57,7 @@ public final class RequestBody {
         return needErrMsg;
     }
 
-    public RequestBody setNeedErrMsg(boolean needErrMsg) {
+    public HttpRequest setNeedErrMsg(boolean needErrMsg) {
         this.needErrMsg = needErrMsg;
         return this;
     }
@@ -66,7 +66,7 @@ public final class RequestBody {
         return cookieList;
     }
 
-    public RequestBody setCookieList(List<Cookie> cookieList) {
+    public HttpRequest setCookieList(List<Cookie> cookieList) {
         this.cookieList = cookieList;
         return this;
     }
@@ -75,7 +75,7 @@ public final class RequestBody {
         return headers;
     }
 
-    public RequestBody setHeaders(Map<String, Object> headers) {
+    public HttpRequest setHeaders(Map<String, Object> headers) {
         this.headers = headers;
         return this;
     }
@@ -84,7 +84,7 @@ public final class RequestBody {
         return method;
     }
 
-    public RequestBody setMethod(HTTP_METHOD method) {
+    public HttpRequest setMethod(HTTP_METHOD method) {
         this.method = method;
         return this;
     }
@@ -93,7 +93,7 @@ public final class RequestBody {
         return timeout;
     }
 
-    public RequestBody setTimeout(long timeout) {
+    public HttpRequest setTimeout(long timeout) {
         this.timeout = timeout;
         return this;
     }
@@ -102,7 +102,7 @@ public final class RequestBody {
         return timeUnit;
     }
 
-    public RequestBody setTimeUnit(TimeUnit timeUnit) {
+    public HttpRequest setTimeUnit(TimeUnit timeUnit) {
         this.timeUnit = timeUnit;
         return this;
     }

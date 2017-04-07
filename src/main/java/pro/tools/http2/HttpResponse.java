@@ -10,7 +10,7 @@ import java.util.List;
  * @author SeanDragon
  *         Create By 2017-04-07 9:06
  */
-public final class ResponseBody {
+public final class HttpResponse {
     private boolean haveError;
     private String errMsg;
     private int statusCode;
@@ -22,7 +22,7 @@ public final class ResponseBody {
         return haveError;
     }
 
-    public ResponseBody setHaveError(boolean haveError) {
+    public HttpResponse setHaveError(boolean haveError) {
         this.haveError = haveError;
         return this;
     }
@@ -31,7 +31,7 @@ public final class ResponseBody {
         return errMsg;
     }
 
-    public ResponseBody setErrMsg(String errMsg) {
+    public HttpResponse setErrMsg(String errMsg) {
         this.errMsg = errMsg;
         return this;
     }
@@ -40,7 +40,7 @@ public final class ResponseBody {
         return statusCode;
     }
 
-    public ResponseBody setStatusCode(int statusCode) {
+    public HttpResponse setStatusCode(int statusCode) {
         this.statusCode = statusCode;
         return this;
     }
@@ -49,7 +49,7 @@ public final class ResponseBody {
         return statusText;
     }
 
-    public ResponseBody setStatusText(String statusText) {
+    public HttpResponse setStatusText(String statusText) {
         this.statusText = statusText;
         return this;
     }
@@ -58,7 +58,7 @@ public final class ResponseBody {
         return responseBody;
     }
 
-    public ResponseBody setResponseBody(String responseBody) {
+    public HttpResponse setResponseBody(String responseBody) {
         this.responseBody = responseBody;
         return this;
     }
@@ -67,7 +67,7 @@ public final class ResponseBody {
         return responseCookieList;
     }
 
-    public ResponseBody setResponseCookieList(List<Cookie> responseCookieList) {
+    public HttpResponse setResponseCookieList(List<Cookie> responseCookieList) {
         this.responseCookieList = responseCookieList;
         return this;
     }

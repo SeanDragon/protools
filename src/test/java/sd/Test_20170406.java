@@ -46,7 +46,7 @@ public class Test_20170406 {
 
     public static void main(String[] a) throws Exception {
         AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
-        Future<Response> f = asyncHttpClient.preparePost("http://m.tuhaolicai.cc/public/index").execute();
+        Future<Response> f = asyncHttpClient.preparePost("http2://m.tuhaolicai.cc/public/index").execute();
         Response r = f.get();
         int statusCode = r.getStatusCode();
         String statusText = r.getStatusText();

@@ -109,7 +109,7 @@
             <version>21.0</version>
         </dependency>
 
-        <!--http-->
+        <!--http2-->
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty</artifactId>

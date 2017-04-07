@@ -10,9 +10,9 @@ import java.math.BigDecimal;
  * @version 1.0
  */
 public final class decimal {
-    /**
-     * 由于Java的简单类型不能够精确的对浮点数进行运算，这个工具类提供精
-     * 确的浮点数运算，包括加减乘除和四舍五入。
+    /*
+      由于Java的简单类型不能够精确的对浮点数进行运算，这个工具类提供精
+      确的浮点数运算，包括加减乘除和四舍五入。
      */
     /**
      * 默认除法运算精度
@@ -63,6 +63,7 @@ public final class decimal {
     public static BigDecimal add(double v1, double v2) {
         return add(Double.toString(v1),Double.toString(v2));
     }
+
     public static BigDecimal add(String v1, String v2){
         BigDecimal b1 = new BigDecimal(v1);
         BigDecimal b2 = new BigDecimal(v2);

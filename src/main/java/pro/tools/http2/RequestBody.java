@@ -7,15 +7,15 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public final class RequestBody {
-    private String url;
-    private Map<String, Object> param;
-    private boolean needMsg = true;
-    private boolean needErrMsg = true;
-    private List<Cookie> cookieList;
-    private Map<String, Object> headers;
-    private HTTP_METHOD method;
-    private long timeout = 10;
-    private TimeUnit timeUnit = TimeUnit.SECONDS;
+    private String url;                 //访问的url
+    private Map<String, Object> param;  //参数
+    private boolean needMsg = true;     //是否需要返回结果
+    private boolean needErrMsg = true;  //是否需要返回错误信息
+    private List<Cookie> cookieList;    //cookie列表
+    private Map<String, Object> headers;//header列表
+    private HTTP_METHOD method;         //访问方法
+    private long timeout = 10;          //超时时间
+    private TimeUnit timeUnit = TimeUnit.SECONDS;//时间单位
 
     public RequestBody() {
     }

@@ -12,7 +12,6 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 import java.util.concurrent.TimeoutException;
 
 /**
@@ -23,45 +22,11 @@ import java.util.concurrent.TimeoutException;
 public class http2 {
 
     /**
-     * 向指定URL发送GET方法的请求
+     * 用于请求http
      *
-     * @param url   发送请求的URL
-     * @param param 请求参数，请求参数应该是 的形式。
-     * @return URL 所代表远程资源的响应结果
+     * @param requestBody 里面包含请求的信息
+     * @return 响应的信息
      */
-    public static Response sendHttpGet(String url, Map<String, Object> param) throws ExecutionException, InterruptedException {
-        AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
-        AsyncHttpClient.BoundRequestBuilder requestBuilder = asyncHttpClient.prepareGet(url);
-
-        param.entrySet().forEach(one -> {
-            requestBuilder.addFormParam(one.getKey(), one.getValue().toString());
-        });
-
-
-        Future<Response> f = requestBuilder.execute();
-        return f.get();
-    }
-
-    /**
-     * 向指定 URL 发送POST方法的请求
-     *
-     * @param url   发送请求的 URL
-     * @param param 请求参数，请求参数应该是 的形式。
-     * @return 所代表远程资源的响应结果
-     */
-    public static Response sendHttpPost(String url, Map<String, Object> param) throws ExecutionException, InterruptedException {
-
-        AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
-        AsyncHttpClient.BoundRequestBuilder requestBuilder = asyncHttpClient.preparePost(url);
-
-        param.entrySet().forEach(one -> {
-            requestBuilder.addFormParam(one.getKey(), one.getValue().toString());
-        });
-
-        Future<Response> f = requestBuilder.execute();
-        return f.get();
-    }
-
     public static ResponseBody sendHttp(RequestBody requestBody) {
 
         ResponseBody responseBody = new ResponseBody();
@@ -69,7 +34,9 @@ public class http2 {
 
         String url = requestBody.getUrl();
         if (!validURI(url)) {
-            responseBody.setErrMsg("不是一个有效的URL");
+            if (requestBody.isNeedErrMsg()) {
+                responseBody.setErrMsg("不是一个有效的URL");
+            }
             return responseBody;
         }
         Map<String, Object> param = requestBody.getParam();
@@ -136,6 +103,11 @@ public class http2 {
         } catch (IOException e) {
             responseBody.setErrMsg("获取返回内容失败!");
         }
+
+        if (!requestBody.isNeedErrMsg()) {
+            responseBody.setErrMsg("");
+        }
+
         return responseBody;
     }
 

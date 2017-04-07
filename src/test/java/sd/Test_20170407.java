@@ -1,14 +1,10 @@
 package sd;
 
-import com.ning.http.client.Response;
 import org.junit.Test;
 import pro.tools.http2.HTTP_METHOD;
 import pro.tools.http2.RequestBody;
 import pro.tools.http2.ResponseBody;
 import pro.tools.http2.http2;
-
-import java.io.IOException;
-import java.util.concurrent.ExecutionException;
 
 /**
  * http测试
@@ -28,12 +24,5 @@ public class Test_20170407 {
             System.out.println(responseBody.getStatusText());
             System.out.println(responseBody.getResponseBody());
         }
-    }
-
-    @Test
-    public void test2() throws ExecutionException, InterruptedException, IOException {
-        Response response = http2.sendHttpPost("http2://m.tuhaolicai.cc/public/index", null);
-        String responseBody = response.getResponseBody();
-        System.out.println(responseBody);
     }
 }

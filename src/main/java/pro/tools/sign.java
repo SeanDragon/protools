@@ -42,7 +42,7 @@ public final class sign {
      *
      * @return
      */
-    public static String getPriKeyString(PrivateKey key) throws Exception {
+    public static String getPriKeyString(PrivateKey key) {
         byte[] keyBytes = key.getEncoded();
         String s = (new BASE64Encoder()).encode(keyBytes);
         return s;
@@ -53,7 +53,7 @@ public final class sign {
      *
      * @return
      */
-    public static String getPubKeyString(PublicKey key) throws Exception {
+    public static String getPubKeyString(PublicKey key) {
         byte[] keyBytes = key.getEncoded();
         String s = (new BASE64Encoder()).encode(keyBytes);
         return s;

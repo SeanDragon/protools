@@ -6,7 +6,7 @@ package pro.tools.future;
  *
  * @author sd
  */
-public class PrimaryKeyUtils {
+public class ToolPrimaryKey {
 
     private final static char[] digits = {//32位
             '0', '1', '2', '3', '4', '5',

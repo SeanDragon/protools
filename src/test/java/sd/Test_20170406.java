@@ -8,6 +8,8 @@ import com.ning.http.client.Response;
 import com.ning.http.client.uri.Uri;
 import org.junit.Test;
 
+import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 
@@ -44,7 +46,7 @@ public class Test_20170406 {
         System.out.println(count);
     }
 
-    public static void main(String[] a) throws Exception {
+    public static void main(String[] a) throws IOException, ExecutionException, InterruptedException {
         AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
         Future<Response> f = asyncHttpClient.preparePost("HttpUtils://m.tuhaolicai.cc/public/index").execute();
         Response r = f.get();

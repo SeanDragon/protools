@@ -1,4 +1,4 @@
-package pro.tools.future;
+package pro.tools.time;
 
 /**
  * <pre>
@@ -6,7 +6,7 @@ package pro.tools.future;
  *     desc  : 阴历相关工具类
  * </pre>
  */
-public class LunarUtils {
+public class ToolLunar {
 
     /*
      * |----4位闰月|-------------13位1为30天，0为29天|
@@ -50,7 +50,7 @@ public class LunarUtils {
             0x106a3d, 0x106c51, 0x106e47, 0x10703c, 0x10724f, 0x107444, 0x107638, 0x10784c, 0x107a3f, 0x107c53,
             0x107e48};
 
-    private LunarUtils() {
+    private ToolLunar() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
 

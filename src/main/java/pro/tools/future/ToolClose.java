@@ -8,9 +8,9 @@ import java.io.IOException;
  *
  * @author sd
  */
-public class CloseUtils {
+public class ToolClose {
 
-    private CloseUtils() {
+    private ToolClose() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
 

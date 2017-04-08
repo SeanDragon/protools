@@ -1,10 +1,6 @@
 package pro.tools;
 
-import com.google.gson.ExclusionStrategy;
-import com.google.gson.FieldAttributes;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -15,11 +11,7 @@ import java.io.*;
 import java.lang.reflect.Type;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 import static pro.tools.tools.toException;
 
@@ -230,7 +222,7 @@ public class convert {
      * @return
      * @throws IOException
      */
-    public static <T> byte[] objectToBytes(T obj) throws Exception {
+    public static <T> byte[] objectToBytes(T obj) throws IOException {
         ByteArrayOutputStream bo = new ByteArrayOutputStream();
         ObjectOutputStream oo = new ObjectOutputStream(bo);
         oo.writeObject(obj);
@@ -247,7 +239,7 @@ public class convert {
      * @return
      * @throws Exception
      */
-    public static Object bytesToObject(byte[] bytes) throws Exception {
+    public static Object bytesToObject(byte[] bytes) throws IOException, ClassNotFoundException {
         ByteArrayInputStream in = new ByteArrayInputStream(bytes);
         ObjectInputStream sIn = new ObjectInputStream(in);
         return sIn.readObject();

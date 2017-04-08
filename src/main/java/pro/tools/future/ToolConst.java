@@ -6,7 +6,7 @@ package pro.tools.future;
  *
  * @author sd
  */
-public class ConstUtils {
+public class ToolConst {
 
     /**
      * 文件分隔符
@@ -142,7 +142,7 @@ public class ConstUtils {
      */
     public static final String REGEX_NEGATIVE_FLOAT = "^-[1-9]\\d*\\.\\d*|-0\\.\\d*[1-9]\\d*$";
 
-    private ConstUtils() {
+    private ToolConst() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
 

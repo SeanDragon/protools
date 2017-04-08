@@ -6,7 +6,7 @@ import com.ning.http.client.ListenableFuture;
 import com.ning.http.client.Response;
 import com.ning.http.client.cookie.Cookie;
 import pro.tools.constant.SystemConstant;
-import pro.tools.future.RegexUtils;
+import pro.tools.data.ToolRegex;
 import pro.tools.tools;
 
 import java.io.IOException;
@@ -34,7 +34,7 @@ public class HttpUtils {
         httpReceive.setHaveError(true);
 
         String url = httpSend.getUrl();
-        if (!RegexUtils.isURL(url)) {
+        if (!ToolRegex.isURL(url)) {
             if (httpSend.isNeedErrMsg()) {
                 httpReceive.setErrMsg("不是一个有效的URL");
             }

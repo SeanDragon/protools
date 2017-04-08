@@ -1,11 +1,11 @@
-package pro.tools.future;
+package pro.tools.data;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static pro.tools.future.ConstUtils.*;
+import static pro.tools.future.ToolConst.*;
 
 
 /**
@@ -13,9 +13,9 @@ import static pro.tools.future.ConstUtils.*;
  *
  * @author sd
  */
-public class RegexUtils {
+public class ToolRegex {
 
-    private RegexUtils() {
+    private ToolRegex() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
 

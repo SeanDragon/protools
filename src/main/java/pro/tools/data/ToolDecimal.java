@@ -1,4 +1,4 @@
-package pro.tools.future;
+package pro.tools.data;
 
 
 import pro.tools.decimal;
@@ -12,7 +12,7 @@ import java.text.DecimalFormat;
  *
  * @author SeanDragon
  */
-public class DecimalUtils {
+public class ToolDecimal {
     public static String formatNumber_string(Double value, int scale) {
         return new BigDecimal(value).setScale(2, BigDecimal.ROUND_HALF_UP).toString();
     }
@@ -23,7 +23,7 @@ public class DecimalUtils {
 
     //不四舍五入取整
     public static String getWord(Object value) {
-        if (StringUtils.isEmpty(null != value ? value.toString() : ""))
+        if (ToolString.isEmpty(null != value ? value.toString() : ""))
             return "0";
         DecimalFormat formatter = new DecimalFormat();
         formatter.setMaximumFractionDigits(0);
@@ -34,7 +34,7 @@ public class DecimalUtils {
 
     //四舍五入
     public static String getWordF(Object value) {
-        if (StringUtils.isEmpty(null != value ? value.toString() : ""))
+        if (ToolString.isEmpty(null != value ? value.toString() : ""))
             return "0";
         return String.format("%.0f", decimal.get(value.toString()));
     }

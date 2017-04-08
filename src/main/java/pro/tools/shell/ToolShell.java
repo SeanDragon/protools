@@ -1,4 +1,4 @@
-package pro.tools.future;
+package pro.tools.shell;
 
 
 import pro.tools.constant.SystemConstant;
@@ -14,9 +14,9 @@ import java.util.List;
  *
  * @author sd
  */
-public class ShellUtils {
+public class ToolShell {
 
-    private ShellUtils() {
+    private ToolShell() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
 

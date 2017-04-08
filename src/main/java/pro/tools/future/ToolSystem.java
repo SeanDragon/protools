@@ -5,7 +5,7 @@ package pro.tools.future;
  *
  * @author sd
  */
-public class SystemUtils {
+public class ToolSystem {
 
     public static boolean isWindows() {
         return System.getProperties().get("os.name").toString().toLowerCase().contains("windows");

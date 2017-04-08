@@ -1,13 +1,13 @@
-package pro.tools.future;
+package pro.tools.data;
 
 /**
  * 字符串相关工具
  *
  * @author sd
  */
-public class StringUtils {
+public class ToolString {
 
-    private StringUtils() {
+    private ToolString() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
 

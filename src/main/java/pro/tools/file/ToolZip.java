@@ -1,13 +1,8 @@
-package pro.tools.future;
+package pro.tools.file;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import pro.tools.data.ToolString;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
@@ -16,7 +11,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
-import static pro.tools.future.ConstUtils.KB;
+import static pro.tools.future.ToolConst.KB;
 
 
 /**
@@ -24,9 +19,9 @@ import static pro.tools.future.ConstUtils.KB;
  *
  * @author sd
  */
-public class ZipUtils {
+public class ToolZip {
 
-    private ZipUtils() {
+    private ToolZip() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
 
@@ -54,7 +49,7 @@ public class ZipUtils {
      */
     public static boolean zipFiles(Collection<File> resFiles, String zipFilePath, String comment)
             throws IOException {
-        return zipFiles(resFiles, FileUtils.getFileByPath(zipFilePath), comment);
+        return zipFiles(resFiles, ToolFile.getFileByPath(zipFilePath), comment);
     }
 
     /**
@@ -115,7 +110,7 @@ public class ZipUtils {
      */
     public static boolean zipFile(String resFilePath, String zipFilePath, String comment)
             throws IOException {
-        return zipFile(FileUtils.getFileByPath(resFilePath), FileUtils.getFileByPath(zipFilePath), comment);
+        return zipFile(ToolFile.getFileByPath(resFilePath), ToolFile.getFileByPath(zipFilePath), comment);
     }
 
     /**
@@ -161,13 +156,13 @@ public class ZipUtils {
      */
     private static boolean zipFile(File resFile, String rootPath, ZipOutputStream zos, String comment)
             throws IOException {
-        rootPath = rootPath + (StringUtils.isSpace(rootPath) ? "" : File.separator) + resFile.getName();
+        rootPath = rootPath + (ToolString.isSpace(rootPath) ? "" : File.separator) + resFile.getName();
         if (resFile.isDirectory()) {
             File[] fileList = resFile.listFiles();
             // 如果是空文件夹那么创建它，我把'/'换为File.separator测试就不成功，eggPain
             if (fileList == null || fileList.length <= 0) {
                 ZipEntry entry = new ZipEntry(rootPath + '/');
-                if (!StringUtils.isEmpty(comment)) entry.setComment(comment);
+                if (!ToolString.isEmpty(comment)) entry.setComment(comment);
                 zos.putNextEntry(entry);
                 zos.closeEntry();
             } else {
@@ -179,7 +174,7 @@ public class ZipUtils {
         } else {
             try (InputStream is = new BufferedInputStream(new FileInputStream(resFile))) {
                 ZipEntry entry = new ZipEntry(rootPath);
-                if (!StringUtils.isEmpty(comment)) entry.setComment(comment);
+                if (!ToolString.isEmpty(comment)) entry.setComment(comment);
                 zos.putNextEntry(entry);
                 byte buffer[] = new byte[KB];
                 int len;
@@ -202,7 +197,7 @@ public class ZipUtils {
      */
     public static boolean unzipFiles(Collection<File> zipFiles, String destDirPath)
             throws IOException {
-        return unzipFiles(zipFiles, FileUtils.getFileByPath(destDirPath));
+        return unzipFiles(zipFiles, ToolFile.getFileByPath(destDirPath));
     }
 
     /**
@@ -232,7 +227,7 @@ public class ZipUtils {
      */
     public static boolean unzipFile(String zipFilePath, String destDirPath)
             throws IOException {
-        return unzipFile(FileUtils.getFileByPath(zipFilePath), FileUtils.getFileByPath(destDirPath));
+        return unzipFile(ToolFile.getFileByPath(zipFilePath), ToolFile.getFileByPath(destDirPath));
     }
 
     /**
@@ -259,8 +254,8 @@ public class ZipUtils {
      */
     public static List<File> unzipFileByKeyword(String zipFilePath, String destDirPath, String keyword)
             throws IOException {
-        return unzipFileByKeyword(FileUtils.getFileByPath(zipFilePath),
-                FileUtils.getFileByPath(destDirPath), keyword);
+        return unzipFileByKeyword(ToolFile.getFileByPath(zipFilePath),
+                ToolFile.getFileByPath(destDirPath), keyword);
     }
 
     /**
@@ -281,14 +276,14 @@ public class ZipUtils {
             while (entries.hasMoreElements()) {
                 ZipEntry entry = ((ZipEntry) entries.nextElement());
                 String entryName = entry.getName();
-                if (StringUtils.isEmpty(keyword) || FileUtils.getFileName(entryName).toLowerCase().contains(keyword.toLowerCase())) {
+                if (ToolString.isEmpty(keyword) || ToolFile.getFileName(entryName).toLowerCase().contains(keyword.toLowerCase())) {
                     String filePath = destDir + File.separator + entryName;
                     File file = new File(filePath);
                     files.add(file);
                     if (entry.isDirectory()) {
-                        if (!FileUtils.createOrExistsDir(file)) return null;
+                        if (!ToolFile.createOrExistsDir(file)) return null;
                     } else {
-                        if (!FileUtils.createOrExistsFile(file)) return null;
+                        if (!ToolFile.createOrExistsFile(file)) return null;
                         try (InputStream in = new BufferedInputStream(zf.getInputStream(entry));
                              OutputStream out = new BufferedOutputStream(new FileOutputStream(file))) {
                             byte buffer[] = new byte[KB];
@@ -313,7 +308,7 @@ public class ZipUtils {
      */
     public static List<String> getFilesPath(String zipFilePath)
             throws IOException {
-        return getFilesPath(FileUtils.getFileByPath(zipFilePath));
+        return getFilesPath(ToolFile.getFileByPath(zipFilePath));
     }
 
     /**
@@ -343,7 +338,7 @@ public class ZipUtils {
      */
     public static List<String> getComments(String zipFilePath)
             throws IOException {
-        return getComments(FileUtils.getFileByPath(zipFilePath));
+        return getComments(ToolFile.getFileByPath(zipFilePath));
     }
 
     /**
@@ -374,7 +369,7 @@ public class ZipUtils {
      */
     public static Enumeration<?> getEntries(String zipFilePath)
             throws IOException {
-        return getEntries(FileUtils.getFileByPath(zipFilePath));
+        return getEntries(ToolFile.getFileByPath(zipFilePath));
     }
 
     /**

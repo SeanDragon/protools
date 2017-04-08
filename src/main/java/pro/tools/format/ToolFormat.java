@@ -1,12 +1,8 @@
-package pro.tools;
+package pro.tools.format;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,7 +12,7 @@ import java.util.regex.Pattern;
  * @author Steven Duan
  * @version 1.0
  */
-public final class format {
+public final class ToolFormat {
     /**
      * 符串首字母大写变小写
      * @return 返回转换后的字符串

@@ -176,7 +176,7 @@ public final class tools {
         StackTraceElement ste = (stackTrace != null && stackTrace.length > 0) ? stackTrace[0] : null;
         if (ste != null)
             return String.format("%s - [%s] [%s.%s(%s)]", e.getMessage(), ste.getFileName(), ste.getClassName(), ste.getMethodName(), ste.getLineNumber());
-            //return String.format("%s - [%s(%s)]", e.getMessage(), ste.getFileName(), ste.getLineNumber());
+            //return String.ToolFormat("%s - [%s(%s)]", e.getMessage(), ste.getFileName(), ste.getLineNumber());
         else
             return e.getMessage();
     }

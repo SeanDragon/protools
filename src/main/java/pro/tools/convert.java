@@ -2,10 +2,10 @@ package pro.tools;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pro.tools.annotation.NoExpose;
+import pro.tools.data.text.ToolStr;
 
 import java.io.*;
 import java.lang.reflect.Type;
@@ -163,7 +163,7 @@ public class convert {
      */
     @SuppressWarnings("unchecked")
     public final static <T> List<T> JsonToModelList(String sJson, Class<T> classOfT) {
-        if (StringUtils.isBlank(sJson) || sJson.equals("[]")) {
+        if (ToolStr.isBlank(sJson) || sJson.equals("[]")) {
             return null;
         }
         List<String> lstsfs = jsonToArrayList(sJson);

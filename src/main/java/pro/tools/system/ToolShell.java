@@ -1,7 +1,8 @@
-package pro.tools.shell;
+package pro.tools.system;
 
 
-import pro.tools.constant.SystemConstant;
+import pro.tools.constant.StrConst;
+import pro.tools.constant.SystemConst;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -45,7 +46,7 @@ public class ToolShell {
         StringBuilder errorMsg = null;
 
         try {
-            process = Runtime.getRuntime().exec(SystemConstant.IS_WINDOWS ? "cmd" : "sh");
+            process = Runtime.getRuntime().exec(SystemConst.IS_WINDOWS ? "cmd" : "sh");
             try (DataOutputStream os = new DataOutputStream(process.getOutputStream())) {
                 for (String command : commands) {
                     if (command == null) continue;
@@ -60,8 +61,8 @@ public class ToolShell {
                 e.printStackTrace();
             }
             if (isNeedResultMsg) {
-                try (BufferedReader successResult = new BufferedReader(new InputStreamReader(process.getInputStream(), SystemConstant.DEFAULT_CHARSET));
-                     BufferedReader errorResult = new BufferedReader(new InputStreamReader(process.getErrorStream(), SystemConstant.DEFAULT_CHARSET))) {
+                try (BufferedReader successResult = new BufferedReader(new InputStreamReader(process.getInputStream(), StrConst.DEFAULT_CHARSET));
+                     BufferedReader errorResult = new BufferedReader(new InputStreamReader(process.getErrorStream(), StrConst.DEFAULT_CHARSET))) {
                     successMsg = new StringBuilder();
                     errorMsg = new StringBuilder();
                     String s;

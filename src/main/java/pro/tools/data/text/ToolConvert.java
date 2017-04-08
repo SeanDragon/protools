@@ -1,6 +1,6 @@
-package pro.tools.data;
+package pro.tools.data.text;
 
-import pro.tools.future.ToolConst;
+import pro.tools.constant.ToolConst;
 
 import java.io.*;
 
@@ -46,7 +46,7 @@ public class ToolConvert {
      * @return 字节数组
      */
     public static byte[] hexString2Bytes(String hexString) {
-        if (ToolString.isSpace(hexString)) return null;
+        if (ToolStr.isSpace(hexString)) return null;
         int len = hexString.length();
         if (len % 2 != 0) {
             hexString = "0" + hexString;
@@ -399,7 +399,7 @@ public class ToolConvert {
      * @return 字符串
      */
     public static String inputStream2String(InputStream is, String charsetName) {
-        if (is == null || ToolString.isSpace(charsetName)) return null;
+        if (is == null || ToolStr.isSpace(charsetName)) return null;
         try {
             return new String(inputStream2Bytes(is), charsetName);
         } catch (UnsupportedEncodingException e) {
@@ -416,7 +416,7 @@ public class ToolConvert {
      * @return 输入流
      */
     public static InputStream string2InputStream(String string, String charsetName) {
-        if (string == null || ToolString.isSpace(charsetName)) return null;
+        if (string == null || ToolStr.isSpace(charsetName)) return null;
         try {
             return new ByteArrayInputStream(string.getBytes(charsetName));
         } catch (UnsupportedEncodingException e) {
@@ -433,7 +433,7 @@ public class ToolConvert {
      * @return 字符串
      */
     public static String outputStream2String(OutputStream out, String charsetName) {
-        if (out == null || ToolString.isSpace(charsetName)) return null;
+        if (out == null || ToolStr.isSpace(charsetName)) return null;
         try {
             return new String(outputStream2Bytes(out), charsetName);
         } catch (UnsupportedEncodingException e) {
@@ -450,7 +450,7 @@ public class ToolConvert {
      * @return 输入流
      */
     public static OutputStream string2OutputStream(String string, String charsetName) {
-        if (string == null || ToolString.isSpace(charsetName)) return null;
+        if (string == null || ToolStr.isSpace(charsetName)) return null;
         try {
             return bytes2OutputStream(string.getBytes(charsetName));
         } catch (UnsupportedEncodingException e) {

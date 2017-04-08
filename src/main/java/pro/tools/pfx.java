@@ -1,5 +1,6 @@
 package pro.tools;
 
+import pro.tools.format.ToolFormat;
 import sun.misc.BASE64Decoder;
 
 import javax.crypto.BadPaddingException;
@@ -71,7 +72,7 @@ public final class pfx {
             return null;
         }
 
-        return pro.tools.format.byte2Hex(destBytes);
+        return ToolFormat.byte2Hex(destBytes);
 
     }
 
@@ -84,7 +85,7 @@ public final class pfx {
      * @return
      */
     public static String decryptByPriPfxFile(String src, String pfxPath, String priKeyPass) {
-        if (pro.tools.format.isEmpty(src) || pro.tools.format.isEmpty(pfxPath)) {
+        if (ToolFormat.isEmpty(src) || ToolFormat.isEmpty(pfxPath)) {
             return null;
         }
         PrivateKey privateKey = RsaReadUtil.getPrivateKeyFromFile(pfxPath, priKeyPass);
@@ -103,7 +104,7 @@ public final class pfx {
      * @return
      */
     public static String decryptByPriPfxStream(String src, byte[] pfxBytes, String priKeyPass) {
-        if (pro.tools.format.isEmpty(src)) {
+        if (ToolFormat.isEmpty(src)) {
             return null;
         }
         PrivateKey privateKey = RsaReadUtil.getPrivateKeyByStream(pfxBytes, priKeyPass);
@@ -121,11 +122,11 @@ public final class pfx {
      * @return
      */
     public static String decryptByPrivateKey(String src, PrivateKey privateKey) {
-        if (pro.tools.format.isEmpty(src)) {
+        if (ToolFormat.isEmpty(src)) {
             return null;
         }
         try {
-            byte[] destBytes = rsaByPrivateKey(pro.tools.format.hex2Bytes(src), privateKey, Cipher.DECRYPT_MODE);
+            byte[] destBytes = rsaByPrivateKey(ToolFormat.hex2Bytes(src), privateKey, Cipher.DECRYPT_MODE);
             if (destBytes == null) {
                 return null;
             }
@@ -189,7 +190,7 @@ public final class pfx {
         if (destBytes == null) {
             return null;
         }
-        return pro.tools.format.byte2Hex(destBytes);
+        return ToolFormat.byte2Hex(destBytes);
 
     }
 
@@ -233,7 +234,7 @@ public final class pfx {
     public static String decryptByPublicKey(String src, PublicKey publicKey) {
 
         try {
-            byte[] destBytes = rsaByPublicKey(pro.tools.format.hex2Bytes(src), publicKey, Cipher.DECRYPT_MODE);
+            byte[] destBytes = rsaByPublicKey(ToolFormat.hex2Bytes(src), publicKey, Cipher.DECRYPT_MODE);
             if (destBytes == null) {
                 return null;
             }

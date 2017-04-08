@@ -1,4 +1,4 @@
-package pro.tools.future;
+package pro.tools.security;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;

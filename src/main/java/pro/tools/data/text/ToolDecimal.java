@@ -1,4 +1,4 @@
-package pro.tools.data;
+package pro.tools.data.text;
 
 
 import pro.tools.decimal;
@@ -23,7 +23,7 @@ public class ToolDecimal {
 
     //不四舍五入取整
     public static String getWord(Object value) {
-        if (ToolString.isEmpty(null != value ? value.toString() : ""))
+        if (ToolStr.isEmpty(null != value ? value.toString() : ""))
             return "0";
         DecimalFormat formatter = new DecimalFormat();
         formatter.setMaximumFractionDigits(0);
@@ -34,7 +34,7 @@ public class ToolDecimal {
 
     //四舍五入
     public static String getWordF(Object value) {
-        if (ToolString.isEmpty(null != value ? value.toString() : ""))
+        if (ToolStr.isEmpty(null != value ? value.toString() : ""))
             return "0";
         return String.format("%.0f", decimal.get(value.toString()));
     }

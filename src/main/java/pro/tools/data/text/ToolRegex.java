@@ -1,11 +1,11 @@
-package pro.tools.data;
+package pro.tools.data.text;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static pro.tools.future.ToolConst.*;
+import static pro.tools.constant.ToolConst.*;
 
 
 /**

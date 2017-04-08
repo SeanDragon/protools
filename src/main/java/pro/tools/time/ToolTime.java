@@ -1,7 +1,7 @@
 package pro.tools.time;//package net.seandragon.util;
 
-import pro.tools.data.ToolConvert;
-import pro.tools.future.ToolConst;
+import pro.tools.constant.ToolConst;
+import pro.tools.data.text.ToolConvert;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

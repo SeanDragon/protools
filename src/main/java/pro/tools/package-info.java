@@ -3,7 +3,7 @@
  *
  * @author SeanDragon
  */
-package pro.tools.future;
+package pro.tools;
 /*
     括号里面的是依赖的包,jdk默认
     ToolClose      关闭相关工具
@@ -17,7 +17,7 @@ package pro.tools.future;
     ToolPrimaryKey 主键生成相关工具(mojo)
     ToolRegex      正则相关工具
     ToolShell      终端运行相关工具
-    ToolString     字符串相关工具(jfinal)
+    ToolStr     字符串相关工具(jfinal)
     ToolSystem     系统相关工具
     ToolThreadPool      线程池(主要是执行)相关工具
     ToolTime       时间相关工具

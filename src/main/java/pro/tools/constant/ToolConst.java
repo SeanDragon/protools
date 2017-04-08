@@ -1,4 +1,4 @@
-package pro.tools.future;
+package pro.tools.constant;
 
 
 /**
@@ -6,12 +6,7 @@ package pro.tools.future;
  *
  * @author sd
  */
-public class ToolConst {
-
-    /**
-     * 文件分隔符
-     */
-    public static final char FILE_SEP = java.io.File.separatorChar;
+public final class ToolConst {
 
     /******************** 存储相关常量 ********************/
     /**
@@ -141,10 +136,6 @@ public class ToolConst {
      * 正则：负浮点数
      */
     public static final String REGEX_NEGATIVE_FLOAT = "^-[1-9]\\d*\\.\\d*|-0\\.\\d*[1-9]\\d*$";
-
-    private ToolConst() {
-        throw new UnsupportedOperationException("u can't instantiate me...");
-    }
 
     public enum MemoryUnit {
         BYTE,

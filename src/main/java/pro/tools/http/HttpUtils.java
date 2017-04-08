@@ -5,8 +5,8 @@ import com.ning.http.client.AsyncHttpClientConfig;
 import com.ning.http.client.ListenableFuture;
 import com.ning.http.client.Response;
 import com.ning.http.client.cookie.Cookie;
-import pro.tools.constant.SystemConstant;
-import pro.tools.data.ToolRegex;
+import pro.tools.constant.StrConst;
+import pro.tools.data.text.ToolRegex;
 import pro.tools.tools;
 
 import java.io.IOException;
@@ -75,7 +75,7 @@ public class HttpUtils {
         }
 
         //设置编码
-        requestBuilder.setBodyEncoding(SystemConstant.DEFAULT_CHARSET);
+        requestBuilder.setBodyEncoding(StrConst.DEFAULT_CHARSET);
         if (httpSend.isNeedResponseTimeout()) {
             requestBuilder.setRequestTimeout(httpSend.getResponseTimeout());
         }
@@ -87,7 +87,7 @@ public class HttpUtils {
         }
 
         //设置基本请求头
-        requestBuilder.addHeader("Content-Type", "application/x-www-form-urlencoded;charset=" + SystemConstant.DEFAULT_CHARSET);
+        requestBuilder.addHeader("Content-Type", "application/x-www-form-urlencoded;charset=" + StrConst.DEFAULT_CHARSET);
         requestBuilder.addHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36");
 
         if (headers != null) {
@@ -118,7 +118,7 @@ public class HttpUtils {
             httpReceive.setStatusText(response.getStatusText());
             if (httpSend.isNeedMsg()) {
                 String responseBody = response.getResponseBody();
-                responseBody = new String(responseBody.getBytes(), SystemConstant.DEFAULT_CHARSET);
+                responseBody = new String(responseBody.getBytes(), StrConst.DEFAULT_CHARSET);
                 httpReceive.setResponseBody(responseBody);
             }
 

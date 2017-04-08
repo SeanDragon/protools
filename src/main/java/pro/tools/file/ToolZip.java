@@ -1,6 +1,6 @@
 package pro.tools.file;
 
-import pro.tools.data.ToolString;
+import pro.tools.data.text.ToolStr;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
-import static pro.tools.future.ToolConst.KB;
+import static pro.tools.constant.ToolConst.KB;
 
 
 /**
@@ -156,13 +156,13 @@ public class ToolZip {
      */
     private static boolean zipFile(File resFile, String rootPath, ZipOutputStream zos, String comment)
             throws IOException {
-        rootPath = rootPath + (ToolString.isSpace(rootPath) ? "" : File.separator) + resFile.getName();
+        rootPath = rootPath + (ToolStr.isSpace(rootPath) ? "" : File.separator) + resFile.getName();
         if (resFile.isDirectory()) {
             File[] fileList = resFile.listFiles();
             // 如果是空文件夹那么创建它，我把'/'换为File.separator测试就不成功，eggPain
             if (fileList == null || fileList.length <= 0) {
                 ZipEntry entry = new ZipEntry(rootPath + '/');
-                if (!ToolString.isEmpty(comment)) entry.setComment(comment);
+                if (!ToolStr.isEmpty(comment)) entry.setComment(comment);
                 zos.putNextEntry(entry);
                 zos.closeEntry();
             } else {
@@ -174,7 +174,7 @@ public class ToolZip {
         } else {
             try (InputStream is = new BufferedInputStream(new FileInputStream(resFile))) {
                 ZipEntry entry = new ZipEntry(rootPath);
-                if (!ToolString.isEmpty(comment)) entry.setComment(comment);
+                if (!ToolStr.isEmpty(comment)) entry.setComment(comment);
                 zos.putNextEntry(entry);
                 byte buffer[] = new byte[KB];
                 int len;
@@ -276,7 +276,7 @@ public class ToolZip {
             while (entries.hasMoreElements()) {
                 ZipEntry entry = ((ZipEntry) entries.nextElement());
                 String entryName = entry.getName();
-                if (ToolString.isEmpty(keyword) || ToolFile.getFileName(entryName).toLowerCase().contains(keyword.toLowerCase())) {
+                if (ToolStr.isEmpty(keyword) || ToolFile.getFileName(entryName).toLowerCase().contains(keyword.toLowerCase())) {
                     String filePath = destDir + File.separator + entryName;
                     File file = new File(filePath);
                     files.add(file);

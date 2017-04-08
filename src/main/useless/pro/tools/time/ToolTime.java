@@ -14,7 +14,7 @@ import java.util.Locale;
  *
  * @author sd
  */
-public class ToolTime {
+public final class ToolTime {
 
     /**
      * <p>在工具类中经常使用到工具类的格式化描述，这个主要是一个日期的操作类，所以日志格式主要使用 SimpleDateFormat的定义格式.</p>
@@ -24,7 +24,7 @@ public class ToolTime {
      * 表示单引号。所有其他字符均不解释；只是在格式化时将它们简单复制到输出字符串，或者在分析时与输入字符串进行匹配。
      * </p>
      * 定义了以下模式字母（所有其他字符 'A' 到 'Z' 和 'a' 到 'z' 都被保留）： <br>
-     * <table border="1" cellspacing="1" cellpadding="1" summary="Chart shows pattern letters, date/time component,
+     * <table border="1" cellspacing="1" cellpadding="1" summary="Chart shows pattern letters, ToolDate/time component,
      * presentation, and examples.">
      * <tr>
      * <th align="left">字母</th>
@@ -182,6 +182,7 @@ public class ToolTime {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
 
+    //region common
     /**
      * 将时间戳转为时间字符串
      * <p>格式为yyyy-MM-dd HH:mm:ss</p>
@@ -409,7 +410,7 @@ public class ToolTime {
      *                  <p>precision = 2，返回天和小时</p>
      *                  <p>precision = 3，返回天、小时和分钟</p>
      *                  <p>precision = 4，返回天、小时、分钟和秒</p>
-     *                  <p>precision &gt;= 5，返回天、小时、分钟、秒和毫秒</p>
+     *                  <p>precision = 5，返回天、小时、分钟、秒和毫秒</p>
      * @param pattern   时间格式
      * @return 合适型两个时间差
      */
@@ -1033,6 +1034,7 @@ public class ToolTime {
     public static int getWeekOfYear(long millis) {
         return getWeekOfYear(millis2Date(millis));
     }
+    //endregion
 
     /**
      * 获取生肖

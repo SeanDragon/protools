@@ -4,7 +4,6 @@ import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pro.tools.annotation.NoExpose;
 import pro.tools.data.text.ToolStr;
 
 import java.io.*;
@@ -105,8 +104,9 @@ public class convert {
                     public boolean shouldSkipField(FieldAttributes f) {
                         // 这里作判断，决定要不要排除该字段,return true为排除
 //                    if ("finalField".equals(f.getName())) return true; //按字段名排除
-                        NoExpose noexpose = f.getAnnotation(NoExpose.class);
-                        return noexpose != null;
+//                        NoExpose noexpose = f.getAnnotation(NoExpose.class);
+//                        return noexpose != null;
+                        return false;
                     }
 
                     @Override
@@ -140,8 +140,9 @@ public class convert {
                     public boolean shouldSkipField(FieldAttributes f) {
                         // 这里作判断，决定要不要排除该字段,return true为排除
 //                    if ("finalField".equals(f.getName())) return true; //按字段名排除
-                        NoExpose noexpose = f.getAnnotation(NoExpose.class);
-                        return noexpose != null;
+//                        NoExpose noexpose = f.getAnnotation(NoExpose.class);
+//                        return noexpose != null;
+                        return false;
                     }
 
                     @Override

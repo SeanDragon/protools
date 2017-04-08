@@ -20,6 +20,6 @@ package pro.tools;
     ToolStr     字符串相关工具(jfinal)
     ToolSystem     系统相关工具
     ToolThreadPool      线程池(主要是执行)相关工具
-    ToolTime       时间相关工具
+    ToolDateTime       时间相关工具
     ToolZip        压缩相关工具
  */

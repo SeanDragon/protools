@@ -16,10 +16,10 @@ public final class HttpSend {
     private HTTP_METHOD method;             //访问方法
     private int connectTimeout;             //连接超时时间
     private boolean needConnectTimeout;     //是否需要连接超时
-    //private TimeUnit connectTimeoutUnit;    //连接超时时间单位
+    //private TimeUnit connectTimeoutUnit;  //连接超时时间单位
     private int responseTimeout;            //响应超时时间
     private TimeUnit responseTimeoutUnit;   //响应超时时间单位
-    private boolean needResponseTimeout;     //是否需要连接超时
+    private boolean needResponseTimeout;    //是否需要连接超时
 
     //初始化块
     {

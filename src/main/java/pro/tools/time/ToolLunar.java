@@ -6,7 +6,7 @@ package pro.tools.time;
  *     desc  : 阴历相关工具类
  * </pre>
  */
-public class ToolLunar {
+public final class ToolLunar {
 
     /*
      * |----4位闰月|-------------13位1为30天，0为29天|
@@ -50,11 +50,7 @@ public class ToolLunar {
             0x106a3d, 0x106c51, 0x106e47, 0x10703c, 0x10724f, 0x107444, 0x107638, 0x10784c, 0x107a3f, 0x107c53,
             0x107e48};
 
-    private ToolLunar() {
-        throw new UnsupportedOperationException("u can't instantiate me...");
-    }
-
-    private static int GetBitInt(int data, int length, int shift) {
+    private static int getBitInt(int data, int length, int shift) {
         return (data & (((1 << length) - 1) << shift)) >> shift;
     }
 
@@ -109,7 +105,7 @@ public class ToolLunar {
      */
     public static Solar LunarToSolar(Lunar lunar) {
         int days = lunar_month_days[lunar.lunarYear - lunar_month_days[0]];
-        int leap = GetBitInt(days, 4, 13);
+        int leap = getBitInt(days, 4, 13);
         int offset = 0;
         int loopend = leap;
         if (!lunar.isLeap) {
@@ -120,15 +116,15 @@ public class ToolLunar {
             }
         }
         for (int i = 0; i < loopend; i++) {
-            offset += GetBitInt(days, 1, 12 - i) == 1 ? 30 : 29;
+            offset += getBitInt(days, 1, 12 - i) == 1 ? 30 : 29;
         }
         offset += lunar.lunarDay;
 
         int solar11 = solar_1_1[lunar.lunarYear - solar_1_1[0]];
 
-        int y = GetBitInt(solar11, 12, 9);
-        int m = GetBitInt(solar11, 4, 5);
-        int d = GetBitInt(solar11, 5, 0);
+        int y = getBitInt(solar11, 12, 9);
+        int m = getBitInt(solar11, 4, 5);
+        int d = getBitInt(solar11, 5, 0);
 
         return SolarFromInt(SolarToInt(y, m, d) + offset - 1);
     }
@@ -148,13 +144,13 @@ public class ToolLunar {
             index--;
         }
         solar11 = solar_1_1[index];
-        int y = GetBitInt(solar11, 12, 9);
-        int m = GetBitInt(solar11, 4, 5);
-        int d = GetBitInt(solar11, 5, 0);
+        int y = getBitInt(solar11, 12, 9);
+        int m = getBitInt(solar11, 4, 5);
+        int d = getBitInt(solar11, 5, 0);
         long offset = SolarToInt(solar.solarYear, solar.solarMonth, solar.solarDay) - SolarToInt(y, m, d);
 
         int days = lunar_month_days[index];
-        int leap = GetBitInt(days, 4, 13);
+        int leap = getBitInt(days, 4, 13);
 
         int lunarY = index + solar_1_1[0];
         int lunarM = 1;
@@ -162,7 +158,7 @@ public class ToolLunar {
         offset += 1;
 
         for (int i = 0; i < 13; i++) {
-            int dm = GetBitInt(days, 1, 12 - i) == 1 ? 30 : 29;
+            int dm = getBitInt(days, 1, 12 - i) == 1 ? 30 : 29;
             if (offset > dm) {
                 lunarM++;
                 offset -= dm;
@@ -185,17 +181,114 @@ public class ToolLunar {
         return lunar;
     }
 
+    /**
+     * 农历
+     */
     public static class Lunar {
-        public boolean isLeap;
-        public int lunarDay;
-        public int lunarMonth;
-        public int lunarYear;
+        private boolean isLeap;
+        private int lunarYear;
+        private int lunarMonth;
+        private int lunarDay;
+
+        public Lunar() {
+        }
+
+        public Lunar(int lunarYear, int lunarMonth, int lunarDay) {
+            this.lunarDay = lunarDay;
+            this.lunarMonth = lunarMonth;
+            this.lunarYear = lunarYear;
+        }
+
+        public boolean isLeap() {
+            return isLeap;
+        }
+
+        public Lunar setLeap(boolean leap) {
+            isLeap = leap;
+            return this;
+        }
+
+        public int getLunarDay() {
+            return lunarDay;
+        }
+
+        public Lunar setLunarDay(int lunarDay) {
+            this.lunarDay = lunarDay;
+            return this;
+        }
+
+        public int getLunarMonth() {
+            return lunarMonth;
+        }
+
+        public Lunar setLunarMonth(int lunarMonth) {
+            this.lunarMonth = lunarMonth;
+            return this;
+        }
+
+        public int getLunarYear() {
+            return lunarYear;
+        }
+
+        public Lunar setLunarYear(int lunarYear) {
+            this.lunarYear = lunarYear;
+            return this;
+        }
+
+        @Override
+        public String toString() {
+            return String.format("阴历：%S年%S月%S日", lunarYear, lunarMonth, lunarDay) + (isLeap ? "（闰年）" : "");
+        }
     }
 
+    /**
+     * 公历
+     */
     public static class Solar {
-        public int solarDay;
-        public int solarMonth;
-        public int solarYear;
+        private int solarYear;
+        private int solarMonth;
+        private int solarDay;
+
+        public Solar() {
+        }
+
+        public Solar(int solarYear, int solarMonth, int solarDay) {
+            this.solarYear = solarYear;
+            this.solarMonth = solarMonth;
+            this.solarDay = solarDay;
+        }
+
+        public int getSolarYear() {
+            return solarYear;
+        }
+
+        public Solar setSolarYear(int solarYear) {
+            this.solarYear = solarYear;
+            return this;
+        }
+
+        public int getSolarMonth() {
+            return solarMonth;
+        }
+
+        public Solar setSolarMonth(int solarMonth) {
+            this.solarMonth = solarMonth;
+            return this;
+        }
+
+        public int getSolarDay() {
+            return solarDay;
+        }
+
+        public Solar setSolarDay(int solarDay) {
+            this.solarDay = solarDay;
+            return this;
+        }
+
+        @Override
+        public String toString() {
+            return String.format("公历：%S年%S月%S日", solarYear, solarMonth, solarDay);
+        }
     }
 }
 

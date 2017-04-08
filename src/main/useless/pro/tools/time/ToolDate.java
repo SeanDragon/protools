@@ -1,4 +1,4 @@
-package pro.tools;
+package pro.tools.time;
 
 
 import java.text.DateFormat;
@@ -13,7 +13,7 @@ import java.util.Date;
  * @author Steven Duan
  * @version 1.0
  */
-public final class date {
+public final class ToolDate {
 
 
     /**
@@ -50,7 +50,7 @@ public final class date {
 
     public static Date string2Date(String strDate, String pattern) {
         if (strDate == null || strDate.equals("")) {
-            throw new RuntimeException("str date null");
+            throw new RuntimeException("str ToolDate null");
         }
         if (pattern == null || pattern.equals("")) {
             pattern = format.ymd;
@@ -372,4 +372,6 @@ public final class date {
          */
         public static final String iso = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
     }
+
+
 }

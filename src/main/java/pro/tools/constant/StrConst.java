@@ -7,7 +7,7 @@ import java.io.File;
 /**
  * Created on 17/4/8 13:04 星期六.
  *
- * @author sd
+ * @author SeanDragon
  */
 public class StrConst {
     public static final String DEFAULT_CHARSET = CharsetUtil.UTF_8.displayName();

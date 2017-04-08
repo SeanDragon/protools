@@ -4,7 +4,7 @@ package pro.tools.constant;
 /**
  * 常量相关工具
  *
- * @author sd
+ * @author SeanDragon
  */
 public final class ToolConst {
 

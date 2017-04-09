@@ -34,9 +34,9 @@ public abstract class ToolBarCode {
     @SuppressWarnings({"rawtypes", "unchecked", "deprecation"})
     public static void encode(String content, int width, int height, String fileType, String savePath) {
         try {
-            content = new String(content.getBytes(StrConst.DEFAULT_CHARSET), StrConst.DEFAULT_CHARSET);// 二维码内容
+            content = new String(content.getBytes(StrConst.DEFAULT_CHARSET_NAME), StrConst.DEFAULT_CHARSET_NAME);// 二维码内容
             Hashtable hints = new Hashtable();
-            hints.put(EncodeHintType.CHARACTER_SET, StrConst.DEFAULT_CHARSET);
+            hints.put(EncodeHintType.CHARACTER_SET, StrConst.DEFAULT_CHARSET_NAME);
             BitMatrix bitMatrix = new MultiFormatWriter().encode(content, BarcodeFormat.QR_CODE, width, height, hints);
             File file = new File(savePath);
             MatrixToImageWriter.writeToFile(bitMatrix, fileType, file);
@@ -87,7 +87,7 @@ public abstract class ToolBarCode {
         Result result;
         try {
             Hashtable hints = new Hashtable();
-            hints.put(EncodeHintType.CHARACTER_SET, StrConst.DEFAULT_CHARSET);
+            hints.put(EncodeHintType.CHARACTER_SET, StrConst.DEFAULT_CHARSET_NAME);
             result = new MultiFormatReader().decode(bitmap, hints);
         } catch (ReaderException re) {
             return re.toString();
@@ -169,7 +169,7 @@ class MatrixToImageWriterEx {
     public static BitMatrix createQRCode(String content, int width, int height) {
         Hashtable<EncodeHintType, Object> hints = new Hashtable<EncodeHintType, Object>();
         // 设置字符编码
-        hints.put(EncodeHintType.CHARACTER_SET, StrConst.DEFAULT_CHARSET);
+        hints.put(EncodeHintType.CHARACTER_SET, StrConst.DEFAULT_CHARSET_NAME);
         // 指定纠错等级
         hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
         BitMatrix matrix = null;

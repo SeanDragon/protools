@@ -1,5 +1,6 @@
 package pro.tools.file;
 
+import pro.tools.constant.StrConst;
 import pro.tools.data.text.ToolConvert;
 import pro.tools.data.text.ToolStr;
 
@@ -17,7 +18,7 @@ import java.util.List;
  *
  * @author sd
  */
-public class ToolFile {
+public final class ToolFile {
 
     private ToolFile() {
         throw new UnsupportedOperationException("u can't instantiate me...");
@@ -220,8 +221,6 @@ public class ToolFile {
     private static boolean copyOrMoveDir(File srcDir, File destDir, boolean isMove) throws IOException {
         if (srcDir == null || destDir == null) return false;
         // 如果目标目录在源目录中则返回false，看不懂的话好好想想递归怎么结束
-        // srcPath : F:\\MyGithub\\AndroidUtilCode\\utilcode\\src\\test\\res
-        // destPath: F:\\MyGithub\\AndroidUtilCode\\utilcode\\src\\test\\res1
         // 为防止以上这种情况出现出现误判，须分别在后面加个路径分隔符
         String srcPath = srcDir.getPath() + File.separator;
         String destPath = destDir.getPath() + File.separator;
@@ -801,7 +800,7 @@ public class ToolFile {
 
         //如果该编码不支持，就变成默认的utf8
         if (!Charset.isSupported(charsetName)) {
-            charsetName = "utf8";
+            charsetName = StrConst.DEFAULT_CHARSET_NAME;
         }
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), charsetName))) {
             String line;

@@ -3,7 +3,7 @@ package sd;
 import org.junit.Test;
 import pro.tools.http.HttpReceive;
 import pro.tools.http.HttpSend;
-import pro.tools.http.HttpUtils;
+import pro.tools.http.ToolHttp;
 
 /**
  * http测试
@@ -19,7 +19,7 @@ public class Test_20170407 {
         //HttpSend httpSend = new HttpSend("https://apio.caiyunapp.com/v2/Dz=JqbrtH7cP8SKd/121.6544,25.1552/realtime.json", null);
         //httpSend.setConnectTimeout(50);
         //httpSend.setResponseTimeout(50);
-        HttpReceive httpReceive = HttpUtils.sendHttp(httpSend);
+        HttpReceive httpReceive = ToolHttp.sendHttp(httpSend);
         if (httpReceive.isHaveError()) {
             System.out.println(httpReceive.getErrMsg());
             return false;

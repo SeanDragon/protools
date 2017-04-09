@@ -5,11 +5,7 @@ package pro.tools.data.text;
  *
  * @author sd
  */
-public class ToolStr {
-
-    private ToolStr() {
-        throw new UnsupportedOperationException("u can't instantiate me...");
-    }
+public final class ToolStr {
 
     /**
      * 判断字符串是否为null或长度为0

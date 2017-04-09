@@ -169,6 +169,7 @@
             <artifactId>javase</artifactId>
             <version>3.3.0</version>
         </dependency>
+
     </dependencies>
 
     <!--配置阿里镜像源-->

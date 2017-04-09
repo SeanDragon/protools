@@ -20,7 +20,7 @@ import java.util.concurrent.TimeoutException;
  *
  * @author sd
  */
-public class HttpUtils {
+public class ToolHttp {
 
     /**
      * 用于请求http
@@ -75,7 +75,7 @@ public class HttpUtils {
         }
 
         //设置编码
-        requestBuilder.setBodyEncoding(StrConst.DEFAULT_CHARSET);
+        requestBuilder.setBodyEncoding(StrConst.DEFAULT_CHARSET_NAME);
         if (httpSend.isNeedResponseTimeout()) {
             requestBuilder.setRequestTimeout(httpSend.getResponseTimeout());
         }
@@ -87,7 +87,7 @@ public class HttpUtils {
         }
 
         //设置基本请求头
-        requestBuilder.addHeader("Content-Type", "application/x-www-form-urlencoded;charset=" + StrConst.DEFAULT_CHARSET);
+        requestBuilder.addHeader("Content-Type", "application/x-www-form-urlencoded;charset=" + StrConst.DEFAULT_CHARSET_NAME);
         requestBuilder.addHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36");
 
         if (headers != null) {
@@ -118,7 +118,7 @@ public class HttpUtils {
             httpReceive.setStatusText(response.getStatusText());
             if (httpSend.isNeedMsg()) {
                 String responseBody = response.getResponseBody();
-                responseBody = new String(responseBody.getBytes(), StrConst.DEFAULT_CHARSET);
+                responseBody = new String(responseBody.getBytes(), StrConst.DEFAULT_CHARSET_NAME);
                 httpReceive.setResponseBody(responseBody);
             }
 
@@ -134,8 +134,7 @@ public class HttpUtils {
         } catch (IOException e) {
             httpReceive.setErrMsg("获取返回内容失败!\n" + tools.toException(e));
         } catch (ExecutionException e) {
-            //httpReceive.setErrMsg("访问URL失败!\n" + tools.toException(e));
-            e.printStackTrace();
+            httpReceive.setErrMsg("访问URL失败!\n" + tools.toException(e));
         }
 
         if (!httpSend.isNeedErrMsg()) {

@@ -61,8 +61,8 @@ public class ToolShell {
                 e.printStackTrace();
             }
             if (isNeedResultMsg) {
-                try (BufferedReader successResult = new BufferedReader(new InputStreamReader(process.getInputStream(), StrConst.DEFAULT_CHARSET));
-                     BufferedReader errorResult = new BufferedReader(new InputStreamReader(process.getErrorStream(), StrConst.DEFAULT_CHARSET))) {
+                try (BufferedReader successResult = new BufferedReader(new InputStreamReader(process.getInputStream(), StrConst.DEFAULT_CHARSET_NAME));
+                     BufferedReader errorResult = new BufferedReader(new InputStreamReader(process.getErrorStream(), StrConst.DEFAULT_CHARSET_NAME))) {
                     successMsg = new StringBuilder();
                     errorMsg = new StringBuilder();
                     String s;

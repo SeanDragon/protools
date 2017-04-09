@@ -1,6 +1,7 @@
 package pro.tools;
 
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +29,7 @@ public class convert {
      * @param sEnc
      * @return String
      */
-    public final static String UrlEncoder(String sStr, String sEnc) {
+    public final static String urlEncoder(String sStr, String sEnc) {
         String sReturnCode = "";
         try {
             sReturnCode = URLEncoder.encode(sStr, sEnc);
@@ -45,7 +46,7 @@ public class convert {
      * @param sEnc
      * @return String
      */
-    public final static String UrlDecoder(String sStr, String sEnc) {
+    public final static String urlDecoder(String sStr, String sEnc) {
         String sReturnCode = "";
         try {
             sReturnCode = URLDecoder.decode(sStr, sEnc);
@@ -61,7 +62,7 @@ public class convert {
      * @param map
      * @return
      */
-    public final static String MapToJson(Map map) {
+    public final static String mapToJson(Map map) {
         if (map == null)
             return "{}";
         Gson gson = new Gson();
@@ -75,7 +76,7 @@ public class convert {
      * @param json
      * @return
      */
-    public final static Map JsonToMap(String json) {
+    public final static Map jsonToMap(String json) {
         if (json == null)
             return new HashMap<>();
         Gson gson = new Gson();
@@ -90,34 +91,11 @@ public class convert {
      * @param model
      * @return String
      */
-    public final static String ModelToJson(Object model) {
+    public final static String modelToJson(Object model) {
         if (model == null)
             return "{}";
         Gson gson = new Gson();
         return gson.toJson(model);
-    }
-
-    public final static String ModelToJsonWithoutNoExpose(Object obModel) {
-        Gson gson = new GsonBuilder()
-                .addSerializationExclusionStrategy(new ExclusionStrategy() {
-                    @Override
-                    public boolean shouldSkipField(FieldAttributes f) {
-                        // 这里作判断，决定要不要排除该字段,return true为排除
-//                    if ("finalField".equals(f.getName())) return true; //按字段名排除
-//                        NoExpose noexpose = f.getAnnotation(NoExpose.class);
-//                        return noexpose != null;
-                        return false;
-                    }
-
-                    @Override
-                    public boolean shouldSkipClass(Class<?> clazz) {
-                        // 直接排除某个类 ，return true为排除
-//                    return (clazz == int.class || clazz == Integer.class);
-                        return false;
-                    }
-                })
-                .create();
-        return gson.toJson(obModel);
     }
 
     /**
@@ -127,32 +105,8 @@ public class convert {
      * @param classOfT
      * @return Object
      */
-    @SuppressWarnings("unchecked")
-    public final static <T> T JsonToModel(String sJson, Class<T> classOfT) {
+    public final static <T> T jsonToModel(String sJson, Class<T> classOfT) {
         Gson gson = new Gson();
-        return gson.fromJson(sJson, classOfT);
-    }
-
-    public final static <T> T JsonToModelWithoutNoExpose(String sJson, Class<T> classOfT) {
-        Gson gson = new GsonBuilder()
-                .addSerializationExclusionStrategy(new ExclusionStrategy() {
-                    @Override
-                    public boolean shouldSkipField(FieldAttributes f) {
-                        // 这里作判断，决定要不要排除该字段,return true为排除
-//                    if ("finalField".equals(f.getName())) return true; //按字段名排除
-//                        NoExpose noexpose = f.getAnnotation(NoExpose.class);
-//                        return noexpose != null;
-                        return false;
-                    }
-
-                    @Override
-                    public boolean shouldSkipClass(Class<?> clazz) {
-                        // 直接排除某个类 ，return true为排除
-//                    return (clazz == int.class || clazz == Integer.class);
-                        return false;
-                    }
-                })
-                .create();
         return gson.fromJson(sJson, classOfT);
     }
 
@@ -163,16 +117,16 @@ public class convert {
      * @return List<Object>
      */
     @SuppressWarnings("unchecked")
-    public final static <T> List<T> JsonToModelList(String sJson, Class<T> classOfT) {
+    public final static <T> List<T> jsonToModelList(String sJson, Class<T> classOfT) {
         if (ToolStr.isBlank(sJson) || sJson.equals("[]")) {
             return null;
         }
-        List<String> lstsfs = jsonToArrayList(sJson);
+        List<String> jsonToArrayList = jsonToArrayList(sJson);
         List<T> lst = new ArrayList<T>();
 
-        for (String str : lstsfs) {
+        for (String str : jsonToArrayList) {
             // 使用JSON作为传输
-            T o = JsonToModel(str, classOfT);
+            T o = jsonToModel(str, classOfT);
             lst.add(o);
         }
         return lst;

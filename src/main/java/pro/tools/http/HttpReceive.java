@@ -1,5 +1,6 @@
 package pro.tools.http;
 
+import com.google.common.base.MoreObjects;
 import com.ning.http.client.Response;
 import com.ning.http.client.cookie.Cookie;
 import com.sun.istack.internal.Nullable;
@@ -57,6 +58,7 @@ public final class HttpReceive {
         return this;
     }
 
+    @Nullable
     public String getResponseBody() {
         return responseBody;
     }
@@ -83,5 +85,18 @@ public final class HttpReceive {
     public HttpReceive setResponse(Response response) {
         this.response = response;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("haveError", haveError)
+                .add("errMsg", errMsg)
+                .add("statusCode", statusCode)
+                .add("statusText", statusText)
+                .add("responseBody", responseBody)
+                .add("responseCookieList", responseCookieList)
+                .add("response", response)
+                .toString();
     }
 }

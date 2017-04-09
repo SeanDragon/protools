@@ -48,7 +48,7 @@ public class Test_20170406 {
 
     public static void main(String[] a) throws IOException, ExecutionException, InterruptedException {
         AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
-        Future<Response> f = asyncHttpClient.preparePost("HttpUtils://m.tuhaolicai.cc/public/index").execute();
+        Future<Response> f = asyncHttpClient.preparePost("ToolHttp://m.tuhaolicai.cc/public/index").execute();
         Response r = f.get();
         int statusCode = r.getStatusCode();
         String statusText = r.getStatusText();

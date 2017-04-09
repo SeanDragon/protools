@@ -19,7 +19,7 @@ import static pro.tools.constant.ToolConst.KB;
  *
  * @author sd
  */
-public class ToolZip {
+public final class ToolZip {
 
     private ToolZip() {
         throw new UnsupportedOperationException("u can't instantiate me...");

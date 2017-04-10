@@ -5,7 +5,7 @@ package pro.tools.system;
  *
  * @author SeanDragon
  */
-public class ToolSystem {
+public final class ToolSystem {
 
     public static boolean isWindows() {
         return System.getProperties().get("os.name").toString().toLowerCase().contains("windows");

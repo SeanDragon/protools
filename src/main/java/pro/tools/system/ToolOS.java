@@ -15,7 +15,7 @@ import java.util.List;
  * @author SeanDragon
  */
 @SuppressWarnings("restriction")
-public abstract class ToolOS {
+public final class ToolOS {
 
     public static final String java_version = "java.version"; // Java的运行环境版本
     public static final String java_vendo = "java.vendor"; // Java的运行环境供应商

@@ -8,7 +8,7 @@ import java.io.IOException;
  *
  * @author SeanDragon
  */
-public class ToolMaven {
+public final class ToolMaven {
     public static boolean install(String groupId, String artifactId, String version, String fileName) throws IOException {
         String mvnInstallStr = "mvn install:install-file -DgroupId=" + groupId + " -DartifactId=" + artifactId + " " +
                 "-Dversion=" + version + " -Dfile=" + fileName + " -Dpackaging=jar -DgeneratePom=true";

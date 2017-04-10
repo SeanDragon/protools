@@ -11,14 +11,18 @@ import java.io.*;
 import java.lang.reflect.Type;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 import static pro.tools.tools.toException;
 
 /**
  * 辅助类
  */
-public class convert {
+public final class convert {
 
     private static final Logger LOG = LoggerFactory.getLogger(convert.class);
 

@@ -20,7 +20,7 @@ import java.util.concurrent.TimeoutException;
  *
  * @author SeanDragon
  */
-public class ToolHttp {
+public final class ToolHttp {
 
     /**
      * 用于请求http

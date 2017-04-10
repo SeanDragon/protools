@@ -9,7 +9,7 @@ import java.util.concurrent.*;
  *
  * @author SeanDragon
  */
-public class ToolThreadPool {
+public final class ToolThreadPool {
 
     private ExecutorService exec;
     private ScheduledExecutorService scheduleExec;

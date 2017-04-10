@@ -9,7 +9,7 @@ import pro.tools.system.ToolSystem;
  *
  * @author SeanDragon
  */
-public class SystemConst {
+public final class SystemConst {
     /**
      * 是否为Windows系统
      */

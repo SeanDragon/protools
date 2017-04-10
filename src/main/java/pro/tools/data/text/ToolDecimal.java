@@ -12,7 +12,7 @@ import java.text.DecimalFormat;
  *
  * @author SeanDragon
  */
-public class ToolDecimal {
+public final class ToolDecimal {
 
     public static String formatNumber_string(Double value, int scale) {
         return new BigDecimal(value).setScale(2, BigDecimal.ROUND_HALF_UP).toString();

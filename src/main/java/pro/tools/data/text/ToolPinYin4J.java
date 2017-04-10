@@ -13,7 +13,7 @@ import pro.tools.constant.StrConst;
  *
  * @author SeanDragon
  */
-public class ToolPinYin4J {
+public final class ToolPinYin4J {
 
 
     /**

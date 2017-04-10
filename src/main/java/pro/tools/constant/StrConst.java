@@ -9,7 +9,7 @@ import java.nio.charset.Charset;
  *
  * @author SeanDragon
  */
-public class StrConst {
+public final class StrConst {
     /**
      * 默认编码
      */

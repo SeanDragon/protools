@@ -14,7 +14,7 @@ import java.security.spec.KeySpec;
  *
  * @author SeanDragon
  */
-public class ToolPBE2 {
+public final class ToolPBE2 {
 
     private static final String PBKDF2_ALGORITHM = "PBKDF2WithHmacSHA1";
 

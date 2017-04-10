@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter;
  *
  * @author SeanDragon
  */
-public class DatePlus {
+public final class DatePlus {
     /**
      * 日期对象
      */

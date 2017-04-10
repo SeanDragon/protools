@@ -6,9 +6,9 @@ import java.io.IOException;
 /**
  * 关闭相关工具
  *
- * @author sd
+ * @author SeanDragon
  */
-public class ToolClose {
+public final class ToolClose {
 
     private ToolClose() {
         throw new UnsupportedOperationException("u can't instantiate me...");

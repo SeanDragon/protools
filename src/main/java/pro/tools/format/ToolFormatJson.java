@@ -1,15 +1,11 @@
 package pro.tools.format;
 
-public abstract class ToolFormatJson {
-
-
-    public static void main(String[] args) {
-        String jsonStr = "{\"id\":\"1\",\"name\":\"a1\",\"obj\":{\"id\":11,\"name\":\"a11\",\"array\":[{\"id\":111,\"name\":\"a111\"},{\"id\":112,\"name\":\"a112\"}]}}";
-        String formatStr = ToolFormatJson.format(jsonStr);
-        // fotmatStr = fotmatStr.replaceAll("\n", "<br/>");
-        // fotmatStr = fotmatStr.replaceAll("\t", "    ");
-        System.out.println(formatStr);
-    }
+/**
+ * 仅有两个方法,使json更加直观化
+ *
+ * @author SeanDragon
+ */
+public final class ToolFormatJson {
 
     /**
      * 得到格式化json数据 退格用\t 换行用\r
@@ -45,7 +41,6 @@ public abstract class ToolFormatJson {
         }
 
         return jsonForMatStr.toString();
-
     }
 
     private static String getLevelStr(int level) {

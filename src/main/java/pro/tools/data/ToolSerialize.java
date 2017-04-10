@@ -6,13 +6,16 @@ import pro.tools.data.text.ToolRandoms;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 /**
  * 序列化操作
+ *
+ * @author SeanDragon
  */
-public abstract class ToolSerialize {
+public final class ToolSerialize {
 
     private static final Logger log = LoggerFactory.getLogger(ToolRandoms.class);
 
@@ -22,21 +25,14 @@ public abstract class ToolSerialize {
      * @param object
      * @return
      */
-    public static byte[] serialize(Object object) {
-        ObjectOutputStream oos = null;
-        ByteArrayOutputStream baos = null;
-        try {
+    public static byte[] serialize(Object object) throws IOException {
+        try (
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);) {
             // 序列化
-            baos = new ByteArrayOutputStream();
-            oos = new ObjectOutputStream(baos);
-            oos.writeObject(object);
-            byte[] bytes = baos.toByteArray();
-            return bytes;
-        } catch (Exception e) {
-            log.error("序列化异常：" + e.getMessage());
-            e.printStackTrace();
+            objectOutputStream.writeObject(object);
+            return byteArrayOutputStream.toByteArray();
         }
-        return null;
     }
 
     /**
@@ -45,18 +41,13 @@ public abstract class ToolSerialize {
      * @param bytes
      * @return
      */
-    public static Object unserialize(byte[] bytes) {
-        ByteArrayInputStream bais = null;
-        try {
-            // 反序列化
-            bais = new ByteArrayInputStream(bytes);
-            ObjectInputStream ois = new ObjectInputStream(bais);
-            return ois.readObject();
-        } catch (Exception e) {
-            log.error("反序列化异常：" + e.getMessage());
-            e.printStackTrace();
+    public static Object unserialize(byte[] bytes) throws IOException, ClassNotFoundException {
+        try (
+                ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
+                ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);) {
+            // 序列化
+            return objectInputStream.readObject();
         }
-        return null;
     }
 
 }

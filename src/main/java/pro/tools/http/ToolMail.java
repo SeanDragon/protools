@@ -7,7 +7,11 @@ import pro.tools.data.text.ToolStr;
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
 import javax.mail.*;
-import javax.mail.internet.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import javax.mail.internet.MimeUtility;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
@@ -22,8 +26,10 @@ import java.util.Properties;
  * <p>
  * 1. main方法加入System.setProperty("java.net.preferIPv4Stack", "true");
  * 2. tomcat服务器加上启动参数 -Djava.net.preferIPv4Stack=true
+ *
+ * @author SeanDragon
  */
-public class ToolMail {
+public final class ToolMail {
 
     public static final String sendType_text = "text";
     public static final String sendType_html = "html";

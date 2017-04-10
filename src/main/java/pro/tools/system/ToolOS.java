@@ -10,6 +10,9 @@ import java.util.List;
 
 /**
  * 系统环境相关
+ * 主要是系统属性信息的key
+ *
+ * @author SeanDragon
  */
 @SuppressWarnings("restriction")
 public abstract class ToolOS {
@@ -42,14 +45,14 @@ public abstract class ToolOS {
     public static final String user_home = "user.home"; // 用户的主目录
     public static final String user_dir = "user.dir"; //  用户的当前工作目录
     // 系统bean
-    private static final OperatingSystemMXBean osmxb;
+    private static final OperatingSystemMXBean systemMxBean;
     private static final List<GarbageCollectorMXBean> list;
 
     // K转换M
     private static final long K2M = 1024L * 1024L;
 
     static {
-        osmxb = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
+        systemMxBean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
         list = ManagementFactory.getGarbageCollectorMXBeans();
     }
 
@@ -68,16 +71,8 @@ public abstract class ToolOS {
      *
      * @return
      */
-    public static String getOsLocalHostIp() {
-        InetAddress addr;
-        String ip;
-        try {
-            addr = InetAddress.getLocalHost();
-            ip = addr.getHostAddress();// 获得本机IP
-        } catch (UnknownHostException e) {
-            ip = "未知";
-        }
-        return ip;
+    public static String getOsLocalHostIp() throws UnknownHostException {
+        return getInetAddress().getHostAddress();// 获得本机IP
     }
 
     /**
@@ -85,16 +80,14 @@ public abstract class ToolOS {
      *
      * @return
      */
-    public static String getOsLocalHostName() {
-        InetAddress addr;
-        String name = null;
-        try {
-            addr = InetAddress.getLocalHost();
-            name = addr.getHostName();// 获得本机名称
-        } catch (UnknownHostException e) {
-            name = "未知";
-        }
-        return name;
+    public static String getOsLocalHostName() throws UnknownHostException {
+        return getInetAddress().getHostName();// 获得本机名称
+    }
+
+    public static InetAddress getInetAddress() throws UnknownHostException {
+        InetAddress inetAddress;
+        inetAddress = InetAddress.getLocalHost();
+        return inetAddress;
     }
 
     /**
@@ -119,7 +112,7 @@ public abstract class ToolOS {
      * @return
      */
     public static String getOsName() {
-        return osmxb.getName();// System.getProperty("os.name");
+        return systemMxBean.getName();// System.getProperty("os.name");
     }
 
     /**
@@ -128,7 +121,7 @@ public abstract class ToolOS {
      * @return
      */
     public static String getOsArch() {
-        return osmxb.getArch();// System.getProperty("os.arch");
+        return systemMxBean.getArch();// System.getProperty("os.arch");
     }
 
     /**
@@ -137,7 +130,7 @@ public abstract class ToolOS {
      * @return
      */
     public static int getOsCpuNumber() {
-        return osmxb.getAvailableProcessors();// Runtime.getRuntime().availableProcessors();// 获取当前电脑CPU数量
+        return systemMxBean.getAvailableProcessors();// Runtime.getRuntime().availableProcessors();// 获取当前电脑CPU数量
     }
 
     /**
@@ -146,7 +139,7 @@ public abstract class ToolOS {
      * @return
      */
     public static double getOscpuRatio() {
-        return osmxb.getSystemCpuLoad();
+        return systemMxBean.getSystemCpuLoad();
     }
 
     /**
@@ -155,7 +148,7 @@ public abstract class ToolOS {
      * @return
      */
     public static long getOsPhysicalMemory() {
-        long totalMemorySize = osmxb.getTotalPhysicalMemorySize() / K2M; // M
+        long totalMemorySize = systemMxBean.getTotalPhysicalMemorySize() / K2M; // M
         return totalMemorySize;
     }
 
@@ -165,8 +158,7 @@ public abstract class ToolOS {
      * @return
      */
     public static long getOsPhysicalFreeMemory() {
-        long freePhysicalMemorySize = osmxb.getFreePhysicalMemorySize() / K2M; // M
-        return freePhysicalMemorySize;
+        return systemMxBean.getFreePhysicalMemorySize() / K2M;
     }
 
     /**
@@ -219,10 +211,6 @@ public abstract class ToolOS {
         Thread[] threads = new Thread[activeCount];
         Thread.enumerate(threads);
         return java.util.Arrays.asList(threads);
-    }
-
-    public static void main(String[] args) {
-        System.out.println(getOsLocalHostIp());
     }
 
 }

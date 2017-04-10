@@ -6,14 +6,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-public final class HttpSend {
+public final class ToolHttpSend {
     private String url;                     //访问的url
     private Map<String, Object> param;      //参数
     private boolean needMsg;                //是否需要返回结果
     private boolean needErrMsg;             //是否需要返回错误信息
     private List<Cookie> cookieList;        //cookie列表
     private Map<String, Object> headers;    //header列表
-    private HTTP_METHOD method;             //访问方法
+    private Tool_HTTP_METHOD method;             //访问方法
     private int connectTimeout;             //连接超时时间
     private boolean needConnectTimeout;     //是否需要连接超时
     //private TimeUnit connectTimeoutUnit;  //连接超时时间单位
@@ -25,7 +25,7 @@ public final class HttpSend {
     {
         needMsg = true;
         needErrMsg = true;
-        method = HTTP_METHOD.GET;
+        method = Tool_HTTP_METHOD.GET;
         connectTimeout = 100;
         //connectTimeoutUnit = TimeUnit.SECONDS;
         responseTimeout = 100;
@@ -34,12 +34,12 @@ public final class HttpSend {
         needResponseTimeout = false;
     }
 
-    public HttpSend(String url, Map<String, Object> param) {
+    public ToolHttpSend(String url, Map<String, Object> param) {
         this.url = url;
         this.param = param;
     }
 
-    public HttpSend(String url, Map<String, Object> param, HTTP_METHOD method) {
+    public ToolHttpSend(String url, Map<String, Object> param, Tool_HTTP_METHOD method) {
         this.url = url;
         this.param = param;
         this.method = method;
@@ -49,7 +49,7 @@ public final class HttpSend {
         return url;
     }
 
-    public HttpSend setUrl(String url) {
+    public ToolHttpSend setUrl(String url) {
         this.url = url;
         return this;
     }
@@ -58,7 +58,7 @@ public final class HttpSend {
         return param;
     }
 
-    public HttpSend setParam(Map<String, Object> param) {
+    public ToolHttpSend setParam(Map<String, Object> param) {
         this.param = param;
         return this;
     }
@@ -67,7 +67,7 @@ public final class HttpSend {
         return needMsg;
     }
 
-    public HttpSend setNeedMsg(boolean needMsg) {
+    public ToolHttpSend setNeedMsg(boolean needMsg) {
         this.needMsg = needMsg;
         return this;
     }
@@ -76,7 +76,7 @@ public final class HttpSend {
         return needErrMsg;
     }
 
-    public HttpSend setNeedErrMsg(boolean needErrMsg) {
+    public ToolHttpSend setNeedErrMsg(boolean needErrMsg) {
         this.needErrMsg = needErrMsg;
         return this;
     }
@@ -85,7 +85,7 @@ public final class HttpSend {
         return cookieList;
     }
 
-    public HttpSend setCookieList(List<Cookie> cookieList) {
+    public ToolHttpSend setCookieList(List<Cookie> cookieList) {
         this.cookieList = cookieList;
         return this;
     }
@@ -94,16 +94,16 @@ public final class HttpSend {
         return headers;
     }
 
-    public HttpSend setHeaders(Map<String, Object> headers) {
+    public ToolHttpSend setHeaders(Map<String, Object> headers) {
         this.headers = headers;
         return this;
     }
 
-    public HTTP_METHOD getMethod() {
+    public Tool_HTTP_METHOD getMethod() {
         return method;
     }
 
-    public HttpSend setMethod(HTTP_METHOD method) {
+    public ToolHttpSend setMethod(Tool_HTTP_METHOD method) {
         this.method = method;
         return this;
     }
@@ -112,7 +112,7 @@ public final class HttpSend {
         return connectTimeout;
     }
 
-    public HttpSend setConnectTimeout(int connectTimeout) {
+    public ToolHttpSend setConnectTimeout(int connectTimeout) {
         this.connectTimeout = connectTimeout;
         return this;
     }
@@ -121,7 +121,7 @@ public final class HttpSend {
     //    return connectTimeoutUnit;
     //}
 
-    //public HttpSend setConnectTimeoutUnit(TimeUnit connectTimeoutUnit) {
+    //public ToolHttpSend setConnectTimeoutUnit(TimeUnit connectTimeoutUnit) {
     //    this.connectTimeoutUnit = connectTimeoutUnit;
     //    return this;
     //}
@@ -130,7 +130,7 @@ public final class HttpSend {
         return responseTimeout;
     }
 
-    public HttpSend setResponseTimeout(int responseTimeout) {
+    public ToolHttpSend setResponseTimeout(int responseTimeout) {
         this.responseTimeout = responseTimeout;
         return this;
     }
@@ -139,7 +139,7 @@ public final class HttpSend {
         return responseTimeoutUnit;
     }
 
-    public HttpSend setResponseTimeoutUnit(TimeUnit responseTimeoutUnit) {
+    public ToolHttpSend setResponseTimeoutUnit(TimeUnit responseTimeoutUnit) {
         this.responseTimeoutUnit = responseTimeoutUnit;
         return this;
     }
@@ -148,7 +148,7 @@ public final class HttpSend {
         return needConnectTimeout;
     }
 
-    public HttpSend setNeedConnectTimeout(boolean needConnectTimeout) {
+    public ToolHttpSend setNeedConnectTimeout(boolean needConnectTimeout) {
         this.needConnectTimeout = needConnectTimeout;
         return this;
     }
@@ -157,7 +157,7 @@ public final class HttpSend {
         return needResponseTimeout;
     }
 
-    public HttpSend setNeedResponseTimeout(boolean needResponseTimeout) {
+    public ToolHttpSend setNeedResponseTimeout(boolean needResponseTimeout) {
         this.needResponseTimeout = needResponseTimeout;
         return this;
     }

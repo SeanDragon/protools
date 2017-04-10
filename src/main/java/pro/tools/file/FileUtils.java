@@ -10,13 +10,15 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
-import static pro.tools.file.FileValidUtils.*;
+import static pro.tools.file.FileValidUtils.isFile;
+import static pro.tools.file.FileValidUtils.isFileExists;
+import static pro.tools.file.FileValidUtils.readable;
 import static pro.tools.file.ToolFile.writeFileFromIS;
 
 /**
  * Created on 17/4/9 12:01 星期日.
  *
- * @author sd
+ * @author SeanDragon
  */
 public final class FileUtils {
 

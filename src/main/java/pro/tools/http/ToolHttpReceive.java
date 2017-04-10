@@ -13,7 +13,7 @@ import java.util.List;
  * @author SeanDragon
  *         Create By 2017-04-07 9:06
  */
-public final class HttpReceive {
+public final class ToolHttpReceive {
     private boolean haveError;
     private String errMsg;
     private int statusCode;
@@ -26,7 +26,7 @@ public final class HttpReceive {
         return haveError;
     }
 
-    public HttpReceive setHaveError(boolean haveError) {
+    public ToolHttpReceive setHaveError(boolean haveError) {
         this.haveError = haveError;
         return this;
     }
@@ -35,7 +35,7 @@ public final class HttpReceive {
         return errMsg;
     }
 
-    public HttpReceive setErrMsg(String errMsg) {
+    public ToolHttpReceive setErrMsg(String errMsg) {
         this.errMsg = errMsg;
         return this;
     }
@@ -44,7 +44,7 @@ public final class HttpReceive {
         return statusCode;
     }
 
-    public HttpReceive setStatusCode(int statusCode) {
+    public ToolHttpReceive setStatusCode(int statusCode) {
         this.statusCode = statusCode;
         return this;
     }
@@ -53,7 +53,7 @@ public final class HttpReceive {
         return statusText;
     }
 
-    public HttpReceive setStatusText(String statusText) {
+    public ToolHttpReceive setStatusText(String statusText) {
         this.statusText = statusText;
         return this;
     }
@@ -63,7 +63,7 @@ public final class HttpReceive {
         return responseBody;
     }
 
-    public HttpReceive setResponseBody(String responseBody) {
+    public ToolHttpReceive setResponseBody(String responseBody) {
         this.responseBody = responseBody;
         return this;
     }
@@ -72,7 +72,7 @@ public final class HttpReceive {
         return responseCookieList;
     }
 
-    public HttpReceive setResponseCookieList(List<Cookie> responseCookieList) {
+    public ToolHttpReceive setResponseCookieList(List<Cookie> responseCookieList) {
         this.responseCookieList = responseCookieList;
         return this;
     }
@@ -82,7 +82,7 @@ public final class HttpReceive {
         return response;
     }
 
-    public HttpReceive setResponse(Response response) {
+    public ToolHttpReceive setResponse(Response response) {
         this.response = response;
         return this;
     }

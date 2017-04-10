@@ -12,7 +12,7 @@ import java.util.Locale;
 /**
  * 时间相关工具
  *
- * @author sd
+ * @author SeanDragon
  */
 public final class ToolTime {
 

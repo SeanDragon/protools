@@ -2,18 +2,16 @@ package sd.time;
 
 import org.junit.Test;
 import pro.tools.time.DatePlus;
-import pro.tools.time.DatePro;
 import pro.tools.time.ToolLunar;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 /**
  * Created on 17/4/8 18:48 星期六.
  *
- * @author sd
+ * @author SeanDragon
  */
 public class Test_LocalDate {
     //
@@ -60,20 +58,20 @@ public class Test_LocalDate {
 
     @Test
     public void test4() {
-        long l = System.currentTimeMillis();
-        //DatePlus datePlus = new DatePlus();
-        System.out.println(new DatePlus());
-        //System.out.println(datePlus.toDate());
-        System.out.println(System.currentTimeMillis() - l);
-
-        l = System.currentTimeMillis();
-        //System.out.println(new Date(new Date(System.currentTimeMillis()).getTime()));
-        System.out.println(new Date());
-        System.out.println(System.currentTimeMillis() - l);
-
-        l = System.currentTimeMillis();
-        System.out.println(new DatePro().getDate());
-        System.out.println(System.currentTimeMillis() - l);
+        //long l = System.currentTimeMillis();
+        ////DatePlus datePlus = new DatePlus();
+        //System.out.println(new DatePlus());
+        ////System.out.println(datePlus.toDate());
+        //System.out.println(System.currentTimeMillis() - l);
+        //
+        //l = System.currentTimeMillis();
+        ////System.out.println(new Date(new Date(System.currentTimeMillis()).getTime()));
+        //System.out.println(new Date());
+        //System.out.println(System.currentTimeMillis() - l);
+        //
+        //l = System.currentTimeMillis();
+        //System.out.println(new DatePro().getDate());
+        //System.out.println(System.currentTimeMillis() - l);
     }
 
     @Test

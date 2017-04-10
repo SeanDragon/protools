@@ -3,6 +3,9 @@ package pro.tools.constant;
 
 /**
  * 常量相关工具
+ * 包含
+ * 数据单位的常量
+ * 常见的正则表达式
  *
  * @author SeanDragon
  */
@@ -39,6 +42,8 @@ public final class ToolConst {
      * 天与毫秒的倍数
      */
     public static final int DAY = 86400000;
+
+    public static final String REGEX_WORD_OR_NUMBER = "^[A-Za-z0-9]+$";
     /**
      * 正则：手机号（简单）
      */
@@ -81,7 +86,7 @@ public final class ToolConst {
     /**
      * 正则：用户名，取值范围为a-z,A-Z,0-9,"_",汉字，不能以"_"结尾,用户名必须是6-20位
      */
-    public static final String REGEX_USERNAME = "^[\\w\\u4e00-\\u9fa5]{6,20}(?<!_)$";
+    public static final String REGEX_USERNAME = "^[A-Za-z\\u4e00-\\u9fa5]{4,30}(?<!_)$";
     /**
      * 正则：yyyy-MM-dd格式的日期校验，已考虑平闰年
      */

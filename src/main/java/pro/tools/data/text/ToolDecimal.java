@@ -13,6 +13,7 @@ import java.text.DecimalFormat;
  * @author SeanDragon
  */
 public class ToolDecimal {
+
     public static String formatNumber_string(Double value, int scale) {
         return new BigDecimal(value).setScale(2, BigDecimal.ROUND_HALF_UP).toString();
     }
@@ -36,6 +37,6 @@ public class ToolDecimal {
     public static String getWordF(Object value) {
         if (ToolStr.isEmpty(null != value ? value.toString() : ""))
             return "0";
-        return String.format("%.0f", decimal.get(value.toString()));
+        return String.format("%.0f", decimal.get(value != null ? value.toString() : null));
     }
 }

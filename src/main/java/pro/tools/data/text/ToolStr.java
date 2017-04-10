@@ -3,7 +3,7 @@ package pro.tools.data.text;
 /**
  * 字符串相关工具
  *
- * @author sd
+ * @author SeanDragon
  */
 public final class ToolStr {
 

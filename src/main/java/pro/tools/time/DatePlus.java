@@ -1,13 +1,19 @@
 package pro.tools.time;
 
-import java.time.*;
+import java.time.DayOfWeek;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.Month;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 
 /**
  * Created on 17/4/8 19:27 星期六.
  * 替代时间类的类
  *
- * @author sd
+ * @author SeanDragon
  */
 public class DatePlus {
     /**
@@ -44,7 +50,6 @@ public class DatePlus {
         java.util.Date date = new java.util.Date(time);
         this.localDateTime = ToolDateTime.date2LocalDateTime(date);
         this.localDateTime = ToolDateTime.date2LocalDateTime(date);
-
     }
 
     public DatePlus(java.util.Date date) {

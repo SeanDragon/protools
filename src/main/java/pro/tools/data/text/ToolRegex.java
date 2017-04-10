@@ -11,17 +11,71 @@ import static pro.tools.constant.ToolConst.*;
 /**
  * 正则相关工具
  *
- * @author sd
+ * @author SeanDragon
  */
-public class ToolRegex {
+public final class ToolRegex {
 
     private ToolRegex() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
 
     /**
-     * If u want more please visit http://toutiao.com/i6231678548520731137/
+     * 判断是否为整数(包括负数)
+     *
+     * @param input 要判断的数字
+     * @return 是返回true, 否则返回false
      */
+    public static boolean isInteger(CharSequence input) {
+        return NumberBo(0, input);
+    }
+
+    /**
+     * 判断是否为小数(包括整数,包括负数)
+     *
+     * @param input 要判断的数字
+     * @return 是返回true, 否则返回false
+     */
+    public static boolean isDecimal(CharSequence input) {
+        return NumberBo(1, input);
+    }
+
+
+    /**
+     * 判断是否为数字
+     *
+     * @param type 判断类型, 整数为0, 小数为1
+     * @param str  要判断的数字
+     * @return 是返回true, 否则返回false
+     */
+    private static boolean NumberBo(int type, CharSequence str) {
+        if (ToolStr.isBlank(str.toString()))
+            return false;
+        int points = 0;
+        int chr;
+        for (int i = str.length(); --i >= 0; ) {
+            chr = str.charAt(i);
+            if (chr < 48 || chr > 57) { // 判断数字
+                if (i == 0 && chr == 45) // 判断 - 号
+                    return true;
+                if (i >= 0 && chr == 46 && type == 1) { // 判断 . 号
+                    if (++points <= 1)
+                        continue;
+                }
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 判断是否为数字或英文字符
+     *
+     * @param input 需要判断的字符串，不能含有标点或其它特殊字符
+     * @return 若为数字或英文字符返回true 否则返回false
+     */
+    public static boolean isWordOrNumber(CharSequence input) {
+        return isMatch(REGEX_WORD_OR_NUMBER, input);
+    }
 
     /**
      * 验证手机号（简单）

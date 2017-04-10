@@ -10,13 +10,20 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * 图像压缩工具
+ *
+ * @author SeanDragon
  */
 @SuppressWarnings("restriction")
-public abstract class ToolImageResize {
+public final class ToolImageResize {
 
     public static final MediaTracker tracker = new MediaTracker(new Component() {
         private static final long serialVersionUID = 1234162663955668507L;
@@ -27,22 +34,18 @@ public abstract class ToolImageResize {
      * @param newPath 压缩后的图像
      * @param width   图像宽
      * @param format  图片格式 jpg, jpeg, png, gif(非动画)
-     * @throws IOException
      */
-    public static void resize(String oldPath, String newPath, int width, String format) {
+    public static void resize(String oldPath, String newPath, int width, String format) throws IOException {
         File originalFile = new File(oldPath);
         File resizedFile = new File(newPath);
         if (format != null && "gif".equals(format.toLowerCase())) {
             resize(originalFile, resizedFile, width, 1);
             return;
         }
-        FileInputStream fis = null;
-        ByteArrayOutputStream byteStream = null;
-        byte[] in = null;
-        try {
-            fis = new FileInputStream(originalFile);
-            byteStream = new ByteArrayOutputStream();
-            int readLength = -1;
+        byte[] in;
+        try (FileInputStream fis = new FileInputStream(originalFile);
+             ByteArrayOutputStream byteStream = new ByteArrayOutputStream();) {
+            int readLength;
             int bufferSize = 1024;
             byte bytes[] = new byte[bufferSize];
             while ((readLength = fis.read(bytes, 0, bufferSize)) != -1) {
@@ -73,19 +76,6 @@ public abstract class ToolImageResize {
             Image outputImage = inputImage.getScaledInstance(width, height, Image.SCALE_DEFAULT);
             checkImage(outputImage);
             encode(new FileOutputStream(resizedFile), outputImage, format);
-        } catch (Exception e) {
-            throw new RuntimeException("resize异常");
-        } finally {
-            try {
-                fis.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                byteStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
@@ -144,56 +134,47 @@ public abstract class ToolImageResize {
      * @param quality      缩放比例 (等比例)
      * @throws IOException
      */
-    private static void resize(File originalFile, File resizedFile, int newWidth, float quality) {
+    private static void resize(File originalFile, File resizedFile, int newWidth, float quality) throws IOException {
         if (quality < 0 || quality > 1) {
             throw new IllegalArgumentException("Quality has to be between 0 and 1");
         }
-        FileOutputStream out = null;
-        try {
-            ImageIcon ii = new ImageIcon(originalFile.getCanonicalPath());
+        ImageIcon ii = new ImageIcon(originalFile.getCanonicalPath());
 
-            Image i = ii.getImage();
-            Image resizedImage = null;
-            int iWidth = i.getWidth(null);
-            int iHeight = i.getHeight(null);
-            if (iWidth > iHeight) {
-                resizedImage = i.getScaledInstance(newWidth, (newWidth * iHeight) / iWidth, Image.SCALE_SMOOTH);
-            } else {
-                resizedImage = i.getScaledInstance((newWidth * iWidth) / iHeight, newWidth, Image.SCALE_SMOOTH);
-            }
-            // This code ensures that all the pixels in the image are loaded.
-            Image temp = new ImageIcon(resizedImage).getImage();
-            // Create the buffered image.
-            BufferedImage bufferedImage = new BufferedImage(temp.getWidth(null), temp.getHeight(null), BufferedImage.TYPE_INT_RGB);
-            // Copy image to buffered image.
-            Graphics g = bufferedImage.createGraphics();
-            // Clear background and paint the image.
-            g.setColor(Color.white);
-            g.fillRect(0, 0, temp.getWidth(null), temp.getHeight(null));
-            g.drawImage(temp, 0, 0, null);
-            g.dispose();
-            // Soften.
-            float softenFactor = 0.05f;
-            float[] softenArray = {0, softenFactor, 0, softenFactor, 1 - (softenFactor * 4), softenFactor, 0, softenFactor, 0};
-            Kernel kernel = new Kernel(3, 3, softenArray);
-            ConvolveOp cOp = new ConvolveOp(kernel, ConvolveOp.EDGE_NO_OP, null);
-            bufferedImage = cOp.filter(bufferedImage, null);
-            // Write the jpeg to a file.
-            out = new FileOutputStream(resizedFile);
+        Image i = ii.getImage();
+        Image resizedImage = null;
+        int iWidth = i.getWidth(null);
+        int iHeight = i.getHeight(null);
+        if (iWidth > iHeight) {
+            resizedImage = i.getScaledInstance(newWidth, (newWidth * iHeight) / iWidth, Image.SCALE_SMOOTH);
+        } else {
+            resizedImage = i.getScaledInstance((newWidth * iWidth) / iHeight, newWidth, Image.SCALE_SMOOTH);
+        }
+        // This code ensures that all the pixels in the image are loaded.
+        Image temp = new ImageIcon(resizedImage).getImage();
+        // Create the buffered image.
+        BufferedImage bufferedImage = new BufferedImage(temp.getWidth(null), temp.getHeight(null), BufferedImage.TYPE_INT_RGB);
+        // Copy image to buffered image.
+        Graphics g = bufferedImage.createGraphics();
+        // Clear background and paint the image.
+        g.setColor(Color.white);
+        g.fillRect(0, 0, temp.getWidth(null), temp.getHeight(null));
+        g.drawImage(temp, 0, 0, null);
+        g.dispose();
+        // Soften.
+        float softenFactor = 0.05f;
+        float[] softenArray = {0, softenFactor, 0, softenFactor, 1 - (softenFactor * 4), softenFactor, 0, softenFactor, 0};
+        Kernel kernel = new Kernel(3, 3, softenArray);
+        ConvolveOp cOp = new ConvolveOp(kernel, ConvolveOp.EDGE_NO_OP, null);
+        bufferedImage = cOp.filter(bufferedImage, null);
+        // Write the jpeg to a file.
+        try (
+                FileOutputStream out = new FileOutputStream(resizedFile);) {
             // Encodes image as a JPEG data stream
             JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
             JPEGEncodeParam param = encoder.getDefaultJPEGEncodeParam(bufferedImage);
             param.setQuality(quality, true);
             encoder.setJPEGEncodeParam(param);
             encoder.encode(bufferedImage);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                out.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 }

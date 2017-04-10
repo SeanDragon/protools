@@ -2,7 +2,12 @@ package pro.tools.data.binary;
 
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.RegionUtil;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
@@ -14,7 +19,6 @@ import org.slf4j.LoggerFactory;
 import pro.tools.time.ToolDateTime;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
@@ -26,8 +30,10 @@ import java.util.Iterator;
  * <p>
  * <p>
  * 描述：建议导出规则是，先定义好excel模板，然后填充数据，这样避免编写很多不必要的样式代码
+ *
+ * @author SeanDragon
  */
-public abstract class ToolPoi {
+public final class ToolPoi {
 
     private static final Logger log = LoggerFactory.getLogger(ToolPoi.class);
 
@@ -37,7 +43,7 @@ public abstract class ToolPoi {
      * @param templatePath 模板路径
      */
     @SuppressWarnings("unused")
-    public static String export(String filePath, String templatePath) {
+    public static String export(String filePath, String templatePath) throws IOException, InvalidFormatException {
         File fileDir = new File(filePath);
         if (!fileDir.exists()) {
             fileDir.mkdir();
@@ -46,71 +52,24 @@ public abstract class ToolPoi {
         // 导出文件路径
         String path = filePath + File.separator + ToolDateTime.format(new Date(), "yyyyMMddHHmmssSSS") + ".xlsx";
 
-        XSSFWorkbook wb = null;
-        SXSSFWorkbook swb = null;
-        FileOutputStream os = null;
-        try {
+        try (// 2.读取模板处理好样式
+             XSSFWorkbook wb = new XSSFWorkbook(new File(templatePath)); // 初始化HSSFWorkbook对象
+             // 3.转换成大数据读取模式
+             SXSSFWorkbook swb = new SXSSFWorkbook(wb, 1000); // 用于大文件导出
+             FileOutputStream os = new FileOutputStream(new File(path));
+        ) {
             // 1.载入模板
-            wb = new XSSFWorkbook(new File(templatePath)); // 初始化HSSFWorkbook对象
             wb.setSheetName(0, "用户信息导出");
             Sheet sheet = wb.getSheetAt(0); // wb.createSheet("监控点资源状态");
 
-            // 2.读取模板处理好样式
-
-            // 3.转换成大数据读取模式
-            swb = new SXSSFWorkbook(wb, 1000); // 用于大文件导出
             sheet = swb.getSheetAt(0);
 
             // 4.大批量写入数据
 
             // 5.保存到本地文件夹
-            os = new FileOutputStream(new File(path));
             swb.write(os);
 
             return path;
-        } catch (IOException e) {
-            log.error("导出失败：" + e.getMessage());
-            e.printStackTrace();
-            return null;
-        } catch (InvalidFormatException e) {
-            log.error("导出失败：" + e.getMessage());
-            e.printStackTrace();
-            return null;
-        } finally {
-            close(os, swb, wb);
-        }
-    }
-
-    /**
-     * 资源关闭
-     *
-     * @param os
-     * @param wb
-     * @param swb
-     */
-    public static void close(FileOutputStream os, SXSSFWorkbook swb, XSSFWorkbook wb) {
-        if (null != os) {
-            try {
-                os.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        if (null != swb) {
-            try {
-                swb.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        if (null != wb) {
-            try {
-                wb.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
@@ -122,9 +81,7 @@ public abstract class ToolPoi {
      */
     public static String writeExcel(String filePath, SXSSFWorkbook wb, String name) {
         File f = new File(filePath);
-        if (!f.exists()) {
-            f.mkdir();
-        }
+        if (!f.exists()) f.mkdir();
 
         String path = filePath + File.separator + name + ToolDateTime.format(new Date(), "_yyyy_MM_dd_HH_mm_ss_SSS") + ".xlsx";
 
@@ -134,8 +91,6 @@ public abstract class ToolPoi {
             os = new FileOutputStream(file);
             wb.write(os);
             os.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -316,12 +271,4 @@ public abstract class ToolPoi {
         row.setHeight((short) height);
         return row;
     }
-
-//	public static String nullVal(Object val){
-//		if(val == null){
-//			return "";
-//		}
-//		return val;
-//	}
-
 }

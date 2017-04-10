@@ -8,12 +8,15 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  * 图片水印处理
+ *
+ * @author SeanDragon
  */
 @SuppressWarnings("restriction")
-public abstract class ToolImagePressText {
+public final class ToolImagePressText {
 
     /**
      * 把图片印刷到图片上
@@ -23,29 +26,25 @@ public abstract class ToolImagePressText {
      * @param x
      * @param y
      */
-    public final static void pressImage(String pressImg, String targetImg, int x, int y) {
-        try {
-            File _file = new File(targetImg);
-            Image src = ImageIO.read(_file);
-            int wideth = src.getWidth(null);
-            int height = src.getHeight(null);
-            BufferedImage image = new BufferedImage(wideth, height, BufferedImage.TYPE_INT_RGB);
-            Graphics g = image.createGraphics();
-            g.drawImage(src, 0, 0, wideth, height, null);
+    public static void pressImage(String pressImg, String targetImg, int x, int y) throws IOException {
+        File _file = new File(targetImg);
+        Image src = ImageIO.read(_file);
+        int width = src.getWidth(null);
+        int height = src.getHeight(null);
+        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        Graphics g = image.createGraphics();
+        g.drawImage(src, 0, 0, width, height, null);
 
-            // 水印文件
-            File _filebiao = new File(pressImg);
-            Image src_biao = ImageIO.read(_filebiao);
-            int wideth_biao = src_biao.getWidth(null);
-            int height_biao = src_biao.getHeight(null);
-            g.drawImage(src_biao, wideth - wideth_biao - x, height - height_biao - y, wideth_biao, height_biao, null);
-            g.dispose();
-            FileOutputStream out = new FileOutputStream(targetImg);
+        // 水印文件
+        File file = new File(pressImg);
+        Image read = ImageIO.read(file);
+        int readWidth = read.getWidth(null);
+        int readHeight = read.getHeight(null);
+        g.drawImage(read, width - readWidth - x, height - readHeight - y, readWidth, readHeight, null);
+        g.dispose();
+        try (FileOutputStream out = new FileOutputStream(targetImg);) {
             JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
             encoder.encode(image);
-            out.close();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -62,32 +61,23 @@ public abstract class ToolImagePressText {
      * @param y
      */
     public static void pressText(String pressText, String targetImg,
-                                 String fontName, int fontStyle, int color, int fontSize, int x, int y) {
-        try {
-            File _file = new File(targetImg);
-            Image src = ImageIO.read(_file);
-            int wideth = src.getWidth(null);
-            int height = src.getHeight(null);
-            BufferedImage image = new BufferedImage(wideth, height, BufferedImage.TYPE_INT_RGB);
-            Graphics g = image.createGraphics();
-            g.drawImage(src, 0, 0, wideth, height, null);
-            g.setColor(Color.RED);
-            g.setFont(new Font(fontName, fontStyle, fontSize));
-            g.drawString(pressText, wideth - fontSize - x, height - fontSize / 2 - y);
-            g.dispose();
-            FileOutputStream out = new FileOutputStream(targetImg);
+                                 String fontName, int fontStyle, Color color, int fontSize, int x, int y) throws IOException {
+        File _file = new File(targetImg);
+        Image src = ImageIO.read(_file);
+        int width = src.getWidth(null);
+        int height = src.getHeight(null);
+        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        Graphics g = image.createGraphics();
+        g.drawImage(src, 0, 0, width, height, null);
+        g.setColor(color);
+        g.setFont(new Font(fontName, fontStyle, fontSize));
+        g.drawString(pressText, width - fontSize - x, height - fontSize / 2 - y);
+        g.dispose();
+        try (FileOutputStream out = new FileOutputStream(targetImg);) {
             JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
             encoder.encode(image);
-            out.close();
-        } catch (Exception e) {
-            System.out.println(e);
         }
     }
 
-    public static void main(String[] args) {
-        //图片水印处理
-        //pressImage("D:/194122749129953.jpg", "D:/aaa.jpg", 20, 20);//前面的图片印刷到后面的图片
-        pressText("http://www.4bu4.com", "d:/sago.jpg", "", 11, 11, 20, 300, 20);//右下角是坐标定点
-    }
 
 }

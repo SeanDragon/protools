@@ -10,6 +10,8 @@ import java.util.Map;
 
 /**
  * script工具类
+ *
+ * @author SeanDragon
  */
 public abstract class ToolScript {
 
@@ -22,11 +24,10 @@ public abstract class ToolScript {
      * @param paramMap
      * @return
      */
-    public static String render(String templateContent, Map<String, Object> paramMap) {
+    public static String render(String templateContent, Map<String, Object> paramMap) throws ScriptException {
         ScriptEngineManager manager = new ScriptEngineManager();
         // 建立javascript脚本引擎
         ScriptEngine engine = manager.getEngineByName("javascript");
-        try {
             // 将变量和变量值传给javascript脚本
             for (String key : paramMap.keySet()) {
                 engine.put(key, paramMap.get(key));
@@ -55,17 +56,13 @@ public abstract class ToolScript {
 //			t.start();
 //			t.join();
 
-        } catch (ScriptException e) {
-            log.error("执行脚本异常");
-        }
 //		} catch (NoSuchMethodException e) {
 //			log.error("执行脚本异常");
 //		}
 
         // 取js变量值
-        String output = (String) engine.get("output");
 
-        return output;
+        return (String) engine.get("output");
     }
 
     /**
@@ -75,7 +72,7 @@ public abstract class ToolScript {
      * @param paramMap 参数
      * @param htmlPath html文件保存路径
      */
-    public static void makeHtml(String tlPath, Map<String, Object> paramMap, String htmlPath) {
+    public static void makeHtml(String tlPath, Map<String, Object> paramMap, String htmlPath) throws ScriptException {
         String html = render(tlPath, paramMap);
         //ToolDirFile.createFile(htmlPath, html);
     }

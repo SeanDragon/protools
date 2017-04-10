@@ -2,7 +2,14 @@ package pro.tools.file;
 
 import pro.tools.data.text.ToolStr;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
@@ -17,7 +24,7 @@ import static pro.tools.constant.ToolConst.KB;
 /**
  * 压缩相关工具
  *
- * @author sd
+ * @author SeanDragon
  */
 public final class ToolZip {
 

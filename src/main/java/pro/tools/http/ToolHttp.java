@@ -18,36 +18,36 @@ import java.util.concurrent.TimeoutException;
 /**
  * Created on 17/4/6 22:06 星期四.
  *
- * @author sd
+ * @author SeanDragon
  */
 public class ToolHttp {
 
     /**
      * 用于请求http
      *
-     * @param httpSend 里面包含请求的信息
+     * @param toolHttpSend 里面包含请求的信息
      * @return 响应的信息
      */
-    public static HttpReceive sendHttp(HttpSend httpSend) {
+    public static ToolHttpReceive sendHttp(ToolHttpSend toolHttpSend) {
 
-        HttpReceive httpReceive = new HttpReceive();
-        httpReceive.setHaveError(true);
+        ToolHttpReceive toolHttpReceive = new ToolHttpReceive();
+        toolHttpReceive.setHaveError(true);
 
-        String url = httpSend.getUrl();
+        String url = toolHttpSend.getUrl();
         if (!ToolRegex.isURL(url)) {
-            if (httpSend.isNeedErrMsg()) {
-                httpReceive.setErrMsg("不是一个有效的URL");
+            if (toolHttpSend.isNeedErrMsg()) {
+                toolHttpReceive.setErrMsg("不是一个有效的URL");
             }
-            return httpReceive;
+            return toolHttpReceive;
         }
-        Map<String, Object> param = httpSend.getParam();
-        List<Cookie> cookies = httpSend.getCookieList();
-        Map<String, Object> headers = httpSend.getHeaders();
-        HTTP_METHOD method = httpSend.getMethod();
+        Map<String, Object> param = toolHttpSend.getParam();
+        List<Cookie> cookies = toolHttpSend.getCookieList();
+        Map<String, Object> headers = toolHttpSend.getHeaders();
+        Tool_HTTP_METHOD method = toolHttpSend.getMethod();
 
-        AsyncHttpClientConfig.Builder builder = HttpBuilder.buildDefault();
-        if (httpSend.isNeedConnectTimeout()) {
-            builder.setConnectTimeout(httpSend.getConnectTimeout());
+        AsyncHttpClientConfig.Builder builder = ToolHttpBuilder.buildDefault();
+        if (toolHttpSend.isNeedConnectTimeout()) {
+            builder.setConnectTimeout(toolHttpSend.getConnectTimeout());
         }
         AsyncHttpClientConfig build = builder.build();
         AsyncHttpClient asyncHttpClient = new AsyncHttpClient(build);
@@ -76,8 +76,8 @@ public class ToolHttp {
 
         //设置编码
         requestBuilder.setBodyEncoding(StrConst.DEFAULT_CHARSET_NAME);
-        if (httpSend.isNeedResponseTimeout()) {
-            requestBuilder.setRequestTimeout(httpSend.getResponseTimeout());
+        if (toolHttpSend.isNeedResponseTimeout()) {
+            requestBuilder.setRequestTimeout(toolHttpSend.getResponseTimeout());
         }
 
         if (param != null) {
@@ -106,42 +106,42 @@ public class ToolHttp {
 
         try {
             Response response;
-            if (httpSend.isNeedResponseTimeout()) {
+            if (toolHttpSend.isNeedResponseTimeout()) {
                 response = future.get(
-                        httpSend.getResponseTimeout(), httpSend.getResponseTimeoutUnit()
+                        toolHttpSend.getResponseTimeout(), toolHttpSend.getResponseTimeoutUnit()
                 );
             } else {
                 response = future.get();
             }
-            httpReceive.setResponseCookieList(response.getCookies());
-            httpReceive.setStatusCode(response.getStatusCode());
-            httpReceive.setStatusText(response.getStatusText());
-            if (httpSend.isNeedMsg()) {
+            toolHttpReceive.setResponseCookieList(response.getCookies());
+            toolHttpReceive.setStatusCode(response.getStatusCode());
+            toolHttpReceive.setStatusText(response.getStatusText());
+            if (toolHttpSend.isNeedMsg()) {
                 String responseBody = response.getResponseBody();
                 responseBody = new String(responseBody.getBytes(), StrConst.DEFAULT_CHARSET_NAME);
-                httpReceive.setResponseBody(responseBody);
+                toolHttpReceive.setResponseBody(responseBody);
             }
 
             //将原生对象放入,方便复杂操作
-            httpReceive.setResponse(response);
+            toolHttpReceive.setResponse(response);
             //将是否有错误信息设置为无
-            httpReceive.setHaveError(false);
+            toolHttpReceive.setHaveError(false);
 
         } catch (InterruptedException e) {
-            httpReceive.setErrMsg("http组件出现问题!\n" + tools.toException(e));
+            toolHttpReceive.setErrMsg("http组件出现问题!\n" + tools.toException(e));
         } catch (TimeoutException e) {
-            httpReceive.setErrMsg("设置超时时间失败!\n" + tools.toException(e));
+            toolHttpReceive.setErrMsg("设置超时时间失败!\n" + tools.toException(e));
         } catch (IOException e) {
-            httpReceive.setErrMsg("获取返回内容失败!\n" + tools.toException(e));
+            toolHttpReceive.setErrMsg("获取返回内容失败!\n" + tools.toException(e));
         } catch (ExecutionException e) {
-            httpReceive.setErrMsg("访问URL失败!\n" + tools.toException(e));
+            toolHttpReceive.setErrMsg("访问URL失败!\n" + tools.toException(e));
         }
 
-        if (!httpSend.isNeedErrMsg()) {
-            httpReceive.setErrMsg("");
+        if (!toolHttpSend.isNeedErrMsg()) {
+            toolHttpReceive.setErrMsg("");
         }
 
-        return httpReceive;
+        return toolHttpReceive;
     }
 
 }

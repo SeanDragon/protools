@@ -3,7 +3,7 @@ package pro.tools.system;
 /**
  * 系统相关工具
  *
- * @author sd
+ * @author SeanDragon
  */
 public class ToolSystem {
 

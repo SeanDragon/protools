@@ -1,9 +1,18 @@
 package pro.tools.security;
 
-import javax.crypto.*;
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.PBEParameterSpec;
-import java.security.*;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.Key;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 
 /**
@@ -26,6 +35,22 @@ public abstract class ToolPBE {
      */
     public static final String ALGORITHM = "PBEWithMD5AndTripleDES";
 
+
+    /**
+     * 盐的长度
+     */
+    private static final int SALT_BYTE_SIZE = 32 / 2;
+
+    /**
+     * 生成密文的长度
+     */
+    private static final int HASH_BIT_SIZE = 128 * 4;
+
+    /**
+     * 迭代次数
+     */
+    private static final int PBKDF2_ITERATIONS = 1000;
+
     /**
      * 盐初始化<br>
      * 盐长度必须为8字节
@@ -35,7 +60,7 @@ public abstract class ToolPBE {
      */
     public static byte[] initSalt() {
         SecureRandom random = new SecureRandom();
-        return random.generateSeed(8);
+        return random.generateSeed(SALT_BYTE_SIZE);
     }
 
     /**
@@ -73,7 +98,7 @@ public abstract class ToolPBE {
         Key key = toKey(password);
 
         // 实例化PBE参数材料
-        PBEParameterSpec paramSpec = new PBEParameterSpec(salt, 100);
+        PBEParameterSpec paramSpec = new PBEParameterSpec(salt, HASH_BIT_SIZE);
 
         // 实例化
         Cipher cipher = Cipher.getInstance(ALGORITHM);

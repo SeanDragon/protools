@@ -13,9 +13,9 @@ import java.util.List;
 /**
  * shell相关工具
  *
- * @author sd
+ * @author SeanDragon
  */
-public class ToolShell {
+public final class ToolShell {
 
     private ToolShell() {
         throw new UnsupportedOperationException("u can't instantiate me...");
@@ -24,22 +24,22 @@ public class ToolShell {
     /**
      * 是否是在root下执行命令
      *
-     * @param commandExec 包含下面四个属性
+     * @param toolCommandExec 包含下面四个属性
      *                    commands          命令数组
      *                    isRoot            是否需要root权限执行
      *                    isNeedResultMsg   是否需要结果消息
      *                    isNeedEnter       是否需要回车
-     * @return CommandResult
+     * @return ToolCommandResult
      */
-    public static CommandResult execCmd(CommandExec commandExec) {
+    public static ToolCommandResult execCmd(ToolCommandExec toolCommandExec) throws IOException {
         int result = -1;
-        if (commandExec.getCommands() == null || commandExec.getCommands().length == 0) {
-            return new CommandResult(result, null, null);
+        if (toolCommandExec.getCommands() == null || toolCommandExec.getCommands().length == 0) {
+            return new ToolCommandResult(result, null, null);
         }
 
-        String[] commands = commandExec.getCommands();
-        boolean isNeedResultMsg = commandExec.isNeedResultMsg();
-        boolean isNeedEnter = commandExec.isNeedEnter();
+        String[] commands = toolCommandExec.getCommands();
+        boolean isNeedResultMsg = toolCommandExec.isNeedResultMsg();
+        boolean isNeedEnter = toolCommandExec.isNeedEnter();
 
         Process process = null;
         StringBuilder successMsg = null;
@@ -73,18 +73,14 @@ public class ToolShell {
                     while ((s = errorResult.readLine()) != null) {
                         errorMsg.append(s).append(entry);
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         } finally {
             if (process != null) {
                 process.destroy();
             }
         }
-        return new CommandResult(
+        return new ToolCommandResult(
                 result,
                 successMsg == null ? null : successMsg.toString(),
                 errorMsg == null ? null : errorMsg.toString()
@@ -94,7 +90,7 @@ public class ToolShell {
     /**
      * 返回的命令结果
      */
-    public static class CommandResult {
+    public static class ToolCommandResult {
         /**
          * 结果码
          **/
@@ -108,7 +104,7 @@ public class ToolShell {
          **/
         public String errorMsg;
 
-        CommandResult(int result, String successMsg, String errorMsg) {
+        ToolCommandResult(int result, String successMsg, String errorMsg) {
             this.result = result;
             this.successMsg = successMsg;
             this.errorMsg = errorMsg;
@@ -118,7 +114,7 @@ public class ToolShell {
     /**
      * 执行命令用的对象
      */
-    public static class CommandExec {
+    public static class ToolCommandExec {
 
         //命令集合
         private String[] commands;
@@ -127,13 +123,13 @@ public class ToolShell {
         //是否需要回车
         private boolean isNeedEnter;
 
-        public CommandExec(boolean isNeedResultMsg, boolean isNeedEnter, List<String> commandList) {
+        public ToolCommandExec(boolean isNeedResultMsg, boolean isNeedEnter, List<String> commandList) {
             this.commands = commandList.toArray(getCommands());
             this.isNeedResultMsg = isNeedResultMsg;
             this.isNeedEnter = isNeedEnter;
         }
 
-        public CommandExec(boolean isNeedResultMsg, boolean isNeedEnter, String... commands) {
+        public ToolCommandExec(boolean isNeedResultMsg, boolean isNeedEnter, String... commands) {
             this.commands = commands;
             this.isNeedResultMsg = isNeedResultMsg;
             this.isNeedEnter = isNeedEnter;
@@ -143,12 +139,12 @@ public class ToolShell {
             return commands;
         }
 
-        public CommandExec setCommands(List<String> commandList) {
+        public ToolCommandExec setCommands(List<String> commandList) {
             this.commands = commandList.toArray(getCommands());
             return this;
         }
 
-        public CommandExec setCommands(String[] commands) {
+        public ToolCommandExec setCommands(String[] commands) {
             this.commands = commands;
             return this;
         }
@@ -157,7 +153,7 @@ public class ToolShell {
             return isNeedResultMsg;
         }
 
-        public CommandExec setNeedResultMsg(boolean needResultMsg) {
+        public ToolCommandExec setNeedResultMsg(boolean needResultMsg) {
             isNeedResultMsg = needResultMsg;
             return this;
         }
@@ -166,7 +162,7 @@ public class ToolShell {
             return isNeedEnter;
         }
 
-        public CommandExec setNeedEnter(boolean needEnter) {
+        public ToolCommandExec setNeedEnter(boolean needEnter) {
             isNeedEnter = needEnter;
             return this;
         }

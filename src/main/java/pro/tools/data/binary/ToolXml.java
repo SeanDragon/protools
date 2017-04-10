@@ -18,6 +18,8 @@ import java.util.Set;
 
 /**
  * XML工具类
+ *
+ * @author SeanDragon
  */
 public abstract class ToolXml {
 
@@ -71,24 +73,20 @@ public abstract class ToolXml {
      * 获取xml一级节点文本值，不区分元素名称大小写
      *
      * @param xml
-     * @param element
+     * @param elementName
      * @return
      */
     @SuppressWarnings("rawtypes")
-    public static String getStairText(String xml, String elementName) {
+    public static String getStairText(String xml, String elementName) throws DocumentException {
         elementName = elementName.toLowerCase();
         String result = null;
-        try {
-            Document doc = DocumentHelper.parseText(xml);
-            Element root = doc.getRootElement();
-            for (Iterator iterTemp = root.elementIterator(); iterTemp.hasNext(); ) {
-                Element element = (Element) iterTemp.next();
-                if (element.getName().toLowerCase().equals(elementName)) {
-                    result = element.getText();
-                }
+        Document doc = DocumentHelper.parseText(xml);
+        Element root = doc.getRootElement();
+        for (Iterator elementIterator = root.elementIterator(); elementIterator.hasNext(); ) {
+            Element element = (Element) elementIterator.next();
+            if (element.getName().toLowerCase().equals(elementName)) {
+                result = element.getText();
             }
-        } catch (DocumentException e) {
-            e.printStackTrace();
         }
         return result;
     }
@@ -124,25 +122,5 @@ public abstract class ToolXml {
         content = content.replaceAll("&gt;", ">");// >
         return content;
     }
-
-    public static void main(String[] args) {
-//		String xml = "<xml>";
-//		xml += "<URL><![CDATA[http://littleant.duapp.com/msg]]></URL>";
-//		xml += "<ToUserName><![CDATA[jiu_guang]]></ToUserName>";
-//		xml += "<FromUserName><![CDATA[dongcb678]]></FromUserName>";
-//		xml += "<CreateTime>11</CreateTime>";
-//		xml += "<MsgType><![CDATA[text\\//]]></MsgType>";
-//		xml += "<Content><![CDATA[wentest]]></Content>";
-//		xml += "<MsgId>11</MsgId>";
-//		xml += "</xml>";
-
-//		Map<String, Class<?>> map = new HashMap<String, Class<?>>();
-//		map.put("xml", RecevieMsgText.class);
-//		
-//		RecevieMsgText recevie = (RecevieMsgText) xmlToBean(xml, map);
-//
-//		System.out.println(beanToXml(recevie, RecevieMsgText.class));
-    }
-
 
 }

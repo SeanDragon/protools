@@ -13,7 +13,7 @@ package pro.tools;
     ToolFile       文件相关工具
     ToolLunar      阴历相关工具
     ToolMaven      终端运行maven命令
-    PasswordEncryption  密码加密类(只有一种加密方式)
+    ToolPBE2  密码加密类(只有一种加密方式)
     ToolPrimaryKey 主键生成相关工具(mojo)
     ToolRegex      正则相关工具
     ToolShell      终端运行相关工具

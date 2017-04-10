@@ -1,9 +1,9 @@
 package sd;
 
 import org.junit.Test;
-import pro.tools.http.HttpReceive;
-import pro.tools.http.HttpSend;
 import pro.tools.http.ToolHttp;
+import pro.tools.http.ToolHttpReceive;
+import pro.tools.http.ToolHttpSend;
 
 /**
  * http测试
@@ -14,20 +14,20 @@ import pro.tools.http.ToolHttp;
 public class Test_20170407 {
     public boolean connect() {
         long l = System.currentTimeMillis();
-        HttpSend httpSend = new HttpSend("http://a/5.com", null);
-        //HttpSend httpSend = new HttpSend("http://m.tuhaolicai.cc/public/index", null);
-        //HttpSend httpSend = new HttpSend("https://apio.caiyunapp.com/v2/Dz=JqbrtH7cP8SKd/121.6544,25.1552/realtime.json", null);
-        //httpSend.setConnectTimeout(50);
-        //httpSend.setResponseTimeout(50);
-        HttpReceive httpReceive = ToolHttp.sendHttp(httpSend);
-        if (httpReceive.isHaveError()) {
-            System.out.println(httpReceive.getErrMsg());
+        ToolHttpSend toolHttpSend = new ToolHttpSend("http://a/5.com", null);
+        //ToolHttpSend toolHttpSend = new ToolHttpSend("http://m.tuhaolicai.cc/public/index", null);
+        //ToolHttpSend toolHttpSend = new ToolHttpSend("https://apio.caiyunapp.com/v2/Dz=JqbrtH7cP8SKd/121.6544,25.1552/realtime.json", null);
+        //toolHttpSend.setConnectTimeout(50);
+        //toolHttpSend.setResponseTimeout(50);
+        ToolHttpReceive toolHttpReceive = ToolHttp.sendHttp(toolHttpSend);
+        if (toolHttpReceive.isHaveError()) {
+            System.out.println(toolHttpReceive.getErrMsg());
             return false;
         } else {
-            //System.out.println(httpReceive.getResponse().isRedirected());
-            System.out.println(httpReceive.getStatusCode());
-            //System.out.println(httpReceive.getStatusText());
-            //String responseBody = httpReceive.getResponseBody();
+            //System.out.println(toolHttpReceive.getResponse().isRedirected());
+            System.out.println(toolHttpReceive.getStatusCode());
+            //System.out.println(toolHttpReceive.getStatusText());
+            //String responseBody = toolHttpReceive.getResponseBody();
             //System.out.println(responseBody);
             return true;
         }

@@ -2,14 +2,19 @@ package pro.tools.data.text;
 
 import pro.tools.constant.ToolConst;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 
 /**
  * 转换相关工具
  *
- * @author sd
+ * @author SeanDragon
  */
-public class ToolConvert {
+public final class ToolConvert {
 
     private static final char hexDigits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 
@@ -326,7 +331,7 @@ public class ToolConvert {
      * @param is 输入流
      * @return outputStream子类
      */
-    public static ByteArrayOutputStream input2OutputStream(InputStream is) {
+    public static ByteArrayOutputStream input2OutputStream(InputStream is) throws IOException {
         if (is == null) return null;
         try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
             byte[] b = new byte[ToolConst.KB];
@@ -335,9 +340,6 @@ public class ToolConvert {
                 os.write(b, 0, len);
             }
             return os;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
         }
     }
 
@@ -347,7 +349,7 @@ public class ToolConvert {
      * @param is 输入流
      * @return 字节数组
      */
-    public static byte[] inputStream2Bytes(InputStream is) {
+    public static byte[] inputStream2Bytes(InputStream is) throws IOException {
         if (is == null) return null;
         return input2OutputStream(is).toByteArray();
     }
@@ -380,14 +382,11 @@ public class ToolConvert {
      * @param bytes 字节数组
      * @return 字节数组
      */
-    public static OutputStream bytes2OutputStream(byte[] bytes) {
+    public static OutputStream bytes2OutputStream(byte[] bytes) throws IOException {
         if (bytes == null || bytes.length <= 0) return null;
         try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
             os.write(bytes);
             return os;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
         }
     }
 
@@ -398,14 +397,9 @@ public class ToolConvert {
      * @param charsetName 编码格式
      * @return 字符串
      */
-    public static String inputStream2String(InputStream is, String charsetName) {
+    public static String inputStream2String(InputStream is, String charsetName) throws IOException {
         if (is == null || ToolStr.isSpace(charsetName)) return null;
-        try {
-            return new String(inputStream2Bytes(is), charsetName);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return new String(inputStream2Bytes(is), charsetName);
     }
 
     /**
@@ -415,14 +409,11 @@ public class ToolConvert {
      * @param charsetName 编码格式
      * @return 输入流
      */
-    public static InputStream string2InputStream(String string, String charsetName) {
+    public static InputStream string2InputStream(String string, String charsetName) throws UnsupportedEncodingException {
         if (string == null || ToolStr.isSpace(charsetName)) return null;
-        try {
-            return new ByteArrayInputStream(string.getBytes(charsetName));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            return null;
-        }
+
+        return new ByteArrayInputStream(string.getBytes(charsetName));
+
     }
 
     /**
@@ -432,14 +423,11 @@ public class ToolConvert {
      * @param charsetName 编码格式
      * @return 字符串
      */
-    public static String outputStream2String(OutputStream out, String charsetName) {
+    public static String outputStream2String(OutputStream out, String charsetName) throws UnsupportedEncodingException {
         if (out == null || ToolStr.isSpace(charsetName)) return null;
-        try {
-            return new String(outputStream2Bytes(out), charsetName);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            return null;
-        }
+
+        return new String(outputStream2Bytes(out), charsetName);
+
     }
 
     /**
@@ -449,14 +437,9 @@ public class ToolConvert {
      * @param charsetName 编码格式
      * @return 输入流
      */
-    public static OutputStream string2OutputStream(String string, String charsetName) {
+    public static OutputStream string2OutputStream(String string, String charsetName) throws IOException {
         if (string == null || ToolStr.isSpace(charsetName)) return null;
-        try {
-            return bytes2OutputStream(string.getBytes(charsetName));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return bytes2OutputStream(string.getBytes(charsetName));
     }
 
     /**

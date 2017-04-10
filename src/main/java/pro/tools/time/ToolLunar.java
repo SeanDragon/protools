@@ -1,10 +1,9 @@
 package pro.tools.time;
 
 /**
- * <pre>
- *     author: SeanDragon
- *     desc  : 阴历相关工具类
- * </pre>
+ * 阴历相关工具类
+ *
+ * @author SeanDragon
  */
 public final class ToolLunar {
 

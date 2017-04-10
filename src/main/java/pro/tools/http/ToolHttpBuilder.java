@@ -8,7 +8,7 @@ import com.ning.http.client.AsyncHttpClientConfig;
  * @author SeanDragon
  *         Create By 2017-04-07 14:59
  */
-class HttpBuilder {
+class ToolHttpBuilder {
     private static AsyncHttpClientConfig.Builder builder = new AsyncHttpClientConfig.Builder();
     private static final int MAX_REQUEST_RETRY = 10;
     private static final int MAX_CONNECTIONS = 100;

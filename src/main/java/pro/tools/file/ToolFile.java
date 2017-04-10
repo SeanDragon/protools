@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * 文件相关工具
  *
- * @author sd
+ * @author SeanDragon
  */
 public final class ToolFile {
 
@@ -854,7 +854,7 @@ public final class ToolFile {
      * @param filePath 文件路径
      * @return 字符数组
      */
-    public static byte[] readFile2Bytes(String filePath) throws FileNotFoundException {
+    public static byte[] readFile2Bytes(String filePath) throws IOException {
         return readFile2Bytes(getFileByPath(filePath));
     }
 
@@ -864,7 +864,7 @@ public final class ToolFile {
      * @param file 文件
      * @return 字符数组
      */
-    public static byte[] readFile2Bytes(File file) throws FileNotFoundException {
+    public static byte[] readFile2Bytes(File file) throws IOException {
         if (file == null) return null;
         return ToolConvert.inputStream2Bytes(new FileInputStream(file));
     }

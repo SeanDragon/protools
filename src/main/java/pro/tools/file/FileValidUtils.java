@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 /**
  * Created on 17/4/9 12:14 星期日.
  *
- * @author sd
+ * @author SeanDragon
  */
 public final class FileValidUtils {
 

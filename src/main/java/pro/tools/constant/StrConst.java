@@ -5,12 +5,19 @@ import java.nio.charset.Charset;
 
 /**
  * Created on 17/4/8 13:04 星期六.
+ * 字符串常量
  *
  * @author SeanDragon
  */
 public class StrConst {
+    /**
+     * 默认编码
+     */
     public static final String DEFAULT_CHARSET_NAME = "UTF-8";
     public static final Charset DEFAULT_CHARSET = Charset.forName(DEFAULT_CHARSET_NAME);
+    /**
+     * 文件分隔符
+     */
     public static final String FILE_SEP = File.separator;
     public static final String FILE_PATH_SEP = File.pathSeparator;
 }

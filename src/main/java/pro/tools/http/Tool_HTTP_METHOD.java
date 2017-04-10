@@ -1,6 +1,6 @@
 package pro.tools.http;
 
-public enum HTTP_METHOD {
+public enum Tool_HTTP_METHOD {
     GET,
     POST,
     PUT,

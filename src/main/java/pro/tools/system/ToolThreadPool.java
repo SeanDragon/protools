@@ -7,7 +7,7 @@ import java.util.concurrent.*;
 /**
  * 线程池相关工具
  *
- * @author sd
+ * @author SeanDragon
  */
 public class ToolThreadPool {
 

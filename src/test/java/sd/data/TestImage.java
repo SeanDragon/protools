@@ -1,5 +1,7 @@
 package sd.data;
 
+import com.google.zxing.NotFoundException;
+import com.google.zxing.WriterException;
 import org.junit.Test;
 import pro.tools.data.image.ToolBarCode;
 import pro.tools.data.image.ToolImagePressText;
@@ -14,7 +16,7 @@ import java.io.IOException;
 public class TestImage {
 
 
-    public void test1() {
+    public void test1() throws IOException, WriterException, NotFoundException {
         String content = "http://www.hikvision.com.cn";
         int width = 200;
         int height = 200;

@@ -17,33 +17,33 @@ import java.util.List;
 @SuppressWarnings("restriction")
 public final class ToolOS {
 
-    public static final String java_version = "java.version"; // Java的运行环境版本
-    public static final String java_vendo = "java.vendor"; // Java的运行环境供应商
-    public static final String java_vendo_url = "java.vendor.url"; // Java供应商的URL
-    public static final String java_home = "java.home"; // Java的安装路径
-    public static final String java_vm_specification_version = "java.vm.specification.version"; // Java的虚拟机规范版本
-    public static final String java_vm_specification_vendor = "java.vm.specification.vendor"; // Java的虚拟机规范供应商
-    public static final String java_vm_specification_name = "java.vm.specification.name"; // Java的虚拟机规范名称
-    public static final String java_vm_version = "java.vm.version"; // Java的虚拟机实现版本
-    public static final String java_vm_vendor = "java.vm.vendor"; // Java的虚拟机实现供应商
-    public static final String java_vm_name = "java.vm.name"; // Java的虚拟机实现名称
-    public static final String java_specification_version = "java.specification.version"; // Java运行时环境规范版本
-    public static final String java_specification_vender = "java.specification.vender"; // Java运行时环境规范供应商
-    public static final String java_specification_name = "java.specification.name"; // Java运行时环境规范名称
-    public static final String java_class_version = "java.class.version"; // Java的类格式版本号
-    public static final String java_class_path = "java.class.path"; // Java的类路径
-    public static final String java_library_path = "java.library.path"; // 加载库时搜索的路径列表
-    public static final String java_io_tmpdir = "java.io.tmpdir"; // 默认的临时文件路径
-    public static final String java_ext_dirs = "java.ext.dirs"; // 一个或多个扩展目录的路径
-    public static final String os_name = "os.name"; // 操作系统的名称
-    public static final String os_arch = "os.arch"; // 操作系统的构架
-    public static final String os_version = "os.version"; // 操作系统的版本
-    public static final String file_separator = "file.separator"; // 文件分隔符
-    public static final String path_separator = "path.separator"; // 路径分隔符
-    public static final String line_separator = "line.separator"; // 行分隔符
-    public static final String user_name = "user.name"; // 用户的账户名称
-    public static final String user_home = "user.home"; // 用户的主目录
-    public static final String user_dir = "user.dir"; //  用户的当前工作目录
+    public static final String java_version = getOsSystemProperty("java.version"); // Java的运行环境版本
+    public static final String java_vendo = getOsSystemProperty("java.vendor"); // Java的运行环境供应商
+    public static final String java_vendo_url = getOsSystemProperty("java.vendor.url"); // Java供应商的URL
+    public static final String java_home = getOsSystemProperty("java.home"); // Java的安装路径
+    public static final String java_vm_specification_version = getOsSystemProperty("java.vm.specification.version"); // Java的虚拟机规范版本
+    public static final String java_vm_specification_vendor = getOsSystemProperty("java.vm.specification.vendor"); // Java的虚拟机规范供应商
+    public static final String java_vm_specification_name = getOsSystemProperty("java.vm.specification.name"); // Java的虚拟机规范名称
+    public static final String java_vm_version = getOsSystemProperty("java.vm.version"); // Java的虚拟机实现版本
+    public static final String java_vm_vendor = getOsSystemProperty("java.vm.vendor"); // Java的虚拟机实现供应商
+    public static final String java_vm_name = getOsSystemProperty("java.vm.name"); // Java的虚拟机实现名称
+    public static final String java_specification_version = getOsSystemProperty("java.specification.version"); // Java运行时环境规范版本
+    public static final String java_specification_vender = getOsSystemProperty("java.specification.vender"); // Java运行时环境规范供应商
+    public static final String java_specification_name = getOsSystemProperty("java.specification.name"); // Java运行时环境规范名称
+    public static final String java_class_version = getOsSystemProperty("java.class.version"); // Java的类格式版本号
+    public static final String java_class_path = getOsSystemProperty("java.class.path"); // Java的类路径
+    public static final String java_library_path = getOsSystemProperty("java.library.path"); // 加载库时搜索的路径列表
+    public static final String java_io_tmpdir = getOsSystemProperty("java.io.tmpdir"); // 默认的临时文件路径
+    public static final String java_ext_dirs = getOsSystemProperty("java.ext.dirs"); // 一个或多个扩展目录的路径
+    public static final String os_name = getOsSystemProperty("os.name"); // 操作系统的名称
+    public static final String os_arch = getOsSystemProperty("os.arch"); // 操作系统的构架
+    public static final String os_version = getOsSystemProperty("os.version"); // 操作系统的版本
+    public static final String file_separator = getOsSystemProperty("file.separator"); // 文件分隔符
+    public static final String path_separator = getOsSystemProperty("path.separator"); // 路径分隔符
+    public static final String line_separator = getOsSystemProperty("line.separator"); // 行分隔符
+    public static final String user_name = getOsSystemProperty("user.name"); // 用户的账户名称
+    public static final String user_home = getOsSystemProperty("user.home"); // 用户的主目录
+    public static final String user_dir = getOsSystemProperty("user.dir"); //  用户的当前工作目录
     // 系统bean
     private static final OperatingSystemMXBean systemMxBean;
     private static final List<GarbageCollectorMXBean> list;

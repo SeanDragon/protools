@@ -125,4 +125,14 @@ public class Test_LocalDate {
         System.out.println(solar);
     }
 
+    @Test
+    public void test9() {
+        DatePlus datePlus = new DatePlus();
+        String s = datePlus.toGanZhi();
+        String s1 = datePlus.toChineseZodiac();
+        String s2 = datePlus.toZodiac();
+        System.out.println(s);
+        System.out.println(s1);
+        System.out.println(s2);
+    }
 }

@@ -134,5 +134,8 @@ public class Test_LocalDate {
         System.out.println(s);
         System.out.println(s1);
         System.out.println(s2);
+
+        System.out.println(datePlus.toString());
+        System.out.println(datePlus.toString("yyyy年MM月dd日"));
     }
 }

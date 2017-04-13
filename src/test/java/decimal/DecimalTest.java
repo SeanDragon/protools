@@ -1,7 +1,9 @@
 package decimal;
+
 import org.junit.Test;
 import pro.tools.data.decimal.DecimalPlus;
 import pro.tools.decimal;
+
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -38,7 +40,7 @@ public class DecimalTest {
         DecimalPlus add = new DecimalPlus("159753");
         //System.out.println(add.toMoney());
         long l = System.currentTimeMillis();
-        System.out.println(add.sqrt(99999999).toRealString());
+        System.out.println(add.sqrt2(99999999).toRealString());
         System.err.println("1----------" + (System.currentTimeMillis() - l));
         l = System.currentTimeMillis();
         add = new DecimalPlus("159753");

@@ -83,6 +83,36 @@ public class ToolDecimal {
         return new BigDecimal(sb.toString()).setScale(scale, roundingMode);
     }
 
+    public static int numberOfLeadingZeros(long i) {
+        // HD, Figure 5-6
+        if (i == 0)
+            return 64;
+        int n = 1;
+        int x = (int) (i >>> 32);
+        if (x == 0) {
+            n += 32;
+            x = (int) i;
+        }
+        if (x >>> 16 == 0) {
+            n += 16;
+            x <<= 16;
+        }
+        if (x >>> 24 == 0) {
+            n += 8;
+            x <<= 8;
+        }
+        if (x >>> 28 == 0) {
+            n += 4;
+            x <<= 4;
+        }
+        if (x >>> 30 == 0) {
+            n += 2;
+            x <<= 2;
+        }
+        n -= x >>> 31;
+        return n;
+    }
+
     /**
      * 设置给DecimalFormat用的精度字符创
      *

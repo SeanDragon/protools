@@ -15,7 +15,7 @@ import java.text.DecimalFormat;
 public final class DecimalPlus {
 
     private BigDecimal bigDecimal;
-    private MathContext defaultMathContext = MathContext.UNLIMITED;
+    private MathContext defaultMathContext = new MathContext(0, RoundingMode.HALF_EVEN);
 
     //region 初始化模块
     public DecimalPlus(Object initValue) {
@@ -110,9 +110,12 @@ public final class DecimalPlus {
         return this;
     }
 
-    public DecimalPlus sqrt(int scale) {
+    public DecimalPlus sqrt2(int scale) {
+        if (this.bigDecimal.divide(new BigDecimal(1), defaultMathContext).doubleValue() == 1.00D || this.bigDecimal.divide(new BigDecimal(2), defaultMathContext).doubleValue() == 1.00D) {
+            this.bigDecimal = new BigDecimal(toInt());
+        }
         if (scale > 13) {
-            this.bigDecimal = ToolDecimal.sqrt(this.bigDecimal, 500, RoundingMode.HALF_EVEN);
+            this.bigDecimal = ToolDecimal.sqrt(this.bigDecimal, scale, RoundingMode.HALF_EVEN);
         } else {
             double sqrt = Math.sqrt(this.bigDecimal.doubleValue());
             this.bigDecimal = new BigDecimal(sqrt, defaultMathContext);
@@ -120,17 +123,27 @@ public final class DecimalPlus {
         return this;
     }
 
+    public DecimalPlus sqrtN(int n) {
+        double log = Math.pow(this.toDouble(), 1D / n);
+        this.bigDecimal = new BigDecimal(log, new MathContext(defaultMathContext.getPrecision(), RoundingMode.HALF_UP));
+        return this;
+    }
+
     @Override
     public String toString() {
-        return toMoney();
+        return toMoneyStr();
     }
 
     public String toRealString() {
         return this.bigDecimal.toPlainString();
     }
 
-    public String toMoney() {
-        return String.valueOf(toDouble(2, RoundingMode.HALF_EVEN));
+    public String toMoneyStr() {
+        return String.valueOf(toMoney());
+    }
+
+    public double toMoney() {
+        return toDouble(2, RoundingMode.HALF_EVEN);
     }
 
     /**
@@ -142,8 +155,8 @@ public final class DecimalPlus {
      */
     public double toDouble(int scale, RoundingMode roundingMode) {
         DecimalFormat decimalFormat = new DecimalFormat(ToolDecimal.scale2FormatStr(scale));
-        decimalFormat.setRoundingMode(roundingMode);//设置银行家算法
-        return Double.valueOf(decimalFormat.format(this.bigDecimal.doubleValue()));
+        decimalFormat.setRoundingMode(roundingMode);//设置舍入算法
+        return Double.valueOf(decimalFormat.format(toDouble()));
     }
 
     public double toDouble() {

@@ -14,10 +14,6 @@ public final class ToolThreadPool {
     private ExecutorService exec;
     private ScheduledExecutorService scheduleExec;
 
-    private ToolThreadPool() {
-        throw new UnsupportedOperationException("u can't instantiate me...");
-    }
-
     /**
      * ThreadPoolUtils构造函数
      *

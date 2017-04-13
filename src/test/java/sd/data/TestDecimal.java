@@ -30,7 +30,7 @@ public class TestDecimal {
         DecimalPlus add = new DecimalPlus("15955555544444444444444444444444444444444444555555555222222222222222222555555555555555555522222222222222");
         //System.out.println(add.toMoney());
         long l = System.currentTimeMillis();
-        System.out.println(add.sqrt());
+        System.out.println(add.sqrt(999));
         System.err.println("1----------" + (System.currentTimeMillis() - l));
         l = System.currentTimeMillis();
         add = new DecimalPlus("15955555544444444444444444444444444444444444555555555222222222222222222555555555555555555522222222222222");
@@ -44,6 +44,6 @@ public class TestDecimal {
         DecimalPlus add = new DecimalPlus("2.5");
         System.out.println(add.toRealString());
         System.out.println(add.pow(2));
-        System.out.println(add.sqrt());
+        System.out.println(add.sqrt(999));
     }
 }

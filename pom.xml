@@ -8,12 +8,19 @@
     <artifactId>protools</artifactId>
     <version>2.0</version>
 
+    <packaging>jar</packaging>
+
+    <organization>
+        <url>http://www.tuhaolicai.cc/</url>
+        <name>tuhao-team</name>
+    </organization>
+
     <developers>
         <developer>
             <id>sd</id>
             <email>syl8023who@gmail.com</email>
             <name>SeanDragon</name>
-            <organization>鑫德阳光</organization>
+            <organization>tuhao-team</organization>
             <url>https://seandragon.github.io</url>
             <timezone>+8</timezone>
         </developer>
@@ -51,7 +58,6 @@
     </build>
 
     <dependencies>
-
         <!--单元测试用-->
         <dependency>
             <groupId>junit</groupId>
@@ -66,29 +72,6 @@
             <artifactId>guava</artifactId>
             <version>21.0</version>
         </dependency>
-        <!--<dependency>-->
-        <!--<groupId>commons-beanutils</groupId>-->
-        <!--<artifactId>commons-beanutils</artifactId>-->
-        <!--<version>1.9.2</version>-->
-        <!--<exclusions>-->
-        <!--<exclusion>-->
-        <!--<groupId>*</groupId>-->
-        <!--<artifactId>*</artifactId>-->
-        <!--</exclusion>-->
-        <!--</exclusions>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--<groupId>org.apache.commons</groupId>-->
-        <!--<artifactId>commons-lang3</artifactId>-->
-        <!--<version>3.4</version>-->
-        <!--<exclusions>-->
-        <!--<exclusion>-->
-        <!--<groupId>*</groupId>-->
-        <!--<artifactId>*</artifactId>-->
-        <!--</exclusion>-->
-        <!--</exclusions>-->
-        <!--</dependency>-->
-
         <!--json-->
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -174,6 +157,7 @@
 
     <!--配置镜像源-->
     <repositories>
+        <!--region 阿里镜像源-->
         <!--<repository>-->
         <!--<id>nexus-aliyun</id>-->
         <!--<name>Nexus aliyun</name>-->
@@ -182,6 +166,7 @@
         <!--<enabled>true</enabled>-->
         <!--</snapshots>-->
         <!--</repository>-->
+        <!--endregion-->
         <repository>
             <id>nexus</id>
             <name>nexus</name>
@@ -209,6 +194,5 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
-
 
 </project>

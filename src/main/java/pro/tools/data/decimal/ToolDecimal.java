@@ -10,7 +10,7 @@ import java.math.RoundingMode;
  * @author SeanDragon
  *         Create By 2017-04-13 15:29
  */
-public class ToolDecimal {
+public final class ToolDecimal {
     private final static BigInteger HUNDRED = BigInteger.valueOf(100);
 
     /**

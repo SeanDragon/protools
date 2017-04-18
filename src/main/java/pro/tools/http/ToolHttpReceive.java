@@ -3,7 +3,6 @@ package pro.tools.http;
 import com.google.common.base.MoreObjects;
 import com.ning.http.client.Response;
 import com.ning.http.client.cookie.Cookie;
-import com.sun.istack.internal.Nullable;
 
 import java.util.List;
 
@@ -59,7 +58,6 @@ public final class ToolHttpReceive {
         return this;
     }
 
-    @Nullable
     public String getResponseBody() {
         return responseBody;
     }
@@ -78,7 +76,6 @@ public final class ToolHttpReceive {
         return this;
     }
 
-    @Nullable
     public Response getResponse() {
         return response;
     }

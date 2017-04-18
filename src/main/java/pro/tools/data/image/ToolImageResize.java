@@ -1,10 +1,12 @@
 package pro.tools.data.image;
 
-import com.sun.image.codec.jpeg.JPEGCodec;
-import com.sun.image.codec.jpeg.JPEGEncodeParam;
-import com.sun.image.codec.jpeg.JPEGImageEncoder;
-
+import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
+import javax.imageio.ImageTypeSpecifier;
+import javax.imageio.ImageWriter;
+import javax.imageio.metadata.IIOMetadata;
+import javax.imageio.plugins.jpeg.JPEGImageWriteParam;
+import javax.imageio.stream.ImageOutputStream;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -173,12 +175,17 @@ public final class ToolImageResize {
         // Write the jpeg to a file.
         try (
                 FileOutputStream out = new FileOutputStream(resizedFile)) {
-            // Encodes image as a JPEG data stream
-            JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
-            JPEGEncodeParam param = encoder.getDefaultJPEGEncodeParam(bufferedImage);
-            param.setQuality(quality, true);
-            encoder.setJPEGEncodeParam(param);
-            encoder.encode(bufferedImage);
+
+            ImageWriter imageWriter = ImageIO.getImageWritersBySuffix("jpg").next();
+            ImageOutputStream ios = ImageIO.createImageOutputStream(out);
+            imageWriter.setOutput(ios);
+            //and metadata
+            IIOMetadata imageMetaData = imageWriter.getDefaultImageMetadata(new ImageTypeSpecifier(bufferedImage), null);
+
+            JPEGImageWriteParam jpegParams = (JPEGImageWriteParam) imageWriter.getDefaultWriteParam();
+            jpegParams.setCompressionMode(JPEGImageWriteParam.MODE_EXPLICIT);
+            jpegParams.setCompressionQuality(quality);
+            imageWriter.write(imageMetaData, new IIOImage(bufferedImage, null, null), jpegParams);
         }
     }
 }

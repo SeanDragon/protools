@@ -9,7 +9,11 @@ import java.util.Set;
  *
  * @author sd
  */
-public class ToolClassSearch {
+public final class ToolClassSearch {
+    private ToolClassSearch() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
+
     private static Set<Class<?>> classList = new HashSet<>();
 
     static {

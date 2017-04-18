@@ -10,7 +10,12 @@ import java.util.Set;
 public class Test_20170412 {
 
     public static void main(String[] args) {
-        Set<Class<?>> allClazz = ToolClassSearch.getAllClazz();
-        allClazz.forEach(System.out::println);
+        Object a = new ABC();
+        Set<Class<?>> clazz = ToolClassSearch.getClazz(a.getClass());
+        System.out.println(clazz);
+    }
+
+    static class ABC {
+
     }
 }

@@ -16,7 +16,11 @@ import java.util.Iterator;
  *
  * @author SeanDragon
  */
-public abstract class ToolImageTailor {
+public final class ToolImageTailor {
+
+    private ToolImageTailor() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
 
     /**
      * 裁剪
@@ -44,7 +48,7 @@ public abstract class ToolImageTailor {
                 FileInputStream is = new FileInputStream(srcPath);
 
                 // 获取图片流
-                ImageInputStream iis = ImageIO.createImageInputStream(is);
+                ImageInputStream iis = ImageIO.createImageInputStream(is)
         ) {
             /*
              * <p>iis:读取源.true:只向前搜索 </p>.将它标记为 ‘只向前搜索’。 此设置意味着包含在输入源中的图像将只按顺序读取，可能允许 reader 避免缓存包含与以前已经读取的图像关联的数据的那些输入部分。

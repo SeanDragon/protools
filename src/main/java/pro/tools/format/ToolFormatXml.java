@@ -17,6 +17,10 @@ import java.io.StringWriter;
  */
 public final class ToolFormatXml {
 
+    private ToolFormatXml() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
+
 
     public static String formatXML(String inputXML) {
         String requestXML = null;

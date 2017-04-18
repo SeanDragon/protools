@@ -7,6 +7,10 @@ import java.util.UUID;
  * 随机数类
  */
 public final class ToolRandoms {
+    private ToolRandoms() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
+
 
     // 定义验证码字符.去除了O、I、l、、等容易混淆的字母
     public static final char authCodeAll[] = {

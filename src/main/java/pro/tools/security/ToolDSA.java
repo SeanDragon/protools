@@ -12,8 +12,10 @@ import java.util.Map;
 /**
  * DSA安全编码组件
  */
-public abstract class ToolDSA {
-
+public final class ToolDSA {
+    private ToolDSA() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
     /**
      * 数字签名密钥算法
      */

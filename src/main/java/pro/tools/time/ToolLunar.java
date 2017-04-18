@@ -6,6 +6,9 @@ package pro.tools.time;
  * @author SeanDragon
  */
 public final class ToolLunar {
+    private ToolLunar() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
 
     /*
      * |----4位闰月|-------------13位1为30天，0为29天|

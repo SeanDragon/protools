@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static pro.tools.constant.ToolConst.*;
+import static pro.tools.constant.RegexConst.*;
 
 
 /**

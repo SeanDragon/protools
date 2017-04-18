@@ -9,6 +9,10 @@ import java.io.IOException;
  * @author SeanDragon
  */
 public final class ToolMaven {
+    private ToolMaven() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
+
     public static boolean install(String groupId, String artifactId, String version, String fileName) throws IOException {
         String mvnInstallStr = "mvn install:install-file -DgroupId=" + groupId + " -DartifactId=" + artifactId + " " +
                 "-Dversion=" + version + " -Dfile=" + fileName + " -Dpackaging=jar -DgeneratePom=true";

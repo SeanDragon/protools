@@ -12,7 +12,7 @@ import java.text.DecimalFormat;
  * @author SeanDragon
  *         Create By 2017-04-13 14:22
  */
-public final class Decimal extends Number {
+public class Decimal extends Number {
 
     //region 全局变量
     private BigDecimal bigDecimal;

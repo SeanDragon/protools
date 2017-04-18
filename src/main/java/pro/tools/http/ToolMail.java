@@ -30,6 +30,9 @@ import java.util.Properties;
  * @author SeanDragon
  */
 public final class ToolMail {
+    private ToolMail() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
 
     public static final String sendType_text = "text";
     public static final String sendType_html = "html";

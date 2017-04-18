@@ -10,6 +10,11 @@ import pro.tools.system.ToolSystem;
  * @author SeanDragon
  */
 public final class SystemConst {
+
+    private SystemConst() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
+
     /**
      * 是否为Windows系统
      */

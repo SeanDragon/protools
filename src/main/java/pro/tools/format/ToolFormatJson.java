@@ -7,6 +7,11 @@ package pro.tools.format;
  */
 public final class ToolFormatJson {
 
+    private ToolFormatJson() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
+
+
     /**
      * 得到格式化json数据 退格用\t 换行用\r
      */

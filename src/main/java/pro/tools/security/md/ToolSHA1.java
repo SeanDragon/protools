@@ -8,8 +8,10 @@ import java.security.NoSuchAlgorithmException;
 /**
  * SHA-1加密
  */
-public abstract class ToolSHA1 {
-
+public final class ToolSHA1 {
+    private ToolSHA1() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
     /**
      * SHA-1加密
      *

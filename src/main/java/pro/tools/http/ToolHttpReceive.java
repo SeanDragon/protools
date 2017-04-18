@@ -14,6 +14,7 @@ import java.util.List;
  *         Create By 2017-04-07 9:06
  */
 public final class ToolHttpReceive {
+
     private boolean haveError;
     private String errMsg;
     private int statusCode;

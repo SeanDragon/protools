@@ -8,8 +8,10 @@ import java.security.NoSuchAlgorithmException;
 /**
  * MD加密组件
  */
-public abstract class ToolMD2 {
-
+public final class ToolMD2 {
+    private ToolMD2() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
     /**
      * MD2加密
      *

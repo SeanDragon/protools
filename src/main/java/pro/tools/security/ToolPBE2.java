@@ -15,7 +15,9 @@ import java.security.spec.KeySpec;
  * @author SeanDragon
  */
 public final class ToolPBE2 {
-
+    private ToolPBE2() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
     private static final String PBKDF2_ALGORITHM = "PBKDF2WithHmacSHA1";
 
     /**

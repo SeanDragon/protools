@@ -1,6 +1,12 @@
 package pro.tools.security;
 
-import javax.crypto.*;
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.KeyGenerator;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
 import java.security.InvalidKeyException;
 import java.security.Key;
@@ -11,8 +17,11 @@ import java.security.spec.InvalidKeySpecException;
 /**
  * DES安全编码组件
  */
-public abstract class ToolDES {
+public final class ToolDES {
 
+    private ToolDES() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
     /**
      * 密钥算法 <br>
      * Java 6 只支持56bit密钥 <br>

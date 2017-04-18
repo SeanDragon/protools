@@ -25,6 +25,10 @@ import java.io.OutputStream;
 @SuppressWarnings("restriction")
 public final class ToolImageResize {
 
+    private ToolImageResize() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
+
     public static final MediaTracker tracker = new MediaTracker(new Component() {
         private static final long serialVersionUID = 1234162663955668507L;
     });
@@ -44,7 +48,7 @@ public final class ToolImageResize {
         }
         byte[] in;
         try (FileInputStream fis = new FileInputStream(originalFile);
-             ByteArrayOutputStream byteStream = new ByteArrayOutputStream();) {
+             ByteArrayOutputStream byteStream = new ByteArrayOutputStream()) {
             int readLength;
             int bufferSize = 1024;
             byte bytes[] = new byte[bufferSize];
@@ -168,7 +172,7 @@ public final class ToolImageResize {
         bufferedImage = cOp.filter(bufferedImage, null);
         // Write the jpeg to a file.
         try (
-                FileOutputStream out = new FileOutputStream(resizedFile);) {
+                FileOutputStream out = new FileOutputStream(resizedFile)) {
             // Encodes image as a JPEG data stream
             JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
             JPEGEncodeParam param = encoder.getDefaultJPEGEncodeParam(bufferedImage);

@@ -1,6 +1,6 @@
 package pro.tools.data.text;
 
-import pro.tools.constant.ToolConst;
+import pro.tools.constant.UnitConst;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -15,12 +15,11 @@ import java.io.UnsupportedEncodingException;
  * @author SeanDragon
  */
 public final class ToolConvert {
-
-    private static final char hexDigits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
-
     private ToolConvert() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
+
+    private static final char hexDigits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 
     /**
      * byteArr转hexString
@@ -120,25 +119,25 @@ public final class ToolConvert {
      * @param memorySize 大小
      * @param unit       单位类型
      *                   <ul>
-     *                   <li>{@link ToolConst.MemoryUnit#BYTE}: 字节</li>
-     *                   <li>{@link ToolConst.MemoryUnit#KB}  : 千字节</li>
-     *                   <li>{@link ToolConst.MemoryUnit#MB}  : 兆</li>
-     *                   <li>{@link ToolConst.MemoryUnit#GB}  : GB</li>
+     *                   <li>{@link UnitConst.MemoryUnit#BYTE}: 字节</li>
+     *                   <li>{@link UnitConst.MemoryUnit#KB}  : 千字节</li>
+     *                   <li>{@link UnitConst.MemoryUnit#MB}  : 兆</li>
+     *                   <li>{@link UnitConst.MemoryUnit#GB}  : GB</li>
      *                   </ul>
      * @return 字节数
      */
-    public static long memorySize2Byte(long memorySize, ToolConst.MemoryUnit unit) {
+    public static long memorySize2Byte(long memorySize, UnitConst.MemoryUnit unit) {
         if (memorySize < 0) return -1;
         switch (unit) {
             default:
             case BYTE:
                 return memorySize;
             case KB:
-                return memorySize * ToolConst.KB;
+                return memorySize * UnitConst.KB;
             case MB:
-                return memorySize * ToolConst.MB;
+                return memorySize * UnitConst.MB;
             case GB:
-                return memorySize * ToolConst.GB;
+                return memorySize * UnitConst.GB;
         }
     }
 
@@ -148,25 +147,25 @@ public final class ToolConvert {
      * @param byteNum 字节数
      * @param unit    单位类型
      *                <ul>
-     *                <li>{@link ToolConst.MemoryUnit#BYTE}: 字节</li>
-     *                <li>{@link ToolConst.MemoryUnit#KB}  : 千字节</li>
-     *                <li>{@link ToolConst.MemoryUnit#MB}  : 兆</li>
-     *                <li>{@link ToolConst.MemoryUnit#GB}  : GB</li>
+     *                <li>{@link UnitConst.MemoryUnit#BYTE}: 字节</li>
+     *                <li>{@link UnitConst.MemoryUnit#KB}  : 千字节</li>
+     *                <li>{@link UnitConst.MemoryUnit#MB}  : 兆</li>
+     *                <li>{@link UnitConst.MemoryUnit#GB}  : GB</li>
      *                </ul>
      * @return 以unit为单位的size
      */
-    public static double byte2MemorySize(long byteNum, ToolConst.MemoryUnit unit) {
+    public static double byte2MemorySize(long byteNum, UnitConst.MemoryUnit unit) {
         if (byteNum < 0) return -1;
         switch (unit) {
             default:
             case BYTE:
                 return (double) byteNum;
             case KB:
-                return (double) byteNum / ToolConst.KB;
+                return (double) byteNum / UnitConst.KB;
             case MB:
-                return (double) byteNum / ToolConst.MB;
+                return (double) byteNum / UnitConst.MB;
             case GB:
-                return (double) byteNum / ToolConst.GB;
+                return (double) byteNum / UnitConst.GB;
         }
     }
 
@@ -180,14 +179,14 @@ public final class ToolConvert {
     public static String byte2FitMemorySize(long byteNum) {
         if (byteNum < 0) {
             return "shouldn't be less than zero!";
-        } else if (byteNum < ToolConst.KB) {
+        } else if (byteNum < UnitConst.KB) {
             return String.format("%.3fB", byteNum + 0.0005);
-        } else if (byteNum < ToolConst.MB) {
-            return String.format("%.3fKB", byteNum / ToolConst.KB + 0.0005);
-        } else if (byteNum < ToolConst.GB) {
-            return String.format("%.3fMB", byteNum / ToolConst.MB + 0.0005);
+        } else if (byteNum < UnitConst.MB) {
+            return String.format("%.3fKB", byteNum / UnitConst.KB + 0.0005);
+        } else if (byteNum < UnitConst.GB) {
+            return String.format("%.3fMB", byteNum / UnitConst.MB + 0.0005);
         } else {
-            return String.format("%.3fGB", byteNum / ToolConst.GB + 0.0005);
+            return String.format("%.3fGB", byteNum / UnitConst.GB + 0.0005);
         }
     }
 
@@ -197,27 +196,27 @@ public final class ToolConvert {
      * @param timeSpan 毫秒时间戳
      * @param unit     单位类型
      *                 <ul>
-     *                 <li>{@link ToolConst.TimeUnit#MSEC}: 毫秒</li>
-     *                 <li>{@link ToolConst.TimeUnit#SEC }: 秒</li>
-     *                 <li>{@link ToolConst.TimeUnit#MIN }: 分</li>
-     *                 <li>{@link ToolConst.TimeUnit#HOUR}: 小时</li>
-     *                 <li>{@link ToolConst.TimeUnit#DAY }: 天</li>
+     *                 <li>{@link UnitConst.TimeUnit#MSEC}: 毫秒</li>
+     *                 <li>{@link UnitConst.TimeUnit#SEC }: 秒</li>
+     *                 <li>{@link UnitConst.TimeUnit#MIN }: 分</li>
+     *                 <li>{@link UnitConst.TimeUnit#HOUR}: 小时</li>
+     *                 <li>{@link UnitConst.TimeUnit#DAY }: 天</li>
      *                 </ul>
      * @return 毫秒时间戳
      */
-    public static long timeSpan2Millis(long timeSpan, ToolConst.TimeUnit unit) {
+    public static long timeSpan2Millis(long timeSpan, UnitConst.TimeUnit unit) {
         switch (unit) {
             default:
             case MSEC:
                 return timeSpan;
             case SEC:
-                return timeSpan * ToolConst.SEC;
+                return timeSpan * UnitConst.SEC;
             case MIN:
-                return timeSpan * ToolConst.MIN;
+                return timeSpan * UnitConst.MIN;
             case HOUR:
-                return timeSpan * ToolConst.HOUR;
+                return timeSpan * UnitConst.HOUR;
             case DAY:
-                return timeSpan * ToolConst.DAY;
+                return timeSpan * UnitConst.DAY;
         }
     }
 
@@ -227,27 +226,27 @@ public final class ToolConvert {
      * @param millis 毫秒时间戳
      * @param unit   单位类型
      *               <ul>
-     *               <li>{@link ToolConst.TimeUnit#MSEC}: 毫秒</li>
-     *               <li>{@link ToolConst.TimeUnit#SEC }: 秒</li>
-     *               <li>{@link ToolConst.TimeUnit#MIN }: 分</li>
-     *               <li>{@link ToolConst.TimeUnit#HOUR}: 小时</li>
-     *               <li>{@link ToolConst.TimeUnit#DAY }: 天</li>
+     *               <li>{@link UnitConst.TimeUnit#MSEC}: 毫秒</li>
+     *               <li>{@link UnitConst.TimeUnit#SEC }: 秒</li>
+     *               <li>{@link UnitConst.TimeUnit#MIN }: 分</li>
+     *               <li>{@link UnitConst.TimeUnit#HOUR}: 小时</li>
+     *               <li>{@link UnitConst.TimeUnit#DAY }: 天</li>
      *               </ul>
      * @return 以unit为单位的时间长度
      */
-    public static long millis2TimeSpan(long millis, ToolConst.TimeUnit unit) {
+    public static long millis2TimeSpan(long millis, UnitConst.TimeUnit unit) {
         switch (unit) {
             default:
             case MSEC:
                 return millis;
             case SEC:
-                return millis / ToolConst.SEC;
+                return millis / UnitConst.SEC;
             case MIN:
-                return millis / ToolConst.MIN;
+                return millis / UnitConst.MIN;
             case HOUR:
-                return millis / ToolConst.HOUR;
+                return millis / UnitConst.HOUR;
             case DAY:
-                return millis / ToolConst.DAY;
+                return millis / UnitConst.DAY;
         }
     }
 
@@ -334,9 +333,9 @@ public final class ToolConvert {
     public static ByteArrayOutputStream input2OutputStream(InputStream is) throws IOException {
         if (is == null) return null;
         try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
-            byte[] b = new byte[ToolConst.KB];
+            byte[] b = new byte[UnitConst.KB];
             int len;
-            while ((len = is.read(b, 0, ToolConst.KB)) != -1) {
+            while ((len = is.read(b, 0, UnitConst.KB)) != -1) {
                 os.write(b, 0, len);
             }
             return os;

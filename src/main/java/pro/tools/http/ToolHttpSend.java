@@ -21,8 +21,14 @@ public final class ToolHttpSend {
     private TimeUnit responseTimeoutUnit;   //响应超时时间单位
     private boolean needResponseTimeout;    //是否需要连接超时
 
-    //初始化块
     {
+        init();
+    }
+
+    /**
+     * 初始化块
+     */
+    public void init() {
         needMsg = true;
         needErrMsg = true;
         method = Tool_HTTP_METHOD.GET;

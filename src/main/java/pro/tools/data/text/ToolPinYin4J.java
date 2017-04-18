@@ -15,6 +15,9 @@ import pro.tools.constant.StrConst;
  */
 public final class ToolPinYin4J {
 
+    private ToolPinYin4J() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
 
     /**
      * 得到 全拼

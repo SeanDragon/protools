@@ -1,16 +1,27 @@
 package pro.tools.security;
 
-import javax.net.ssl.*;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.KeyManagerFactory;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManagerFactory;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.security.*;
+import java.security.KeyManagementException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 
 /**
  * HTTPS组件
  */
-public abstract class ToolHTTPS {
-
+public final class ToolHTTPS {
+    private ToolHTTPS() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
     /**
      * 协议
      */

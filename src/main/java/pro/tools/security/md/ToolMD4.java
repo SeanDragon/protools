@@ -10,8 +10,10 @@ import java.security.Security;
 /**
  * MD4加密组件
  */
-public abstract class ToolMD4 {
-
+public final class ToolMD4 {
+    private ToolMD4() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
     /**
      * MD4加密
      *

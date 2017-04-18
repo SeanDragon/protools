@@ -17,6 +17,11 @@ import java.io.ObjectOutputStream;
  */
 public final class ToolSerialize {
 
+    private ToolSerialize() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
+
+
     private static final Logger log = LoggerFactory.getLogger(ToolRandoms.class);
 
     /**
@@ -28,7 +33,7 @@ public final class ToolSerialize {
     public static byte[] serialize(Object object) throws IOException {
         try (
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);) {
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream)) {
             // 序列化
             objectOutputStream.writeObject(object);
             return byteArrayOutputStream.toByteArray();
@@ -44,7 +49,7 @@ public final class ToolSerialize {
     public static Object unserialize(byte[] bytes) throws IOException, ClassNotFoundException {
         try (
                 ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
-                ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);) {
+                ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream)) {
             // 序列化
             return objectInputStream.readObject();
         }

@@ -4,14 +4,20 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSocketFactory;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.security.*;
+import java.security.KeyManagementException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 
 /**
  * HTTPS组件
  */
-public abstract class ToolHTTPS2 {
-
+public final class ToolHTTPS2 {
+    private ToolHTTPS2() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
     /**
      * 获得KeyStore
      *

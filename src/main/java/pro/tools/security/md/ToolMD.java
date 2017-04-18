@@ -11,7 +11,11 @@ import java.security.Security;
  * MD系列加密组件<br>
  * Tiger、Whirlpool和GOST3411共3种算法
  */
-public abstract class ToolMD {
+public final class ToolMD {
+
+    private ToolMD() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
 
 
     /**

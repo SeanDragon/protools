@@ -11,8 +11,10 @@ import java.security.Security;
  * RipeMD系列消息摘要组件<br>
  * 包含RipeMD128、RipeMD160、RipeMD256和RipeMD320共4种RipeMD系列算法
  */
-public abstract class ToolRipeMD {
-
+public final class ToolRipeMD {
+    private ToolRipeMD() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
     /**
      * RipeMD128消息摘要
      *

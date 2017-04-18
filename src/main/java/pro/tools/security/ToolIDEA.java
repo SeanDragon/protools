@@ -4,7 +4,12 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.crypto.*;
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.KeyGenerator;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.InvalidKeyException;
 import java.security.Key;
@@ -16,8 +21,10 @@ import java.security.Security;
  * <p>
  * 国际数据加密标准---IDEA：完全是新突破，几乎同时和AES出现
  */
-public abstract class ToolIDEA {
-
+public final class ToolIDEA {
+    private ToolIDEA() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
     /**
      * 密钥算法
      */

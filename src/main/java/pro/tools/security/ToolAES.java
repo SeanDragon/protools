@@ -3,7 +3,12 @@ package pro.tools.security;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.crypto.*;
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.KeyGenerator;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.InvalidKeyException;
 import java.security.Key;
@@ -22,8 +27,10 @@ import java.security.NoSuchAlgorithmException;
  * 有安装说明。就是替换${java_home}/jre/lib/security/
  * 下面的local_policy.jar和US_export_policy.jar
  */
-public abstract class ToolAES {
-
+public final class ToolAES {
+    private ToolAES() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
     /**
      * 密钥算法
      */

@@ -15,8 +15,10 @@ import java.security.cert.X509Certificate;
 /**
  * 证书组件
  */
-public abstract class ToolCertificate2 {
-
+public final class ToolCertificate2 {
+    private ToolCertificate2() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
     /**
      * 证书类型X509
      */
@@ -77,7 +79,7 @@ public abstract class ToolCertificate2 {
 
         Certificate certificate;
         // 取得证书文件流
-        try (FileInputStream in = new FileInputStream(certificatePath);) {
+        try (FileInputStream in = new FileInputStream(certificatePath)) {
             // 生成证书
             certificate = certificateFactory.generateCertificate(in);
         }
@@ -98,7 +100,7 @@ public abstract class ToolCertificate2 {
         KeyStore ks = KeyStore.getInstance(STORE_TYPE);
 
         // 获得密钥库文件流
-        try (FileInputStream in = new FileInputStream(keyStorePath);) {
+        try (FileInputStream in = new FileInputStream(keyStorePath)) {
             // 加载密钥库
             ks.load(in, password.toCharArray());
 

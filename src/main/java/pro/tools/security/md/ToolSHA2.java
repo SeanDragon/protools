@@ -10,7 +10,10 @@ import java.security.Security;
 /**
  * SHA-2 的变种 SHA- 224、 SHA- 256、 SHA-384 、 SHA-512
  */
-public abstract class ToolSHA2 {
+public final class ToolSHA2 {
+    private ToolSHA2() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
 
     /**
      * SHA-224加密

@@ -10,6 +10,11 @@ import java.nio.charset.Charset;
  * @author SeanDragon
  */
 public final class StrConst {
+
+    private StrConst() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
+
     /**
      * 默认编码
      */

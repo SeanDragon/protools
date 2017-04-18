@@ -11,6 +11,11 @@ import java.math.RoundingMode;
  *         Create By 2017-04-13 15:29
  */
 public final class ToolDecimal {
+
+    private ToolDecimal() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
+
     private final static BigInteger HUNDRED = BigInteger.valueOf(100);
 
     /**
@@ -133,5 +138,13 @@ public final class ToolDecimal {
         }
 
         return m_strFormat.toString();
+    }
+
+    public static String formatNumber_string(Double value, int scale) {
+        return new BigDecimal(value).setScale(2, BigDecimal.ROUND_HALF_UP).toString();
+    }
+
+    public static Double formatNumber_double(Double value, int scale) {
+        return new BigDecimal(value).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
     }
 }

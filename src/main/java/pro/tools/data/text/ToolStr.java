@@ -7,6 +7,11 @@ package pro.tools.data.text;
  */
 public final class ToolStr {
 
+    private ToolStr() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
+
+
     /**
      * 判断字符串是否为null或长度为0
      *

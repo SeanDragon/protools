@@ -15,13 +15,17 @@ import java.security.Security;
  * HmacRipeMD系列加密组件<br>
  * HmacRipeMD128、HmacRipeMD160共2种算法
  */
-public abstract class ToolHmacRipeMD {
+public final class ToolHmacRipeMD {
+
+    private ToolHmacRipeMD() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
 
     /**
      * 初始化HmacRipeMD128密钥
      *
      * @return byte[] 密钥
-     * @throws Exception
+     * @throws NoSuchAlgorithmException
      */
     public static byte[] initHmacRipeMD128Key() throws NoSuchAlgorithmException {
 

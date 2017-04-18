@@ -205,7 +205,7 @@ public final class ToolFormat {
     /**
      * String 转 Money
      *
-     * @param input       要转换的数字
+     * @param input     要转换的数字
      * @param MoneyType 要转换的格式
      * @return 返回转换后的String
      */

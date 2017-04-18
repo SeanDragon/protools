@@ -6,15 +6,23 @@ import java.math.BigInteger;
 import java.security.*;
 import java.security.interfaces.ECPrivateKey;
 import java.security.interfaces.ECPublicKey;
-import java.security.spec.*;
+import java.security.spec.ECFieldFp;
+import java.security.spec.ECParameterSpec;
+import java.security.spec.ECPoint;
+import java.security.spec.EllipticCurve;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * ECDSA安全编码组件
  */
-public abstract class ToolECDSA {
-
+public final class ToolECDSA {
+    private ToolECDSA() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
     /**
      * 数字签名 密钥算法
      */

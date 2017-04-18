@@ -23,6 +23,9 @@ import java.util.Hashtable;
  */
 public final class ToolBarCode {
 
+    private ToolBarCode() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
 
     /**
      * 生成二维码

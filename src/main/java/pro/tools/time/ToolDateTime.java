@@ -16,6 +16,10 @@ import java.util.Date;
  */
 public final class ToolDateTime {
 
+    private ToolDateTime() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
+
     private static final ZoneId DEFAULT_ZONE_ID = ZoneId.systemDefault();
 
     //region 关于星座和生肖

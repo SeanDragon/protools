@@ -35,6 +35,10 @@ import java.util.Iterator;
  */
 public final class ToolPoi {
 
+    private ToolPoi() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
+
     private static final Logger log = LoggerFactory.getLogger(ToolPoi.class);
 
     /**
@@ -56,7 +60,7 @@ public final class ToolPoi {
              XSSFWorkbook wb = new XSSFWorkbook(new File(templatePath)); // 初始化HSSFWorkbook对象
              // 3.转换成大数据读取模式
              SXSSFWorkbook swb = new SXSSFWorkbook(wb, 1000); // 用于大文件导出
-             FileOutputStream os = new FileOutputStream(new File(path));
+             FileOutputStream os = new FileOutputStream(new File(path))
         ) {
             // 1.载入模板
             wb.setSheetName(0, "用户信息导出");
@@ -81,7 +85,9 @@ public final class ToolPoi {
      */
     public static String writeExcel(String filePath, SXSSFWorkbook wb, String name) {
         File f = new File(filePath);
-        if (!f.exists()) f.mkdir();
+        if (!f.exists()) {
+            f.mkdir();
+        }
 
         String path = filePath + File.separator + name + ToolDateTime.format(new Date(), "_yyyy_MM_dd_HH_mm_ss_SSS") + ".xlsx";
 
@@ -111,8 +117,8 @@ public final class ToolPoi {
      */
     public static void setTitleFont(SXSSFWorkbook wb, Iterator<Cell> it) {
         XSSFColor color = new XSSFColor(new java.awt.Color(219, 229, 241));
-        Font font = createFont(wb, Font.BOLDWEIGHT_BOLD, Font.COLOR_NORMAL, (short) 11);
-        CellStyle style = createCellStyle(wb, color, CellStyle.ALIGN_CENTER, font);
+        Font font = createFont(wb, (short) 700, Font.COLOR_NORMAL, (short) 11);
+        CellStyle style = createCellStyle(wb, color, (short) 2, font);
         while (it.hasNext()) {
             it.next().setCellStyle(style);
         }
@@ -123,8 +129,8 @@ public final class ToolPoi {
      */
     public static void setHeadStyle(SXSSFWorkbook wb, Iterator<Cell> it) {
         XSSFColor color = new XSSFColor(new java.awt.Color(79, 129, 189));
-        Font font = createFont(wb, Font.BOLDWEIGHT_NORMAL, HSSFColor.WHITE.index, (short) 11);
-        CellStyle style = createCellStyle(wb, color, CellStyle.ALIGN_CENTER, font);
+        Font font = createFont(wb, (short) 400, HSSFColor.WHITE.index, (short) 11);
+        CellStyle style = createCellStyle(wb, color, (short) 2, font);
         while (it.hasNext()) {
             it.next().setCellStyle(style);
         }
@@ -135,8 +141,8 @@ public final class ToolPoi {
      */
     public static void setContentStyle(SXSSFWorkbook wb, Iterator<Cell> it) {
         XSSFColor color = new XSSFColor(new java.awt.Color(255, 255, 255));
-        Font font = createFont(wb, Font.BOLDWEIGHT_NORMAL, Font.COLOR_NORMAL, (short) 10);
-        CellStyle style = createBorderCellStyle(wb, HSSFColor.WHITE.index, color, CellStyle.ALIGN_CENTER, font);
+        Font font = createFont(wb, (short) 400, Font.COLOR_NORMAL, (short) 10);
+        CellStyle style = createBorderCellStyle(wb, HSSFColor.WHITE.index, color, (short) 2, font);
         while (it.hasNext()) {
             it.next().setCellStyle(style);
         }
@@ -147,8 +153,8 @@ public final class ToolPoi {
      */
     public static void setContentLeftStyle(SXSSFWorkbook wb, Cell cell) {
         XSSFColor color = new XSSFColor(new java.awt.Color(255, 255, 255));
-        Font font = createFont(wb, Font.BOLDWEIGHT_NORMAL, Font.COLOR_NORMAL, (short) 10);
-        CellStyle style = createBorderCellStyle(wb, HSSFColor.WHITE.index, color, CellStyle.ALIGN_LEFT, font);
+        Font font = createFont(wb, (short) 400, Font.COLOR_NORMAL, (short) 10);
+        CellStyle style = createBorderCellStyle(wb, HSSFColor.WHITE.index, color, (short) 2, font);
         style.setWrapText(true); // 实现换行
         cell.setCellStyle(style);
     }

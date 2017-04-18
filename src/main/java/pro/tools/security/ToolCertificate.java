@@ -15,8 +15,10 @@ import java.security.cert.X509Certificate;
 /**
  * 证书组件
  */
-public abstract class ToolCertificate {
-
+public final class ToolCertificate {
+    private ToolCertificate() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
     /**
      * 类型证书X509
      */

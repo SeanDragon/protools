@@ -21,8 +21,10 @@ import java.util.Arrays;
  * <p>
  * 3.当用户修改密码的时候，仍然可以使用原来的盐，只需要调用getEncryptedPassword()方法重新生成密文就可以了。
  */
-public abstract class ToolPbkdf2 {
-
+public final class ToolPbkdf2 {
+    private ToolPbkdf2() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
 
     public static boolean authenticate(String attemptedPassword, byte[] encryptedPassword, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
         // Encrypt the clear-text password using the same salt that was used to

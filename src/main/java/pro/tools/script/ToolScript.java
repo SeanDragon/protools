@@ -13,7 +13,12 @@ import java.util.Map;
  *
  * @author SeanDragon
  */
-public abstract class ToolScript {
+public final class ToolScript {
+
+    private ToolScript() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
+
 
     private static final Logger log = LoggerFactory.getLogger(ToolScript.class);
 

@@ -18,7 +18,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
-import static pro.tools.constant.ToolConst.KB;
+import static pro.tools.constant.UnitConst.KB;
 
 
 /**

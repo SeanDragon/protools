@@ -1,6 +1,11 @@
 package pro.tools.security;
 
-import javax.crypto.*;
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.KeyAgreement;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
 import javax.crypto.interfaces.DHPrivateKey;
 import javax.crypto.interfaces.DHPublicKey;
 import javax.crypto.spec.DHParameterSpec;
@@ -15,8 +20,10 @@ import java.util.Map;
 /**
  * DH安全编码组件
  */
-public abstract class ToolDH {
-
+public final class ToolDH {
+    private ToolDH() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
     /**
      * 非对称加密密钥算法
      */

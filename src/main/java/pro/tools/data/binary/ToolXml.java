@@ -21,8 +21,11 @@ import java.util.Set;
  *
  * @author SeanDragon
  */
-public abstract class ToolXml {
+public final class ToolXml {
 
+    private ToolXml() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
 
     /**
      * 获取XStream对象

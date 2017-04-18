@@ -22,6 +22,11 @@ import java.util.concurrent.TimeoutException;
  */
 public final class ToolHttp {
 
+    private ToolHttp() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
+
+
     /**
      * 用于请求http
      *

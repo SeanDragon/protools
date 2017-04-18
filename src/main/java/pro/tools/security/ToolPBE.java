@@ -21,8 +21,10 @@ import java.security.spec.InvalidKeySpecException;
  * 基于口令的加密---PBE：前面的对称加密几乎如出一辙，流程基本一致，PBE综合了对称加密和消息摘要算法的优势，形成对称加密算法的一个特例。没有密钥的概念
  * ，使用口令代替密钥
  */
-public abstract class ToolPBE {
-
+public final class ToolPBE {
+    private ToolPBE() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
     /**
      * Java 6 支持以下任意一种算法
      * <p>

@@ -18,6 +18,10 @@ import java.io.IOException;
 @SuppressWarnings("restriction")
 public final class ToolImagePressText {
 
+    private ToolImagePressText() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
+
     /**
      * 把图片印刷到图片上
      *
@@ -42,7 +46,7 @@ public final class ToolImagePressText {
         int readHeight = read.getHeight(null);
         g.drawImage(read, width - readWidth - x, height - readHeight - y, readWidth, readHeight, null);
         g.dispose();
-        try (FileOutputStream out = new FileOutputStream(targetImg);) {
+        try (FileOutputStream out = new FileOutputStream(targetImg)) {
             JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
             encoder.encode(image);
         }
@@ -73,7 +77,7 @@ public final class ToolImagePressText {
         g.setFont(new Font(fontName, fontStyle, fontSize));
         g.drawString(pressText, width - fontSize - x, height - fontSize / 2 - y);
         g.dispose();
-        try (FileOutputStream out = new FileOutputStream(targetImg);) {
+        try (FileOutputStream out = new FileOutputStream(targetImg)) {
             JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
             encoder.encode(image);
         }

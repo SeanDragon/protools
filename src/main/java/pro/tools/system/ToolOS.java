@@ -16,7 +16,9 @@ import java.util.List;
  */
 @SuppressWarnings("restriction")
 public final class ToolOS {
-
+    private ToolOS() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
     public static final String java_version = getOsSystemProperty("java.version"); // Java的运行环境版本
     public static final String java_vendo = getOsSystemProperty("java.vendor"); // Java的运行环境供应商
     public static final String java_vendo_url = getOsSystemProperty("java.vendor.url"); // Java供应商的URL

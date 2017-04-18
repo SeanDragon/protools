@@ -11,7 +11,11 @@ import java.security.NoSuchAlgorithmException;
 /**
  * MAC加密组件
  */
-public abstract class ToolMAC {
+public final class ToolMAC {
+
+    private ToolMAC() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
 
     /**
      * 初始化HmacMD5密钥

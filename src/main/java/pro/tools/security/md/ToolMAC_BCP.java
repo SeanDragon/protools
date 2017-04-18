@@ -14,7 +14,11 @@ import java.security.Security;
 /**
  * MAC消息摘要组件
  */
-public abstract class ToolMAC_BCP {
+public final class ToolMAC_BCP {
+
+    private ToolMAC_BCP() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
 
     /**
      * 初始化HmacMD2密钥

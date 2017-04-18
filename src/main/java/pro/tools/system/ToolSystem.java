@@ -6,9 +6,12 @@ package pro.tools.system;
  * @author SeanDragon
  */
 public final class ToolSystem {
+    private ToolSystem() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
 
     public static boolean isWindows() {
-        return System.getProperties().get("os.name").toString().toLowerCase().contains("windows");
+        return ToolOS.getOsName().toLowerCase().contains("windows");
     }
 
 }

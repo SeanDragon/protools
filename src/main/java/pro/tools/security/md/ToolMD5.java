@@ -10,8 +10,10 @@ import java.security.Security;
 /**
  * MD5加密组件
  */
-public abstract class ToolMD5 {
-
+public final class ToolMD5 {
+    private ToolMD5() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
     /**
      * MD5加密
      *

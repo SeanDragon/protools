@@ -92,10 +92,21 @@ public final class ToolBarCode {
 class MatrixToLogoImageConfig {
 
     // logo默认边框颜色
+    /**
+     * logo默认边框颜色
+     */
     public static final Color DEFAULT_BORDER_COLOR = Color.RED;
+
     // logo默认边框宽度
+    /**
+     * logo默认边框宽度
+     */
     public static final int DEFAULT_BORDER = 2;
+
     // logo大小默认为照片的1/5
+    /**
+     * logo大小默认为照片的1/5
+     */
     public static final int DEFAULT_LOGO_PART = 5;
 
     private final int border = DEFAULT_BORDER;

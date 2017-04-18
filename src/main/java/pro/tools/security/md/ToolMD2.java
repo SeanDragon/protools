@@ -12,6 +12,7 @@ public final class ToolMD2 {
     private ToolMD2() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
+
     /**
      * MD2加密
      *

@@ -27,6 +27,7 @@ public final class ToolRSA {
     private ToolRSA() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
+
     /**
      * 非对称加密密钥算法
      */

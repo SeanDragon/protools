@@ -22,6 +22,7 @@ public final class ToolDES {
     private ToolDES() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
+
     /**
      * 密钥算法 <br>
      * Java 6 只支持56bit密钥 <br>

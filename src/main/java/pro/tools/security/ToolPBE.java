@@ -25,6 +25,7 @@ public final class ToolPBE {
     private ToolPBE() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
+
     /**
      * Java 6 支持以下任意一种算法
      * <p>

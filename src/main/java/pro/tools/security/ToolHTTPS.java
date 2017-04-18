@@ -22,6 +22,7 @@ public final class ToolHTTPS {
     private ToolHTTPS() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
+
     /**
      * 协议
      */

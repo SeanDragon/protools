@@ -6,6 +6,7 @@ import java.math.BigDecimal;
  * 用BigDecimal精确计算Double类型
  * 如果需要精确计算,用String来够造BigDecimal
  * Created by Administrator on 2016/3/7.
+ *
  * @author Steven Duan
  * @version 1.0
  */
@@ -37,19 +38,21 @@ public final class decimal {
 
     /**
      * 将double转成BigDecimal
+     *
      * @param v1 double
      * @return BigDecimal
      */
-    public static BigDecimal get(double v1){
+    public static BigDecimal get(double v1) {
         return new BigDecimal(v1);
     }
 
     /**
      * 将String 转成BigDecimal
+     *
      * @param v1 String
      * @return BigDecimal
      */
-    public static BigDecimal get(String v1){
+    public static BigDecimal get(String v1) {
         return new BigDecimal(v1);
     }
 
@@ -61,14 +64,14 @@ public final class decimal {
      * @return 两个参数的和
      */
     public static BigDecimal add(double v1, double v2) {
-        return add(Double.toString(v1),Double.toString(v2));
+        return add(Double.toString(v1), Double.toString(v2));
     }
 
-    public static BigDecimal add(String v1, String v2){
+    public static BigDecimal add(String v1, String v2) {
         BigDecimal b1 = new BigDecimal(v1);
         BigDecimal b2 = new BigDecimal(v2);
 
-        return b1.add(b2).setScale(DEF_SCALE,RoundingMode);
+        return b1.add(b2).setScale(DEF_SCALE, RoundingMode);
     }
 
     /**
@@ -79,12 +82,13 @@ public final class decimal {
      * @return 两个参数的差
      */
     public static BigDecimal sub(double v1, double v2) {
-        return sub(Double.toString(v1),Double.toString(v2));
+        return sub(Double.toString(v1), Double.toString(v2));
     }
+
     public static BigDecimal sub(String v1, String v2) {
         BigDecimal b1 = new BigDecimal(v1);
         BigDecimal b2 = new BigDecimal(v2);
-        return b1.subtract(b2).setScale(DEF_SCALE,RoundingMode);
+        return b1.subtract(b2).setScale(DEF_SCALE, RoundingMode);
     }
 
     /**
@@ -95,12 +99,13 @@ public final class decimal {
      * @return 两个参数的积
      */
     public static BigDecimal mul(double v1, double v2) {
-        return mul(Double.toString(v1),Double.toString(v2));
+        return mul(Double.toString(v1), Double.toString(v2));
     }
+
     public static BigDecimal mul(String v1, String v2) {
         BigDecimal b1 = new BigDecimal(v1);
         BigDecimal b2 = new BigDecimal(v2);
-        return b1.multiply(b2).setScale(DEF_SCALE,RoundingMode);
+        return b1.multiply(b2).setScale(DEF_SCALE, RoundingMode);
     }
 
     /**
@@ -114,6 +119,7 @@ public final class decimal {
     public static BigDecimal div(double v1, double v2) {
         return div(v1, v2, DEF_DIV_SCALE);
     }
+
     public static BigDecimal div(String v1, String v2) {
         return div(v1, v2, DEF_DIV_SCALE);
     }
@@ -128,14 +134,15 @@ public final class decimal {
      * @return 两个参数的商
      */
     public static BigDecimal div(double v1, double v2, int scale) {
-        return div(Double.toString(v1),Double.toString(v2),scale);
+        return div(Double.toString(v1), Double.toString(v2), scale);
     }
+
     public static BigDecimal div(String v1, String v2, int scale) {
         if (scale < 0) {
             throw new IllegalArgumentException("The scale must be a positive integer or zero");
         }
         BigDecimal b = new BigDecimal(v1);
         BigDecimal one = new BigDecimal(v2);
-        return b.divide(one, scale, BigDecimal.ROUND_HALF_UP).setScale(DEF_SCALE,RoundingMode);
+        return b.divide(one, scale, BigDecimal.ROUND_HALF_UP).setScale(DEF_SCALE, RoundingMode);
     }
 }

@@ -12,6 +12,7 @@ public final class ToolSHA1 {
     private ToolSHA1() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
+
     /**
      * SHA-1加密
      *

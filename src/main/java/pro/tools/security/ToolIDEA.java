@@ -25,6 +25,7 @@ public final class ToolIDEA {
     private ToolIDEA() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
+
     /**
      * 密钥算法
      */

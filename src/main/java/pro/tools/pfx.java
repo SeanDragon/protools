@@ -7,8 +7,21 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-import java.io.*;
-import java.security.*;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringReader;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.UnrecoverableKeyException;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
@@ -248,15 +261,13 @@ public final class pfx {
     // ======================================================================================
     // 公私钥算法
     // ======================================================================================
+
     /**
      * 公钥算法
      *
-     * @param srcData
-     *            源字节
-     * @param publicKey
-     *            公钥
-     * @param mode
-     *            加密 OR 解密
+     * @param srcData   源字节
+     * @param publicKey 公钥
+     * @param mode      加密 OR 解密
      * @return
      */
     public static byte[] rsaByPublicKey(byte[] srcData, PublicKey publicKey, int mode) {
@@ -290,12 +301,9 @@ public final class pfx {
     /**
      * 私钥算法
      *
-     * @param srcData
-     *            源字节
-     * @param privateKey
-     *            私钥
-     * @param mode
-     *            加密 OR 解密
+     * @param srcData    源字节
+     * @param privateKey 私钥
+     * @param mode       加密 OR 解密
      * @return
      */
     public static byte[] rsaByPrivateKey(byte[] srcData, PrivateKey privateKey, int mode) {
@@ -365,7 +373,9 @@ public final class pfx {
     }
 
     private static final class RsaConst {
-        /** 编码 */
+        /**
+         * 编码
+         */
         public final static String ENCODE = "UTF-8";
 
         public final static String KEY_X509 = "X509";
@@ -376,9 +386,13 @@ public final class pfx {
         public final static String RSA_CHIPER = "pfx/ECB/PKCS1Padding";
 
         public final static int KEY_SIZE = 1024;
-        /** 1024bit 加密块 大小 */
+        /**
+         * 1024bit 加密块 大小
+         */
         public final static int ENCRYPT_KEYSIZE = 117;
-        /** 1024bit 解密块 大小 */
+        /**
+         * 1024bit 解密块 大小
+         */
         public final static int DECRYPT_KEYSIZE = 128;
     }
 

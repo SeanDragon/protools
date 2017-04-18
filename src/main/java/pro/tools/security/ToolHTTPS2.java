@@ -18,6 +18,7 @@ public final class ToolHTTPS2 {
     private ToolHTTPS2() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
+
     /**
      * 获得KeyStore
      *

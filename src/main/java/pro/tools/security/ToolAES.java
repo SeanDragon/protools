@@ -31,6 +31,7 @@ public final class ToolAES {
     private ToolAES() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
+
     /**
      * 密钥算法
      */

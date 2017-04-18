@@ -15,6 +15,7 @@ public final class ToolRipeMD {
     private ToolRipeMD() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
+
     /**
      * RipeMD128消息摘要
      *

@@ -14,6 +14,7 @@ public final class ToolMD5 {
     private ToolMD5() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
+
     /**
      * MD5加密
      *

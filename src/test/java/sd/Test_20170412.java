@@ -27,8 +27,10 @@ public class Test_20170412 {
 
 // Join all threads
         Arrays.stream(threads).forEach(t -> {
-            try { t.join(); }
-            catch (InterruptedException ignore) {}
+            try {
+                t.join();
+            } catch (InterruptedException ignore) {
+            }
         });
     }
 }

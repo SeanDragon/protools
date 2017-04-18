@@ -25,10 +25,10 @@ public final class ToolShell {
      * 是否是在root下执行命令
      *
      * @param toolCommandExec 包含下面四个属性
-     *                    commands          命令数组
-     *                    isRoot            是否需要root权限执行
-     *                    isNeedResultMsg   是否需要结果消息
-     *                    isNeedEnter       是否需要回车
+     *                        commands          命令数组
+     *                        isRoot            是否需要root权限执行
+     *                        isNeedResultMsg   是否需要结果消息
+     *                        isNeedEnter       是否需要回车
      * @return ToolCommandResult
      */
     public static ToolCommandResult execCmd(ToolCommandExec toolCommandExec) throws IOException {

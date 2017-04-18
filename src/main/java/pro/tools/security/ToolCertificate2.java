@@ -19,6 +19,7 @@ public final class ToolCertificate2 {
     private ToolCertificate2() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
+
     /**
      * 证书类型X509
      */

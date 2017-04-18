@@ -1,4 +1,4 @@
-package pro.tools;
+package pro.tools.security;
 
 import pro.tools.format.ToolFormat;
 import sun.misc.BASE64Decoder;
@@ -33,7 +33,7 @@ import java.util.Enumeration;
  * 私钥采用PKCS12加密方式的PFX私钥文件<br>
  * 加密算法为1024位的RSA，填充算法为PKCS1Padding<br>
  */
-public final class pfx {
+public final class ToolRSA2 {
 
 
     // ======================================================================================
@@ -380,10 +380,10 @@ public final class pfx {
 
         public final static String KEY_X509 = "X509";
         public final static String KEY_PKCS12 = "PKCS12";
-        public final static String KEY_ALGORITHM = "pfx";
+        public final static String KEY_ALGORITHM = "ToolRSA2";
         public final static String CER_ALGORITHM = "MD5WithRSA";
 
-        public final static String RSA_CHIPER = "pfx/ECB/PKCS1Padding";
+        public final static String RSA_CHIPER = "ToolRSA2/ECB/PKCS1Padding";
 
         public final static int KEY_SIZE = 1024;
         /**

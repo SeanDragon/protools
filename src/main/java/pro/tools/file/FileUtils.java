@@ -21,6 +21,9 @@ import static pro.tools.file.ToolFile.writeFileFromIS;
  * @author SeanDragon
  */
 public final class FileUtils {
+    private FileUtils() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
 
     public static Path getFileByPath(String filePath) {
         return Paths.get(filePath);

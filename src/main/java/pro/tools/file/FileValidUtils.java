@@ -10,6 +10,9 @@ import java.nio.file.Paths;
  * @author SeanDragon
  */
 public final class FileValidUtils {
+    private FileValidUtils() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
 
     public static boolean isFile(String filePath) {
         if (!isFileExists(filePath)) return false;

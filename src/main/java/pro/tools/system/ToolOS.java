@@ -99,7 +99,7 @@ public final class ToolOS {
      * @return
      */
     public static String getOsPathType() {
-        String osPathType = System.getProperty("file.separator");
+        String osPathType = file_separator;
         if (osPathType.equals("\\")) {
             return "\\\\";
         }

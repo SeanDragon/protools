@@ -60,7 +60,7 @@ public final class ToolDecimal {
             sb.append(j);
         }
         sb.append('.');
-        BigDecimal fraction = number.subtract(number.setScale(0, BigDecimal.ROUND_DOWN));
+        BigDecimal fraction = number.subtract(number.setScale(0, RoundingMode.DOWN));
         int fractionLength = (fraction.scale() + 1) / 2;
         fraction = fraction.movePointRight(fractionLength * 2);
         String fractionStr = fraction.toPlainString();
@@ -141,10 +141,10 @@ public final class ToolDecimal {
     }
 
     public static String formatNumber_string(Double value, int scale) {
-        return new BigDecimal(value).setScale(2, BigDecimal.ROUND_HALF_UP).toString();
+        return new BigDecimal(value).setScale(scale, RoundingMode.HALF_UP).toString();
     }
 
     public static Double formatNumber_double(Double value, int scale) {
-        return new BigDecimal(value).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        return new BigDecimal(value).setScale(scale, RoundingMode.HALF_UP).doubleValue();
     }
 }

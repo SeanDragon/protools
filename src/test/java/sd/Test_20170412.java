@@ -6,5 +6,6 @@ package sd;
 public class Test_20170412 {
 
     public static void main(String[] args) {
+        System.out.println("Test_20170412.main");
     }
 }

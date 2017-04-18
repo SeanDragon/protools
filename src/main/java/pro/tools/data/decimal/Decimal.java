@@ -19,7 +19,10 @@ public class Decimal extends Number {
     private MathContext defaultMathContext = new MathContext(0, RoundingMode.HALF_EVEN);
     //endregion
 
-    //region 初始化模块
+    /**
+     * region初始化模块
+     * @param initValue
+     */
     public Decimal(Object initValue) {
         init(initValue);
     }
@@ -50,6 +53,11 @@ public class Decimal extends Number {
     }
 
     //region 便利生成方式,获取实例方法
+    /**
+     * 便利生成方式,获取实例方法
+     * @param initValue
+     * @return
+     */
     public static Decimal instance(Object initValue) {
         return new Decimal(initValue);
     }
@@ -61,10 +69,18 @@ public class Decimal extends Number {
     //endregion
 
     //region 获取属性值
+    /**
+     * 获取属性值
+     * @return
+     */
     public BigDecimal getBigDecimal() {
         return this.bigDecimal;
     }
 
+    /**
+     * 获取MathContext
+     * @return
+     */
     public MathContext getDefaultMathContext() {
         return this.defaultMathContext;
     }
@@ -91,26 +107,50 @@ public class Decimal extends Number {
     //endregion
 
     //region 基本数值运算
+    /**
+     * 基本数值运算：加法
+     * @param object
+     * @return
+     */
     public Decimal add(Object object) {
         this.bigDecimal = this.bigDecimal.add(new Decimal(object).getBigDecimal(), defaultMathContext);
         return this;
     }
 
+    /**
+     * 减法
+     * @param object
+     * @return
+     */
     public Decimal sub(Object object) {
         this.bigDecimal = this.bigDecimal.subtract(new Decimal(object).getBigDecimal(), defaultMathContext);
         return this;
     }
 
+    /**
+     * 乘法
+     * @param object
+     * @return
+     */
     public Decimal mul(Object object) {
         this.bigDecimal = this.bigDecimal.multiply(new Decimal(object).getBigDecimal(), defaultMathContext);
         return this;
     }
 
+    /**
+     * 除法
+     * @param object
+     * @return
+     */
     public Decimal div(Object object) {
         this.bigDecimal = this.bigDecimal.divide(new Decimal(object).getBigDecimal(), defaultMathContext);
         return this;
     }
 
+    /**
+     * 绝对值
+     * @return
+     */
     public Decimal abs() {
         this.bigDecimal = this.bigDecimal.abs(defaultMathContext);
         return this;
@@ -172,10 +212,18 @@ public class Decimal extends Number {
         return this.bigDecimal.toPlainString();
     }
 
+    /**
+     * 精确最多2位小数四舍五入转换为字符串
+     * @return
+     */
     public String moneyStrValue() {
         return String.valueOf(moneyValue());
     }
 
+    /**
+     * 精确最多2位小数四舍五入
+     * @return
+     */
     public double moneyValue() {
         return doubleValue(2, RoundingMode.HALF_EVEN);
     }

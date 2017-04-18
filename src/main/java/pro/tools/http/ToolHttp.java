@@ -7,7 +7,7 @@ import com.ning.http.client.Response;
 import com.ning.http.client.cookie.Cookie;
 import pro.tools.constant.StrConst;
 import pro.tools.data.text.ToolRegex;
-import pro.tools.tools;
+import pro.tools.format.ToolFormat;
 
 import java.io.IOException;
 import java.util.List;
@@ -133,13 +133,13 @@ public final class ToolHttp {
             toolHttpReceive.setHaveError(false);
 
         } catch (InterruptedException e) {
-            toolHttpReceive.setErrMsg("http组件出现问题!\n" + tools.toException(e));
+            toolHttpReceive.setErrMsg("http组件出现问题!\n" + ToolFormat.toException(e));
         } catch (TimeoutException e) {
-            toolHttpReceive.setErrMsg("设置超时时间失败!\n" + tools.toException(e));
+            toolHttpReceive.setErrMsg("设置超时时间失败!\n" + ToolFormat.toException(e));
         } catch (IOException e) {
-            toolHttpReceive.setErrMsg("获取返回内容失败!\n" + tools.toException(e));
+            toolHttpReceive.setErrMsg("获取返回内容失败!\n" + ToolFormat.toException(e));
         } catch (ExecutionException e) {
-            toolHttpReceive.setErrMsg("访问URL失败!\n" + tools.toException(e));
+            toolHttpReceive.setErrMsg("访问URL失败!\n" + ToolFormat.toException(e));
         }
 
         if (!toolHttpSend.isNeedErrMsg()) {

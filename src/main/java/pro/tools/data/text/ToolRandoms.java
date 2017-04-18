@@ -127,10 +127,6 @@ public final class ToolRandoms {
     }
 
 
-    public static String getRandomStrByNanoTime(final boolean shift) {
-        return toUnsignedString(getRightNanoTime() + pro.tools.tools.getCode(5), shift ? 6 : 4);
-    }
-
     private static long getRightNanoTime() {
         long nanoTime = System.nanoTime();
         if (nanoTime < 0) return getRightNanoTime();

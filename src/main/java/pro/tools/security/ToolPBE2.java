@@ -99,7 +99,7 @@ public final class ToolPBE2 {
     /**
      * 二进制字符串转十六进制字符串
      *
-     * @param array the byte array to convert
+     * @param array the byte array to ToolJson
      * @return a length*2 character string encoding the byte array
      */
     private static String toHex(byte[] array) {

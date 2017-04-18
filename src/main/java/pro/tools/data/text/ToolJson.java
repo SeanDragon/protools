@@ -1,9 +1,8 @@
-package pro.tools;
+package pro.tools.data.text;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
-import pro.tools.data.text.ToolStr;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;

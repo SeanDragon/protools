@@ -1,7 +1,7 @@
 package sd.path;
 
 import org.junit.Test;
-import pro.tools.path;
+import pro.tools.system.ToolPath;
 
 /**
  * @author SeanDragon
@@ -10,7 +10,7 @@ import pro.tools.path;
 public class Test_20170413 {
     @Test
     public void test1() {
-        System.out.println(path.getRootClassPath());
-        System.out.println(path.getWebRootPath());
+        System.out.println(ToolPath.getRootClassPath());
+        System.out.println(ToolPath.getWebRootPath());
     }
 }

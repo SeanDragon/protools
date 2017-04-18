@@ -3,12 +3,12 @@ package pro.tools;
 import java.io.File;
 
 /**
- * new File("..\path\abc.txt") 中的三个方法获取路径的方法 <br>
- * 1： getPath() 获取相对路径，例如 ..\path\abc.txt <br>
- * 2： getAbslutlyPath() 获取绝对路径，但可能包含 ".." 或 "." 字符，例如D:\otherPath\..\path\abc.txt <br>
- * 3： getCanonicalPath() 获取绝对路径，但不包含 ".." 或 "." 字符，例如 D:\path\abc.txt
+ * new File("..\ToolPath\abc.txt") 中的三个方法获取路径的方法 <br>
+ * 1： getPath() 获取相对路径，例如 ..\ToolPath\abc.txt <br>
+ * 2： getAbslutlyPath() 获取绝对路径，但可能包含 ".." 或 "." 字符，例如D:\otherPath\..\ToolPath\abc.txt <br>
+ * 3： getCanonicalPath() 获取绝对路径，但不包含 ".." 或 "." 字符，例如 D:\ToolPath\abc.txt
  */
-public final class path {
+public final class ToolPath {
 
     private static String webRootPath;
     private static String rootClassPath;
@@ -27,10 +27,10 @@ public final class path {
     public static String getRootClassPath() {
         if (rootClassPath == null) {
             try {
-                String path = path.class.getClassLoader().getResource("").toURI().getPath();
+                String path = ToolPath.class.getClassLoader().getResource("").toURI().getPath();
                 rootClassPath = new File(path).getAbsolutePath();
             } catch (Exception e) {
-                String path = path.class.getClassLoader().getResource("").getPath();
+                String path = ToolPath.class.getClassLoader().getResource("").getPath();
                 rootClassPath = new File(path).getAbsolutePath();
             }
         }
@@ -52,17 +52,9 @@ public final class path {
         return webRootPath;
     }
 
-    public static void setWebRootPath(String webRootPath) {
-        if (webRootPath == null)
-            return;
-        if (webRootPath.endsWith(File.separator))
-            webRootPath = webRootPath.substring(0, webRootPath.length() - 1);
-        path.webRootPath = webRootPath;
-    }
-
     private static String detectWebRootPath() {
         try {
-            String path = path.class.getResource("/").toURI().getPath();
+            String path = ToolPath.class.getResource("/").toURI().getPath();
             return new File(path).getParentFile().getParentFile().getCanonicalPath();
         } catch (Exception e) {
             throw new RuntimeException(e);

@@ -13,6 +13,7 @@ public final class RegexConst {
     }
 
     public static final String REGEX_WORD_OR_NUMBER = "^[A-Za-z0-9]+$";
+
     /**
      * 正则：手机号（简单）
      */

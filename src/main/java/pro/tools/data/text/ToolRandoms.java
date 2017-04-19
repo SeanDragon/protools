@@ -13,11 +13,18 @@ public final class ToolRandoms {
 
 
     // 定义验证码字符.去除了O、I、l、、等容易混淆的字母
+    /**
+     * 定义验证码字符.去除了O、I、l、、等容易混淆的字母
+     */
     public static final char authCodeAll[] = {
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y',
             'a', 'c', 'd', 'e', 'f', 'g', 'h', 'k', 'm', 'n', 'p', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y',
             '3', '4', '5', '7', '8'};
+
     // 定义验证码数字
+    /**
+     * 定义验证码数字
+     */
     private static final char authCodeNumber[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
     private static final int authCodeAllLength = authCodeAll.length;
     public static final int authCodeNumberLength = authCodeNumber.length;

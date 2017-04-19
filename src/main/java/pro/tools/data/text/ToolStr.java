@@ -224,10 +224,20 @@ public final class ToolStr {
         return true;
     }
 
+    /**
+     * 判断字符串不为空返回true
+     * @param str
+     * @return
+     */
     public static boolean notBlank(String str) {
         return !isBlank(str);
     }
 
+    /**
+     * 判断多个字符串不为空字符串返回true
+     * @param strings
+     * @return
+     */
     public static boolean notBlank(String... strings) {
         if (strings == null) {
             return false;
@@ -240,6 +250,11 @@ public final class ToolStr {
         return true;
     }
 
+    /**
+     * 判断多个Object对象不为null，则返回true
+     * @param paras
+     * @return
+     */
     public static boolean notNull(Object... paras) {
         if (paras == null) {
             return false;
@@ -252,6 +267,11 @@ public final class ToolStr {
         return true;
     }
 
+    /**
+     * 将带（下划线）_的字符串格式化驼峰命名法
+     * @param stringWithUnderline
+     * @return
+     */
     public static String toCamelCase(String stringWithUnderline) {
         if (stringWithUnderline.indexOf('_') == -1) {
             return stringWithUnderline;
@@ -275,6 +295,11 @@ public final class ToolStr {
         return new String(toArray, 0, j);
     }
 
+    /**
+     * 将字符串数据组拼接一个字符串
+     * @param stringArray
+     * @return
+     */
     public static String join(String[] stringArray) {
         StringBuilder sb = new StringBuilder();
         for (String s : stringArray) {
@@ -283,6 +308,12 @@ public final class ToolStr {
         return sb.toString();
     }
 
+    /**
+     * 将字符串数组拼接一个字符串，拼接时数组每个对象都会间隔拼接separator字符串
+     * @param stringArray
+     * @param separator
+     * @return
+     */
     public static String join(String[] stringArray, String separator) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < stringArray.length; i++) {

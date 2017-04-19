@@ -40,6 +40,12 @@ public final class FileUtils {
         return Files.createDirectories(Paths.get(filePath));
     }
 
+    /**
+     * 判断文件是否存在，不存在则判断是否创建成功
+     * @param filePath
+     * @return
+     * @throws IOException
+     */
     public static Path createOrExistsFile(String filePath) throws IOException {
         if (isFileExists(filePath)) return Paths.get(filePath);
         return Files.createFile(Paths.get(filePath));
@@ -124,7 +130,13 @@ public final class FileUtils {
                 && !(isMove && !delete(srcFileName));
     }
 
-
+    /**
+     * 将文件移动到新的路径中
+     * @param filePath 源文件路径
+     * @param newName 新目录
+     * @return
+     * @throws IOException
+     */
     public static Path rename(String filePath, String newName) throws IOException {
         if (!isFileExists(filePath)) return null;
 
@@ -135,20 +147,45 @@ public final class FileUtils {
         return Files.move(sourcePath, Paths.get(targetFilePath));
     }
 
+    /**
+     * 删除
+     * @param filePath
+     * @return
+     * @throws IOException
+     */
     public static boolean delete(String filePath) throws IOException {
         Path path = Paths.get(filePath);
         return Files.deleteIfExists(path);
     }
 
+    /**
+     * 获得文件路径下的所有文件路径
+     * @param filePath 文件路径
+     * @return
+     * @throws IOException
+     */
     public static Stream<Path> getFileList(String filePath) throws IOException {
         Path path = Paths.get(filePath);
         return Files.list(path);
     }
 
+    /**
+     * 以UTF-8格式获得文件路径下的所有文件路径
+     * @param filePath
+     * @return
+     * @throws IOException
+     */
     public static Stream<String> readFile2List(String filePath) throws IOException {
         return readFile2List(filePath, StrConst.DEFAULT_CHARSET);
     }
 
+    /**
+     * 以指定字符格式获得文件路径下的所有文件路径
+     * @param filePath 文件路径
+     * @param charset 字符格式
+     * @return
+     * @throws IOException
+     */
     public static Stream<String> readFile2List(String filePath, Charset charset) throws IOException {
         if (!readable(filePath)) {
             return null;

@@ -73,8 +73,8 @@ public final class FileUtils {
     //private static boolean copyOrMoveDir(String srcDirPath, String destDirPath, boolean isMove) throws IOException {
     //    // 如果目标目录在源目录中则返回false，看不懂的话好好想想递归怎么结束
     //    // 为防止以上这种情况出现出现误判，须分别在后面加个路径分隔符
-    //    String srcPath = srcDirPath + File.separator;
-    //    String destPath = destDirPath + File.separator;
+    //    String srcPath = srcDirPath + StrConst.FILE_SEP;
+    //    String destPath = destDirPath + StrConst.FILE_SEP;
     //    if (destPath.contains(srcPath)) return false;
     //    // 源文件不存在或者不是目录则返回false
     //    if (!isFileExists(srcPath) || !isDir(srcPath)) return false;

@@ -16,6 +16,7 @@ import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pro.tools.constant.StrConst;
 import pro.tools.time.ToolDateTime;
 
 import java.io.File;
@@ -54,7 +55,7 @@ public final class ToolPoi {
         }
 
         // 导出文件路径
-        String path = filePath + File.separator + ToolDateTime.format(new Date(), "yyyyMMddHHmmssSSS") + ".xlsx";
+        String path = filePath + StrConst.FILE_SEP + ToolDateTime.format(new Date(), "yyyyMMddHHmmssSSS") + ".xlsx";
 
         try (// 2.读取模板处理好样式
              XSSFWorkbook wb = new XSSFWorkbook(new File(templatePath)); // 初始化HSSFWorkbook对象
@@ -89,7 +90,7 @@ public final class ToolPoi {
             f.mkdir();
         }
 
-        String path = filePath + File.separator + name + ToolDateTime.format(new Date(), "_yyyy_MM_dd_HH_mm_ss_SSS") + ".xlsx";
+        String path = filePath + StrConst.FILE_SEP + name + ToolDateTime.format(new Date(), "_yyyy_MM_dd_HH_mm_ss_SSS") + ".xlsx";
 
         FileOutputStream os = null;
         try {

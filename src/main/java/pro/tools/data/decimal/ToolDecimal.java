@@ -88,8 +88,15 @@ public final class ToolDecimal {
         return new BigDecimal(sb.toString()).setScale(scale, roundingMode);
     }
 
+    /**
+     * 返回零位的最高位(“最左侧”)之前的数中指定的int值的二进制补码表示一比特
+     * <p>
+     * 此方法返回零位的最高位(“最左侧”)前在指定的int值的二进制补码表示法，或32个1位的数量，如果该值为零。
+     *
+     * @param i 数字
+     * @return 结果
+     */
     public static int numberOfLeadingZeros(long i) {
-        // HD, Figure 5-6
         if (i == 0)
             return 64;
         int n = 1;
@@ -140,11 +147,21 @@ public final class ToolDecimal {
         return m_strFormat.toString();
     }
 
+    /**
+     * @param value
+     * @param scale
+     * @return
+     */
     public static String formatNumber_string(Double value, int scale) {
-        return new BigDecimal(value).setScale(2, RoundingMode.HALF_UP).toString();
+        return new BigDecimal(value).setScale(scale, RoundingMode.HALF_UP).toString();
     }
 
+    /**
+     * @param value
+     * @param scale
+     * @return
+     */
     public static Double formatNumber_double(Double value, int scale) {
-        return new BigDecimal(value).setScale(2, RoundingMode.HALF_UP).doubleValue();
+        return new BigDecimal(value).setScale(scale, RoundingMode.HALF_UP).doubleValue();
     }
 }

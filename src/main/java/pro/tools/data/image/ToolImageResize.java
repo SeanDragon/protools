@@ -86,7 +86,9 @@ public final class ToolImageResize {
     }
 
     /**
-     * Checks the given image for valid width and height.
+     * 检验图片的宽和高
+     *
+     * @param image 图片对象
      */
     private static void checkImage(Image image) {
         waitForImage(image);
@@ -99,7 +101,9 @@ public final class ToolImageResize {
     }
 
     /**
-     * Waits for given image to load. Use before querying image height/width/colors.
+     * 图片处理队列,手动放入等待
+     *
+     * @param image 图片
      */
     private static void waitForImage(Image image) {
         try {
@@ -112,7 +116,7 @@ public final class ToolImageResize {
     }
 
     /**
-     * Encodes the given image at the given quality to the output stream.
+     * 将图片写入到输出流中
      */
     private static void encode(OutputStream outputStream, Image outputImage, String format) throws IOException {
         int outputWidth = outputImage.getWidth(null);

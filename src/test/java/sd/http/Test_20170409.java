@@ -1,7 +1,7 @@
 package sd.http;
 
-import io.netty.util.CharsetUtil;
 import org.junit.Test;
+import pro.tools.constant.StrConst;
 import pro.tools.file.FileUtils;
 
 import java.io.IOException;
@@ -22,7 +22,7 @@ public class Test_20170409 {
 
     @Test
     public void test1() throws IOException {
-        List<String> lines = Files.readAllLines(path, CharsetUtil.UTF_8);
+        List<String> lines = Files.readAllLines(path, StrConst.DEFAULT_CHARSET);
         StringBuilder sb = new StringBuilder();
         for (String line : lines) {
             sb.append(line);

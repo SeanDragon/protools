@@ -26,7 +26,7 @@ public final class ToolDecimal {
      * @param roundingMode 舍入方法
      * @return 结果
      */
-    public static BigDecimal sqrt(BigDecimal number, int scale, RoundingMode roundingMode) {
+    static BigDecimal sqrt(BigDecimal number, int scale, RoundingMode roundingMode) {
         if (number.compareTo(BigDecimal.ZERO) < 0)
             throw new ArithmeticException("sqrt with negative");
         BigInteger integer = number.toBigInteger();
@@ -60,7 +60,7 @@ public final class ToolDecimal {
             sb.append(j);
         }
         sb.append('.');
-        BigDecimal fraction = number.subtract(number.setScale(0, BigDecimal.ROUND_DOWN));
+        BigDecimal fraction = number.subtract(number.setScale(0, RoundingMode.DOWN));
         int fractionLength = (fraction.scale() + 1) / 2;
         fraction = fraction.movePointRight(fractionLength * 2);
         String fractionStr = fraction.toPlainString();
@@ -141,10 +141,10 @@ public final class ToolDecimal {
     }
 
     public static String formatNumber_string(Double value, int scale) {
-        return new BigDecimal(value).setScale(2, BigDecimal.ROUND_HALF_UP).toString();
+        return new BigDecimal(value).setScale(2, RoundingMode.HALF_UP).toString();
     }
 
     public static Double formatNumber_double(Double value, int scale) {
-        return new BigDecimal(value).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        return new BigDecimal(value).setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
 }

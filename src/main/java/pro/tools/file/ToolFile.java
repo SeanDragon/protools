@@ -81,7 +81,7 @@ public final class ToolFile {
         if (ToolStr.isSpace(newName)) return false;
         // 如果文件名没有改变返回true
         if (newName.equals(file.getName())) return true;
-        File newFile = new File(file.getParent() + File.separator + newName);
+        File newFile = new File(file.getParent() + StrConst.FILE_SEP + newName);
         // 如果重命名的文件已存在返回false
         return !newFile.exists()
                 && file.renameTo(newFile);
@@ -168,8 +168,7 @@ public final class ToolFile {
         if (file == null) return false;
         // 如果存在，是文件则返回true，是目录则返回false
         if (file.exists()) return file.isFile();
-        if (!createOrExistsDir(file.getParentFile())) return false;
-        return file.createNewFile();
+        return createOrExistsDir(file.getParentFile()) && file.createNewFile();
     }
 
     /**
@@ -193,9 +192,8 @@ public final class ToolFile {
         // 文件存在并且删除失败返回false
         if (file.exists() && file.isFile() && !file.delete()) return false;
         // 创建目录失败返回false
-        if (!createOrExistsDir(file.getParentFile())) return false;
+        return createOrExistsDir(file.getParentFile()) && file.createNewFile();
 
-        return file.createNewFile();
     }
 
     /**
@@ -222,8 +220,8 @@ public final class ToolFile {
         if (srcDir == null || destDir == null) return false;
         // 如果目标目录在源目录中则返回false，看不懂的话好好想想递归怎么结束
         // 为防止以上这种情况出现出现误判，须分别在后面加个路径分隔符
-        String srcPath = srcDir.getPath() + File.separator;
-        String destPath = destDir.getPath() + File.separator;
+        String srcPath = srcDir.getPath() + StrConst.FILE_SEP;
+        String destPath = destDir.getPath() + StrConst.FILE_SEP;
         if (destPath.contains(srcPath)) return false;
         // 源文件不存在或者不是目录则返回false
         if (!srcDir.exists() || !srcDir.isDirectory()) return false;
@@ -1118,7 +1116,7 @@ public final class ToolFile {
      */
     public static String getDirName(String filePath) {
         if (ToolStr.isSpace(filePath)) return filePath;
-        int lastSep = filePath.lastIndexOf(File.separator);
+        int lastSep = filePath.lastIndexOf(StrConst.FILE_SEP);
         return lastSep == -1 ? "" : filePath.substring(0, lastSep + 1);
     }
 
@@ -1141,7 +1139,7 @@ public final class ToolFile {
      */
     public static String getFileName(String filePath) {
         if (ToolStr.isSpace(filePath)) return filePath;
-        int lastSep = filePath.lastIndexOf(File.separator);
+        int lastSep = filePath.lastIndexOf(StrConst.FILE_SEP);
         return lastSep == -1 ? filePath : filePath.substring(lastSep + 1);
     }
 
@@ -1165,7 +1163,7 @@ public final class ToolFile {
     public static String getFileNameNoExtension(String filePath) {
         if (ToolStr.isSpace(filePath)) return filePath;
         int lastPoi = filePath.lastIndexOf('.');
-        int lastSep = filePath.lastIndexOf(File.separator);
+        int lastSep = filePath.lastIndexOf(StrConst.FILE_SEP);
         if (lastSep == -1) {
             return (lastPoi == -1 ? filePath : filePath.substring(0, lastPoi));
         }
@@ -1195,7 +1193,7 @@ public final class ToolFile {
     public static String getFileExtension(String filePath) {
         if (ToolStr.isSpace(filePath)) return filePath;
         int lastPoi = filePath.lastIndexOf('.');
-        int lastSep = filePath.lastIndexOf(File.separator);
+        int lastSep = filePath.lastIndexOf(StrConst.FILE_SEP);
         if (lastPoi == -1 || lastSep >= lastPoi) return "";
         return filePath.substring(lastPoi + 1);
     }

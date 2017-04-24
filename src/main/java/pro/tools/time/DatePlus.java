@@ -46,6 +46,10 @@ public class DatePlus {
         this.localDateTime = LocalDateTime.of(year, month, dayOfMonth, hour, minutes, seconds);
     }
 
+    public DatePlus(int year, int month, int dayOfMonth, int hour, int minutes, int seconds, int nanoOfSecond) {
+        this.localDateTime = LocalDateTime.of(year, month, dayOfMonth, hour, minutes, seconds, nanoOfSecond);
+    }
+
     public DatePlus(long time) {
         java.util.Date date = new java.util.Date(time);
         this.localDateTime = ToolDateTime.date2LocalDateTime(date);

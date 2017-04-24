@@ -1,5 +1,6 @@
 package pro.tools.file;
 
+import pro.tools.constant.StrConst;
 import pro.tools.data.text.ToolStr;
 
 import java.io.BufferedInputStream;
@@ -163,10 +164,10 @@ public final class ToolZip {
      */
     private static boolean zipFile(File resFile, String rootPath, ZipOutputStream zos, String comment)
             throws IOException {
-        rootPath = rootPath + (ToolStr.isSpace(rootPath) ? "" : File.separator) + resFile.getName();
+        rootPath = rootPath + (ToolStr.isSpace(rootPath) ? "" : StrConst.FILE_SEP) + resFile.getName();
         if (resFile.isDirectory()) {
             File[] fileList = resFile.listFiles();
-            // 如果是空文件夹那么创建它，我把'/'换为File.separator测试就不成功，eggPain
+            // 如果是空文件夹那么创建它，我把'/'换为StrConst.FILE_SEP测试就不成功，eggPain
             if (fileList == null || fileList.length <= 0) {
                 ZipEntry entry = new ZipEntry(rootPath + '/');
                 if (!ToolStr.isEmpty(comment)) entry.setComment(comment);
@@ -284,7 +285,7 @@ public final class ToolZip {
                 ZipEntry entry = ((ZipEntry) entries.nextElement());
                 String entryName = entry.getName();
                 if (ToolStr.isEmpty(keyword) || ToolFile.getFileName(entryName).toLowerCase().contains(keyword.toLowerCase())) {
-                    String filePath = destDir + File.separator + entryName;
+                    String filePath = destDir + StrConst.FILE_SEP + entryName;
                     File file = new File(filePath);
                     files.add(file);
                     if (entry.isDirectory()) {

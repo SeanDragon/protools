@@ -25,8 +25,7 @@ public final class ToolJson {
         if (map == null)
             return "{}";
         Gson gson = new Gson();
-        String json = gson.toJson(map);
-        return json;
+        return gson.toJson(map);
     }
 
     /**
@@ -70,22 +69,85 @@ public final class ToolJson {
     }
 
     /**
+     * 将模型进行JSON解码
+     *
+     * @param data
+     * @param classOfT
+     * @return Object
+     */
+    public final static <T> T mapToModel(Map data, Class<T> classOfT) {
+        return jsonToModel(mapToJson(data), classOfT);
+    }
+
+    /**
+     * 将模型进行JSON解码
+     *
+     * @param data
+     * @param classOfT
+     * @return Object
+     */
+    public final static <T> List<T> mapToModelList(Map data, Class<T> classOfT) {
+        return jsonToModelList(mapToJson(data), classOfT);
+    }
+
+    /**
+     * 将模型进行JSON解码
+     *
+     * @param data
+     * @return Object
+     */
+    public final static Map modelToMap(Object data) {
+        return jsonToMap(modelToJson(data));
+    }
+
+    /**
+     * 将模型进行JSON解码
+     *
+     * @param data
+     * @return Object
+     */
+    public final static List<Map> modelToMapList(Object data) {
+        return jsonToMapList(modelToJson(data));
+    }
+
+
+    /**
      * 将模型列表进行JSON解码
      *
      * @param sJson
      * @return List<Object>
      */
-    @SuppressWarnings("unchecked")
     public final static <T> List<T> jsonToModelList(String sJson, Class<T> classOfT) {
         if (ToolStr.isBlank(sJson) || sJson.equals("[]")) {
             return null;
         }
         List<String> jsonToArrayList = jsonToArrayList(sJson);
-        List<T> lst = new ArrayList<T>();
+        List<T> lst = new ArrayList<>();
 
         for (String str : jsonToArrayList) {
             // 使用JSON作为传输
             T o = jsonToModel(str, classOfT);
+            lst.add(o);
+        }
+        return lst;
+    }
+
+    /**
+     * 将模型列表进行JSON解码
+     *
+     * @param sJson
+     * @return List<Object>
+     */
+    public final static List<Map> jsonToMapList(String sJson) {
+        if (ToolStr.isBlank(sJson) || sJson.equals("[]")) {
+            return null;
+        }
+        List<String> jsonToArrayList = jsonToArrayList(sJson);
+        List<Map> lst = new ArrayList<>();
+
+        for (String str : jsonToArrayList) {
+            // 使用JSON作为传输
+            Map o = jsonToMap(str);
             lst.add(o);
         }
         return lst;

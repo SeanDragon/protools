@@ -3,6 +3,7 @@ package pro.tools.system;
 import pro.tools.constant.StrConst;
 
 import java.io.File;
+import java.lang.annotation.Annotation;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -95,5 +96,18 @@ public final class ToolClassSearch {
         } else {
             return null;
         }
+    }
+
+    public static Set<Class<?>> getClazzByAnnotation(Class<? extends Annotation> clazz) {
+        if (!clazz.isAnnotation()) return null;
+        Set<Class<?>> returnClassList = new HashSet<>();
+
+        classList.forEach(one -> {
+            if (one.isAnnotationPresent(clazz)) {
+                returnClassList.add(one);
+            }
+        });
+
+        return returnClassList;
     }
 }

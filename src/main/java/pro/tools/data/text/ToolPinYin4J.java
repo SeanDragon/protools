@@ -25,7 +25,7 @@ public final class ToolPinYin4J {
      * @param src
      * @return
      */
-    public static String getPingYin(String src) throws BadHanyuPinyinOutputFormatCombination {
+    public static String getPinYin(String src) throws BadHanyuPinyinOutputFormatCombination {
         char[] t1;
         t1 = src.toCharArray();
         String[] t2;
@@ -77,7 +77,6 @@ public final class ToolPinYin4J {
         StringBuilder sb = new StringBuilder();
         byte[] strByte = cnStr.getBytes(StrConst.DEFAULT_CHARSET);
         for (byte aStrByte : strByte) {
-            // System.out.println(Integer.toHexString(bGBK[i]&0xff));
             sb.append(Integer.toHexString(aStrByte & 0xff));
         }
         return sb.toString();

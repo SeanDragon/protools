@@ -12,7 +12,7 @@ public class TestText {
     @Test
     public void test1() throws BadHanyuPinyinOutputFormatCombination {
         String cnStr = "";
-        System.out.println(ToolPinYin4J.getPingYin(cnStr));
+        System.out.println(ToolPinYin4J.getPinYin(cnStr));
         System.out.println(ToolPinYin4J.getPinYinHeadChar(cnStr));
         System.out.println(ToolPinYin4J.getCnASCII(cnStr));
     }

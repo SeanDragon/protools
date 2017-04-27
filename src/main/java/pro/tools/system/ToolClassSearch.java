@@ -110,4 +110,19 @@ public final class ToolClassSearch {
 
         return returnClassList;
     }
+
+    public static Set<Class<?>> getClazzByInterface(Class<?> clazz) {
+        if (!clazz.isInterface()) return null;
+        Set<Class<?>> returnClassList = new HashSet<>();
+
+        classList.forEach(one -> {
+            if (clazz.isAssignableFrom(one)) {
+                if (!clazz.equals(one)) {// 本身加不进去
+                    returnClassList.add(one);
+                }
+            }
+        });
+
+        return returnClassList;
+    }
 }

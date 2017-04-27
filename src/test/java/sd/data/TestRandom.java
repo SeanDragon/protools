@@ -2,14 +2,16 @@ package sd.data;
 
 import org.junit.Test;
 import pro.tools.data.text.ToolRandoms;
+import pro.tools.system.ToolClassSearch;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 /**
  * @author SeanDragon
  *         Create By 2017-04-25 10:17
  */
-public class TestRandom {
+public class TestRandom implements java.io.Serializable {
     public void doOne() {
         System.out.println(ToolRandoms.getAuthCodeAll(4));
         System.out.println(ToolRandoms.getAuthCodeAllChar());
@@ -28,5 +30,11 @@ public class TestRandom {
         for (int i = 0; i < 100; i++) {
             doOne();
         }
+    }
+
+    @Test
+    public void test3() {
+        System.out.println(ToolClassSearch.getAllClazz());
+        System.out.println(ToolClassSearch.getClazzByInterface(Serializable.class));
     }
 }

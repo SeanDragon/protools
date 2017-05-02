@@ -40,14 +40,7 @@
 
     <!--构建和编译-->
     <build>
-        <finalName>protools</finalName>
-        <resources>
-            <!-- 控制资源文件的拷贝 -->
-            <resource>
-                <directory>src/main/resources</directory>
-                <targetPath>${project.build.directory}</targetPath>
-            </resource>
-        </resources>
+        <finalName>protools-2.0</finalName>
         <pluginManagement>
             <plugins>
                 <plugin>

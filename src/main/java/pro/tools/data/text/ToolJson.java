@@ -15,16 +15,18 @@ import java.util.Map;
  */
 public final class ToolJson {
 
+    private static final Gson gson = new Gson();
+
     /**
      * 将Map进行JSON编码
      *
      * @param map
      * @return
      */
-    public final static String mapToJson(Map map) {
+    public static String mapToJson(Map map) {
         if (map == null)
             return "{}";
-        Gson gson = new Gson();
+        //Gson gson = new Gson();
         return gson.toJson(map);
     }
 
@@ -34,10 +36,10 @@ public final class ToolJson {
      * @param json
      * @return
      */
-    public final static Map jsonToMap(String json) {
+    public static Map jsonToMap(String json) {
         if (json == null)
             return new HashMap<>();
-        Gson gson = new Gson();
+        //Gson gson = new Gson();
         Map map = gson.fromJson(json, Map.class);
         return map;
     }
@@ -49,10 +51,10 @@ public final class ToolJson {
      * @param model
      * @return String
      */
-    public final static String modelToJson(Object model) {
+    public static String modelToJson(Object model) {
         if (model == null)
             return "{}";
-        Gson gson = new Gson();
+        //Gson gson = new Gson();
         return gson.toJson(model);
     }
 
@@ -63,8 +65,8 @@ public final class ToolJson {
      * @param classOfT
      * @return Object
      */
-    public final static <T> T jsonToModel(String sJson, Class<T> classOfT) {
-        Gson gson = new Gson();
+    public static <T> T jsonToModel(String sJson, Class<T> classOfT) {
+        //Gson gson = new Gson();
         return gson.fromJson(sJson, classOfT);
     }
 
@@ -75,7 +77,7 @@ public final class ToolJson {
      * @param classOfT
      * @return Object
      */
-    public final static <T> T mapToModel(Map data, Class<T> classOfT) {
+    public static <T> T mapToModel(Map data, Class<T> classOfT) {
         return jsonToModel(mapToJson(data), classOfT);
     }
 
@@ -86,7 +88,7 @@ public final class ToolJson {
      * @param classOfT
      * @return Object
      */
-    public final static <T> List<T> mapToModelList(Map data, Class<T> classOfT) {
+    public static <T> List<T> mapToModelList(Map data, Class<T> classOfT) {
         return jsonToModelList(mapToJson(data), classOfT);
     }
 
@@ -96,7 +98,7 @@ public final class ToolJson {
      * @param data
      * @return Object
      */
-    public final static Map modelToMap(Object data) {
+    public static Map modelToMap(Object data) {
         return jsonToMap(modelToJson(data));
     }
 
@@ -106,7 +108,7 @@ public final class ToolJson {
      * @param data
      * @return Object
      */
-    public final static List<Map> modelToMapList(Object data) {
+    public static List<Map> modelToMapList(Object data) {
         return jsonToMapList(modelToJson(data));
     }
 
@@ -117,19 +119,19 @@ public final class ToolJson {
      * @param sJson
      * @return List<Object>
      */
-    public final static <T> List<T> jsonToModelList(String sJson, Class<T> classOfT) {
+    public static <T> List<T> jsonToModelList(String sJson, Class<T> classOfT) {
         if (ToolStr.isBlank(sJson) || sJson.equals("[]")) {
             return null;
         }
         List<String> jsonToArrayList = jsonToArrayList(sJson);
-        List<T> lst = new ArrayList<>();
+        List<T> list = new ArrayList<>();
 
         for (String str : jsonToArrayList) {
             // 使用JSON作为传输
             T o = jsonToModel(str, classOfT);
-            lst.add(o);
+            list.add(o);
         }
-        return lst;
+        return list;
     }
 
     /**
@@ -138,19 +140,19 @@ public final class ToolJson {
      * @param sJson
      * @return List<Object>
      */
-    public final static List<Map> jsonToMapList(String sJson) {
+    public static List<Map> jsonToMapList(String sJson) {
         if (ToolStr.isBlank(sJson) || sJson.equals("[]")) {
             return null;
         }
         List<String> jsonToArrayList = jsonToArrayList(sJson);
-        List<Map> lst = new ArrayList<>();
+        List<Map> list = new ArrayList<>();
 
         for (String str : jsonToArrayList) {
             // 使用JSON作为传输
             Map o = jsonToMap(str);
-            lst.add(o);
+            list.add(o);
         }
-        return lst;
+        return list;
     }
 
     /**
@@ -164,11 +166,11 @@ public final class ToolJson {
     public static <T> ArrayList<T> jsonToArrayList(String json, Class<T> clazz) {
         Type type = new TypeToken<ArrayList<JsonObject>>() {
         }.getType();
-        ArrayList<JsonObject> jsonObjects = new Gson().fromJson(json, type);
+        ArrayList<JsonObject> jsonObjects = gson.fromJson(json, type);
 
         ArrayList<T> arrayList = new ArrayList<>();
         for (JsonObject jsonObject : jsonObjects) {
-            arrayList.add(new Gson().fromJson(jsonObject, clazz));
+            arrayList.add(gson.fromJson(jsonObject, clazz));
         }
         return arrayList;
     }
@@ -182,7 +184,7 @@ public final class ToolJson {
     public static ArrayList<String> jsonToArrayList(String json) {
         Type type = new TypeToken<ArrayList<JsonObject>>() {
         }.getType();
-        ArrayList<JsonObject> jsonObjects = new Gson().fromJson(json, type);
+        ArrayList<JsonObject> jsonObjects = gson.fromJson(json, type);
 
         ArrayList<String> arrayList = new ArrayList<>();
         for (JsonObject jsonObject : jsonObjects) {

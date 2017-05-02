@@ -40,7 +40,7 @@
 
     <!--构建和编译-->
     <build>
-        <finalName>protools</finalName>
+        <finalName>protools-2.0</finalName>
         <pluginManagement>
             <plugins>
                 <plugin>

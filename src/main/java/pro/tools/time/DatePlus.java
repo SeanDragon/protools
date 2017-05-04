@@ -1,5 +1,7 @@
 package pro.tools.time;
 
+import com.google.common.base.Objects;
+
 import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -110,32 +112,113 @@ public class DatePlus {
     //endregion
 
     //region 获取属性值
+
+    /**
+     * 获取年份
+     *
+     * @return 年
+     */
     public int getYear() {
         return this.localDateTime.getYear();
     }
 
+    /**
+     * 获取月份
+     *
+     * @return 月
+     */
     public int getMonth() {
         return this.localDateTime.getMonthValue();
     }
 
+    /**
+     * 获取月份对象
+     *
+     * @return 对象
+     */
     public Month getMonthObj() {
         return this.localDateTime.getMonth();
     }
 
+    /**
+     * 获取天在这周的次序
+     *
+     * @return 天
+     */
     public int getDayOfWeek() {
         return this.localDateTime.getDayOfWeek().getValue();
     }
 
+    /**
+     * 获取天在这周的对象
+     *
+     * @return 对象
+     */
     public DayOfWeek getDayOfWeekObj() {
         return this.localDateTime.getDayOfWeek();
     }
 
+    /**
+     * 获取天在这月的次序
+     *
+     * @return 天
+     */
     public int getDayOfMonth() {
         return this.localDateTime.getDayOfMonth();
     }
 
+    /**
+     * 获取天在这年的次序
+     *
+     * @return 天
+     */
     public int getDayOfYear() {
         return this.localDateTime.getDayOfYear();
+    }
+
+    /**
+     * 获取小时数
+     *
+     * @return
+     */
+    public int getHour() {
+        return this.localDateTime.getHour();
+    }
+
+    /**
+     * 获取分钟数
+     *
+     * @return
+     */
+    public int getMinute() {
+        return this.localDateTime.getMinute();
+    }
+
+    /**
+     * 获取秒数
+     *
+     * @return
+     */
+    public int getSecond() {
+        return this.localDateTime.getSecond();
+    }
+
+    /**
+     * 获取纳秒数
+     *
+     * @return
+     */
+    public int getNanoSecond() {
+        return this.localDateTime.getNano();
+    }
+
+    /**
+     * 获取这个月的最后一天
+     *
+     * @return 天
+     */
+    public int getLastDayOfMonth() {
+        return this.localDateTime.getMonth().length(isLeapYear());
     }
 
     /**
@@ -204,6 +287,54 @@ public class DatePlus {
         return this.localDateTime;
     }
 
+    public DatePlus toMinDate(DateType dateType) {
+        switch (dateType) {
+            case YEAR:
+                this.localDateTime = LocalDateTime.of(getYear(), 1, 1, 0, 0, 0, 0);
+                break;
+            case MONTH:
+                this.localDateTime = LocalDateTime.of(getYear(), getMonth(), 1, 0, 0, 0, 0);
+                break;
+            case DAY:
+                this.localDateTime = LocalDateTime.of(getYear(), getMonth(), getDayOfMonth(), 0, 0, 0, 0);
+                break;
+            case HOUR:
+                this.localDateTime = LocalDateTime.of(getYear(), getMonth(), getDayOfMonth(), getHour(), 0, 0, 0);
+                break;
+            case MINUTES:
+                this.localDateTime = LocalDateTime.of(getYear(), getMonth(), getDayOfMonth(), getHour(), getMinute(), 0, 0);
+                break;
+            case SECONDS:
+                this.localDateTime = LocalDateTime.of(getYear(), getMonth(), getDayOfMonth(), getHour(), getMinute(), getSecond(), 0);
+                break;
+        }
+        return this;
+    }
+
+    public DatePlus toMaxDate(DateType dateType) {
+        switch (dateType) {
+            case YEAR:
+                this.localDateTime = LocalDateTime.of(getYear(), 12, 31, 23, 59, 59, 999_999_999);
+                break;
+            case MONTH:
+                this.localDateTime = LocalDateTime.of(getYear(), getMonth(), getLastDayOfMonth(), 23, 59, 59, 999_999_999);
+                break;
+            case DAY:
+                this.localDateTime = LocalDateTime.of(getYear(), getMonth(), getDayOfMonth(), 23, 59, 59, 999_999_999);
+                break;
+            case HOUR:
+                this.localDateTime = LocalDateTime.of(getYear(), getMonth(), getDayOfMonth(), getHour(), 59, 59, 999_999_999);
+                break;
+            case MINUTES:
+                this.localDateTime = LocalDateTime.of(getYear(), getMonth(), getDayOfMonth(), getHour(), getMinute(), 59, 999_999_999);
+                break;
+            case SECONDS:
+                this.localDateTime = LocalDateTime.of(getYear(), getMonth(), getDayOfMonth(), getHour(), getMinute(), getSecond(), 999_999_999);
+                break;
+        }
+        return this;
+    }
+
     public java.util.Date toDate() {
         return ToolDateTime.localDateTime2Date(this.localDateTime);
     }
@@ -250,12 +381,15 @@ public class DatePlus {
     //endregion
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj instanceof DatePlus) {
-            DatePlus _obj = (DatePlus) obj;
-            return this.localDateTime.equals(_obj.localDateTime);
-        }
-        return false;
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (!(object instanceof DatePlus)) return false;
+        DatePlus datePlus = (DatePlus) object;
+        return Objects.equal(getLocalDateTime(), datePlus.getLocalDateTime());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getLocalDateTime());
     }
 }

@@ -33,4 +33,10 @@ public class Test_Month {
         System.out.println(datePlus.toMaxDate(DateType.YEAR));
         System.out.println(datePlus.toMinDate(DateType.YEAR));
     }
+
+    @Test
+    public void test3() {
+        DatePlus datePlus = new DatePlus("2017-05-04", "yyyy-MM-dd");
+        System.out.println(datePlus);
+    }
 }

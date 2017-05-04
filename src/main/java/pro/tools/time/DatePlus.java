@@ -10,6 +10,7 @@ import java.time.LocalTime;
 import java.time.Month;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 /**
  * Created on 17/4/8 19:27 星期六.
@@ -64,7 +65,14 @@ public class DatePlus {
     }
 
     public DatePlus(String dateStr, String pattern) {
-        this.localDateTime = LocalDateTime.parse(dateStr, DateTimeFormatter.ofPattern(pattern));
+        try {
+            this.localDateTime = LocalDateTime.parse(dateStr, DateTimeFormatter.ofPattern(pattern));
+        } catch (DateTimeParseException e) {
+            LocalDate date = LocalDate.parse(dateStr, DateTimeFormatter.ofPattern(pattern));
+            LocalTime time = LocalTime.MIN;
+            this.localDateTime = LocalDateTime.of(date, time);
+        }
+
     }
     //endregion
 

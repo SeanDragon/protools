@@ -3,7 +3,6 @@ package pro.tools.system;
 import pro.tools.constant.StrConst;
 
 import java.io.File;
-import java.lang.annotation.Annotation;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,7 +16,7 @@ public final class ToolClassSearch {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
 
-    private static Set<Class<?>> classList = new HashSet<>();
+    private static Set<Class> classList = new HashSet<>();
 
     static {
         init();
@@ -67,7 +66,7 @@ public final class ToolClassSearch {
         }
     }
 
-    public static Set<Class<?>> getAllClazz() {
+    public static Set<Class> getAllClazz() {
         return classList;
     }
 
@@ -98,7 +97,7 @@ public final class ToolClassSearch {
         }
     }
 
-    public static Set<Class<?>> getClazzByAnnotation(Class<? extends Annotation> clazz) {
+    public static Set<Class<?>> getClazzByAnnotation(Class<?> clazz) {
         if (!clazz.isAnnotation()) return null;
         Set<Class<?>> returnClassList = new HashSet<>();
 

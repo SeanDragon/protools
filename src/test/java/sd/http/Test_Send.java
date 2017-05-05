@@ -67,7 +67,9 @@ public class Test_Send {
         userModel3.setUserName("user3")
                 .setId("3")
                 .setUserModel(userModel1);
-        ToolClone.clone(userModel3);
+        UserModel clone = ToolClone.clone(userModel3);
+        System.out.println(userModel3.hashCode());
+        System.out.println(clone.hashCode());
 
         System.err.println(System.currentTimeMillis() - begin);
     }

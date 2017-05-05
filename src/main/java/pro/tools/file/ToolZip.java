@@ -1,5 +1,8 @@
 package pro.tools.file;
 
+import com.github.junrar.Archive;
+import com.github.junrar.exception.RarException;
+import com.github.junrar.rarfile.FileHeader;
 import pro.tools.constant.StrConst;
 import pro.tools.data.text.ToolStr;
 
@@ -306,6 +309,87 @@ public final class ToolZip {
         }
         return files;
     }
+
+    /**
+     * 解压rar
+     *
+     * @param rarFiles    带解压压缩包列表
+     * @param destDirPath 目标目录
+     * @return 成功与否
+     * @throws IOException  IO错误抛出
+     * @throws RarException IO错误抛出
+     */
+    public static boolean unrarFiles(Collection<File> rarFiles, String destDirPath) throws IOException, RarException {
+        return unrarFiles(rarFiles, ToolFile.getFileByPath(destDirPath));
+    }
+
+    /**
+     * 解压rar
+     *
+     * @param rarFiles 带解压压缩包列表
+     * @param destDir  目标目录
+     * @return 成功与否
+     * @throws IOException  IO错误抛出
+     * @throws RarException IO错误抛出
+     */
+    public static boolean unrarFiles(Collection<File> rarFiles, File destDir) throws IOException, RarException {
+        if (rarFiles == null || destDir == null) return false;
+        for (File rarFile : rarFiles) {
+            if (!unrarFile(rarFile, destDir)) return false;
+        }
+        return true;
+    }
+
+    /**
+     * 解压rar
+     *
+     * @param rarFilePath 带解压压缩包列表
+     * @param destDirPath 目标目录
+     * @return 成功与否
+     * @throws IOException  IO错误抛出
+     * @throws RarException IO错误抛出
+     */
+    public static boolean unrarFile(String rarFilePath, String destDirPath) throws IOException, RarException {
+        return unrarFile(ToolFile.getFileByPath(rarFilePath), ToolFile.getFileByPath(destDirPath));
+    }
+
+    /**
+     * 解压rar
+     *
+     * @param rarFile 带解压压缩包列表
+     * @param destDir 目标目录
+     * @return 成功与否
+     * @throws IOException  IO错误抛出
+     * @throws RarException IO错误抛出
+     */
+    public static boolean unrarFile(File rarFile, File destDir) throws IOException, RarException {
+        try (Archive archive = new Archive(rarFile)) {
+            FileHeader fh = archive.nextFileHeader();
+            while (fh != null) {
+                String compressFileName = fh.getFileNameString().trim();
+                File destFile = new File(destDir.getAbsolutePath() + StrConst.FILE_SEP + compressFileName);
+
+                if (fh.isDirectory()) {
+                    if (!destFile.exists()) {
+                        destFile.mkdirs();
+                    }
+                    fh = archive.nextFileHeader();
+                    continue;
+                }
+
+                if (!destFile.getParentFile().exists()) {
+                    destFile.getParentFile().mkdirs();
+                }
+
+                try (FileOutputStream fos = new FileOutputStream(destFile)) {
+                    archive.extractFile(fh, fos);
+                }
+                fh = archive.nextFileHeader();
+            }
+        }
+        return true;
+    }
+
 
     /**
      * 获取压缩文件中的文件路径链表

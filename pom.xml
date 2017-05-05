@@ -177,6 +177,13 @@
             <version>3.3.0</version>
         </dependency>
 
+        <!--rar-->
+        <dependency>
+            <groupId>com.github.junrar</groupId>
+            <artifactId>junrar</artifactId>
+            <version>0.7</version>
+        </dependency>
+
     </dependencies>
 
 

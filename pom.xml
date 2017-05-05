@@ -179,44 +179,5 @@
 
     </dependencies>
 
-    <!--配置镜像源-->
-    <repositories>
-        <!--region 阿里镜像源-->
-        <!--<repository>-->
-        <!--<id>nexus-aliyun</id>-->
-        <!--<name>Nexus aliyun</name>-->
-        <!--<url>http://maven.aliyun.com/nexus/content/groups/public</url>-->
-        <!--<snapshots>-->
-        <!--<enabled>true</enabled>-->
-        <!--</snapshots>-->
-        <!--</repository>-->
-        <!--endregion-->
-        <repository>
-            <id>nexus</id>
-            <name>nexus</name>
-            <url>http://maven.asyou.cc:8081/repository/maven-public/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
-
-    <!--配置插件镜像源-->
-    <pluginRepositories>
-        <pluginRepository>
-            <id>nexus</id>
-            <name>nexus</name>
-            <url>http://maven.asyou.cc:8081/repository/maven-public/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
 
 </project>

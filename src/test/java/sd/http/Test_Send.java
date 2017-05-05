@@ -1,13 +1,18 @@
 package sd.http;
 
+import com.google.common.base.MoreObjects;
 import org.junit.Test;
+import pro.tools.data.ToolClone;
 import pro.tools.file.FileUtils;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.nio.file.FileVisitOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Stream;
 
 /**
@@ -46,5 +51,77 @@ public class Test_Send {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void test4() throws IOException, ClassNotFoundException {
+        long begin = System.currentTimeMillis();
+        UserModel userModel1 = new UserModel();
+        Map map = new HashMap();
+        map.put("a", "b");
+        userModel1.setId("1")
+                .setUserName("user1")
+                .setMap(map);
+
+        UserModel userModel3 = new UserModel();
+        userModel3.setUserName("user3")
+                .setId("3")
+                .setUserModel(userModel1);
+        ToolClone.clone(userModel3);
+
+        System.err.println(System.currentTimeMillis() - begin);
+    }
+}
+
+class UserModel implements Serializable {
+    private String id;
+    private String userName;
+    private Map<String, String> map;
+    private UserModel userModel;
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("id", id)
+                .add("userName", userName)
+                .add("map", map)
+                .add("userModel", userModel)
+                .toString();
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public UserModel setId(String id) {
+        this.id = id;
+        return this;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public UserModel setUserName(String userName) {
+        this.userName = userName;
+        return this;
+    }
+
+    public Map<String, String> getMap() {
+        return map;
+    }
+
+    public UserModel setMap(Map<String, String> map) {
+        this.map = map;
+        return this;
+    }
+
+    public UserModel getUserModel() {
+        return userModel;
+    }
+
+    public UserModel setUserModel(UserModel userModel) {
+        this.userModel = userModel;
+        return this;
     }
 }

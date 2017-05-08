@@ -98,6 +98,10 @@ public final class ToolRandoms {
         return uuid;
     }
 
+    public static UUID getUuid() {
+        return UUID.randomUUID();
+    }
+
     /**
      * 产生两个数之间的随机数
      *
@@ -152,7 +156,7 @@ public final class ToolRandoms {
      * @param shift 2的几次幂
      * @return 经过转换的
      */
-    private static String toUnsignedString(long i, int shift) {
+    public static String toUnsignedString(long i, int shift) {
         shift = shift > 6 ? 6 : shift;
         final char[] self = shift > 5 ? digits_$ : digits;
         char[] buf = new char[64];

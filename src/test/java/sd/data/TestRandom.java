@@ -2,9 +2,7 @@ package sd.data;
 
 import org.junit.Test;
 import pro.tools.data.text.ToolRandoms;
-import pro.tools.system.ToolClassSearch;
 
-import java.io.Serializable;
 import java.util.Arrays;
 
 /**
@@ -28,13 +26,18 @@ public class TestRandom implements java.io.Serializable {
     @Test
     public void test2() {
         for (int i = 0; i < 100; i++) {
-            doOne();
+            test3();
         }
     }
 
     @Test
     public void test3() {
-        System.out.println(ToolClassSearch.getAllClazz());
-        System.out.println(ToolClassSearch.getClazzByInterface(Serializable.class));
+        String sum = ToolRandoms.getUuid(true);
+        String first = sum.substring(0, 16);
+        String second = sum.substring(16, sum.length() - 1);
+        System.out.println(first);
+        System.out.println(second);
+        System.out.println(Long.parseLong(first, 16));
+        System.out.println(Long.parseLong(second, 16));
     }
 }

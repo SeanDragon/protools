@@ -15,8 +15,8 @@ public class TestRandom implements java.io.Serializable {
         System.out.println(ToolRandoms.getAuthCodeAllChar());
         System.out.println(ToolRandoms.getAuthCodeNumber(4));
         System.out.println(Arrays.toString(ToolRandoms.getRandomRgb()));
-        System.out.println(ToolRandoms.numberRandom(4));
-        System.out.println(ToolRandoms.numberRandom(1, 4));
+        System.out.println(ToolRandoms.getNumberRandom(4));
+        System.out.println(ToolRandoms.getNumberRandom(1, 4));
         System.out.println(ToolRandoms.getUuid(true));
         System.out.println(ToolRandoms.getUuid(false));
         System.out.println(ToolRandoms.getRandomStrByNanoTime(true));
@@ -25,19 +25,15 @@ public class TestRandom implements java.io.Serializable {
 
     @Test
     public void test2() {
-        for (int i = 0; i < 100; i++) {
+        long begin = System.currentTimeMillis();
+        for (int i = 0; i < 10000; i++) {
             test3();
         }
+        System.out.println(System.currentTimeMillis() - begin);
     }
 
     @Test
     public void test3() {
-        String sum = ToolRandoms.getUuid(true);
-        String first = sum.substring(0, 16);
-        String second = sum.substring(16, sum.length() - 1);
-        System.out.println(first);
-        System.out.println(second);
-        System.out.println(Long.parseLong(first, 16));
-        System.out.println(Long.parseLong(second, 16));
+        System.out.println(ToolRandoms.getRandomStr());
     }
 }

@@ -1,6 +1,7 @@
 package pro.tools.data.text;
 
 import java.security.SecureRandom;
+import java.util.StringTokenizer;
 import java.util.UUID;
 
 /**
@@ -10,7 +11,6 @@ public final class ToolRandoms {
     private ToolRandoms() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
-
 
     // 定义验证码字符.去除了O、I、l、、等容易混淆的字母
     /**
@@ -47,7 +47,7 @@ public final class ToolRandoms {
             'G', 'H', 'I', 'J', 'K', 'L',
             'M', 'N', 'O', 'P', 'Q', 'R',
             'S', 'T', 'U', 'V', 'W', 'X',
-            'Y', 'Z', '*', '$'
+            'Y', 'Z', '_', '_'
     };
 
     /**
@@ -56,7 +56,7 @@ public final class ToolRandoms {
      * @return
      */
     public static char getAuthCodeAllChar() {
-        return authCodeAll[numberRandom(0, authCodeAllLength)];
+        return authCodeAll[getNumberRandom(0, authCodeAllLength)];
     }
 
     /**
@@ -67,7 +67,7 @@ public final class ToolRandoms {
     public static String getAuthCodeNumber(int length) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < length; i++) {
-            sb.append(authCodeNumber[numberRandom(0, length)]);
+            sb.append(authCodeNumber[getNumberRandom(0, length)]);
         }
         return sb.toString();
     }
@@ -80,7 +80,7 @@ public final class ToolRandoms {
     public static String getAuthCodeAll(int length) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < length; i++) {
-            sb.append(authCodeAll[numberRandom(0, length)]);
+            sb.append(authCodeAll[getNumberRandom(0, length)]);
         }
         return sb.toString();
     }
@@ -91,13 +91,18 @@ public final class ToolRandoms {
      * @return
      */
     public static String getUuid(boolean is32bit) {
-        String uuid = UUID.randomUUID().toString();
+        String uuid = getUuid().toString();
         if (is32bit) {
             return uuid.replace("-", "");
         }
         return uuid;
     }
 
+    /**
+     * 获取原生UUID对象
+     *
+     * @return
+     */
     public static UUID getUuid() {
         return UUID.randomUUID();
     }
@@ -109,7 +114,7 @@ public final class ToolRandoms {
      * @param max 比min大的数
      * @return int 随机数字
      */
-    public static int numberRandom(int min, int max) {
+    public static int getNumberRandom(int min, int max) {
         return min + random.nextInt(max - min);
     }
 
@@ -119,7 +124,7 @@ public final class ToolRandoms {
      * @param number 数字
      * @return int 随机数字
      */
-    public static int numberRandom(int number) {
+    public static int getNumberRandom(int number) {
         return random.nextInt(number);
     }
 
@@ -136,11 +141,39 @@ public final class ToolRandoms {
         return rgb;
     }
 
+    /**
+     * 通过nanotime获取随机数
+     *
+     * @param shift
+     * @return
+     */
     public static String getRandomStrByNanoTime(final boolean shift) {
-        return toUnsignedString(getRightNanoTime() + numberRandom(5), shift ? 6 : 4);
+        return toUnsignedString(getRightNanoTime() + getNumberRandom(5), shift ? 6 : 4);
     }
 
-    private static long getRightNanoTime() {
+    /**
+     * 通过UUID和nanotime共同获取随机数
+     *
+     * @return
+     */
+    public static String getRandomStr() {
+        String sum = ToolRandoms.getUuid(false);
+        StringTokenizer stringTokenizer = new StringTokenizer(sum, "-");
+        StringBuilder result = new StringBuilder();
+        while (stringTokenizer.hasMoreElements()) {
+            String one = (String) stringTokenizer.nextElement();
+            Long one_long = Long.parseLong(one, 16);
+            result.append(ToolRandoms.toUnsignedString(one_long, 6));
+        }
+        return result.toString();
+    }
+
+    /**
+     * 获取正确的nanotime
+     *
+     * @return
+     */
+    public static long getRightNanoTime() {
         long nanoTime = System.nanoTime();
         if (nanoTime < 0) return getRightNanoTime();
         else return nanoTime;

@@ -26,6 +26,15 @@ public final class ToolHttp {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
 
+    public static ToolHttpReceive sendGet(String url, Map<String, Object> param) {
+        ToolHttpSend send = new ToolHttpSend(url, param, Tool_HTTP_METHOD.GET);
+        return sendHttp(send);
+    }
+
+    public static ToolHttpReceive sendPost(String url, Map<String, Object> param) {
+        ToolHttpSend send = new ToolHttpSend(url, param, Tool_HTTP_METHOD.POST);
+        return sendHttp(send);
+    }
 
     /**
      * 用于请求http

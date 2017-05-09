@@ -66,4 +66,10 @@ public class HttpTest {
 //        System.err.println(HttpSendUtil.httpRequest("http://www.baidu.com","GET"));
 //        System.err.println("123456");
     }
+
+    @Test
+    public void test3() {
+        ToolHttpReceive toolHttpReceive = ToolHttp.sendGet("http://m.tuhaolicai.cc/public/index", null);
+        System.out.println(toolHttpReceive.getResponseBody());
+    }
 }

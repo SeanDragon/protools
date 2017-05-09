@@ -14,6 +14,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
@@ -283,6 +284,54 @@ public final class ToolZip {
         if (zipFile == null || destDir == null) return null;
         List<File> files = new ArrayList<>();
         try (ZipFile zf = new ZipFile(zipFile)) {
+            Enumeration<?> entries = zf.entries();
+            while (entries.hasMoreElements()) {
+                ZipEntry entry = ((ZipEntry) entries.nextElement());
+                String entryName = entry.getName();
+                if (ToolStr.isEmpty(keyword) || ToolFile.getFileName(entryName).toLowerCase().contains(keyword.toLowerCase())) {
+                    String filePath = destDir + StrConst.FILE_SEP + entryName;
+                    File file = new File(filePath);
+                    files.add(file);
+                    if (entry.isDirectory()) {
+                        if (!ToolFile.createOrExistsDir(file)) return null;
+                    } else {
+                        if (!ToolFile.createOrExistsFile(file)) return null;
+                        try (InputStream in = new BufferedInputStream(zf.getInputStream(entry));
+                             OutputStream out = new BufferedOutputStream(new FileOutputStream(file))) {
+                            byte buffer[] = new byte[KB];
+                            int len;
+                            while ((len = in.read(buffer)) != -1) {
+                                out.write(buffer, 0, len);
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (IllegalArgumentException e) {
+            if (e.getMessage().equals("MALFORMED")) {
+                return unzipFileByKeyword(zipFile, destDir, keyword, Charset.forName("GBK"));
+            } else {
+                e.printStackTrace();
+                throw new RuntimeException(e);
+            }
+        }
+        return files;
+    }
+
+    /**
+     * 解压带有关键字的文件
+     *
+     * @param zipFile 待解压文件
+     * @param destDir 目标目录
+     * @param keyword 关键字
+     * @return 返回带有关键字的文件链表
+     * @throws IOException IO错误时抛出
+     */
+    public static List<File> unzipFileByKeyword(File zipFile, File destDir, String keyword, Charset charset)
+            throws IOException {
+        if (zipFile == null || destDir == null) return null;
+        List<File> files = new ArrayList<>();
+        try (ZipFile zf = new ZipFile(zipFile, charset)) {
             Enumeration<?> entries = zf.entries();
             while (entries.hasMoreElements()) {
                 ZipEntry entry = ((ZipEntry) entries.nextElement());

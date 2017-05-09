@@ -21,6 +21,16 @@ public final class ToolHttpSend {
     private TimeUnit responseTimeoutUnit;   //响应超时时间单位
     private boolean needResponseTimeout;    //是否需要连接超时
 
+
+    public static boolean needMsg_default = true;
+    public static boolean needErrMsg_default = true;
+    public static boolean needConnectTimeout_default = true;
+    public static boolean needResponseTimeout_default = true;
+    public static Tool_HTTP_METHOD method_default = Tool_HTTP_METHOD.GET;
+    public static int connectTimeout_default = 100;
+    public static int responseTimeout_default = 100;
+    public static TimeUnit responseTimeoutUnit_default = TimeUnit.SECONDS;
+
     {
         init();
     }
@@ -29,15 +39,15 @@ public final class ToolHttpSend {
      * 初始化块
      */
     public void init() {
-        needMsg = true;
-        needErrMsg = true;
-        method = Tool_HTTP_METHOD.GET;
-        connectTimeout = 100;
+        needMsg = needMsg_default;
+        needErrMsg = needErrMsg_default;
+        method = method_default;
+        connectTimeout = connectTimeout_default;
         //connectTimeoutUnit = TimeUnit.SECONDS;
-        responseTimeout = 100;
-        responseTimeoutUnit = TimeUnit.SECONDS;
-        needConnectTimeout = false;
-        needResponseTimeout = false;
+        responseTimeout = responseTimeout_default;
+        responseTimeoutUnit = responseTimeoutUnit_default;
+        needConnectTimeout = needConnectTimeout_default;
+        needResponseTimeout = needResponseTimeout_default;
     }
 
     public ToolHttpSend(String url, Map<String, Object> param) {

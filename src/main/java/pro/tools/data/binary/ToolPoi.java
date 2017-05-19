@@ -239,13 +239,13 @@ public final class ToolPoi {
      * 功能：创建字体
      *
      * @param wb         HSSFWorkbook
-     * @param boldweight short
+     * @param boldWeight short
      * @param color      short
      * @return Font
      */
-    public static Font createFont(SXSSFWorkbook wb, short boldweight, short color, short size) {
+    public static Font createFont(SXSSFWorkbook wb, short boldWeight, short color, short size) {
         Font font = wb.createFont();
-        font.setBoldweight(boldweight);
+        font.setBoldweight(boldWeight);
         font.setColor(color);
         font.setFontHeightInPoints(size);
         return font;

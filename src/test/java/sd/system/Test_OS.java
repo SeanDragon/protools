@@ -2,7 +2,9 @@ package sd.system;
 
 import org.junit.Test;
 import pro.tools.system.ToolOS;
+import pro.tools.system.ToolSystem;
 
+import java.io.IOException;
 import java.net.UnknownHostException;
 
 /**
@@ -14,5 +16,11 @@ public class Test_OS {
     public void test1() throws UnknownHostException {
         System.out.println(ToolOS.getInetAddress());
         System.out.println(ToolOS.getJvmThreads());
+    }
+
+    @Test
+    public void test2() throws IOException {
+        boolean b = ToolSystem.haveDiskD();
+        System.out.println(b);
     }
 }

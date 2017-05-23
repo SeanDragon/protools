@@ -12,6 +12,9 @@ public final class RegexConst {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
 
+    /**
+     * 正则：英文单词或者数字
+     */
     public static final String REGEX_WORD_OR_NUMBER = "^[A-Za-z0-9]+$";
 
     /**
@@ -32,7 +35,6 @@ public final class RegexConst {
      */
     public static final String REGEX_TEL = "^0\\d{2,3}[- ]?\\d{7,8}";
 
-    /******************** 正则相关常量 ********************/
     /**
      * 正则：身份证号码15位
      */
@@ -76,9 +78,9 @@ public final class RegexConst {
     /**
      * 正则：QQ号
      */
-    public static final String REGEX_TENCENT_NUM = "[1-9][0-9]{4,}";
+    public static final String REGEX_QQ_NUM = "[1-9][0-9]{4,}";
 
-    /************** 以下摘自http://tool.oschina.net/regex **************/
+    //region 以下摘自http://tool.oschina.net/regex
     /**
      * 正则：中国邮政编码
      */
@@ -111,5 +113,6 @@ public final class RegexConst {
      * 正则：负浮点数
      */
     public static final String REGEX_NEGATIVE_FLOAT = "^-[1-9]\\d*\\.\\d*|-0\\.\\d*[1-9]\\d*$";
+    //endregion
 
 }

@@ -2,7 +2,6 @@ package sd.http;
 
 import org.junit.Test;
 import pro.tools.constant.StrConst;
-import pro.tools.file.FileUtils;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -29,16 +28,6 @@ public class Test_20170409 {
         }
         String fromFile = sb.toString();
         System.out.println(fromFile);
-    }
-
-    @Test
-    public void test2() throws IOException {
-
-        //printFile(Files.list(Paths.get("/Users/sd")));
-
-        Path fileName = FileUtils.getFileByPath("/Users/sd");
-        System.out.println(fileName);
-
     }
 
     public void printFile(Stream<Path> list) {

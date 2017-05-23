@@ -15,11 +15,9 @@ public final class ToolClone {
     public static <T> T clone(T src) throws IOException, ClassNotFoundException {
         T dist;
         try (ByteArrayOutputStream memoryBuffer = new ByteArrayOutputStream()) {
-            try (ObjectOutputStream out = new ObjectOutputStream(memoryBuffer)) {
+            try (ObjectOutputStream out = new ObjectOutputStream(memoryBuffer);
+                 ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(memoryBuffer.toByteArray()))) {
                 out.writeObject(src);
-                out.flush();
-            }
-            try (ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(memoryBuffer.toByteArray()))) {
                 dist = (T) in.readObject();
             }
         }

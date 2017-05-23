@@ -3,7 +3,6 @@ package sd.http;
 import com.google.common.base.MoreObjects;
 import org.junit.Test;
 import pro.tools.data.ToolClone;
-import pro.tools.file.FileUtils;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -41,16 +40,6 @@ public class Test_Send {
         Stream<Path> walk = Files.walk(Paths.get(dirPath), FileVisitOption.FOLLOW_LINKS);
 
         walk.filter(Files::isExecutable).forEach(System.out::println);
-    }
-
-    @Test
-    public void test3() {
-        try {
-            Path orExistsFile = FileUtils.createOrExistsFile(dirPath);
-            System.out.println(orExistsFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     @Test

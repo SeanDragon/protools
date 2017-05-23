@@ -12,7 +12,6 @@ public final class ToolRandoms {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
 
-    // 定义验证码字符.去除了O、I、l、、等容易混淆的字母
     /**
      * 定义验证码字符.去除了O、I、l、、等容易混淆的字母
      */
@@ -21,7 +20,6 @@ public final class ToolRandoms {
             'a', 'c', 'd', 'e', 'f', 'g', 'h', 'k', 'm', 'n', 'p', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y',
             '3', '4', '5', '7', '8'};
 
-    // 定义验证码数字
     /**
      * 定义验证码数字
      */
@@ -52,8 +50,6 @@ public final class ToolRandoms {
 
     /**
      * 生成验证码
-     *
-     * @return
      */
     public static char getAuthCodeAllChar() {
         return authCodeAll[getNumberRandom(0, authCodeAllLength)];
@@ -61,8 +57,6 @@ public final class ToolRandoms {
 
     /**
      * 生成验证码，纯数字
-     *
-     * @return
      */
     public static String getAuthCodeNumber(int length) {
         StringBuilder sb = new StringBuilder();
@@ -74,8 +68,6 @@ public final class ToolRandoms {
 
     /**
      * 生成验证码
-     *
-     * @return
      */
     public static String getAuthCodeAll(int length) {
         StringBuilder sb = new StringBuilder();
@@ -87,8 +79,6 @@ public final class ToolRandoms {
 
     /**
      * 获取UUID by jdk
-     *
-     * @return
      */
     public static String getUuid(boolean is32bit) {
         String uuid = getUuid().toString();
@@ -101,7 +91,6 @@ public final class ToolRandoms {
     /**
      * 获取原生UUID对象
      *
-     * @return
      */
     public static UUID getUuid() {
         return UUID.randomUUID();

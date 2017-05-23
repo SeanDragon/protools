@@ -43,14 +43,17 @@ public final class ToolFormat {
         if (args != null) {
             String str = toStringTrim(args[0]);
             // 判断小数情况。舍弃小数位
-            int stri = str.indexOf('.');
-            str = stri > 0 ? str.substring(0, stri) : str;
+            int pointPos = str.indexOf('.');
+            str = pointPos > 0 ? str.substring(0, pointPos) : str;
             if (args.length > 1)
                 def = Integer.parseInt(args[args.length - 1].toString());
             if (ToolRegex.isDecimal(str))
-                return Integer.parseInt(str);
+                def = Integer.parseInt(str);
+
+            return def;
+        } else {
+            throw new NullPointerException("传进来的数值为null");
         }
-        return def;
     }
 
     /**
@@ -66,9 +69,11 @@ public final class ToolFormat {
             if (args.length > 1)
                 def = Long.parseLong(args[args.length - 1].toString());
             if (ToolRegex.isDecimal(str))
-                return Long.parseLong(str);
+                def = Long.parseLong(str);
+            return def;
+        } else {
+            throw new NullPointerException("传进来的数值为null");
         }
-        return def;
     }
 
     /**

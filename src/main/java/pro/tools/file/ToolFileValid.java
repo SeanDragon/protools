@@ -9,8 +9,8 @@ import java.nio.file.Paths;
  *
  * @author SeanDragon
  */
-public final class FileValidUtils {
-    private FileValidUtils() {
+public final class ToolFileValid {
+    private ToolFileValid() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
 

@@ -15,7 +15,7 @@ public final class UnitConst {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
 
-    /******************** 存储相关常量 ********************/
+    //region 存储相关常量
     /**
      * KB与Byte的倍数
      */
@@ -36,8 +36,9 @@ public final class UnitConst {
      * 分与毫秒的倍数
      */
     public static final int MIN = 60000;
+    //endregion
 
-    /******************** 时间相关常量 ********************/
+    //region 时间相关常量
     /**
      * 时与毫秒的倍数
      */
@@ -46,6 +47,7 @@ public final class UnitConst {
      * 天与毫秒的倍数
      */
     public static final int DAY = 86400000;
+    //endregion
 
     public enum MemoryUnit {
         BYTE,

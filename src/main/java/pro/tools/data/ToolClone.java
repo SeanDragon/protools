@@ -1,26 +1,15 @@
 package pro.tools.data;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import com.rits.cloning.Cloner;
 
 /**
- * 使用java.lang.Serializable来实现对象的深度克隆
+ * 深度克隆
  *
  * @author SeanDragon
  */
 public final class ToolClone {
-    public static <T> T clone(T src) throws IOException, ClassNotFoundException {
-        T dist;
-        try (ByteArrayOutputStream memoryBuffer = new ByteArrayOutputStream()) {
-            try (ObjectOutputStream out = new ObjectOutputStream(memoryBuffer);
-                 ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(memoryBuffer.toByteArray()))) {
-                out.writeObject(src);
-                dist = (T) in.readObject();
-            }
-        }
-        return dist;
+    public static <T> T clone(T src) {
+        Cloner cloner = new Cloner();
+        return cloner.deepClone(src);
     }
 }

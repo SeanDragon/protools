@@ -184,6 +184,13 @@
             <version>0.7</version>
         </dependency>
 
+        <!--clone-->
+        <dependency>
+            <groupId>uk.com.robust-it</groupId>
+            <artifactId>cloning</artifactId>
+            <version>1.9.3</version>
+        </dependency>
+
     </dependencies>
 
 

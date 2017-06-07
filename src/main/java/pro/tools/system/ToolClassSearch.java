@@ -56,8 +56,11 @@ public final class ToolClassSearch {
                         }
                     }
                     path = path.substring(target_class_index, path.length() - 6);
-                    path = path.replaceAll(StrConst.FILE_SEP + StrConst.FILE_SEP, ".");
-                    System.out.println("path:\t" + path + "\n");
+                    if (ToolSystem.isWindows()) {
+                        path = path.replaceAll(StrConst.FILE_SEP + StrConst.FILE_SEP, ".");
+                    } else {
+                        path = path.replaceAll(StrConst.FILE_SEP, ".");
+                    }
                     Class<?> aClass = Class.forName(path);
                     classList.add(aClass);
                 } catch (ClassNotFoundException e) {

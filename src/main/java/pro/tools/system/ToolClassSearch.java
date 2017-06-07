@@ -57,10 +57,11 @@ public final class ToolClassSearch {
                     }
                     path = path.substring(target_class_index, path.length() - 6);
                     path = path.replaceAll(StrConst.FILE_SEP + StrConst.FILE_SEP, ".");
+                    System.out.println("path:\t" + path + "\n");
                     Class<?> aClass = Class.forName(path);
                     classList.add(aClass);
                 } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
+                    throw new RuntimeException(e);
                 }
             }
         }

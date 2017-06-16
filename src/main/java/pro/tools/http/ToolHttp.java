@@ -4,11 +4,11 @@ import com.ning.http.client.AsyncHttpClient;
 import com.ning.http.client.ListenableFuture;
 import com.ning.http.client.Response;
 import com.ning.http.client.cookie.Cookie;
-import pro.tools.constant.StrConst;
 import pro.tools.data.text.ToolRegex;
 import pro.tools.format.ToolFormat;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -50,26 +50,27 @@ public final class ToolHttp {
     /**
      * 用于请求http
      *
-     * @param toolHttpSend 里面包含请求的信息
+     * @param send 里面包含请求的信息
      * @return 响应的信息
      */
-    public static ToolHttpReceive sendHttp(ToolHttpSend toolHttpSend) {
+    public static ToolHttpReceive sendHttp(ToolHttpSend send) {
 
         ToolHttpReceive toolHttpReceive = new ToolHttpReceive();
         toolHttpReceive.setHaveError(true);
 
-        String url = toolHttpSend.getUrl();
+        String url = send.getUrl();
         if (!ToolRegex.isURL(url)) {
-            if (toolHttpSend.isNeedErrMsg()) {
+            if (send.isNeedErrMsg()) {
                 toolHttpReceive.setErrMsg("不是一个有效的URL");
             }
             return toolHttpReceive;
         }
 
-        Map<String, Object> param = toolHttpSend.getParam();
-        List<Cookie> cookies = toolHttpSend.getCookieList();
-        Map<String, Object> headers = toolHttpSend.getHeaders();
-        Tool_HTTP_METHOD method = toolHttpSend.getMethod();
+        Map<String, Object> param = send.getParam();
+        List<Cookie> cookies = send.getCookieList();
+        Map<String, Object> headers = send.getHeaders();
+        Tool_HTTP_METHOD method = send.getMethod();
+        Charset charset = send.getCharset();
 
         AsyncHttpClient asyncHttpClient = builder.buildDefaultClient();
         AsyncHttpClient.BoundRequestBuilder requestBuilder;
@@ -96,14 +97,14 @@ public final class ToolHttp {
         }
 
         //设置编码
-        requestBuilder.setBodyEncoding(StrConst.DEFAULT_CHARSET_NAME);
+        requestBuilder.setBodyEncoding(charset.toString());
 
         if (param != null) {
             param.forEach((key, value) -> requestBuilder.addQueryParam(key, value.toString()));
         }
 
         //设置基本请求头
-        requestBuilder.addHeader("Content-Type", "application/x-www-form-urlencoded;charset=" + StrConst.DEFAULT_CHARSET_NAME);
+        requestBuilder.addHeader("Content-Type", "application/x-www-form-urlencoded;charset=" + charset.toString());
 
         if (headers != null) {
             headers.forEach((key, value) -> requestBuilder.addHeader(key, value.toString()));
@@ -120,9 +121,8 @@ public final class ToolHttp {
             toolHttpReceive.setResponseCookieList(response.getCookies());
             toolHttpReceive.setStatusCode(response.getStatusCode());
             toolHttpReceive.setStatusText(response.getStatusText());
-            if (toolHttpSend.isNeedMsg()) {
+            if (send.isNeedMsg()) {
                 String responseBody = response.getResponseBody();
-                responseBody = new String(responseBody.getBytes(), StrConst.DEFAULT_CHARSET_NAME);
                 toolHttpReceive.setResponseBody(responseBody);
             }
 
@@ -139,13 +139,16 @@ public final class ToolHttp {
             toolHttpReceive.setErrMsg("访问URL失败!\n" + ToolFormat.toException(e));
         }
 
-        if (!toolHttpSend.isNeedErrMsg()) {
+        if (!send.isNeedErrMsg()) {
             toolHttpReceive.setErrMsg("");
         }
 
         return toolHttpReceive;
     }
 
+    public static HttpBuilder getBuilder() {
+        return builder;
+    }
 
     public static void setBuilder(HttpBuilder builder) {
         ToolHttp.builder = builder;

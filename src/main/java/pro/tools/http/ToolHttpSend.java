@@ -1,7 +1,10 @@
 package pro.tools.http;
 
+import com.google.common.base.MoreObjects;
 import com.ning.http.client.cookie.Cookie;
+import pro.tools.constant.StrConst;
 
+import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +16,7 @@ public final class ToolHttpSend {
     private List<Cookie> cookieList;        //cookie列表
     private Map<String, Object> headers;    //header列表
     private Tool_HTTP_METHOD method;             //访问方法
+    private Charset charset;
 
     public ToolHttpSend(String url) {
         init();
@@ -33,12 +37,13 @@ public final class ToolHttpSend {
     }
 
     /**
-     * 初始化块
+     * 初始化
      */
-    public void init() {
+    private void init() {
         needMsg = true;
         needErrMsg = true;
         method = Tool_HTTP_METHOD.GET;
+        charset = StrConst.DEFAULT_CHARSET;
     }
 
     public String getUrl() {
@@ -102,5 +107,28 @@ public final class ToolHttpSend {
     public ToolHttpSend setMethod(Tool_HTTP_METHOD method) {
         this.method = method;
         return this;
+    }
+
+    public Charset getCharset() {
+        return charset;
+    }
+
+    public ToolHttpSend setCharset(Charset charset) {
+        this.charset = charset;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("url", url)
+                .add("param", param)
+                .add("needMsg", needMsg)
+                .add("needErrMsg", needErrMsg)
+                .add("cookieList", cookieList)
+                .add("headers", headers)
+                .add("method", method)
+                .add("charset", charset)
+                .toString();
     }
 }

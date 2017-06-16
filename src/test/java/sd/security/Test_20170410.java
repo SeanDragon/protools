@@ -90,4 +90,16 @@ public class Test_20170410 {
         ToolHttp.sendHttp(send);
         System.out.println(System.currentTimeMillis() - begin);
     }
+
+    @Test
+    public void test3() {
+        //String url = "http://192.168.15.20:8088/mt/sysconfig/menus";
+        ////url = "http://192.168.15.20:8088/admin/menu/menus";
+        //ToolHttpReceive receive = ToolHttp.sendGet(url);
+        //System.out.println(receive.getResponseBody());
+
+        String json = ToolHttp.sendGet("http://192.168.15.20:8088/admin/menu/menus").getResponseBody();
+        System.out.println(json);
+
+    }
 }

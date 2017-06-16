@@ -1,7 +1,6 @@
 package pro.tools.http;
 
 import com.ning.http.client.AsyncHttpClient;
-import com.ning.http.client.AsyncHttpClientConfig;
 import com.ning.http.client.ListenableFuture;
 import com.ning.http.client.Response;
 import com.ning.http.client.cookie.Cookie;
@@ -13,7 +12,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeoutException;
 
 /**
  * Created on 17/4/6 22:06 星期四.
@@ -21,9 +19,22 @@ import java.util.concurrent.TimeoutException;
  * @author SeanDragon
  */
 public final class ToolHttp {
+    private static HttpBuilder builder = new HttpBuilder();
 
     private ToolHttp() {
         throw new UnsupportedOperationException("u can't instantiate me...");
+    }
+
+    public static ToolHttpReceive sendGet(String url) {
+        ToolHttpSend send = new ToolHttpSend(url)
+                .setMethod(Tool_HTTP_METHOD.GET);
+        return sendHttp(send);
+    }
+
+    public static ToolHttpReceive sendPost(String url) {
+        ToolHttpSend send = new ToolHttpSend(url)
+                .setMethod(Tool_HTTP_METHOD.POST);
+        return sendHttp(send);
     }
 
     public static ToolHttpReceive sendGet(String url, Map<String, Object> param) {
@@ -54,17 +65,13 @@ public final class ToolHttp {
             }
             return toolHttpReceive;
         }
+
         Map<String, Object> param = toolHttpSend.getParam();
         List<Cookie> cookies = toolHttpSend.getCookieList();
         Map<String, Object> headers = toolHttpSend.getHeaders();
         Tool_HTTP_METHOD method = toolHttpSend.getMethod();
 
-        AsyncHttpClientConfig.Builder builder = ToolHttpBuilder.buildDefault();
-        if (toolHttpSend.isNeedConnectTimeout()) {
-            builder.setConnectTimeout(toolHttpSend.getConnectTimeout());
-        }
-        AsyncHttpClientConfig build = builder.build();
-        AsyncHttpClient asyncHttpClient = new AsyncHttpClient(build);
+        AsyncHttpClient asyncHttpClient = builder.buildDefaultClient();
         AsyncHttpClient.BoundRequestBuilder requestBuilder;
 
         switch (method) {
@@ -90,43 +97,26 @@ public final class ToolHttp {
 
         //设置编码
         requestBuilder.setBodyEncoding(StrConst.DEFAULT_CHARSET_NAME);
-        if (toolHttpSend.isNeedResponseTimeout()) {
-            requestBuilder.setRequestTimeout(toolHttpSend.getResponseTimeout());
-        }
 
         if (param != null) {
-            for (Map.Entry<String, Object> oneParam : param.entrySet()) {
-                requestBuilder.addQueryParam(oneParam.getKey(), oneParam.getValue().toString());
-            }
+            param.forEach((key, value) -> requestBuilder.addQueryParam(key, value.toString()));
         }
 
         //设置基本请求头
         requestBuilder.addHeader("Content-Type", "application/x-www-form-urlencoded;charset=" + StrConst.DEFAULT_CHARSET_NAME);
-        requestBuilder.addHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36");
 
         if (headers != null) {
-            for (Map.Entry<String, Object> oneHeader : headers.entrySet()) {
-                requestBuilder.addHeader(oneHeader.getKey(), oneHeader.getValue().toString());
-            }
+            headers.forEach((key, value) -> requestBuilder.addHeader(key, value.toString()));
         }
 
         if (cookies != null) {
-            for (Cookie oneCookie : cookies) {
-                requestBuilder.addCookie(oneCookie);
-            }
+            cookies.forEach(requestBuilder::addCookie);
         }
 
         ListenableFuture<Response> future = requestBuilder.execute();
 
         try {
-            Response response;
-            if (toolHttpSend.isNeedResponseTimeout()) {
-                response = future.get(
-                        toolHttpSend.getResponseTimeout(), toolHttpSend.getResponseTimeoutUnit()
-                );
-            } else {
-                response = future.get();
-            }
+            Response response = future.get();
             toolHttpReceive.setResponseCookieList(response.getCookies());
             toolHttpReceive.setStatusCode(response.getStatusCode());
             toolHttpReceive.setStatusText(response.getStatusText());
@@ -143,8 +133,6 @@ public final class ToolHttp {
 
         } catch (InterruptedException e) {
             toolHttpReceive.setErrMsg("http组件出现问题!\n" + ToolFormat.toException(e));
-        } catch (TimeoutException e) {
-            toolHttpReceive.setErrMsg("设置超时时间失败!\n" + ToolFormat.toException(e));
         } catch (IOException e) {
             toolHttpReceive.setErrMsg("获取返回内容失败!\n" + ToolFormat.toException(e));
         } catch (ExecutionException e) {
@@ -158,4 +146,8 @@ public final class ToolHttp {
         return toolHttpReceive;
     }
 
+
+    public static void setBuilder(HttpBuilder builder) {
+        ToolHttp.builder = builder;
+    }
 }

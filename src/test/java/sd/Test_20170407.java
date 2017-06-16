@@ -18,7 +18,7 @@ public class Test_20170407 {
         //ToolHttpSend toolHttpSend = new ToolHttpSend("http://m.tuhaolicai.cc/public/index", null);
         //ToolHttpSend toolHttpSend = new ToolHttpSend("https://apio.caiyunapp.com/v2/Dz=JqbrtH7cP8SKd/121.6544,25.1552/realtime.json", null);
         //toolHttpSend.setConnectTimeout(50);
-        //toolHttpSend.setResponseTimeout(50);
+        //toolHttpSend.setReadTimeout(50);
         ToolHttpReceive toolHttpReceive = ToolHttp.sendHttp(toolHttpSend);
         if (toolHttpReceive.isHaveError()) {
             System.out.println(toolHttpReceive.getErrMsg());

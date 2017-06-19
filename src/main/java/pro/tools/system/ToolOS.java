@@ -6,6 +6,7 @@ import java.lang.management.GarbageCollectorMXBean;
 import java.lang.management.ManagementFactory;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -14,12 +15,7 @@ import java.util.List;
  *
  * @author SeanDragon
  */
-@SuppressWarnings("restriction")
 public final class ToolOS {
-    private ToolOS() {
-        throw new UnsupportedOperationException("u can't instantiate me...");
-    }
-
     public static final String java_version = getOsSystemProperty("java.version"); // Java的运行环境版本
     public static final String java_vendo = getOsSystemProperty("java.vendor"); // Java的运行环境供应商
     public static final String java_vendo_url = getOsSystemProperty("java.vendor.url"); // Java供应商的URL
@@ -50,13 +46,16 @@ public final class ToolOS {
     // 系统bean
     private static final OperatingSystemMXBean systemMxBean;
     private static final List<GarbageCollectorMXBean> list;
-
     // K转换M
     private static final long K2M = 1024L * 1024L;
 
     static {
         systemMxBean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
         list = ManagementFactory.getGarbageCollectorMXBeans();
+    }
+
+    private ToolOS() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
     }
 
     /**
@@ -141,7 +140,7 @@ public final class ToolOS {
      *
      * @return
      */
-    public static double getOscpuRatio() {
+    public static double getOsCpuRatio() {
         return systemMxBean.getSystemCpuLoad();
     }
 
@@ -213,7 +212,7 @@ public final class ToolOS {
         int activeCount = Thread.activeCount();
         Thread[] threads = new Thread[activeCount];
         Thread.enumerate(threads);
-        return java.util.Arrays.asList(threads);
+        return Arrays.asList(threads);
     }
 
 }

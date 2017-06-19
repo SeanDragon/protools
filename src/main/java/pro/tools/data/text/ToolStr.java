@@ -216,8 +216,8 @@ public final class ToolStr {
                 case '\t':
                 case '\n':
                 case '\r':
-                    // case '\b':
-                    // case '\f':
+                    //case '\b':
+                    //case '\f':
                     break;
                 default:
                     return false;

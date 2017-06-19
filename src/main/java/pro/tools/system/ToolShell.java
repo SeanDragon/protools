@@ -2,7 +2,6 @@ package pro.tools.system;
 
 
 import pro.tools.constant.StrConst;
-import pro.tools.constant.SystemConst;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -46,7 +45,7 @@ public final class ToolShell {
         StringBuilder errorMsg = null;
 
         try {
-            process = Runtime.getRuntime().exec(SystemConst.IS_WINDOWS ? "cmd" : "sh");
+            process = Runtime.getRuntime().exec(ToolSystem.isWindows() ? "cmd" : "sh");
             try (DataOutputStream os = new DataOutputStream(process.getOutputStream())) {
                 for (String command : commands) {
                     if (command == null) continue;
@@ -139,13 +138,13 @@ public final class ToolShell {
             return commands;
         }
 
-        public ToolCommandExec setCommands(List<String> commandList) {
-            this.commands = commandList.toArray(getCommands());
+        public ToolCommandExec setCommands(String[] commands) {
+            this.commands = commands;
             return this;
         }
 
-        public ToolCommandExec setCommands(String[] commands) {
-            this.commands = commands;
+        public ToolCommandExec setCommands(List<String> commandList) {
+            this.commands = commandList.toArray(getCommands());
             return this;
         }
 

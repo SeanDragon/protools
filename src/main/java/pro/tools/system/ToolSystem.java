@@ -1,9 +1,6 @@
 package pro.tools.system;
 
-import pro.tools.constant.SystemConst;
-
 import java.io.File;
-import java.io.IOException;
 
 /**
  * 系统相关工具
@@ -11,25 +8,28 @@ import java.io.IOException;
  * @author SeanDragon
  */
 public final class ToolSystem {
+    private static Boolean isWindows;
+    private static Boolean haveDiskD;
     private ToolSystem() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
 
     public static boolean isWindows() {
-        return ToolOS.getOsName().toLowerCase().contains("windows");
+        if (isWindows == null) isWindows = ToolOS.getOsName().toLowerCase().contains("windows");
+        return isWindows;
     }
 
-    public static boolean haveDiskD() throws IOException {
-        if (SystemConst.IS_WINDOWS) {
-            File[] files = File.listRoots();
-            for (File file : files) {
-                if (file.isDirectory() && file.getAbsolutePath().contains("D")) {
-                    return true;
+    public static boolean haveDiskD() {
+        if (haveDiskD == null) {
+            if (isWindows()) {
+                for (final File file : File.listRoots()) {
+                    if (file.isDirectory() && file.getAbsolutePath().toLowerCase().contains("d")) {
+                        haveDiskD = true;
+                    }
                 }
             }
-            return false;
-        } else {
-            return false;
+            haveDiskD = false;
         }
+        return haveDiskD;
     }
 }

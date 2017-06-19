@@ -12,14 +12,14 @@ import java.util.Set;
  * @author sd
  */
 public final class ToolClassSearch {
-    private ToolClassSearch() {
-        throw new UnsupportedOperationException("u can't instantiate me...");
-    }
-
     private static Set<Class> classList = new HashSet<>();
 
     static {
         init();
+    }
+
+    private ToolClassSearch() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
     }
 
     public static void init() {
@@ -31,14 +31,10 @@ public final class ToolClassSearch {
     }
 
     private static void tree(File file) {
-        if (file.isDirectory()) {
-            File[] files = file.listFiles();
-            if (files != null && files.length > 0) {
-                for (File oneFile : files) {
-                    tree(oneFile);
-                }
+        if (file.isDirectory() && file.listFiles() != null) {
+            for (File oneFile : file.listFiles()) {
+                tree(oneFile);
             }
-
         } else {
             if (file.getName().contains(".class")) {
                 try {
@@ -46,8 +42,7 @@ public final class ToolClassSearch {
                     int target_class_index = path.indexOf(StrConst.FILE_SEP + "classes" + StrConst.FILE_SEP);
                     if (target_class_index > 0) {
                         target_class_index = target_class_index + 2 + 7;
-                    }
-                    if (target_class_index < 0) {
+                    } else if (target_class_index < 0) {
                         target_class_index = path.indexOf(StrConst.FILE_SEP + "test-classes" + StrConst.FILE_SEP);
                         if (target_class_index > 0) {
                             target_class_index = target_class_index + 2 + 12;

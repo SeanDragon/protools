@@ -6,6 +6,7 @@ import pro.tools.http.ToolHttp;
 import pro.tools.http.ToolHttpReceive;
 import pro.tools.http.ToolHttpSend;
 import pro.tools.http.Tool_HTTP_METHOD;
+import pro.tools.system.ToolClassSearch;
 import pro.tools.system.ToolThreadPool;
 import pro.tools.time.DatePlus;
 
@@ -101,5 +102,10 @@ public class Test_20170410 {
         String json = ToolHttp.sendGet("http://192.168.15.20:8088/admin/menu/menus").getResponseBody();
         System.out.println(json);
 
+    }
+
+    @Test
+    public void test4() {
+        System.out.println(ToolClassSearch.getAllClazz());
     }
 }

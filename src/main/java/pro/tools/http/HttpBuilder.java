@@ -6,8 +6,7 @@ import com.ning.http.client.AsyncHttpClientConfig;
 /**
  * http客户端的工厂类
  *
- * @author SeanDragon
- *         Create By 2017-04-07 14:59
+ * @author SeanDragon Create By 2017-04-07 14:59
  */
 public final class HttpBuilder {
 

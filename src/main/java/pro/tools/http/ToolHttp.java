@@ -73,6 +73,9 @@ public final class ToolHttp {
         Charset charset = send.getCharset();
 
         AsyncHttpClient asyncHttpClient = builder.buildDefaultClient();
+
+        System.out.println(asyncHttpClient.getProvider());
+
         AsyncHttpClient.BoundRequestBuilder requestBuilder;
 
         switch (method) {

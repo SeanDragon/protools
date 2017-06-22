@@ -5,6 +5,9 @@ import pro.tools.http.ToolHttp;
 import pro.tools.http.ToolHttpReceive;
 import pro.tools.http.ToolHttpSend;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+
 /**
  * 测试http发送工具类
  * Created by tuhao on 2017/3/31.
@@ -71,5 +74,10 @@ public class HttpTest {
     public void test3() {
         ToolHttpReceive toolHttpReceive = ToolHttp.sendGet("http://m.tuhaolicai.cc/public/index", null);
         System.out.println(toolHttpReceive.getResponseBody());
+    }
+
+    @Test
+    public void test4() throws IOException, URISyntaxException {
+
     }
 }

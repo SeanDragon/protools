@@ -1,17 +1,21 @@
 package pro.tools.http.netty.future;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.logging.Logger;
 
 /**
 
  */
 public abstract class AbstractFuture implements Future {
+
+    private static final Logger log = LoggerFactory.getLogger(AbstractFuture.class);
 
     //他主要是用来隔离用户的回调，尽量不要在netty的线程中执行用户的回调
     private static ExecutorService service = Executors.newFixedThreadPool(1, new ThreadFactory() {
@@ -159,7 +163,7 @@ public abstract class AbstractFuture implements Future {
             this.setStatus(FutureStatus.Success);
             service.execute(() -> AbstractFuture.this.fireEvent(EventType.Complete, arg));
         } else {
-            Logger.getGlobal().warning("执行完了，但是状态不对啊");
+            log.warn("执行完了，但是状态不对啊");
         }
     }
 }

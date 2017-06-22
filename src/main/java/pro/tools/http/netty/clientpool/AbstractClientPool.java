@@ -1,5 +1,7 @@
 package pro.tools.http.netty.clientpool;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pro.tools.http.netty.client.Client;
 import pro.tools.http.netty.future.Future;
 import pro.tools.http.netty.http.Request;
@@ -7,12 +9,14 @@ import pro.tools.http.netty.http.RequestFuture;
 
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
 
 /**
 
  */
 public abstract class AbstractClientPool implements ClientPool {
+
+    private static final Logger log = LoggerFactory.getLogger(AbstractClientPool.class);
+
     private int size;
     private String remoteHost;
     private LinkedBlockingQueue<Client> clients;
@@ -50,7 +54,7 @@ public abstract class AbstractClientPool implements ClientPool {
      */
     @Override
     public void clientExit(Client client) {
-        Logger.getLogger("main").warning("有client退出了");
+        log.warn("有client退出了");
         this.clients.remove(client);
     }
 

@@ -11,19 +11,16 @@ import io.netty.handler.codec.http.HttpClientCodec;
 import io.netty.handler.codec.http.HttpContent;
 import io.netty.handler.codec.http.HttpResponse;
 import io.netty.handler.codec.http.LastHttpContent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pro.tools.http.netty.client.NettyClient;
 import pro.tools.http.netty.future.Future;
 import pro.tools.http.netty.http.Response;
 
-import java.util.logging.Logger;
-
-/**
-
- */
 public class HandlerInitializer implements ChannelInboundHandler {
 
+    private static final Logger log = LoggerFactory.getLogger(HandlerInitializer.class);
     private NettyClient client;
-
 
     public HandlerInitializer(NettyClient client) {
         this.client = client;
@@ -112,7 +109,7 @@ public class HandlerInitializer implements ChannelInboundHandler {
                     if (client.getRequest().getFuture().getStatus().equals(Future.FutureStatus.Running)) {
                         client.getRequest().getFuture().success(nr);
                     } else {
-                        Logger.getLogger("main").warning("请求执行付完毕，但是请求状态不对");
+                        log.warn("请求执行付完毕，但是请求状态不对");
                     }
                     client.ready();
                 }

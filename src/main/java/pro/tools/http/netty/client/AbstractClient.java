@@ -1,14 +1,18 @@
 package pro.tools.http.netty.client;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pro.tools.http.netty.clientpool.ClientPool;
 import pro.tools.http.netty.http.Request;
 
-import java.util.logging.Logger;
 
 /**
 
  */
 public abstract class AbstractClient implements Client {
+
+    private static final Logger log = LoggerFactory.getLogger(AbstractClient.class);
+
     private String remoteHost;
     private ClientPool pool;
     private volatile Request request;
@@ -99,7 +103,7 @@ public abstract class AbstractClient implements Client {
             this.getClientPool().addClient(this);
             this.setRequest(null);
         } else {
-            Logger.getGlobal().warning("client准备好了，但是client的状态不对啊");
+            log.warn("client准备好了，但是client的状态不对啊");
             this.start();
         }
     }

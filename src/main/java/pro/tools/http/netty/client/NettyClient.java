@@ -8,6 +8,8 @@ import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.HttpMethod;
 import io.netty.handler.codec.http.HttpVersion;
 import io.netty.handler.codec.http.QueryStringEncoder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pro.tools.http.netty.clientpool.ClientPool;
 import pro.tools.http.netty.handler.HandlerInitializer;
 import pro.tools.http.netty.http.Request;
@@ -17,13 +19,15 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Logger;
 
 
 /**
 
  */
 public class NettyClient extends AbstractClient {
+
+    private static final Logger log = LoggerFactory.getLogger(NettyClient.class);
+
     private NioEventLoopGroup group;
     private volatile NioSocketChannel channel;
     private AtomicInteger connectNumber = new AtomicInteger(0);
@@ -44,7 +48,7 @@ public class NettyClient extends AbstractClient {
         if (this.getStatus().equals(ClientStatus.Ready)) {
             this.setStatus(ClientStatus.Working);
         } else {
-            Logger.getGlobal().warning("client状态不对啊");
+            log.warn("client状态不对啊");
             return;
         }
         QueryStringEncoder encoder = new QueryStringEncoder("http://" + this.getRemoteHost() + request.getPath());
@@ -85,7 +89,7 @@ public class NettyClient extends AbstractClient {
     @Override
     public void cancel() {
         if (this.getStatus().equals(ClientStatus.Working)) {
-            Logger.getGlobal().warning("正在工作的request被取消了");
+            log.warn("正在工作的request被取消了");
             this.channel.close();
             this.start();
         }
@@ -102,11 +106,11 @@ public class NettyClient extends AbstractClient {
         if (this.getStatus().equals(ClientStatus.Stopped)) {
             return;
         }
-        Logger.getGlobal().warning("链接出现了异常,将会进行重链接");
+        log.warn("链接出现了异常,将会进行重链接");
         if (this.getStatus().equals(ClientStatus.Ready)) {
             this.getClientPool().removeClient(this);
         } else if (this.getStatus().equals(ClientStatus.Working)) {
-            Logger.getGlobal().severe("request执行时出现异常, request is :" + this.getRequest());
+            log.error("request执行时出现异常, request is :" + this.getRequest());
             this.getRequest().getFuture().exception(t);
         }
         this.start();  //重启
@@ -119,11 +123,11 @@ public class NettyClient extends AbstractClient {
         if (this.getStatus().equals(ClientStatus.Stopped)) {
             return;
         }
-        Logger.getGlobal().warning("链接断开了，将会尝试重新链接");
+        log.warn("链接断开了，将会尝试重新链接");
         if (this.getStatus().equals(ClientStatus.Ready)) {
             this.getClientPool().removeClient(this);
         } else if (this.getStatus().equals(ClientStatus.Working)) {
-            Logger.getGlobal().severe("request执行时出现异常, request is :" + this.getRequest());
+            log.error("request执行时出现异常, request is :" + this.getRequest());
             this.getRequest().getFuture().exception(new Exception("链接断开了"));
         }
         this.start();  //重启
@@ -147,15 +151,15 @@ public class NettyClient extends AbstractClient {
         this.channel.connect(new InetSocketAddress(this.getRemoteHost(), 80)).addListener((ChannelFutureListener) channelFuture -> {
             if (channelFuture.channel().isActive()) {
                 connectNumber.set(0);  //链接上了之后就可以刷新成0
-                Logger.getGlobal().info("连接建立成功, host : " + getRemoteHost());
+                log.info("连接建立成功, host : " + getRemoteHost());
             } else {
                 int number = connectNumber.incrementAndGet();
                 if (number > 10) {
-                    Logger.getGlobal().severe("我擦，尝试这么多次，还是没有连接上，算了吧");
+                    log.error("我擦，尝试这么多次，还是没有连接上，算了吧");
                     getClientPool().stop();
                     return;
                 }
-                Logger.getGlobal().warning("连接超时，即将尝试重新连接");
+                log.warn("连接超时，即将尝试重新连接");
                 NettyClient.this.getClientPool().scBuild(NettyClient.this::start, 2000);
             }
         });

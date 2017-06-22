@@ -1,4 +1,4 @@
-package pro.tools.http;
+package pro.tools.http.jdk;
 
 public enum Tool_HTTP_METHOD {
     GET,

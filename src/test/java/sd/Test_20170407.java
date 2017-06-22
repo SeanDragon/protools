@@ -1,9 +1,9 @@
 package sd;
 
 import org.junit.Test;
-import pro.tools.http.ToolHttp;
-import pro.tools.http.ToolHttpReceive;
-import pro.tools.http.ToolHttpSend;
+import pro.tools.http.jdk.ToolHttp;
+import pro.tools.http.jdk.ToolHttpReceive;
+import pro.tools.http.jdk.ToolHttpSend;
 
 /**
  * http测试

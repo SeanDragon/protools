@@ -1,4 +1,4 @@
-package pro.tools.http;
+package pro.tools.http.jdk;
 
 import com.google.common.base.MoreObjects;
 import com.ning.http.client.cookie.Cookie;

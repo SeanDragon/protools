@@ -1,9 +1,9 @@
 package sd.http;
 
 import org.junit.Test;
-import pro.tools.http.ToolHttp;
-import pro.tools.http.ToolHttpReceive;
-import pro.tools.http.ToolHttpSend;
+import pro.tools.http.jdk.ToolHttp;
+import pro.tools.http.jdk.ToolHttpReceive;
+import pro.tools.http.jdk.ToolHttpSend;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -19,7 +19,7 @@ public class HttpTest {
 
         ToolHttpSend toolHttpSend = new ToolHttpSend("http://localhost/sd", null);
 //        ToolHttpSend toolHttpSend = new ToolHttpSend("http://www.baidu.com", null);
-//        pro.tools.http.ToolHttpSend toolHttpSend = new ToolHttpSend("http://www.baidu.com", null);
+//        pro.tools.http.jdk.ToolHttpSend toolHttpSend = new ToolHttpSend("http://www.baidu.com", null);
 //        ToolHttpSend toolHttpSend = new ToolHttpSend("http://m.tuhaolicai.cc/public/index", null);
         //ToolHttpSend toolHttpSend = new ToolHttpSend("https://apio.caiyunapp.com/v2/Dz=JqbrtH7cP8SKd/121.6544,25.1552/realtime.json", null);
         //toolHttpSend.setConnectTimeout(50);

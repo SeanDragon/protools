@@ -1,4 +1,4 @@
-package pro.tools.http;
+package pro.tools.http.jdk;
 
 import com.ning.http.client.AsyncHttpClient;
 import com.ning.http.client.AsyncHttpClientConfig;

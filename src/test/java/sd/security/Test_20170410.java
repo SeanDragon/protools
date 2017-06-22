@@ -2,10 +2,10 @@ package sd.security;
 
 import org.junit.Test;
 import pro.tools.data.ToolClone;
-import pro.tools.http.ToolHttp;
-import pro.tools.http.ToolHttpReceive;
-import pro.tools.http.ToolHttpSend;
-import pro.tools.http.Tool_HTTP_METHOD;
+import pro.tools.http.jdk.ToolHttp;
+import pro.tools.http.jdk.ToolHttpReceive;
+import pro.tools.http.jdk.ToolHttpSend;
+import pro.tools.http.jdk.Tool_HTTP_METHOD;
 import pro.tools.system.ToolClassSearch;
 import pro.tools.system.ToolThreadPool;
 import pro.tools.time.DatePlus;

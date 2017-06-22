@@ -9,6 +9,8 @@ import io.netty.handler.codec.http.HttpMethod;
 import io.netty.handler.codec.http.HttpVersion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pro.tools.constant.StrConst;
+import pro.tools.data.text.ToolConvert;
 import pro.tools.http.netty.clientpool.ClientPool;
 import pro.tools.http.netty.handler.HandlerInitializer;
 import pro.tools.http.netty.http.Request;
@@ -58,7 +60,6 @@ public class NettyClient extends AbstractClient {
             throw new RuntimeException(e);
         }
 
-        FullHttpRequest fullHttpRequest;
 
         String rawPath = uri.getRawPath();
 
@@ -87,20 +88,38 @@ public class NettyClient extends AbstractClient {
                 break;
         }
 
-        fullHttpRequest = new DefaultFullHttpRequest(HttpVersion.HTTP_1_1, method, rawPath);
+        FullHttpRequest fullHttpRequest = new DefaultFullHttpRequest(HttpVersion.HTTP_1_1, method, rawPath);
 
-        //如果是post请求,做特殊处理
-        if (method.equals(HttpMethod.POST)) {
-            fullHttpRequest.content().writeBytes(request.getBody());
-            fullHttpRequest.headers().add("content-length", fullHttpRequest.content().readableBytes());
+
+        Map<String, String> params = request.getParams();
+        if (params != null && params.size() > 0) {
+            String paramsStr = ToolConvert.map2str(params, "=", "&");
+            fullHttpRequest.content().writeBytes(paramsStr.getBytes());
         }
 
-        for (Map.Entry<String, String> header : request.getHeaders().entrySet()) {
-            fullHttpRequest.headers().add(header.getKey(), header.getValue());
+
+        Map<String, String> headers = request.getHeaders();
+        if (headers != null && headers.size() > 0) {
+            request.getHeaders().forEach((key, value) -> {
+                fullHttpRequest.headers().add(key, value);
+            });
         }
 
-        fullHttpRequest.headers().add("Host", this.getRemoteHost());
+        Map<String, String> cookies = request.getCookies();
+        if (headers != null && headers.size() > 0) {
+            String cookieStr = ToolConvert.map2str(cookies, "=", ";");
+            fullHttpRequest.headers().add("Cookie", cookieStr);
+        }
+
+        fullHttpRequest.headers().add("DNT", 1);
+        fullHttpRequest.headers().add("Content-Length", fullHttpRequest.content().readableBytes());
+        fullHttpRequest.headers().add("Accept-Encoding", "gzip, deflate");
+        fullHttpRequest.headers().add("Cache-Control", "max-age=0");
+        fullHttpRequest.headers().add("User-Agent", "Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html）");
+        fullHttpRequest.headers().add("Host", this.getRemoteHost() + ":" + this.getPort());
         fullHttpRequest.headers().add("Connection", "keep-alive");
+        fullHttpRequest.headers().add("Content-Type", "application/x-www-form-urlencoded;charset=" + StrConst.DEFAULT_CHARSET_NAME);
+
         this.channel.pipeline().write(fullHttpRequest);
         this.channel.pipeline().flush();
     }
@@ -173,7 +192,7 @@ public class NettyClient extends AbstractClient {
         this.channel.connect(new InetSocketAddress(this.getRemoteHost(), this.getPort())).addListener((ChannelFutureListener) channelFuture -> {
             if (channelFuture.channel().isActive()) {
                 connectNumber.set(0);  //连接上了之后就可以刷新成0
-                log.info("连接建立成功, host : " + getRemoteHost());
+                log.info("连接建立成功, host : " + getRemoteHost() + "\t,port : " + getPort());
             } else {
                 int number = connectNumber.incrementAndGet();
                 if (number > 10) {

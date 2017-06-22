@@ -22,6 +22,10 @@ public interface Client extends Lifecycle {
      */
     String getRemoteHost();
 
+    int getPort();
+
+    String getScheme();
+
     /**
      * 处理请求
      *

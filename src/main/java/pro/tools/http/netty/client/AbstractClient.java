@@ -14,6 +14,8 @@ public abstract class AbstractClient implements Client {
     private static final Logger log = LoggerFactory.getLogger(AbstractClient.class);
 
     private String remoteHost;
+    private String scheme;
+    private int port;
     private ClientPool pool;
     private volatile Request request;
     private volatile ClientStatus status;
@@ -21,6 +23,8 @@ public abstract class AbstractClient implements Client {
     public AbstractClient(ClientPool pool) {
         this.pool = pool;
         this.remoteHost = pool.getRemoteHost();
+        this.scheme = pool.getScheme();
+        this.port = pool.getPort();
         this.status = ClientStatus.Starting;
     }
 
@@ -44,6 +48,16 @@ public abstract class AbstractClient implements Client {
         return this.pool;
     }
 
+    @Override
+    public int getPort() {
+        return this.port;
+    }
+
+    @Override
+    public String getScheme() {
+        return this.scheme;
+    }
+
     /**
      * 获取远程地址
      *
@@ -60,7 +74,7 @@ public abstract class AbstractClient implements Client {
     @Override
     public void cancel() {
         if (this.request != null) {
-
+            this.getClientPool().clientExit(this);
         }
     }
 

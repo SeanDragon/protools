@@ -2,6 +2,7 @@ package pro.tools.http.netty.http;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import pro.tools.constant.HttpConst;
 import pro.tools.http.netty.future.Future;
 
 import java.util.HashMap;
@@ -13,10 +14,10 @@ public class Request {
     private Future future;
     private String path;
     private HashMap<String, String> headers = new HashMap<>();
-    private RequestMethod method;
+    private HttpConst.RequestMethod method;
     private ByteBuf body;
 
-    public Request(String path, RequestMethod method) {
+    public Request(String path, HttpConst.RequestMethod method) {
         this.path = path;
         this.method = method;
         this.body = Unpooled.buffer();
@@ -38,11 +39,11 @@ public class Request {
         this.path = path;
     }
 
-    public RequestMethod getMethod() {
+    public HttpConst.RequestMethod getMethod() {
         return method;
     }
 
-    public void setMethod(RequestMethod method) {
+    public void setMethod(HttpConst.RequestMethod method) {
         this.method = method;
     }
 
@@ -62,7 +63,4 @@ public class Request {
         return headers;
     }
 
-    public enum RequestMethod {
-        GET, POST, PUT, DELETE, TRACE
-    }
 }

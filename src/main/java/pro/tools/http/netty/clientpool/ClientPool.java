@@ -16,6 +16,10 @@ public interface ClientPool extends Lifecycle {
      */
     String getRemoteHost();
 
+    int getPort();
+
+    String getScheme();
+
     /**
      * 获取当前pool的规模，其实也就是有多少个client
      *

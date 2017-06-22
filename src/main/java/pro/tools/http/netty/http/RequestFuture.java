@@ -105,7 +105,8 @@ public class RequestFuture extends AbstractFuture {
             }
             try {
                 this.wait();
-            } catch (InterruptedException ignored) {
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }

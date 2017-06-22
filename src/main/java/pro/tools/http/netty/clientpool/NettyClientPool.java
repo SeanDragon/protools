@@ -17,6 +17,21 @@ public class NettyClientPool extends AbstractClientPool {
         this.nioEventLoopGroup = new NioEventLoopGroup(2);
     }
 
+    public NettyClientPool(int size, String remoteHost, int port) {
+        super(size, remoteHost, port);
+        this.nioEventLoopGroup = new NioEventLoopGroup(2);
+    }
+
+    public NettyClientPool(int size, String remoteHost, String scheme) {
+        super(size, remoteHost, scheme);
+        this.nioEventLoopGroup = new NioEventLoopGroup(2);
+    }
+
+    public NettyClientPool(int size, String remoteHost, int port, String scheme) {
+        super(size, remoteHost, port, scheme);
+        this.nioEventLoopGroup = new NioEventLoopGroup(2);
+    }
+
     /**
      * 用于构建具体的client
      *

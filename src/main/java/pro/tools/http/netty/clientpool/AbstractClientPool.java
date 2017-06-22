@@ -2,6 +2,7 @@ package pro.tools.http.netty.clientpool;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pro.tools.constant.HttpConst;
 import pro.tools.http.netty.client.Client;
 import pro.tools.http.netty.future.Future;
 import pro.tools.http.netty.http.Request;
@@ -18,10 +19,38 @@ public abstract class AbstractClientPool implements ClientPool {
     private static final Logger log = LoggerFactory.getLogger(AbstractClientPool.class);
 
     private int size;
+    private String scheme;
+    private int port;
     private String remoteHost;
     private LinkedBlockingQueue<Client> clients;
 
     public AbstractClientPool(int size, String remoteHost) {
+        this.scheme = HttpConst.HttpScheme.HTTP;
+        this.port = 80;
+        this.size = size;
+        this.remoteHost = remoteHost;
+        this.clients = new LinkedBlockingQueue<>(this.size);
+    }
+
+    public AbstractClientPool(int size, String remoteHost, int port) {
+        this.scheme = HttpConst.HttpScheme.HTTP;
+        this.port = port;
+        this.size = size;
+        this.remoteHost = remoteHost;
+        this.clients = new LinkedBlockingQueue<>(this.size);
+    }
+
+    public AbstractClientPool(int size, String remoteHost, String scheme) {
+        this.scheme = scheme;
+        this.port = 80;
+        this.size = size;
+        this.remoteHost = remoteHost;
+        this.clients = new LinkedBlockingQueue<>(this.size);
+    }
+
+    public AbstractClientPool(int size, String remoteHost, int port, String scheme) {
+        this.scheme = scheme;
+        this.port = port;
         this.size = size;
         this.remoteHost = remoteHost;
         this.clients = new LinkedBlockingQueue<>(this.size);
@@ -35,6 +64,16 @@ public abstract class AbstractClientPool implements ClientPool {
     @Override
     public String getRemoteHost() {
         return this.remoteHost;
+    }
+
+    @Override
+    public int getPort() {
+        return this.port;
+    }
+
+    @Override
+    public String getScheme() {
+        return this.scheme;
     }
 
     /**
@@ -73,7 +112,8 @@ public abstract class AbstractClientPool implements ClientPool {
             try {
                 client = this.clients.poll(1000, TimeUnit.DAYS);
                 break;
-            } catch (InterruptedException ignored) {
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
 
@@ -91,20 +131,21 @@ public abstract class AbstractClientPool implements ClientPool {
      * 带有超时控制的请求
      *
      * @param request
-     * @param time
+     * @param timeout
      *
      * @return
      */
     @Override
-    public RequestFuture requestWithTimeOut(Request request, int time) {
+    public RequestFuture requestWithTimeOut(Request request, int timeout) {
         long before = System.currentTimeMillis();
         final RequestFuture future = new RequestFuture(request);
         Client client;
         while (true) {
             try {
-                client = this.clients.poll(time, TimeUnit.MILLISECONDS);
+                client = this.clients.poll(timeout, TimeUnit.MILLISECONDS);
                 break;
-            } catch (InterruptedException ignored) {
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
 
         }
@@ -119,8 +160,8 @@ public abstract class AbstractClientPool implements ClientPool {
         request.setFuture(future);
         future.setStatus(Future.FutureStatus.Running);
 
-        time = (int) (time - (after - before));
-        this.scBuild(future::timeOut, time);
+        timeout = (int) (timeout - (after - before));
+        this.scBuild(future::timeOut, timeout);
         client.request(request);
         return future;
 

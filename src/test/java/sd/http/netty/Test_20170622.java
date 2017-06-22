@@ -1,5 +1,7 @@
 package sd.http.netty;
 
+import org.junit.Test;
+import pro.tools.constant.HttpConst;
 import pro.tools.http.netty.clientpool.ClientPool;
 import pro.tools.http.netty.clientpool.NettyClientPool;
 import pro.tools.http.netty.future.Future;
@@ -14,7 +16,7 @@ import java.nio.charset.Charset;
  */
 public class Test_20170622 {
 
-    private static final ClientPool pool = new NettyClientPool(10000, "www.yige.dog");
+    private static final ClientPool pool = new NettyClientPool(100, "192.168.15.20", 8088);
     private static int count = 0;
 
     /**
@@ -23,14 +25,16 @@ public class Test_20170622 {
      * @param path
      * @param method
      */
-    public static void doGet(String path, Request.RequestMethod method) {
+    public static void doGet(String path, HttpConst.RequestMethod method) {
         Request request = new Request(path, method);
         pool.request(request).addListener(new Future.Listener() {
             @Override
             public void complete(Object arg) {
-                Response res = (Response) arg;
-                String result = res.getBody().toString(Charset.forName("utf-8"));
-                System.out.println(++count + "\t" + result.length());
+                Response response = (Response) arg;
+                String result = response.getBody().toString(Charset.forName("utf-8"));
+                //System.out.println(++count + "\t" + result.length());
+                System.out.println("Test_20170622.complete");
+                System.out.println(result);
             }
 
             @Override
@@ -44,7 +48,7 @@ public class Test_20170622 {
     //public static void doGetSync() throws Throwable {
     //    final ClientPool pool = new NettyClientPool(2, "http://", "192.168.15.13");
     //    pool.start();
-    //    Request request = new Request("/public/index", Request.RequestMethod.GET);
+    //    Request request = new Request("/public/index", HttpConst.RequestMethod.GET);
     //    request.getBody().writeBytes("aa".getBytes(Charset.forName("utf-8")));
     //    Response response = pool.requestWithTimeOut(request, 2000).sync();
     //    pool.stop();
@@ -54,7 +58,7 @@ public class Test_20170622 {
     public static void main(String args[]) throws Throwable {
         //long b = System.currentTimeMillis();
         pool.start();
-        final ToolThreadPool threadPool = new ToolThreadPool(ToolThreadPool.Type.CachedThread, 500);
+        final ToolThreadPool threadPool = new ToolThreadPool(ToolThreadPool.Type.CachedThread, 50);
         //final int[] count = {0};
         //final List<Long> times = new ArrayList<>(1000);
         //final long[] total = {0};
@@ -63,9 +67,10 @@ public class Test_20170622 {
             threadPool.submit(() -> {
                 for (int j = 0; j < 20; j++) {
                     //long begin = System.currentTimeMillis();
-                    doGet("/wp-includes/js/wp-embed.min.js?ver=4.7.5", Request.RequestMethod.GET);
-                    //doGet("/public/index/", Request.RequestMethod.GET);
-                    //doGet("/#ie=UTF-8&wd=SeanDragon", Request.RequestMethod.GET);
+                    doGet("/getService", HttpConst.RequestMethod.GET);
+                    //doGet("/wp-includes/js/wp-embed.min.js?ver=4.7.5", HttpConst.RequestMethod.GET);
+                    //doGet("/public/index/", HttpConst.RequestMethod.GET);
+                    //doGet("/#ie=UTF-8&wd=SeanDragon", HttpConst.RequestMethod.GET);
                     //long x = System.currentTimeMillis() - begin;
                     //times.add(x);
                     //total[0] += x;
@@ -82,6 +87,14 @@ public class Test_20170622 {
                 }
             });
         }
+    }
 
+    @Test
+    public void test1() {
+        pool.start();
+        doGet("/getService", HttpConst.RequestMethod.GET);
+        doGet("/getService", HttpConst.RequestMethod.GET);
+        doGet("/getService", HttpConst.RequestMethod.GET);
+        while (true) ;
     }
 }

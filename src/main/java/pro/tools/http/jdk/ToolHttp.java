@@ -74,8 +74,6 @@ public final class ToolHttp {
 
         AsyncHttpClient asyncHttpClient = builder.buildDefaultClient();
 
-        System.out.println(asyncHttpClient.getProvider());
-
         AsyncHttpClient.BoundRequestBuilder requestBuilder;
 
         switch (method) {

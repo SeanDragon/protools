@@ -10,26 +10,27 @@ import java.util.concurrent.TimeUnit;
 
  */
 public class NettyClientPool extends AbstractClientPool {
+
     private NioEventLoopGroup nioEventLoopGroup;
 
     public NettyClientPool(int size, String remoteHost) {
         super(size, remoteHost);
-        this.nioEventLoopGroup = new NioEventLoopGroup(2);
+        this.nioEventLoopGroup = new NioEventLoopGroup();
     }
 
     public NettyClientPool(int size, String remoteHost, int port) {
         super(size, remoteHost, port);
-        this.nioEventLoopGroup = new NioEventLoopGroup(2);
+        this.nioEventLoopGroup = new NioEventLoopGroup();
     }
 
     public NettyClientPool(int size, String remoteHost, String scheme) {
         super(size, remoteHost, scheme);
-        this.nioEventLoopGroup = new NioEventLoopGroup(2);
+        this.nioEventLoopGroup = new NioEventLoopGroup();
     }
 
     public NettyClientPool(int size, String remoteHost, int port, String scheme) {
         super(size, remoteHost, port, scheme);
-        this.nioEventLoopGroup = new NioEventLoopGroup(2);
+        this.nioEventLoopGroup = new NioEventLoopGroup();
     }
 
     /**

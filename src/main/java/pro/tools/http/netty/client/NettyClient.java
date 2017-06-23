@@ -63,12 +63,6 @@ public class NettyClient extends AbstractClient {
 
         String rawPath = uri.getRawPath();
 
-        log.warn(String.format("\r\n---------START---------\r\n%s\r\n%s\r\n%s\r\n----------END----------\r\n"
-                , "value:\t" + rawPath
-                , "key:\trawPath"
-                , "site:\tpro.tools.http.netty.client.NettyClient.request()")
-        );
-
         HttpMethod method;
         switch (request.getMethod()) {
             case GET:
@@ -188,6 +182,7 @@ public class NettyClient extends AbstractClient {
         }
         this.channel = new NioSocketChannel();
         this.channel.pipeline().addFirst(new HandlerInitializer(this));
+
         this.group.register(this.channel);
         this.channel.connect(new InetSocketAddress(this.getRemoteHost(), this.getPort())).addListener((ChannelFutureListener) channelFuture -> {
             if (channelFuture.channel().isActive()) {

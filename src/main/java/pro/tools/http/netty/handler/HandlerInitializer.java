@@ -49,6 +49,7 @@ public class HandlerInitializer implements ChannelInboundHandler {
     @Override
     public void channelInactive(ChannelHandlerContext channelHandlerContext) throws Exception {
         client.disconnected();
+        channelHandlerContext.disconnect();
     }
 
     @Override

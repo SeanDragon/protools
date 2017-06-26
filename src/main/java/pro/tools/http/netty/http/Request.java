@@ -1,5 +1,6 @@
 package pro.tools.http.netty.http;
 
+import io.netty.handler.codec.http.cookie.Cookie;
 import pro.tools.constant.HttpConst;
 import pro.tools.http.netty.future.Future;
 
@@ -14,7 +15,7 @@ public class Request {
     private HttpConst.RequestMethod method;
     private Map<String, String> headers;
     private Map<String, Object> params;
-    private Map<String, Object> cookies;
+    private Cookie[] cookies;
 
     public Request(String path) {
         this.path = path;
@@ -80,11 +81,11 @@ public class Request {
         return this;
     }
 
-    public Map<String, Object> getCookies() {
+    public Cookie[] getCookies() {
         return cookies;
     }
 
-    public Request setCookies(Map<String, Object> cookies) {
+    public Request setCookies(Cookie[] cookies) {
         this.cookies = cookies;
         return this;
     }

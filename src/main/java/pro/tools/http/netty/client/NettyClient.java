@@ -5,8 +5,12 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.http.DefaultFullHttpRequest;
 import io.netty.handler.codec.http.FullHttpRequest;
+import io.netty.handler.codec.http.HttpHeaderNames;
+import io.netty.handler.codec.http.HttpHeaderValues;
 import io.netty.handler.codec.http.HttpMethod;
 import io.netty.handler.codec.http.HttpVersion;
+import io.netty.handler.codec.http.cookie.ClientCookieEncoder;
+import io.netty.handler.codec.http.cookie.Cookie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pro.tools.constant.StrConst;
@@ -60,7 +64,6 @@ public class NettyClient extends AbstractClient {
             throw new RuntimeException(e);
         }
 
-
         String rawPath = uri.getRawPath();
 
         HttpMethod method;
@@ -84,7 +87,6 @@ public class NettyClient extends AbstractClient {
 
         FullHttpRequest fullHttpRequest = new DefaultFullHttpRequest(HttpVersion.HTTP_1_1, method, rawPath);
 
-
         Map<String, Object> params = request.getParams();
         if (params != null && params.size() > 0) {
             String paramsStr = ToolConvert.map2str(params, "=", "&");
@@ -95,24 +97,27 @@ public class NettyClient extends AbstractClient {
         Map<String, String> headers = request.getHeaders();
         if (headers != null && headers.size() > 0) {
             request.getHeaders().forEach((key, value) -> {
-                fullHttpRequest.headers().add(key, value);
+                fullHttpRequest.headers().set(key, value);
             });
         }
 
-        Map<String, Object> cookies = request.getCookies();
-        if (headers != null && headers.size() > 0) {
-            String cookieStr = ToolConvert.map2str(cookies, "=", ";");
-            fullHttpRequest.headers().add("Cookie", cookieStr);
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null && cookies.length > 0) {
+            fullHttpRequest.headers().set(
+                    HttpHeaderNames.COOKIE,
+                    ClientCookieEncoder.STRICT.encode(cookies));
         }
 
-        fullHttpRequest.headers().add("DNT", 1);
-        fullHttpRequest.headers().add("Content-Length", fullHttpRequest.content().readableBytes());
-        fullHttpRequest.headers().add("Accept-Encoding", "gzip, deflate");
-        fullHttpRequest.headers().add("Cache-Control", "max-age=0");
-        fullHttpRequest.headers().add("User-Agent", "Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html）");
-        fullHttpRequest.headers().add("Host", this.getRemoteHost() + ":" + this.getPort());
-        fullHttpRequest.headers().add("Connection", "keep-alive");
-        fullHttpRequest.headers().add("Content-Type", "application/x-www-form-urlencoded;charset=" + StrConst.DEFAULT_CHARSET_NAME);
+
+        fullHttpRequest.headers().set("DNT", 1);
+        fullHttpRequest.headers().set(HttpHeaderNames.CACHE_CONTROL, HttpHeaderValues.MAX_AGE + "=0");
+        fullHttpRequest.headers().set(HttpHeaderNames.CONTENT_LENGTH, fullHttpRequest.content().readableBytes());
+        fullHttpRequest.headers().set(HttpHeaderNames.CONTENT_TYPE, HttpHeaderValues.APPLICATION_JSON + ";charset=" + StrConst.DEFAULT_CHARSET_NAME);
+        fullHttpRequest.headers().set(HttpHeaderNames.ACCEPT_ENCODING, HttpHeaderValues.GZIP_DEFLATE);
+        fullHttpRequest.headers().set(HttpHeaderNames.USER_AGENT, "Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html）");
+        fullHttpRequest.headers().set(HttpHeaderNames.HOST, this.getRemoteHost() + ":" + this.getPort());
+        fullHttpRequest.headers().set(HttpHeaderNames.CONNECTION, HttpHeaderValues.CLOSE);
+        //fullHttpRequest.headers().add("Connection", "keep-alive");
 
         this.channel.pipeline().write(fullHttpRequest);
         this.channel.pipeline().flush();

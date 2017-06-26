@@ -496,10 +496,10 @@ public final class ToolConvert {
         return result;
     }
 
-    public static String map2str(Map<String, String> params, String middleStr, String endStr) {
+    public static String map2str(Map<String, Object> params, String middleStr, String endStr) {
         StringBuilder result = new StringBuilder();
         params.forEach((key, value) -> {
-            result.append(key).append(middleStr).append(value).append(endStr);
+            result.append(key).append(middleStr).append(value.toString()).append(endStr);
         });
         return result.toString();
     }

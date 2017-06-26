@@ -85,10 +85,10 @@ public class NettyClient extends AbstractClient {
         FullHttpRequest fullHttpRequest = new DefaultFullHttpRequest(HttpVersion.HTTP_1_1, method, rawPath);
 
 
-        Map<String, String> params = request.getParams();
+        Map<String, Object> params = request.getParams();
         if (params != null && params.size() > 0) {
             String paramsStr = ToolConvert.map2str(params, "=", "&");
-            fullHttpRequest.content().writeBytes(paramsStr.getBytes());
+            fullHttpRequest.content().writeBytes(paramsStr.getBytes(StrConst.DEFAULT_CHARSET));
         }
 
 
@@ -99,7 +99,7 @@ public class NettyClient extends AbstractClient {
             });
         }
 
-        Map<String, String> cookies = request.getCookies();
+        Map<String, Object> cookies = request.getCookies();
         if (headers != null && headers.size() > 0) {
             String cookieStr = ToolConvert.map2str(cookies, "=", ";");
             fullHttpRequest.headers().add("Cookie", cookieStr);
@@ -196,7 +196,7 @@ public class NettyClient extends AbstractClient {
                     return;
                 }
                 log.warn("连接超时，即将尝试重新连接");
-                NettyClient.this.getClientPool().scBuild(NettyClient.this::start, 2000);
+                NettyClient.this.getClientPool().scBuild(NettyClient.this::start, 0);
             }
         });
     }

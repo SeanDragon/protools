@@ -1,9 +1,11 @@
 package sd.http.netty;
 
+import com.google.common.base.MoreObjects;
 import io.netty.buffer.ByteBuf;
 import org.junit.Test;
 import pro.tools.constant.HttpConst;
 import pro.tools.constant.StrConst;
+import pro.tools.data.text.ToolJson;
 import pro.tools.http.netty.clientpool.ClientPool;
 import pro.tools.http.netty.clientpool.NettyClientPool;
 import pro.tools.http.netty.http.Request;
@@ -34,7 +36,7 @@ public class Test_20170622 {
      */
     public static void send(String path, HttpConst.RequestMethod method) {
         Request request = new Request(path, method);
-        Map<String, String> params = new HashMap<>();
+        Map<String, Object> params = new HashMap<>();
         params.put("a", "商宇龙");
         params.put("b", "b=2&a=b=2");
         request.setParams(params);
@@ -111,5 +113,56 @@ public class Test_20170622 {
     public void test1() {
         pool.start();
         send("/testProTools", HttpConst.RequestMethod.POST);
+    }
+
+    @Test
+    public void test2() {
+        Menu menu = new Menu();
+        menu.setMenuId(1D)
+                .setName("商宇龙");
+
+        Map map = ToolJson.modelToMap(menu);
+
+        //JsonPrimitive menuId = (JsonPrimitive) map.get("menuId");
+        //
+        //System.out.println(menuId.getAsInt());
+
+        System.out.println(map.get("menuId"));
+
+        Menu newMenu = ToolJson.mapToModel(map, Menu.class);
+
+        System.out.println(newMenu);
+
+    }
+}
+
+class Menu {
+    private String name;
+    private Double menuId;
+
+    public String getName() {
+        return name;
+    }
+
+    public Menu setName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public Double getMenuId() {
+        return menuId;
+    }
+
+    public Menu setMenuId(Double menuId) {
+        this.menuId = menuId;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("name", name)
+                .add("menuId", menuId)
+                .toString();
     }
 }

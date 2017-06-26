@@ -1,6 +1,9 @@
 package pro.tools.data.text;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
@@ -9,18 +12,38 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 /**
  * 辅助类
  */
 public final class ToolJson {
 
-    private static final Gson gson = new Gson();
+    public static Gson gson = null;
+
+    static {
+        init();
+    }
+
+    private static void init() {
+        gson = new GsonBuilder()
+                .registerTypeAdapter(
+                        new TypeToken<TreeMap<String, Object>>() {
+                        }.getType(), (JsonDeserializer<TreeMap<String, Object>>) (json, typeOfT, context) -> {
+                            TreeMap<String, Object> treeMap = new TreeMap<>();
+                            JsonObject jsonObject = json.getAsJsonObject();
+                            Set<Map.Entry<String, JsonElement>> entrySet = jsonObject.entrySet();
+                            entrySet.forEach(entry -> treeMap.put(entry.getKey(), entry.getValue()));
+                            return treeMap;
+                        }).create();
+    }
 
     /**
      * 将Map进行JSON编码
      *
      * @param map
+     *
      * @return
      */
     public static String mapToJson(Map map) {
@@ -34,14 +57,17 @@ public final class ToolJson {
      * 将Map进行JSON编码
      *
      * @param json
+     *
      * @return
      */
     public static Map jsonToMap(String json) {
         if (json == null)
             return new HashMap<>();
         //Gson gson = new Gson();
-        Map map = gson.fromJson(json, Map.class);
-        return map;
+        //Map map = gson.fromJson(json, Map.class);
+        //return map;
+        return gson.fromJson(json, new TypeToken<TreeMap<String, Object>>() {
+        }.getType());
     }
 
 
@@ -49,6 +75,7 @@ public final class ToolJson {
      * 将模型进行JSON编码
      *
      * @param model
+     *
      * @return String
      */
     public static String modelToJson(Object model) {
@@ -63,6 +90,7 @@ public final class ToolJson {
      *
      * @param sJson
      * @param classOfT
+     *
      * @return Object
      */
     public static <T> T jsonToModel(String sJson, Class<T> classOfT) {
@@ -75,6 +103,7 @@ public final class ToolJson {
      *
      * @param data
      * @param classOfT
+     *
      * @return Object
      */
     public static <T> T mapToModel(Map data, Class<T> classOfT) {
@@ -86,6 +115,7 @@ public final class ToolJson {
      *
      * @param data
      * @param classOfT
+     *
      * @return Object
      */
     public static <T> List<T> mapToModelList(Map data, Class<T> classOfT) {
@@ -96,6 +126,7 @@ public final class ToolJson {
      * 将模型进行JSON解码
      *
      * @param data
+     *
      * @return Object
      */
     public static Map modelToMap(Object data) {
@@ -106,6 +137,7 @@ public final class ToolJson {
      * 将模型进行JSON解码
      *
      * @param data
+     *
      * @return Object
      */
     public static List<Map> modelToMapList(Object data) {
@@ -117,6 +149,7 @@ public final class ToolJson {
      * 将模型列表进行JSON解码
      *
      * @param sJson
+     *
      * @return List<Object>
      */
     public static <T> List<T> jsonToModelList(String sJson, Class<T> classOfT) {
@@ -138,6 +171,7 @@ public final class ToolJson {
      * 将模型列表进行JSON解码
      *
      * @param sJson
+     *
      * @return List<Object>
      */
     public static List<Map> jsonToMapList(String sJson) {
@@ -158,9 +192,13 @@ public final class ToolJson {
     /**
      * 把json数组转换成泛型T为类型的ArrayList
      *
-     * @param json  Json数组
-     * @param clazz 泛型类型的class
-     * @param <T>   泛型类型
+     * @param json
+     *         Json数组
+     * @param clazz
+     *         泛型类型的class
+     * @param <T>
+     *         泛型类型
+     *
      * @return 返回ArrayList<T>
      */
     public static <T> ArrayList<T> jsonToArrayList(String json, Class<T> clazz) {
@@ -178,7 +216,9 @@ public final class ToolJson {
     /**
      * 把json数组转换成String类型的ArrayList
      *
-     * @param json json数组
+     * @param json
+     *         json数组
+     *
      * @return 返回ArrayList<String>
      */
     public static ArrayList<String> jsonToArrayList(String json) {
@@ -197,6 +237,7 @@ public final class ToolJson {
      * 将json列表转换为字符串列表,每个字符串为一个对象
      *
      * @param json
+     *
      * @return List<String>
      */
     public static List<String> dealJsonStr(String json) {

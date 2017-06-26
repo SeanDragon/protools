@@ -13,8 +13,8 @@ public class Request {
     private String path;
     private HttpConst.RequestMethod method;
     private Map<String, String> headers;
-    private Map<String, String> params;
-    private Map<String, String> cookies;
+    private Map<String, Object> params;
+    private Map<String, Object> cookies;
 
     public Request(String path) {
         this.path = path;
@@ -26,13 +26,13 @@ public class Request {
         this.method = method;
     }
 
-    public Request(String path, Map<String, String> params) {
+    public Request(String path, Map<String, Object> params) {
         this.path = path;
         this.method = HttpConst.RequestMethod.POST;
         this.params = params;
     }
 
-    public Request(String path, HttpConst.RequestMethod method, Map<String, String> params) {
+    public Request(String path, HttpConst.RequestMethod method, Map<String, Object> params) {
         this.path = path;
         this.method = method;
         this.params = params;
@@ -71,20 +71,20 @@ public class Request {
         return this;
     }
 
-    public Map<String, String> getParams() {
+    public Map<String, Object> getParams() {
         return params;
     }
 
-    public Request setParams(Map<String, String> params) {
+    public Request setParams(Map<String, Object> params) {
         this.params = params;
         return this;
     }
 
-    public Map<String, String> getCookies() {
+    public Map<String, Object> getCookies() {
         return cookies;
     }
 
-    public Request setCookies(Map<String, String> cookies) {
+    public Request setCookies(Map<String, Object> cookies) {
         this.cookies = cookies;
         return this;
     }

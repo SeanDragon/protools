@@ -31,8 +31,8 @@ public final class ToolJson {
         gson = new GsonBuilder()
                 .setLenient()// json宽松
                 .enableComplexMapKeySerialization()//支持Map的key为复杂对象的形式
-                .serializeNulls() //智能null
-                .setPrettyPrinting()// 调教格式
+                //.serializeNulls() //智能null
+                //.setPrettyPrinting()// 调教格式
                 .disableHtmlEscaping() //默认是GSON把HTML 转义的
                 .registerTypeAdapter(
                         new TypeToken<TreeMap<String, Object>>() {
@@ -50,7 +50,8 @@ public final class ToolJson {
                                 }
                             });
                             return treeMap;
-                        }).create();
+                        })
+                .create();
     }
 
     /**

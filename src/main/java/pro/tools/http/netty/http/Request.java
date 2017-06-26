@@ -85,7 +85,7 @@ public class Request {
         return cookies;
     }
 
-    public Request setCookies(Cookie[] cookies) {
+    public Request setCookies(Cookie... cookies) {
         this.cookies = cookies;
         return this;
     }

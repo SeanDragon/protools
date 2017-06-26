@@ -5,8 +5,6 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.http.DefaultFullHttpRequest;
 import io.netty.handler.codec.http.FullHttpRequest;
-import io.netty.handler.codec.http.HttpHeaderNames;
-import io.netty.handler.codec.http.HttpHeaderValues;
 import io.netty.handler.codec.http.HttpMethod;
 import io.netty.handler.codec.http.HttpVersion;
 import io.netty.handler.codec.http.cookie.ClientCookieEncoder;
@@ -93,7 +91,6 @@ public class NettyClient extends AbstractClient {
             fullHttpRequest.content().writeBytes(paramsStr.getBytes(StrConst.DEFAULT_CHARSET));
         }
 
-
         Map<String, String> headers = request.getHeaders();
         if (headers != null && headers.size() > 0) {
             request.getHeaders().forEach((key, value) -> {
@@ -104,20 +101,26 @@ public class NettyClient extends AbstractClient {
         Cookie[] cookies = request.getCookies();
         if (cookies != null && cookies.length > 0) {
             fullHttpRequest.headers().set(
-                    HttpHeaderNames.COOKIE,
-                    ClientCookieEncoder.STRICT.encode(cookies));
+                    "cookie", ClientCookieEncoder.STRICT.encode(cookies));
         }
 
-
         fullHttpRequest.headers().set("DNT", 1);
-        fullHttpRequest.headers().set(HttpHeaderNames.CACHE_CONTROL, HttpHeaderValues.MAX_AGE + "=0");
-        fullHttpRequest.headers().set(HttpHeaderNames.CONTENT_LENGTH, fullHttpRequest.content().readableBytes());
-        fullHttpRequest.headers().set(HttpHeaderNames.CONTENT_TYPE, HttpHeaderValues.APPLICATION_JSON + ";charset=" + StrConst.DEFAULT_CHARSET_NAME);
-        fullHttpRequest.headers().set(HttpHeaderNames.ACCEPT_ENCODING, HttpHeaderValues.GZIP_DEFLATE);
-        fullHttpRequest.headers().set(HttpHeaderNames.USER_AGENT, "Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html）");
-        fullHttpRequest.headers().set(HttpHeaderNames.HOST, this.getRemoteHost() + ":" + this.getPort());
-        fullHttpRequest.headers().set(HttpHeaderNames.CONNECTION, HttpHeaderValues.CLOSE);
-        //fullHttpRequest.headers().add("Connection", "keep-alive");
+        fullHttpRequest.headers().set("cache-control", "max-age=0");
+        fullHttpRequest.headers().set("content-length", fullHttpRequest.content().readableBytes());
+        fullHttpRequest.headers().set("content-type", "application/x-www-form-urlencoded;charset=" + StrConst.DEFAULT_CHARSET_NAME);
+        fullHttpRequest.headers().set("accept-encoding", "gzip, deflate");
+        fullHttpRequest.headers().set("user-agent", "Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html）");
+        fullHttpRequest.headers().set("host", this.getRemoteHost() + ":" + this.getPort());
+        fullHttpRequest.headers().set("connection", "keep-alive");
+
+        //fullHttpRequest.headers().set("DNT", 1);
+        //fullHttpRequest.headers().set(HttpHeaderNames.CACHE_CONTROL, HttpHeaderValues.MAX_AGE + "=0");
+        //fullHttpRequest.headers().set(HttpHeaderNames.CONTENT_LENGTH, fullHttpRequest.content().readableBytes());
+        //fullHttpRequest.headers().set(HttpHeaderNames.CONTENT_TYPE, HttpHeaderValues.APPLICATION_JSON + ";charset=" + StrConst.DEFAULT_CHARSET_NAME);
+        //fullHttpRequest.headers().set(HttpHeaderNames.ACCEPT_ENCODING, HttpHeaderValues.GZIP_DEFLATE);
+        //fullHttpRequest.headers().set(HttpHeaderNames.USER_AGENT, "Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html）");
+        //fullHttpRequest.headers().set(HttpHeaderNames.HOST, this.getRemoteHost() + ":" + this.getPort());
+        //fullHttpRequest.headers().set(HttpHeaderNames.CONNECTION, HttpHeaderValues.KEEP_ALIVE);
 
         this.channel.pipeline().write(fullHttpRequest);
         this.channel.pipeline().flush();
@@ -163,7 +166,7 @@ public class NettyClient extends AbstractClient {
         if (this.getStatus().equals(ClientStatus.Stopped)) {
             return;
         }
-        log.warn("连接断开了，将会尝试重新连接");
+        log.info("连接断开了，将会尝试重新连接");
         if (this.getStatus().equals(ClientStatus.Ready)) {
             this.getClientPool().removeClient(this);
         } else if (this.getStatus().equals(ClientStatus.Working)) {
@@ -192,11 +195,11 @@ public class NettyClient extends AbstractClient {
         this.channel.connect(new InetSocketAddress(this.getRemoteHost(), this.getPort())).addListener((ChannelFutureListener) channelFuture -> {
             if (channelFuture.channel().isActive()) {
                 connectNumber.set(0);  //连接上了之后就可以刷新成0
-                log.info("连接建立成功, host : " + getRemoteHost() + "\t,port : " + getPort());
+                log.debug("连接建立成功, host : " + getRemoteHost() + "\t,port : " + getPort());
             } else {
                 int number = connectNumber.incrementAndGet();
                 if (number > 10) {
-                    log.error("我擦，尝试这么多次，还是没有连接上，算了吧");
+                    log.warn("我擦，尝试这么多次，还是没有连接上，算了吧");
                     getClientPool().stop();
                     return;
                 }

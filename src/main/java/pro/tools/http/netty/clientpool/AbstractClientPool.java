@@ -110,7 +110,7 @@ public abstract class AbstractClientPool implements ClientPool {
         Client client;
         while (true) {
             try {
-                client = this.clients.poll(1000, TimeUnit.DAYS);
+                client = this.clients.poll(365, TimeUnit.DAYS);
                 break;
             } catch (InterruptedException e) {
                 e.printStackTrace();

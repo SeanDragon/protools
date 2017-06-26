@@ -123,16 +123,48 @@ public class Test_20170622 {
 
         Map map = ToolJson.modelToMap(menu);
 
-        //JsonPrimitive menuId = (JsonPrimitive) map.get("menuId");
+        //JsonPrimitive menuId = (JsonPrimitive) map.get("name");
+        //menuId = (JsonPrimitive) map.get("menuId");
         //
-        //System.out.println(menuId.getAsInt());
+        //String s = menuId.toString();
+        //try {
+        //    StringWriter stringWriter = new StringWriter();
+        //    JsonWriter jsonWriter = new JsonWriter(stringWriter);
+        //    jsonWriter.setLenient(false);
+        //    Streams.write(menuId, jsonWriter);
+        //    s = stringWriter.toString();
+        //    if (menuId.isString()) {
+        //        s = s.substring(1, s.length() - 1);
+        //    }
+        //} catch (Exception var3) {
+        //    throw new AssertionError(var3);
+        //}
+
+        //System.out.println(s);
 
         System.out.println(map.get("menuId"));
+        System.out.println(map.get("name"));
 
         Menu newMenu = ToolJson.mapToModel(map, Menu.class);
 
         System.out.println(newMenu);
+    }
 
+    @Test
+    public void test4() {
+        List<Menu> menuList = new ArrayList<>();
+        menuList.add(new Menu().setName("menu1").setMenuId(1D));
+        menuList.add(new Menu().setName("menu2").setMenuId(2D));
+        menuList.add(new Menu().setName("menu3").setMenuId(3D));
+
+        String x = ToolJson.modelToJson(menuList);
+        System.out.println(x);
+
+        menuList = ToolJson.jsonToModelList(x, Menu.class);
+
+        System.out.println(menuList);
+
+        //String json = ToolJson.modelToMapList(menuList);
     }
 }
 

@@ -15,4 +15,9 @@ public class Test_20170623 {
 
         while (true) ;
     }
+
+    @Test
+    public void test2() {
+
+    }
 }

@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -28,13 +29,26 @@ public final class ToolJson {
 
     private static void init() {
         gson = new GsonBuilder()
+                .setLenient()// json宽松
+                .enableComplexMapKeySerialization()//支持Map的key为复杂对象的形式
+                .serializeNulls() //智能null
+                .setPrettyPrinting()// 调教格式
+                .disableHtmlEscaping() //默认是GSON把HTML 转义的
                 .registerTypeAdapter(
                         new TypeToken<TreeMap<String, Object>>() {
                         }.getType(), (JsonDeserializer<TreeMap<String, Object>>) (json, typeOfT, context) -> {
                             TreeMap<String, Object> treeMap = new TreeMap<>();
                             JsonObject jsonObject = json.getAsJsonObject();
                             Set<Map.Entry<String, JsonElement>> entrySet = jsonObject.entrySet();
-                            entrySet.forEach(entry -> treeMap.put(entry.getKey(), entry.getValue()));
+                            entrySet.forEach(entry -> {
+                                String key = entry.getKey();
+                                JsonElement value = entry.getValue();
+                                if (value instanceof JsonPrimitive && ((JsonPrimitive) value).isString()) {
+                                    treeMap.put(key, value.getAsString());
+                                } else {
+                                    treeMap.put(key, value);
+                                }
+                            });
                             return treeMap;
                         }).create();
     }

@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
 
 /**
@@ -21,26 +20,21 @@ import java.util.TreeMap;
  */
 public final class ToolJson {
 
-    public static Gson gson = null;
+    private static Gson gson;
 
     static {
-        init();
-    }
-
-    private static void init() {
-        gson = new GsonBuilder()
+        final GsonBuilder gsonBuilder = new GsonBuilder()
                 .setLenient()// json宽松
+                .excludeFieldsWithoutExposeAnnotation()//排除用Expose注解的属性
+                .setPrettyPrinting()//变得更好看
                 .enableComplexMapKeySerialization()//支持Map的key为复杂对象的形式
-                //.serializeNulls() //智能null
-                //.setPrettyPrinting()// 调教格式
+                .setDateFormat("yyyy-MM-dd HH:mm:ss:SSS")//时间转化为特定格式
                 .disableHtmlEscaping() //默认是GSON把HTML 转义的
                 .registerTypeAdapter(
                         new TypeToken<TreeMap<String, Object>>() {
                         }.getType(), (JsonDeserializer<TreeMap<String, Object>>) (json, typeOfT, context) -> {
                             TreeMap<String, Object> treeMap = new TreeMap<>();
-                            JsonObject jsonObject = json.getAsJsonObject();
-                            Set<Map.Entry<String, JsonElement>> entrySet = jsonObject.entrySet();
-                            entrySet.forEach(entry -> {
+                            json.getAsJsonObject().entrySet().forEach(entry -> {
                                 String key = entry.getKey();
                                 JsonElement value = entry.getValue();
                                 if (value instanceof JsonPrimitive && ((JsonPrimitive) value).isString()) {
@@ -50,8 +44,9 @@ public final class ToolJson {
                                 }
                             });
                             return treeMap;
-                        })
-                .create();
+                        });
+
+        gson = gsonBuilder.create();
     }
 
     /**
@@ -64,7 +59,6 @@ public final class ToolJson {
     public static String mapToJson(Map map) {
         if (map == null)
             return "{}";
-        //Gson gson = new Gson();
         return gson.toJson(map);
     }
 
@@ -78,9 +72,6 @@ public final class ToolJson {
     public static Map jsonToMap(String json) {
         if (json == null)
             return new HashMap<>();
-        //Gson gson = new Gson();
-        //Map map = gson.fromJson(json, Map.class);
-        //return map;
         return gson.fromJson(json, new TypeToken<TreeMap<String, Object>>() {
         }.getType());
     }
@@ -96,7 +87,6 @@ public final class ToolJson {
     public static String modelToJson(Object model) {
         if (model == null)
             return "{}";
-        //Gson gson = new Gson();
         return gson.toJson(model);
     }
 
@@ -109,8 +99,28 @@ public final class ToolJson {
      * @return Object
      */
     public static <T> T jsonToModel(String sJson, Class<T> classOfT) {
-        //Gson gson = new Gson();
         return gson.fromJson(sJson, classOfT);
+    }
+
+    /**
+     * 将模型进行JSON解码
+     *
+     * @param sJson
+     * @param type
+     *
+     * @return Object
+     */
+    public static <T> T jsonToAny(String sJson, Type type) {
+        return gson.fromJson(sJson, type);
+    }
+
+    /**
+     * 将模型进行JSON解码
+     *
+     * @return Object
+     */
+    public static <T> String jsonToAny(T t) {
+        return gson.toJson(t);
     }
 
     /**
@@ -256,7 +266,7 @@ public final class ToolJson {
      * @return List<String>
      */
     public static List<String> dealJsonStr(String json) {
-        List<String> lst = new ArrayList<String>();
+        List<String> lst = new ArrayList<>();
         String[] sfs = json.split("\"\\},\\{\"");
         for (String str : sfs) {
             if (str.startsWith("[")) {
@@ -283,4 +293,8 @@ public final class ToolJson {
         return lst;
     }
 
+
+    public synchronized static void resetGsonBuilder(GsonBuilder newGsonBuilder) {
+        gson = newGsonBuilder.create();
+    }
 }

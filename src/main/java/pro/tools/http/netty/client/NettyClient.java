@@ -165,7 +165,7 @@ public class NettyClient extends AbstractClient {
         if (this.getStatus().equals(ClientStatus.Stopped)) {
             return;
         }
-        log.info("连接断开了，将会尝试重新连接");
+        log.debug("连接断开了，将会尝试重新连接");
         if (this.getStatus().equals(ClientStatus.Ready)) {
             this.getClientPool().removeClient(this);
         } else if (this.getStatus().equals(ClientStatus.Working)) {

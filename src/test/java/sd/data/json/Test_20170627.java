@@ -67,7 +67,7 @@ public class Test_20170627 {
 
         //JsonResult<User<Account>>
 
-        //JsonResult<User<Account>> =
+        //JsonResult<User<Account>>
 
         TypeBuilder.newInstance(JsonResult.class);
 
@@ -78,7 +78,7 @@ public class Test_20170627 {
                 .endSubType()
                 .build();
 
-        JsonResult<User> jsonResult1 = ToolJson.jsonToAny(s, type);
+        JsonResult<User<Account>> jsonResult1 = ToolJson.jsonToAny(s, type);
 
         System.out.println(jsonResult1.getData().getClass());
 

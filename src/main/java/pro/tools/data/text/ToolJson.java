@@ -119,7 +119,7 @@ public final class ToolJson {
      *
      * @return Object
      */
-    public static <T> String jsonToAny(T t) {
+    public static <T> String anyToJson(T t) {
         return gson.toJson(t);
     }
 

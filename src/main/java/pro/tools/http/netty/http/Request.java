@@ -1,5 +1,6 @@
 package pro.tools.http.netty.http;
 
+import com.google.common.base.MoreObjects;
 import io.netty.handler.codec.http.cookie.Cookie;
 import pro.tools.constant.HttpConst;
 import pro.tools.http.netty.future.Future;
@@ -88,5 +89,17 @@ public class Request {
     public Request setCookies(Cookie... cookies) {
         this.cookies = cookies;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("future", future)
+                .add("path", path)
+                .add("method", method)
+                .add("headers", headers)
+                .add("params", params)
+                .add("cookies", cookies)
+                .toString();
     }
 }

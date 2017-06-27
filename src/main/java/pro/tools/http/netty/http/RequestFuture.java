@@ -9,14 +9,9 @@ import java.util.concurrent.TimeoutException;
 
  */
 public class RequestFuture extends AbstractFuture {
-    private Request request;
     private Client client;
     private volatile Response response;
     private volatile Throwable throwable;
-
-    public RequestFuture(Request request) {
-        this.request = request;
-    }
 
     /**
      * 设置当前的response，相当于做一层记录

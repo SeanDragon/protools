@@ -122,8 +122,7 @@ public class NettyClient extends AbstractClient {
         //fullHttpRequest.headers().set(HttpHeaderNames.HOST, this.getRemoteHost() + ":" + this.getPort());
         //fullHttpRequest.headers().set(HttpHeaderNames.CONNECTION, HttpHeaderValues.KEEP_ALIVE);
 
-        this.channel.pipeline().write(fullHttpRequest);
-        this.channel.pipeline().flush();
+        this.channel.pipeline().writeAndFlush(fullHttpRequest);
     }
 
     /**

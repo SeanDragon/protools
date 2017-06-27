@@ -117,7 +117,7 @@ public abstract class AbstractClientPool implements ClientPool {
             }
         }
 
-        RequestFuture future = new RequestFuture(request);
+        RequestFuture future = new RequestFuture();
         request.setFuture(future);
         future.setClient(client);
         client.setRequest(request);
@@ -138,7 +138,7 @@ public abstract class AbstractClientPool implements ClientPool {
     @Override
     public RequestFuture requestWithTimeOut(Request request, int timeout) {
         long before = System.currentTimeMillis();
-        final RequestFuture future = new RequestFuture(request);
+        final RequestFuture future = new RequestFuture();
         Client client;
         while (true) {
             try {

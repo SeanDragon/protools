@@ -101,7 +101,6 @@ public abstract class AbstractClientPool implements ClientPool {
      * 发送一个http请求，并返回一个RequestFuture
      *
      * @param request
-     *
      * @return
      */
     @Override
@@ -132,7 +131,6 @@ public abstract class AbstractClientPool implements ClientPool {
      *
      * @param request
      * @param timeout
-     *
      * @return
      */
     @Override
@@ -160,7 +158,7 @@ public abstract class AbstractClientPool implements ClientPool {
         request.setFuture(future);
         future.setStatus(Future.FutureStatus.Running);
 
-        timeout = (int) (timeout - (after - before));
+        timeout -= (int) (after - before);
         this.scBuild(future::timeOut, timeout);
         client.request(request);
         return future;

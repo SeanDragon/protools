@@ -2,12 +2,7 @@ package pro.tools.data.text;
 
 import pro.tools.constant.UnitConst;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -29,9 +24,7 @@ public final class ToolConvert {
      * <p>例如：</p>
      * bytes2HexString(new byte[] { 0, (byte) 0xa8 }) returns 00A8
      *
-     * @param bytes
-     *         字节数组
-     *
+     * @param bytes 字节数组
      * @return 16进制大写字符串
      */
     public static String bytes2HexString(byte[] bytes) {
@@ -51,9 +44,7 @@ public final class ToolConvert {
      * <p>例如：</p>
      * hexString2Bytes("00A8") returns { 0, (byte) 0xA8 }
      *
-     * @param hexString
-     *         十六进制字符串
-     *
+     * @param hexString 十六进制字符串
      * @return 字节数组
      */
     public static byte[] hexString2Bytes(String hexString) {
@@ -74,9 +65,7 @@ public final class ToolConvert {
     /**
      * hexChar转int
      *
-     * @param hexChar
-     *         hex单个字节
-     *
+     * @param hexChar hex单个字节
      * @return 0..15
      */
     private static int hex2Dec(char hexChar) {
@@ -92,9 +81,7 @@ public final class ToolConvert {
     /**
      * charArr转byteArr
      *
-     * @param chars
-     *         字符数组
-     *
+     * @param chars 字符数组
      * @return 字节数组
      */
     public static byte[] chars2Bytes(char[] chars) {
@@ -110,9 +97,7 @@ public final class ToolConvert {
     /**
      * byteArr转charArr
      *
-     * @param bytes
-     *         字节数组
-     *
+     * @param bytes 字节数组
      * @return 字符数组
      */
     public static char[] bytes2Chars(byte[] bytes) {
@@ -129,12 +114,9 @@ public final class ToolConvert {
     /**
      * 以unit为单位的内存大小转字节数
      *
-     * @param memorySize
-     *         大小
-     * @param unit
-     *         单位类型 <ul> <li>{@link UnitConst.MemoryUnit#BYTE}: 字节</li> <li>{@link UnitConst.MemoryUnit#KB}  : 千字节</li>
-     *         <li>{@link UnitConst.MemoryUnit#MB}  : 兆</li> <li>{@link UnitConst.MemoryUnit#GB}  : GB</li> </ul>
-     *
+     * @param memorySize 大小
+     * @param unit       单位类型 <ul> <li>{@link UnitConst.MemoryUnit#BYTE}: 字节</li> <li>{@link UnitConst.MemoryUnit#KB}  : 千字节</li>
+     *                   <li>{@link UnitConst.MemoryUnit#MB}  : 兆</li> <li>{@link UnitConst.MemoryUnit#GB}  : GB</li> </ul>
      * @return 字节数
      */
     public static long memorySize2Byte(long memorySize, UnitConst.MemoryUnit unit) {
@@ -155,12 +137,9 @@ public final class ToolConvert {
     /**
      * 字节数转以unit为单位的内存大小
      *
-     * @param byteNum
-     *         字节数
-     * @param unit
-     *         单位类型 <ul> <li>{@link UnitConst.MemoryUnit#BYTE}: 字节</li> <li>{@link UnitConst.MemoryUnit#KB}  : 千字节</li>
-     *         <li>{@link UnitConst.MemoryUnit#MB}  : 兆</li> <li>{@link UnitConst.MemoryUnit#GB}  : GB</li> </ul>
-     *
+     * @param byteNum 字节数
+     * @param unit    单位类型 <ul> <li>{@link UnitConst.MemoryUnit#BYTE}: 字节</li> <li>{@link UnitConst.MemoryUnit#KB}  : 千字节</li>
+     *                <li>{@link UnitConst.MemoryUnit#MB}  : 兆</li> <li>{@link UnitConst.MemoryUnit#GB}  : GB</li> </ul>
      * @return 以unit为单位的size
      */
     public static double byte2MemorySize(long byteNum, UnitConst.MemoryUnit unit) {
@@ -182,9 +161,7 @@ public final class ToolConvert {
      * 字节数转合适内存大小
      * <p>保留3位小数</p>
      *
-     * @param byteNum
-     *         字节数
-     *
+     * @param byteNum 字节数
      * @return 合适内存大小
      */
     public static String byte2FitMemorySize(long byteNum) {
@@ -204,13 +181,10 @@ public final class ToolConvert {
     /**
      * 以unit为单位的时间长度转毫秒时间戳
      *
-     * @param timeSpan
-     *         毫秒时间戳
-     * @param unit
-     *         单位类型 <ul> <li>{@link UnitConst.TimeUnit#MSEC}: 毫秒</li> <li>{@link UnitConst.TimeUnit#SEC }: 秒</li>
-     *         <li>{@link UnitConst.TimeUnit#MIN }: 分</li> <li>{@link UnitConst.TimeUnit#HOUR}: 小时</li> <li>{@link
-     *         UnitConst.TimeUnit#DAY }: 天</li> </ul>
-     *
+     * @param timeSpan 毫秒时间戳
+     * @param unit     单位类型 <ul> <li>{@link UnitConst.TimeUnit#MSEC}: 毫秒</li> <li>{@link UnitConst.TimeUnit#SEC }: 秒</li>
+     *                 <li>{@link UnitConst.TimeUnit#MIN }: 分</li> <li>{@link UnitConst.TimeUnit#HOUR}: 小时</li> <li>{@link
+     *                 UnitConst.TimeUnit#DAY }: 天</li> </ul>
      * @return 毫秒时间戳
      */
     public static long timeSpan2Millis(long timeSpan, UnitConst.TimeUnit unit) {
@@ -232,13 +206,10 @@ public final class ToolConvert {
     /**
      * 毫秒时间戳转以unit为单位的时间长度
      *
-     * @param millis
-     *         毫秒时间戳
-     * @param unit
-     *         单位类型 <ul> <li>{@link UnitConst.TimeUnit#MSEC}: 毫秒</li> <li>{@link UnitConst.TimeUnit#SEC }: 秒</li>
-     *         <li>{@link UnitConst.TimeUnit#MIN }: 分</li> <li>{@link UnitConst.TimeUnit#HOUR}: 小时</li> <li>{@link
-     *         UnitConst.TimeUnit#DAY }: 天</li> </ul>
-     *
+     * @param millis 毫秒时间戳
+     * @param unit   单位类型 <ul> <li>{@link UnitConst.TimeUnit#MSEC}: 毫秒</li> <li>{@link UnitConst.TimeUnit#SEC }: 秒</li>
+     *               <li>{@link UnitConst.TimeUnit#MIN }: 分</li> <li>{@link UnitConst.TimeUnit#HOUR}: 小时</li> <li>{@link
+     *               UnitConst.TimeUnit#DAY }: 天</li> </ul>
      * @return 以unit为单位的时间长度
      */
     public static long millis2TimeSpan(long millis, UnitConst.TimeUnit unit) {
@@ -260,13 +231,10 @@ public final class ToolConvert {
     /**
      * 毫秒时间戳转合适时间长度
      *
-     * @param millis
-     *         毫秒时间戳 <p>小于等于0，返回null</p>
-     * @param precision
-     *         精度 <ul> <li>precision = 0，返回null</li> <li>precision = 1，返回天</li> <li>precision = 2，返回天和小时</li>
-     *         <li>precision = 3，返回天、小时和分钟</li> <li>precision = 4，返回天、小时、分钟和秒</li> <li>precision &gt;=
-     *         5，返回天、小时、分钟、秒和毫秒</li> </ul>
-     *
+     * @param millis    毫秒时间戳 <p>小于等于0，返回null</p>
+     * @param precision 精度 <ul> <li>precision = 0，返回null</li> <li>precision = 1，返回天</li> <li>precision = 2，返回天和小时</li>
+     *                  <li>precision = 3，返回天、小时和分钟</li> <li>precision = 4，返回天、小时、分钟和秒</li> <li>precision &gt;=
+     *                  5，返回天、小时、分钟、秒和毫秒</li> </ul>
      * @return 合适时间长度
      */
     public static String millis2FitTimeSpan(long millis, int precision) {
@@ -288,9 +256,7 @@ public final class ToolConvert {
     /**
      * bytes转bits
      *
-     * @param bytes
-     *         字节数组
-     *
+     * @param bytes 字节数组
      * @return bits
      */
     public static String bytes2Bits(byte[] bytes) {
@@ -306,9 +272,7 @@ public final class ToolConvert {
     /**
      * bits转bytes
      *
-     * @param bits
-     *         二进制
-     *
+     * @param bits 二进制
      * @return bytes
      */
     public static byte[] bits2Bytes(String bits) {
@@ -334,9 +298,7 @@ public final class ToolConvert {
     /**
      * inputStream转outputStream
      *
-     * @param is
-     *         输入流
-     *
+     * @param is 输入流
      * @return outputStream子类
      */
     public static ByteArrayOutputStream input2OutputStream(InputStream is) throws IOException {
@@ -354,9 +316,7 @@ public final class ToolConvert {
     /**
      * inputStream转byteArr
      *
-     * @param is
-     *         输入流
-     *
+     * @param is 输入流
      * @return 字节数组
      */
     public static byte[] inputStream2Bytes(InputStream is) throws IOException {
@@ -367,9 +327,7 @@ public final class ToolConvert {
     /**
      * byteArr转inputStream
      *
-     * @param bytes
-     *         字节数组
-     *
+     * @param bytes 字节数组
      * @return 输入流
      */
     public static InputStream bytes2InputStream(byte[] bytes) {
@@ -380,9 +338,7 @@ public final class ToolConvert {
     /**
      * outputStream转byteArr
      *
-     * @param out
-     *         输出流
-     *
+     * @param out 输出流
      * @return 字节数组
      */
     public static byte[] outputStream2Bytes(OutputStream out) {
@@ -393,9 +349,7 @@ public final class ToolConvert {
     /**
      * outputStream转byteArr
      *
-     * @param bytes
-     *         字节数组
-     *
+     * @param bytes 字节数组
      * @return 字节数组
      */
     public static OutputStream bytes2OutputStream(byte[] bytes) throws IOException {
@@ -409,11 +363,8 @@ public final class ToolConvert {
     /**
      * inputStream转string按编码
      *
-     * @param is
-     *         输入流
-     * @param charsetName
-     *         编码格式
-     *
+     * @param is          输入流
+     * @param charsetName 编码格式
      * @return 字符串
      */
     public static String inputStream2String(InputStream is, String charsetName) throws IOException {
@@ -424,11 +375,8 @@ public final class ToolConvert {
     /**
      * string转inputStream按编码
      *
-     * @param string
-     *         字符串
-     * @param charsetName
-     *         编码格式
-     *
+     * @param string      字符串
+     * @param charsetName 编码格式
      * @return 输入流
      */
     public static InputStream string2InputStream(String string, String charsetName) throws UnsupportedEncodingException {
@@ -441,11 +389,8 @@ public final class ToolConvert {
     /**
      * outputStream转string按编码
      *
-     * @param out
-     *         输出流
-     * @param charsetName
-     *         编码格式
-     *
+     * @param out         输出流
+     * @param charsetName 编码格式
      * @return 字符串
      */
     public static String outputStream2String(OutputStream out, String charsetName) throws UnsupportedEncodingException {
@@ -458,11 +403,8 @@ public final class ToolConvert {
     /**
      * string转outputStream按编码
      *
-     * @param string
-     *         字符串
-     * @param charsetName
-     *         编码格式
-     *
+     * @param string      字符串
+     * @param charsetName 编码格式
      * @return 输入流
      */
     public static OutputStream string2OutputStream(String string, String charsetName) throws IOException {
@@ -473,9 +415,7 @@ public final class ToolConvert {
     /**
      * outputStream转inputStream
      *
-     * @param out
-     *         输出流
-     *
+     * @param out 输出流
      * @return inputStream子类
      */
     public static ByteArrayInputStream output2InputStream(OutputStream out) {
@@ -485,12 +425,12 @@ public final class ToolConvert {
 
     public static Map<String, String> str2map(String str, String tokenStr, String splitStr) {
         Map<String, String> result = new HashMap<>();
-        StringTokenizer stringTokenizer = new StringTokenizer(str, tokenStr);
-        while (stringTokenizer.hasMoreTokens()) {
-            String nextStr = stringTokenizer.nextToken();
-            String[] strListBySplit = nextStr.split(splitStr);
-            if (strListBySplit.length == 2) {
-                result.put(strListBySplit[0], strListBySplit[1]);
+        StringTokenizer tokenSTK = new StringTokenizer(str, tokenStr);
+        while (tokenSTK.hasMoreTokens()) {
+            String nextStr = tokenSTK.nextToken();
+            StringTokenizer splitSTK = new StringTokenizer(nextStr, splitStr);
+            if (splitSTK.countTokens() == 2) {
+                result.put(splitSTK.nextToken(), splitSTK.nextToken());
             }
         }
         return result;

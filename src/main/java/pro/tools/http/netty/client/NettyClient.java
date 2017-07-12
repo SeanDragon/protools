@@ -7,12 +7,12 @@ import io.netty.handler.codec.http.DefaultFullHttpRequest;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.HttpMethod;
 import io.netty.handler.codec.http.HttpVersion;
+import io.netty.handler.codec.http.QueryStringEncoder;
 import io.netty.handler.codec.http.cookie.ClientCookieEncoder;
 import io.netty.handler.codec.http.cookie.Cookie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pro.tools.constant.StrConst;
-import pro.tools.data.text.ToolConvert;
 import pro.tools.http.netty.clientpool.ClientPool;
 import pro.tools.http.netty.handler.HandlerInitializer;
 import pro.tools.http.netty.http.Request;
@@ -55,14 +55,17 @@ public class NettyClient extends AbstractClient {
             return;
         }
         URI uri;
+
+        QueryStringEncoder queryStringEncoder = new QueryStringEncoder(this.getScheme() + "://" + this.getRemoteHost() + ":" + this.getPort() + request.getPath(), StrConst.DEFAULT_CHARSET);
+
+        request.getParams().forEach((key, value) -> queryStringEncoder.addParam(key, value.toString()));
+
         try {
-            uri = new URI(this.getScheme(), null, this.getRemoteHost(), this.getPort(), request.getPath(), null, null);
+            uri = new URI(queryStringEncoder.toString());
         } catch (URISyntaxException e) {
             log.error("host没问题,path访问出错", e);
             throw new RuntimeException(e);
         }
-
-        String rawPath = uri.getRawPath();
 
         HttpMethod method;
         switch (request.getMethod()) {
@@ -83,19 +86,11 @@ public class NettyClient extends AbstractClient {
                 break;
         }
 
-        FullHttpRequest fullHttpRequest = new DefaultFullHttpRequest(HttpVersion.HTTP_1_1, method, rawPath);
-
-        Map<String, Object> params = request.getParams();
-        if (params != null && params.size() > 0) {
-            String paramsStr = ToolConvert.map2str(params, "=", "&");
-            fullHttpRequest.content().writeBytes(paramsStr.getBytes(StrConst.DEFAULT_CHARSET));
-        }
+        FullHttpRequest fullHttpRequest = new DefaultFullHttpRequest(HttpVersion.HTTP_1_1, method, uri.toASCIIString());
 
         Map<String, String> headers = request.getHeaders();
         if (headers != null && headers.size() > 0) {
-            request.getHeaders().forEach((key, value) -> {
-                fullHttpRequest.headers().set(key, value);
-            });
+            request.getHeaders().forEach((key, value) -> fullHttpRequest.headers().set(key, value));
         }
 
         Cookie[] cookies = request.getCookies();

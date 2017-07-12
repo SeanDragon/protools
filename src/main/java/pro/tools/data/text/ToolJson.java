@@ -83,7 +83,7 @@ public final class ToolJson {
      *
      * @return String
      */
-    public static String modelToJson(Object model) {
+    public static <T> String modelToJson(T model) {
         if (model == null)
             return "{}";
         return gson.toJson(model);
@@ -153,7 +153,7 @@ public final class ToolJson {
      *
      * @return Object
      */
-    public static Map modelToMap(Object data) {
+    public static <T> Map modelToMap(T data) {
         return jsonToMap(modelToJson(data));
     }
 
@@ -164,7 +164,7 @@ public final class ToolJson {
      *
      * @return Object
      */
-    public static List<Map> modelToMapList(Object data) {
+    public static <T> List<Map> modelToMapList(T data) {
         return jsonToMapList(modelToJson(data));
     }
 

@@ -8,15 +8,11 @@ package pro.tools.constant;
  */
 public final class RegexConst {
 
-    private RegexConst() {
-        throw new UnsupportedOperationException("u can't instantiate me...");
-    }
-
+    public static final String REGEX_MONEY = "^(([1-9]\\d{0,9})|0)(\\.\\d{1,2})?$";
     /**
      * 正则：英文单词或者数字
      */
     public static final String REGEX_WORD_OR_NUMBER = "^[A-Za-z0-9]+$";
-
     /**
      * 正则：手机号（简单）
      */
@@ -34,7 +30,6 @@ public final class RegexConst {
      * 正则：电话号码
      */
     public static final String REGEX_TEL = "^0\\d{2,3}[- ]?\\d{7,8}";
-
     /**
      * 正则：身份证号码15位
      */
@@ -79,12 +74,12 @@ public final class RegexConst {
      * 正则：QQ号
      */
     public static final String REGEX_QQ_NUM = "[1-9][0-9]{4,}";
-
-    //region 以下摘自http://tool.oschina.net/regex
     /**
      * 正则：中国邮政编码
      */
     public static final String REGEX_ZIP_CODE = "[1-9]\\d{5}(?!\\d)";
+
+    //region 以下摘自http://tool.oschina.net/regex
     /**
      * 正则：正整数
      */
@@ -113,6 +108,10 @@ public final class RegexConst {
      * 正则：负浮点数
      */
     public static final String REGEX_NEGATIVE_FLOAT = "^-[1-9]\\d*\\.\\d*|-0\\.\\d*[1-9]\\d*$";
+
+    private RegexConst() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
     //endregion
 
 }

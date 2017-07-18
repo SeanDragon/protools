@@ -16,7 +16,7 @@ public class Decimal extends Number {
 
     //region 全局变量
     private BigDecimal bigDecimal;
-    private MathContext defaultMathContext = new MathContext(0, RoundingMode.HALF_EVEN);
+    private MathContext defaultMathContext = new MathContext(10, RoundingMode.HALF_EVEN);
     //endregion
 
     /**
@@ -30,6 +30,23 @@ public class Decimal extends Number {
     public Decimal(Object initValue, MathContext mathContext) {
         init(initValue);
         this.defaultMathContext = mathContext;
+    }
+
+    /**
+     * 便利生成方式,获取实例方法
+     *
+     * @param initValue
+     *
+     * @return
+     */
+    public static Decimal instance(Object initValue) {
+        return new Decimal(initValue);
+    }
+
+    //region 便利生成方式,获取实例方法
+
+    public static Decimal instance(Object initValue, MathContext mathContext) {
+        return new Decimal(initValue, mathContext);
     }
 
     private void init(Object initValue) {
@@ -51,24 +68,11 @@ public class Decimal extends Number {
             throw new NumberFormatException();
         }
     }
-
-    //region 便利生成方式,获取实例方法
-    /**
-     * 便利生成方式,获取实例方法
-     * @param initValue
-     * @return
-     */
-    public static Decimal instance(Object initValue) {
-        return new Decimal(initValue);
-    }
-
-    public static Decimal instance(Object initValue, MathContext mathContext) {
-        return new Decimal(initValue, mathContext);
-    }
     //endregion
     //endregion
 
     //region 获取属性值
+
     /**
      * 获取属性值
      * @return

@@ -8,7 +8,7 @@ package pro.tools.constant;
  */
 public final class RegexConst {
 
-    public static final String REGEX_MONEY = "^(([1-9]\\d{0,9})|0)(\\.\\d{1,2})?$";
+    public static final String REGEX_MONEY = "^(([1-9]\\d*)|0)(\\.\\d{1,2})?$";
     /**
      * 正则：英文单词或者数字
      */

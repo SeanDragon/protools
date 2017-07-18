@@ -58,7 +58,9 @@ public class NettyClient extends AbstractClient {
 
         QueryStringEncoder queryStringEncoder = new QueryStringEncoder(this.getScheme() + "://" + this.getRemoteHost() + ":" + this.getPort() + request.getPath(), StrConst.DEFAULT_CHARSET);
 
-        request.getParams().forEach((key, value) -> queryStringEncoder.addParam(key, value.toString()));
+        if (request.getParams() != null) {
+            request.getParams().forEach((key, value) -> queryStringEncoder.addParam(key, value.toString()));
+        }
 
         try {
             uri = new URI(queryStringEncoder.toString());

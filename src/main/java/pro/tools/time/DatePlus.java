@@ -19,6 +19,10 @@ import java.time.format.DateTimeParseException;
  * @author SeanDragon
  */
 public class DatePlus {
+    //region 生肖和星座
+    private static final String[] CHINESE_ZODIAC = {"猴", "鸡", "狗", "猪", "鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊"};
+    private static final String[] ZODIAC = {"水瓶座", "双鱼座", "白羊座", "金牛座", "双子座", "巨蟹座", "狮子座", "处女座", "天秤座", "天蝎座", "射手座", "魔羯座"};
+    private static final int[] ZODIAC_FLAGS = {20, 19, 21, 21, 21, 22, 23, 23, 23, 24, 23, 22};
     /**
      * 日期对象
      */
@@ -52,6 +56,7 @@ public class DatePlus {
     public DatePlus(int year, int month, int dayOfMonth, int hour, int minutes, int seconds, int nanoOfSecond) {
         this.localDateTime = LocalDateTime.of(year, month, dayOfMonth, hour, minutes, seconds, nanoOfSecond);
     }
+    //endregion
 
     public DatePlus(long time) {
         java.util.Date date = new java.util.Date(time);
@@ -74,7 +79,6 @@ public class DatePlus {
         }
 
     }
-    //endregion
 
     //region 添加属性值
     public DatePlus addYear(long year) {
@@ -102,6 +106,10 @@ public class DatePlus {
         return this;
     }
 
+    //endregion
+
+    //region 获取属性值
+
     public DatePlus addMinutes(long minutes) {
         this.localDateTime = this.localDateTime.plusMinutes(minutes);
         return this;
@@ -116,10 +124,6 @@ public class DatePlus {
         this.localDateTime = this.localDateTime.plusNanos(nanoSeconds);
         return this;
     }
-
-    //endregion
-
-    //region 获取属性值
 
     /**
      * 获取年份
@@ -210,6 +214,7 @@ public class DatePlus {
     public int getSecond() {
         return this.localDateTime.getSecond();
     }
+    //endregion
 
     /**
      * 获取纳秒数
@@ -237,7 +242,6 @@ public class DatePlus {
     public boolean isLeapYear() {
         return this.localDateTime.toLocalDate().isLeapYear();
     }
-    //endregion
 
     //region 属性的比较
     public boolean isBefore(DatePlus datePlus) {
@@ -261,7 +265,33 @@ public class DatePlus {
     }
 
     public long ofDay(DatePlus datePlus) {
-        return this.betweenDate(datePlus).getDays();
+        //return this.betweenDate(datePlus).getDays();
+
+        //拿出两个年份
+        int year1 = this.getYear();
+        int year2 = datePlus.getYear();
+        //天数
+        int days = 0;
+        //如果can1 < can2
+        DatePlus can;
+        //减去小的时间在这一年已经过了的天数
+        //加上大的时间已过的天数
+        if (this.isBefore(datePlus)) {
+            days -= this.getDayOfYear();
+            days += datePlus.getDayOfYear();
+            can = this;
+        } else {
+            days -= datePlus.getDayOfYear();
+            days += this.getDayOfYear();
+            can = datePlus;
+        }
+        for (int i = 0; i < Math.abs(year2 - year1); i++) {
+            //获取小的时间当前年的总天数
+            days += can.toMaxDate(DateType.YEAR).getDayOfYear();
+            //再计算下一年。
+            can.addYear(1);
+        }
+        return days;
     }
 
     public long ofHour(DatePlus datePlus) {
@@ -271,6 +301,7 @@ public class DatePlus {
     public long ofMinutes(DatePlus datePlus) {
         return this.ofSeconds(datePlus) / 60;
     }
+    //endregion
 
     public long ofSeconds(DatePlus datePlus) {
         return (this.ofDay(datePlus) * 24 * 60 * 60) + this.betweenTime(datePlus).getSeconds();
@@ -283,7 +314,6 @@ public class DatePlus {
     public Duration betweenTime(DatePlus datePlus) {
         return Duration.between(this.localDateTime.toLocalTime(), datePlus.getLocalDateTime().toLocalTime());
     }
-    //endregion
 
     //region 输出部分
     @Override
@@ -355,11 +385,6 @@ public class DatePlus {
     public String toGanZhi() {
         return ToolLunar.lunarYearToGanZhi(toLunar().getLunarYear());
     }
-
-    //region 生肖和星座
-    private static final String[] CHINESE_ZODIAC = {"猴", "鸡", "狗", "猪", "鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊"};
-    private static final String[] ZODIAC = {"水瓶座", "双鱼座", "白羊座", "金牛座", "双子座", "巨蟹座", "狮子座", "处女座", "天秤座", "天蝎座", "射手座", "魔羯座"};
-    private static final int[] ZODIAC_FLAGS = {20, 19, 21, 21, 21, 22, 23, 23, 23, 24, 23, 22};
 
     public String toZodiac() {
         int month = getMonth();

@@ -23,8 +23,10 @@ import java.util.Map;
  */
 public class Test_20170622 {
 
+    //private static final String address = "127.0.0.1";
     private static final String address = "127.0.0.1";
-    private static final int port = 88;
+    //private static final int port = 88;
+    private static final int port = 92;
     private static final ClientPool pool = new NettyClientPool(10, address, port);
     private static int count = 0;
 
@@ -56,7 +58,7 @@ public class Test_20170622 {
         //    }
         //});
         try {
-            Response response = pool.requestWithTimeOut(request, 1200).sync();
+            Response response = pool.requestWithTimeOut(request, 3000).sync();
             ByteBuf byteBuf = response.getBody();
             String body = byteBuf.toString(StrConst.DEFAULT_CHARSET);
             System.out.print("\t" + ++count + "\t" + body.length());

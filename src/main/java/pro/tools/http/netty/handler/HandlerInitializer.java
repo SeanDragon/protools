@@ -7,8 +7,10 @@ import io.netty.channel.ChannelInboundHandler;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.http.DefaultHttpResponse;
+import io.netty.handler.codec.http.FullHttpResponse;
 import io.netty.handler.codec.http.HttpClientCodec;
 import io.netty.handler.codec.http.HttpContent;
+import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpResponse;
 import io.netty.handler.codec.http.LastHttpContent;
 import org.slf4j.Logger;
@@ -41,6 +43,7 @@ public class HandlerInitializer implements ChannelInboundHandler {
         NioSocketChannel channel = this.client.getChannel();
         channel.pipeline().remove(this);
         channel.pipeline().addFirst(new HttpClientCodec());  //为当前的channel添加
+        channel.pipeline().addFirst(new HttpObjectAggregator(Integer.MAX_VALUE));  //为当前的channel添加
         channel.pipeline().addLast(new ReadHandler());
         channel.pipeline().addLast(this);
         client.ready();
@@ -94,6 +97,20 @@ public class HandlerInitializer implements ChannelInboundHandler {
         public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
             if (msg instanceof HttpResponse) {
                 this.response = (DefaultHttpResponse) msg;
+            }
+
+            if (msg instanceof FullHttpResponse) {
+                FullHttpResponse response = (FullHttpResponse) msg;
+                String result = response.getDecoderResult().toString();
+                this.body.writeBytes(result.getBytes());
+                Response nr = new Response(this.response, this.body);
+                this.body = null;
+                if (client.getRequest().getFuture().getStatus().equals(Future.FutureStatus.Running)) {
+                    client.getRequest().getFuture().success(nr);
+                } else {
+                    log.warn("请求执行付完毕，但是请求状态不对");
+                }
+                client.ready();
             }
 
             if (msg instanceof HttpContent) {

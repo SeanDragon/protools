@@ -35,12 +35,15 @@ import java.util.concurrent.TimeUnit;
 
 public final class HttpSnoopClient {
 
-    static final String URL = System.getProperty("url", "http://127.0.0.1:92/getService");
+    static final String URL = System.getProperty("url", "https://www.baidu.com/");
 
     public static void main(String[] args) throws Exception {
         URI uri = new URI(URL);
-        String scheme = uri.getScheme() == null ? "http" : uri.getScheme();
-        String host = uri.getHost() == null ? "127.0.0.1" : uri.getHost();
+        if(uri.getScheme()==null || uri.getHost()==null) {
+            throw new IllegalArgumentException("uri不合法");
+        }
+        String scheme = uri.getScheme();
+        String host = uri.getHost();
         int port = uri.getPort();
         if (port == -1) {
             if ("http".equalsIgnoreCase(scheme)) {

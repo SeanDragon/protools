@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations
  * under the License.
  */
-package pro.tools.http.twobai.client.snoop;
+package pro.tools.http.twobai.handler;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
@@ -22,11 +22,11 @@ import io.netty.handler.codec.http.HttpClientCodec;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.ssl.SslContext;
 
-public class HttpSnoopClientInitializer extends ChannelInitializer<SocketChannel> {
+public class HttpClientInitializer extends ChannelInitializer<SocketChannel> {
 
     private final SslContext sslCtx;
 
-    public HttpSnoopClientInitializer(SslContext sslCtx) {
+    public HttpClientInitializer(SslContext sslCtx) {
         this.sslCtx = sslCtx;
     }
 
@@ -43,6 +43,7 @@ public class HttpSnoopClientInitializer extends ChannelInitializer<SocketChannel
 
         p.addLast(new HttpObjectAggregator(1024 * 1024));
 
-        p.addLast(new HttpSnoopClientHandler());
+        //放到request真正发送的时候了
+        //p.addLast(new HttpClientHandler());
     }
 }

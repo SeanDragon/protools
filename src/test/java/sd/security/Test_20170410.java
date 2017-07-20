@@ -24,7 +24,7 @@ import java.util.List;
 public class Test_20170410 {
     public static void main(String[] args) {
         String url = "http://192.168.15.13/capital_operator/freeze?a=1&b=2&z=3&d=5&e=5&f=o&g=htr&h=辅导授课风格基金&key=4561322165";
-        //url = "https://f.tuhaolicai.cc/userLoginPage";
+        url = "http://192.168.15.27:80/";
         ToolHttpSend send = new ToolHttpSend(url, null);
         send.setMethod(Tool_HTTP_METHOD.GET);
         ToolThreadPool threadPool = new ToolThreadPool(ToolThreadPool.Type.CachedThread, 100);

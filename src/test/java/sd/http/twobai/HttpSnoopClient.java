@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations
  * under the License.
  */
-package pro.tools.http.twobai.client.snoop;
+package sd.http.twobai;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -29,13 +29,14 @@ import io.netty.handler.codec.http.HttpVersion;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
+import pro.tools.http.twobai.handler.HttpClientInitializer;
 
 import java.net.URI;
 import java.util.concurrent.TimeUnit;
 
 public final class HttpSnoopClient {
 
-    static final String URL = System.getProperty("url", "https://www.baidu.com/");
+    static final String URL = System.getProperty("url", "http://192.168.15.88:92");
 
     public static void main(String[] args) throws Exception {
         URI uri = new URI(URL);
@@ -72,7 +73,7 @@ public final class HttpSnoopClient {
             Bootstrap b = new Bootstrap();
             b.group(group)
                     .channel(NioSocketChannel.class)
-                    .handler(new HttpSnoopClientInitializer(sslCtx))
+                    .handler(new HttpClientInitializer(sslCtx))
             ;
 
             Channel ch = b.connect(host, port).sync().channel();

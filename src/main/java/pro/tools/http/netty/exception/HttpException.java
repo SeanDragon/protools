@@ -1,7 +1,7 @@
-package pro.tools.http.twobai.exception;
+package pro.tools.http.netty.exception;
 
-import pro.tools.http.twobai.pojo.HttpReceive;
-import pro.tools.http.twobai.pojo.HttpSend;
+import pro.tools.http.netty.pojo.HttpReceive;
+import pro.tools.http.netty.pojo.HttpSend;
 
 /**
  * @author SeanDragon

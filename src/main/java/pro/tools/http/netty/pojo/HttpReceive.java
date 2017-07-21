@@ -1,4 +1,4 @@
-package pro.tools.http.twobai.pojo;
+package pro.tools.http.netty.pojo;
 
 import com.google.common.base.MoreObjects;
 

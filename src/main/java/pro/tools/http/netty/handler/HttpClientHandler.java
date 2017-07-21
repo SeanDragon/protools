@@ -13,18 +13,19 @@
  * License for the specific language governing permissions and limitations
  * under the License.
  */
-package pro.tools.http.twobai.handler;
+package pro.tools.http.netty.handler;
 
 import com.google.common.collect.Maps;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.handler.codec.DecoderResult;
 import io.netty.handler.codec.http.FullHttpResponse;
 import io.netty.handler.codec.http.HttpObject;
 import io.netty.handler.codec.http.HttpUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pro.tools.http.twobai.pojo.HttpReceive;
-import pro.tools.http.twobai.pojo.HttpSend;
+import pro.tools.http.netty.pojo.HttpReceive;
+import pro.tools.http.netty.pojo.HttpSend;
 
 import java.util.Map;
 
@@ -32,10 +33,10 @@ public class HttpClientHandler extends SimpleChannelInboundHandler<HttpObject> {
 
     private static final Logger log = LoggerFactory.getLogger(HttpClientHandler.class);
 
-    private HttpSend httpSend;
+    private final HttpSend httpSend;
     private HttpReceive httpReceive;
 
-    public HttpClientHandler(HttpSend httpSend, HttpReceive httpReceive) {
+    public HttpClientHandler(final HttpSend httpSend, HttpReceive httpReceive) {
         this.httpSend = httpSend;
         this.httpReceive = httpReceive;
     }
@@ -68,13 +69,18 @@ public class HttpClientHandler extends SimpleChannelInboundHandler<HttpObject> {
 
             String responseBody = response.content().toString(httpSend.getCharset());
 
-            if (httpSend.getNeedMsg()) {
-                httpReceive.setResponseBody(responseBody);
-            }
+            httpReceive.setResponseBody(responseBody);
 
             log.debug(responseBody);
 
             log.debug("}EOF#");
+
+            DecoderResult decoderResult = response.decoderResult();
+            if (decoderResult.isFailure()) {
+                httpReceive.setHaveError(true)
+                        .setErrMsg(decoderResult.cause().toString())
+                        .setThrowable(decoderResult.cause());
+            }
 
             httpReceive.setIsDone(true);
             ctx.close();
@@ -84,12 +90,10 @@ public class HttpClientHandler extends SimpleChannelInboundHandler<HttpObject> {
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
         log.warn(cause.getMessage(), cause);
-        if (httpSend.getNeedErrMsg()) {
-            httpReceive.setIsDone(true);
-            httpReceive.setHaveError(true);
-            httpReceive.setErrMsg(cause.getMessage());
-            httpReceive.setThrowable(cause);
-        }
+        httpReceive.setIsDone(true);
+        httpReceive.setHaveError(true);
+        httpReceive.setErrMsg(cause.toString());
+        httpReceive.setThrowable(cause);
         ctx.close();
     }
 }

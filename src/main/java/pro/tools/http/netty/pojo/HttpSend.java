@@ -1,4 +1,4 @@
-package pro.tools.http.twobai.pojo;
+package pro.tools.http.netty.pojo;
 
 import com.google.common.base.MoreObjects;
 import pro.tools.constant.StrConst;
@@ -15,8 +15,6 @@ import java.util.Map;
 public class HttpSend implements java.io.Serializable {
     private String url;
     private Map<String, Object> params;//参数
-    private Boolean needMsg;//是否需要返回结果
-    private Boolean needErrMsg;//是否需要返回错误信息
     private Map<String, String> cookies;//cookie列表
     private Map<String, Object> headers;//header列表
     private Tool_HTTP_METHOD method;     //访问方法
@@ -39,8 +37,6 @@ public class HttpSend implements java.io.Serializable {
      * 初始化
      */
     private void init() {
-        needMsg = true;
-        needErrMsg = true;
         method = Tool_HTTP_METHOD.GET;
         charset = StrConst.DEFAULT_CHARSET;
     }
@@ -63,24 +59,6 @@ public class HttpSend implements java.io.Serializable {
 
     public HttpSend setParams(Map<String, Object> params) {
         this.params = params;
-        return this;
-    }
-
-    public Boolean getNeedMsg() {
-        return needMsg;
-    }
-
-    public HttpSend setNeedMsg(Boolean needMsg) {
-        this.needMsg = needMsg;
-        return this;
-    }
-
-    public Boolean getNeedErrMsg() {
-        return needErrMsg;
-    }
-
-    public HttpSend setNeedErrMsg(Boolean needErrMsg) {
-        this.needErrMsg = needErrMsg;
         return this;
     }
 
@@ -127,8 +105,6 @@ public class HttpSend implements java.io.Serializable {
         return MoreObjects.toStringHelper(this)
                 .add("url", url)
                 .add("params", params)
-                .add("needMsg", needMsg)
-                .add("needErrMsg", needErrMsg)
                 .add("cookies", cookies)
                 .add("headers", headers)
                 .add("method", method)

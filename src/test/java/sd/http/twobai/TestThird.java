@@ -19,12 +19,12 @@ import java.util.concurrent.ExecutionException;
  */
 public class TestThird extends TestCase {
 
-    private static final HttpSend httpSend = new HttpSend("/", null);
+    private static final HttpSend httpSend = new HttpSend("/invest", null);
     private static DefaultClientPool defaultClientPool;
 
     static {
         try {
-            defaultClientPool = new DefaultClientPool("http://192.168.15.88:1234");
+            defaultClientPool = new DefaultClientPool("http://192.168.15.20:84");
         } catch (HttpException e) {
             e.printStackTrace();
         }
@@ -71,7 +71,7 @@ public class TestThird extends TestCase {
                         System.out.println(count[0]);
                     }
 
-                    if (count[0] == 900) {
+                    if (count[0] == 850) {
                         System.out.println(receive.getResponseBody());
                         Object[] objects = times.toArray();
                         Arrays.sort(objects);

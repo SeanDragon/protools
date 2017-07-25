@@ -4,7 +4,19 @@ import pro.tools.constant.StrConst;
 import pro.tools.data.text.ToolConvert;
 import pro.tools.data.text.ToolStr;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
@@ -27,7 +39,9 @@ public final class ToolFile {
     /**
      * 根据文件路径获取文件
      *
-     * @param filePath 文件路径
+     * @param filePath
+     *         文件路径
+     *
      * @return 文件
      */
     public static File getFileByPath(String filePath) {
@@ -37,7 +51,9 @@ public final class ToolFile {
     /**
      * 判断文件是否存在
      *
-     * @param filePath 文件路径
+     * @param filePath
+     *         文件路径
+     *
      * @return {@code true}: 存在<br>{@code false}: 不存在
      */
     public static boolean isFileExists(String filePath) {
@@ -47,7 +63,9 @@ public final class ToolFile {
     /**
      * 判断文件是否存在
      *
-     * @param file 文件
+     * @param file
+     *         文件
+     *
      * @return {@code true}: 存在<br>{@code false}: 不存在
      */
     public static boolean isFileExists(File file) {
@@ -57,8 +75,11 @@ public final class ToolFile {
     /**
      * 重命名文件
      *
-     * @param filePath 文件路径
-     * @param newName  新名称
+     * @param filePath
+     *         文件路径
+     * @param newName
+     *         新名称
+     *
      * @return {@code true}: 重命名成功<br>{@code false}: 重命名失败
      */
     public static boolean rename(String filePath, String newName) {
@@ -68,8 +89,11 @@ public final class ToolFile {
     /**
      * 重命名文件
      *
-     * @param file    文件
-     * @param newName 新名称
+     * @param file
+     *         文件
+     * @param newName
+     *         新名称
+     *
      * @return {@code true}: 重命名成功<br>{@code false}: 重命名失败
      */
     public static boolean rename(File file, String newName) {
@@ -90,7 +114,9 @@ public final class ToolFile {
     /**
      * 判断是否是目录
      *
-     * @param dirPath 目录路径
+     * @param dirPath
+     *         目录路径
+     *
      * @return {@code true}: 是<br>{@code false}: 否
      */
     public static boolean isDir(String dirPath) {
@@ -100,7 +126,9 @@ public final class ToolFile {
     /**
      * 判断是否是目录
      *
-     * @param file 文件
+     * @param file
+     *         文件
+     *
      * @return {@code true}: 是<br>{@code false}: 否
      */
     public static boolean isDir(File file) {
@@ -110,7 +138,9 @@ public final class ToolFile {
     /**
      * 判断是否是文件
      *
-     * @param filePath 文件路径
+     * @param filePath
+     *         文件路径
+     *
      * @return {@code true}: 是<br>{@code false}: 否
      */
     public static boolean isFile(String filePath) {
@@ -120,7 +150,9 @@ public final class ToolFile {
     /**
      * 判断是否是文件
      *
-     * @param file 文件
+     * @param file
+     *         文件
+     *
      * @return {@code true}: 是<br>{@code false}: 否
      */
     public static boolean isFile(File file) {
@@ -130,7 +162,9 @@ public final class ToolFile {
     /**
      * 判断目录是否存在，不存在则判断是否创建成功
      *
-     * @param dirPath 目录路径
+     * @param dirPath
+     *         目录路径
+     *
      * @return {@code true}: 存在或创建成功<br>{@code false}: 不存在或创建失败
      */
     public static boolean createOrExistsDir(String dirPath) {
@@ -140,7 +174,9 @@ public final class ToolFile {
     /**
      * 判断目录是否存在，不存在则判断是否创建成功
      *
-     * @param file 文件
+     * @param file
+     *         文件
+     *
      * @return {@code true}: 存在或创建成功<br>{@code false}: 不存在或创建失败
      */
     public static boolean createOrExistsDir(File file) {
@@ -151,7 +187,9 @@ public final class ToolFile {
     /**
      * 判断文件是否存在，不存在则判断是否创建成功
      *
-     * @param filePath 文件路径
+     * @param filePath
+     *         文件路径
+     *
      * @return {@code true}: 存在或创建成功<br>{@code false}: 不存在或创建失败
      */
     public static boolean createOrExistsFile(String filePath) throws IOException {
@@ -161,7 +199,9 @@ public final class ToolFile {
     /**
      * 判断文件是否存在，不存在则判断是否创建成功
      *
-     * @param file 文件
+     * @param file
+     *         文件
+     *
      * @return {@code true}: 存在或创建成功<br>{@code false}: 不存在或创建失败
      */
     public static boolean createOrExistsFile(File file) throws IOException {
@@ -174,7 +214,9 @@ public final class ToolFile {
     /**
      * 判断文件是否存在，存在则在创建之前删除
      *
-     * @param filePath 文件路径
+     * @param filePath
+     *         文件路径
+     *
      * @return {@code true}: 创建成功<br>{@code false}: 创建失败
      */
     public static boolean createFileByDeleteOldFile(String filePath) throws IOException {
@@ -184,7 +226,9 @@ public final class ToolFile {
     /**
      * 判断文件是否存在，存在则在创建之前删除
      *
-     * @param file 文件
+     * @param file
+     *         文件
+     *
      * @return {@code true}: 创建成功<br>{@code false}: 创建失败
      */
     public static boolean createFileByDeleteOldFile(File file) throws IOException {
@@ -199,9 +243,13 @@ public final class ToolFile {
     /**
      * 复制或移动目录
      *
-     * @param srcDirPath  源目录路径
-     * @param destDirPath 目标目录路径
-     * @param isMove      是否移动
+     * @param srcDirPath
+     *         源目录路径
+     * @param destDirPath
+     *         目标目录路径
+     * @param isMove
+     *         是否移动
+     *
      * @return {@code true}: 复制或移动成功<br>{@code false}: 复制或移动失败
      */
     private static boolean copyOrMoveDir(String srcDirPath, String destDirPath, boolean isMove) throws IOException {
@@ -211,9 +259,13 @@ public final class ToolFile {
     /**
      * 复制或移动目录
      *
-     * @param srcDir  源目录
-     * @param destDir 目标目录
-     * @param isMove  是否移动
+     * @param srcDir
+     *         源目录
+     * @param destDir
+     *         目标目录
+     * @param isMove
+     *         是否移动
+     *
      * @return {@code true}: 复制或移动成功<br>{@code false}: 复制或移动失败
      */
     private static boolean copyOrMoveDir(File srcDir, File destDir, boolean isMove) throws IOException {
@@ -244,9 +296,13 @@ public final class ToolFile {
     /**
      * 复制或移动文件
      *
-     * @param srcFilePath  源文件路径
-     * @param destFilePath 目标文件路径
-     * @param isMove       是否移动
+     * @param srcFilePath
+     *         源文件路径
+     * @param destFilePath
+     *         目标文件路径
+     * @param isMove
+     *         是否移动
+     *
      * @return {@code true}: 复制或移动成功<br>{@code false}: 复制或移动失败
      */
     private static boolean copyOrMoveFile(String srcFilePath, String destFilePath, boolean isMove) throws IOException {
@@ -256,9 +312,13 @@ public final class ToolFile {
     /**
      * 复制或移动文件
      *
-     * @param srcFile  源文件
-     * @param destFile 目标文件
-     * @param isMove   是否移动
+     * @param srcFile
+     *         源文件
+     * @param destFile
+     *         目标文件
+     * @param isMove
+     *         是否移动
+     *
      * @return {@code true}: 复制或移动成功<br>{@code false}: 复制或移动失败
      */
     private static boolean copyOrMoveFile(File srcFile, File destFile, boolean isMove) throws IOException {
@@ -276,8 +336,11 @@ public final class ToolFile {
     /**
      * 复制目录
      *
-     * @param srcDirPath  源目录路径
-     * @param destDirPath 目标目录路径
+     * @param srcDirPath
+     *         源目录路径
+     * @param destDirPath
+     *         目标目录路径
+     *
      * @return {@code true}: 复制成功<br>{@code false}: 复制失败
      */
     public static boolean copyDir(String srcDirPath, String destDirPath) throws IOException {
@@ -287,8 +350,11 @@ public final class ToolFile {
     /**
      * 复制目录
      *
-     * @param srcDir  源目录
-     * @param destDir 目标目录
+     * @param srcDir
+     *         源目录
+     * @param destDir
+     *         目标目录
+     *
      * @return {@code true}: 复制成功<br>{@code false}: 复制失败
      */
     public static boolean copyDir(File srcDir, File destDir) throws IOException {
@@ -298,8 +364,11 @@ public final class ToolFile {
     /**
      * 复制文件
      *
-     * @param srcFilePath  源文件路径
-     * @param destFilePath 目标文件路径
+     * @param srcFilePath
+     *         源文件路径
+     * @param destFilePath
+     *         目标文件路径
+     *
      * @return {@code true}: 复制成功<br>{@code false}: 复制失败
      */
     public static boolean copyFile(String srcFilePath, String destFilePath) throws IOException {
@@ -309,8 +378,11 @@ public final class ToolFile {
     /**
      * 复制文件
      *
-     * @param srcFile  源文件
-     * @param destFile 目标文件
+     * @param srcFile
+     *         源文件
+     * @param destFile
+     *         目标文件
+     *
      * @return {@code true}: 复制成功<br>{@code false}: 复制失败
      */
     public static boolean copyFile(File srcFile, File destFile) throws IOException {
@@ -320,8 +392,11 @@ public final class ToolFile {
     /**
      * 移动目录
      *
-     * @param srcDirPath  源目录路径
-     * @param destDirPath 目标目录路径
+     * @param srcDirPath
+     *         源目录路径
+     * @param destDirPath
+     *         目标目录路径
+     *
      * @return {@code true}: 移动成功<br>{@code false}: 移动失败
      */
     public static boolean moveDir(String srcDirPath, String destDirPath) throws IOException {
@@ -331,8 +406,11 @@ public final class ToolFile {
     /**
      * 移动目录
      *
-     * @param srcDir  源目录
-     * @param destDir 目标目录
+     * @param srcDir
+     *         源目录
+     * @param destDir
+     *         目标目录
+     *
      * @return {@code true}: 移动成功<br>{@code false}: 移动失败
      */
     public static boolean moveDir(File srcDir, File destDir) throws IOException {
@@ -342,8 +420,11 @@ public final class ToolFile {
     /**
      * 移动文件
      *
-     * @param srcFilePath  源文件路径
-     * @param destFilePath 目标文件路径
+     * @param srcFilePath
+     *         源文件路径
+     * @param destFilePath
+     *         目标文件路径
+     *
      * @return {@code true}: 移动成功<br>{@code false}: 移动失败
      */
     public static boolean moveFile(String srcFilePath, String destFilePath) throws IOException {
@@ -353,8 +434,11 @@ public final class ToolFile {
     /**
      * 移动文件
      *
-     * @param srcFile  源文件
-     * @param destFile 目标文件
+     * @param srcFile
+     *         源文件
+     * @param destFile
+     *         目标文件
+     *
      * @return {@code true}: 移动成功<br>{@code false}: 移动失败
      */
     public static boolean moveFile(File srcFile, File destFile) throws IOException {
@@ -364,7 +448,9 @@ public final class ToolFile {
     /**
      * 删除目录
      *
-     * @param dirPath 目录路径
+     * @param dirPath
+     *         目录路径
+     *
      * @return {@code true}: 删除成功<br>{@code false}: 删除失败
      */
     public static boolean deleteDir(String dirPath) {
@@ -374,7 +460,9 @@ public final class ToolFile {
     /**
      * 删除目录
      *
-     * @param dir 目录
+     * @param dir
+     *         目录
+     *
      * @return {@code true}: 删除成功<br>{@code false}: 删除失败
      */
     public static boolean deleteDir(File dir) {
@@ -391,7 +479,9 @@ public final class ToolFile {
     /**
      * 删除文件
      *
-     * @param srcFilePath 文件路径
+     * @param srcFilePath
+     *         文件路径
+     *
      * @return {@code true}: 删除成功<br>{@code false}: 删除失败
      */
     public static boolean deleteFile(String srcFilePath) {
@@ -401,7 +491,9 @@ public final class ToolFile {
     /**
      * 删除文件
      *
-     * @param file 文件
+     * @param file
+     *         文件
+     *
      * @return {@code true}: 删除成功<br>{@code false}: 删除失败
      */
     public static boolean deleteFile(File file) {
@@ -411,7 +503,9 @@ public final class ToolFile {
     /**
      * 删除目录下的所有文件
      *
-     * @param dirPath 目录路径
+     * @param dirPath
+     *         目录路径
+     *
      * @return {@code true}: 删除成功<br>{@code false}: 删除失败
      */
     public static boolean deleteFilesInDir(String dirPath) {
@@ -421,7 +515,9 @@ public final class ToolFile {
     /**
      * 删除目录下的所有文件
      *
-     * @param dir 目录
+     * @param dir
+     *         目录
+     *
      * @return {@code true}: 删除成功<br>{@code false}: 删除失败
      */
     public static boolean deleteFilesInDir(File dir) {
@@ -447,8 +543,11 @@ public final class ToolFile {
     /**
      * 获取目录下所有文件
      *
-     * @param dirPath     目录路径
-     * @param isRecursive 是否递归进子目录
+     * @param dirPath
+     *         目录路径
+     * @param isRecursive
+     *         是否递归进子目录
+     *
      * @return 文件链表
      */
     public static List<File> listFilesInDir(String dirPath, boolean isRecursive) {
@@ -458,8 +557,11 @@ public final class ToolFile {
     /**
      * 获取目录下所有文件
      *
-     * @param dir         目录
-     * @param isRecursive 是否递归进子目录
+     * @param dir
+     *         目录
+     * @param isRecursive
+     *         是否递归进子目录
+     *
      * @return 文件链表
      */
     public static List<File> listFilesInDir(File dir, boolean isRecursive) {
@@ -476,7 +578,9 @@ public final class ToolFile {
     /**
      * 获取目录下所有文件包括子目录
      *
-     * @param dirPath 目录路径
+     * @param dirPath
+     *         目录路径
+     *
      * @return 文件链表
      */
     public static List<File> listFilesInDir(String dirPath) {
@@ -486,7 +590,9 @@ public final class ToolFile {
     /**
      * 获取目录下所有文件包括子目录
      *
-     * @param dir 目录
+     * @param dir
+     *         目录
+     *
      * @return 文件链表
      */
     public static List<File> listFilesInDir(File dir) {
@@ -505,12 +611,15 @@ public final class ToolFile {
     }
 
     /**
-     * 获取目录下所有后缀名为suffix的文件
-     * <p>大小写忽略</p>
+     * 获取目录下所有后缀名为suffix的文件 <p>大小写忽略</p>
      *
-     * @param dirPath     目录路径
-     * @param suffix      后缀名
-     * @param isRecursive 是否递归进子目录
+     * @param dirPath
+     *         目录路径
+     * @param suffix
+     *         后缀名
+     * @param isRecursive
+     *         是否递归进子目录
+     *
      * @return 文件链表
      */
     public static List<File> listFilesInDirWithFilter(String dirPath, String suffix, boolean isRecursive) {
@@ -518,12 +627,15 @@ public final class ToolFile {
     }
 
     /**
-     * 获取目录下所有后缀名为suffix的文件
-     * <p>大小写忽略</p>
+     * 获取目录下所有后缀名为suffix的文件 <p>大小写忽略</p>
      *
-     * @param dir         目录
-     * @param suffix      后缀名
-     * @param isRecursive 是否递归进子目录
+     * @param dir
+     *         目录
+     * @param suffix
+     *         后缀名
+     * @param isRecursive
+     *         是否递归进子目录
+     *
      * @return 文件链表
      */
     public static List<File> listFilesInDirWithFilter(File dir, String suffix, boolean isRecursive) {
@@ -542,11 +654,13 @@ public final class ToolFile {
     }
 
     /**
-     * 获取目录下所有后缀名为suffix的文件包括子目录
-     * <p>大小写忽略</p>
+     * 获取目录下所有后缀名为suffix的文件包括子目录 <p>大小写忽略</p>
      *
-     * @param dirPath 目录路径
-     * @param suffix  后缀名
+     * @param dirPath
+     *         目录路径
+     * @param suffix
+     *         后缀名
+     *
      * @return 文件链表
      */
     public static List<File> listFilesInDirWithFilter(String dirPath, String suffix) {
@@ -554,11 +668,13 @@ public final class ToolFile {
     }
 
     /**
-     * 获取目录下所有后缀名为suffix的文件包括子目录
-     * <p>大小写忽略</p>
+     * 获取目录下所有后缀名为suffix的文件包括子目录 <p>大小写忽略</p>
      *
-     * @param dir    目录
-     * @param suffix 后缀名
+     * @param dir
+     *         目录
+     * @param suffix
+     *         后缀名
+     *
      * @return 文件链表
      */
     public static List<File> listFilesInDirWithFilter(File dir, String suffix) {
@@ -581,9 +697,13 @@ public final class ToolFile {
     /**
      * 获取目录下所有符合filter的文件
      *
-     * @param dirPath     目录路径
-     * @param filter      过滤器
-     * @param isRecursive 是否递归进子目录
+     * @param dirPath
+     *         目录路径
+     * @param filter
+     *         过滤器
+     * @param isRecursive
+     *         是否递归进子目录
+     *
      * @return 文件链表
      */
     public static List<File> listFilesInDirWithFilter(String dirPath, FilenameFilter filter, boolean isRecursive) {
@@ -593,9 +713,13 @@ public final class ToolFile {
     /**
      * 获取目录下所有符合filter的文件
      *
-     * @param dir         目录
-     * @param filter      过滤器
-     * @param isRecursive 是否递归进子目录
+     * @param dir
+     *         目录
+     * @param filter
+     *         过滤器
+     * @param isRecursive
+     *         是否递归进子目录
+     *
      * @return 文件链表
      */
     public static List<File> listFilesInDirWithFilter(File dir, FilenameFilter filter, boolean isRecursive) {
@@ -616,8 +740,11 @@ public final class ToolFile {
     /**
      * 获取目录下所有符合filter的文件包括子目录
      *
-     * @param dirPath 目录路径
-     * @param filter  过滤器
+     * @param dirPath
+     *         目录路径
+     * @param filter
+     *         过滤器
+     *
      * @return 文件链表
      */
     public static List<File> listFilesInDirWithFilter(String dirPath, FilenameFilter filter) {
@@ -627,8 +754,11 @@ public final class ToolFile {
     /**
      * 获取目录下所有符合filter的文件包括子目录
      *
-     * @param dir    目录
-     * @param filter 过滤器
+     * @param dir
+     *         目录
+     * @param filter
+     *         过滤器
+     *
      * @return 文件链表
      */
     public static List<File> listFilesInDirWithFilter(File dir, FilenameFilter filter) {
@@ -649,11 +779,13 @@ public final class ToolFile {
     }
 
     /**
-     * 获取目录下指定文件名的文件包括子目录
-     * <p>大小写忽略</p>
+     * 获取目录下指定文件名的文件包括子目录 <p>大小写忽略</p>
      *
-     * @param dirPath  目录路径
-     * @param fileName 文件名
+     * @param dirPath
+     *         目录路径
+     * @param fileName
+     *         文件名
+     *
      * @return 文件链表
      */
     public static List<File> searchFileInDir(String dirPath, String fileName) {
@@ -661,11 +793,13 @@ public final class ToolFile {
     }
 
     /**
-     * 获取目录下指定文件名的文件包括子目录
-     * <p>大小写忽略</p>
+     * 获取目录下指定文件名的文件包括子目录 <p>大小写忽略</p>
      *
-     * @param dir      目录
-     * @param fileName 文件名
+     * @param dir
+     *         目录
+     * @param fileName
+     *         文件名
+     *
      * @return 文件链表
      */
     public static List<File> searchFileInDir(File dir, String fileName) {
@@ -688,9 +822,13 @@ public final class ToolFile {
     /**
      * 将输入流写入文件
      *
-     * @param filePath 路径
-     * @param is       输入流
-     * @param append   是否追加在文件末
+     * @param filePath
+     *         路径
+     * @param is
+     *         输入流
+     * @param append
+     *         是否追加在文件末
+     *
      * @return {@code true}: 写入成功<br>{@code false}: 写入失败
      */
     public static boolean writeFileFromIS(String filePath, InputStream is, boolean append) throws IOException {
@@ -700,9 +838,13 @@ public final class ToolFile {
     /**
      * 将输入流写入文件
      *
-     * @param file   文件
-     * @param is     输入流
-     * @param append 是否追加在文件末
+     * @param file
+     *         文件
+     * @param is
+     *         输入流
+     * @param append
+     *         是否追加在文件末
+     *
      * @return {@code true}: 写入成功<br>{@code false}: 写入失败
      */
     public static boolean writeFileFromIS(File file, InputStream is, boolean append) throws IOException {
@@ -715,15 +857,21 @@ public final class ToolFile {
                 os.write(data, 0, len);
             }
             return true;
+        } finally {
+            is.close();
         }
     }
 
     /**
      * 将字符串写入文件
      *
-     * @param filePath 文件路径
-     * @param content  写入内容
-     * @param append   是否追加在文件末
+     * @param filePath
+     *         文件路径
+     * @param content
+     *         写入内容
+     * @param append
+     *         是否追加在文件末
+     *
      * @return {@code true}: 写入成功<br>{@code false}: 写入失败
      */
     public static boolean writeFileFromString(String filePath, String content, boolean append) throws IOException {
@@ -733,9 +881,13 @@ public final class ToolFile {
     /**
      * 将字符串写入文件
      *
-     * @param file    文件
-     * @param content 写入内容
-     * @param append  是否追加在文件末
+     * @param file
+     *         文件
+     * @param content
+     *         写入内容
+     * @param append
+     *         是否追加在文件末
+     *
      * @return {@code true}: 写入成功<br>{@code false}: 写入失败
      */
     public static boolean writeFileFromString(File file, String content, boolean append) throws IOException {
@@ -750,8 +902,11 @@ public final class ToolFile {
     /**
      * 指定编码按行读取文件到链表中
      *
-     * @param filePath    文件路径
-     * @param charsetName 编码格式
+     * @param filePath
+     *         文件路径
+     * @param charsetName
+     *         编码格式
+     *
      * @return 文件行链表
      */
     public static List<String> readFile2List(String filePath, String charsetName) throws IOException {
@@ -761,8 +916,11 @@ public final class ToolFile {
     /**
      * 指定编码按行读取文件到链表中
      *
-     * @param file        文件
-     * @param charsetName 编码格式
+     * @param file
+     *         文件
+     * @param charsetName
+     *         编码格式
+     *
      * @return 文件行链表
      */
     public static List<String> readFile2List(File file, String charsetName) throws IOException {
@@ -772,10 +930,15 @@ public final class ToolFile {
     /**
      * 指定编码按行读取文件到链表中
      *
-     * @param filePath    文件路径
-     * @param st          需要读取的开始行数
-     * @param end         需要读取的结束行数
-     * @param charsetName 编码格式
+     * @param filePath
+     *         文件路径
+     * @param st
+     *         需要读取的开始行数
+     * @param end
+     *         需要读取的结束行数
+     * @param charsetName
+     *         编码格式
+     *
      * @return 包含制定行的list
      */
     public static List<String> readFile2List(String filePath, int st, int end, String
@@ -786,10 +949,15 @@ public final class ToolFile {
     /**
      * 指定编码按行读取文件到链表中
      *
-     * @param file        文件
-     * @param st          需要读取的开始行数
-     * @param end         需要读取的结束行数
-     * @param charsetName 编码格式
+     * @param file
+     *         文件
+     * @param st
+     *         需要读取的开始行数
+     * @param end
+     *         需要读取的结束行数
+     * @param charsetName
+     *         编码格式
+     *
      * @return 包含从start行到end行的list
      */
     public static List<String> readFile2List(File file, int st, int end, String charsetName) throws IOException {
@@ -817,8 +985,11 @@ public final class ToolFile {
     /**
      * 指定编码按行读取文件到字符串中
      *
-     * @param filePath    文件路径
-     * @param charsetName 编码格式
+     * @param filePath
+     *         文件路径
+     * @param charsetName
+     *         编码格式
+     *
      * @return 字符串
      */
     public static String readFile2String(String filePath, String charsetName) throws IOException {
@@ -828,8 +999,11 @@ public final class ToolFile {
     /**
      * 指定编码按行读取文件到字符串中
      *
-     * @param file        文件
-     * @param charsetName 编码格式
+     * @param file
+     *         文件
+     * @param charsetName
+     *         编码格式
+     *
      * @return 字符串
      */
     public static String readFile2String(File file, String charsetName) throws IOException {
@@ -849,7 +1023,9 @@ public final class ToolFile {
     /**
      * 读取文件到字符数组中
      *
-     * @param filePath 文件路径
+     * @param filePath
+     *         文件路径
+     *
      * @return 字符数组
      */
     public static byte[] readFile2Bytes(String filePath) throws IOException {
@@ -859,7 +1035,9 @@ public final class ToolFile {
     /**
      * 读取文件到字符数组中
      *
-     * @param file 文件
+     * @param file
+     *         文件
+     *
      * @return 字符数组
      */
     public static byte[] readFile2Bytes(File file) throws IOException {
@@ -870,7 +1048,9 @@ public final class ToolFile {
     /**
      * 获取文件最后修改的毫秒时间戳
      *
-     * @param filePath 文件路径
+     * @param filePath
+     *         文件路径
+     *
      * @return 文件最后修改的毫秒时间戳
      */
     public static long getFileLastModified(String filePath) {
@@ -880,7 +1060,9 @@ public final class ToolFile {
     /**
      * 获取文件最后修改的毫秒时间戳
      *
-     * @param file 文件
+     * @param file
+     *         文件
+     *
      * @return 文件最后修改的毫秒时间戳
      */
     public static long getFileLastModified(File file) {
@@ -891,7 +1073,9 @@ public final class ToolFile {
     /**
      * 简单获取文件编码格式
      *
-     * @param filePath 文件路径
+     * @param filePath
+     *         文件路径
+     *
      * @return 文件编码
      */
     public static String getFileCharsetSimple(String filePath) throws IOException {
@@ -901,7 +1085,9 @@ public final class ToolFile {
     /**
      * 简单获取文件编码格式
      *
-     * @param file 文件
+     * @param file
+     *         文件
+     *
      * @return 文件编码
      */
     public static String getFileCharsetSimple(File file) throws IOException {
@@ -926,7 +1112,9 @@ public final class ToolFile {
     /**
      * 获取文件行数
      *
-     * @param filePath 文件路径
+     * @param filePath
+     *         文件路径
+     *
      * @return 文件行数
      */
     public static int getFileLines(String filePath) throws IOException {
@@ -936,7 +1124,9 @@ public final class ToolFile {
     /**
      * 获取文件行数
      *
-     * @param file 文件
+     * @param file
+     *         文件
+     *
      * @return 文件行数
      */
     public static int getFileLines(File file) throws IOException {
@@ -956,7 +1146,9 @@ public final class ToolFile {
     /**
      * 获取目录大小
      *
-     * @param dirPath 目录路径
+     * @param dirPath
+     *         目录路径
+     *
      * @return 文件大小
      */
     public static String getDirSize(String dirPath) {
@@ -966,7 +1158,9 @@ public final class ToolFile {
     /**
      * 获取目录大小
      *
-     * @param dir 目录
+     * @param dir
+     *         目录
+     *
      * @return 文件大小
      */
     public static String getDirSize(File dir) {
@@ -977,7 +1171,9 @@ public final class ToolFile {
     /**
      * 获取文件大小
      *
-     * @param filePath 文件路径
+     * @param filePath
+     *         文件路径
+     *
      * @return 文件大小
      */
     public static String getFileSize(String filePath) {
@@ -987,7 +1183,9 @@ public final class ToolFile {
     /**
      * 获取文件大小
      *
-     * @param file 文件
+     * @param file
+     *         文件
+     *
      * @return 文件大小
      */
     public static String getFileSize(File file) {
@@ -998,7 +1196,9 @@ public final class ToolFile {
     /**
      * 获取目录长度
      *
-     * @param dirPath 目录路径
+     * @param dirPath
+     *         目录路径
+     *
      * @return 文件大小
      */
     public static long getDirLength(String dirPath) {
@@ -1008,7 +1208,9 @@ public final class ToolFile {
     /**
      * 获取目录长度
      *
-     * @param dir 目录
+     * @param dir
+     *         目录
+     *
      * @return 文件大小
      */
     public static long getDirLength(File dir) {
@@ -1030,7 +1232,9 @@ public final class ToolFile {
     /**
      * 获取文件长度
      *
-     * @param filePath 文件路径
+     * @param filePath
+     *         文件路径
+     *
      * @return 文件大小
      */
     public static long getFileLength(String filePath) {
@@ -1040,7 +1244,9 @@ public final class ToolFile {
     /**
      * 获取文件长度
      *
-     * @param file 文件
+     * @param file
+     *         文件
+     *
      * @return 文件大小
      */
     public static long getFileLength(File file) {
@@ -1051,7 +1257,9 @@ public final class ToolFile {
     /**
      * 获取文件的MD5校验码
      *
-     * @param filePath 文件路径
+     * @param filePath
+     *         文件路径
+     *
      * @return 文件的MD5校验码
      */
     public static String getFileMD5ToString(String filePath) throws IOException, NoSuchAlgorithmException {
@@ -1062,7 +1270,9 @@ public final class ToolFile {
     /**
      * 获取文件的MD5校验码
      *
-     * @param filePath 文件路径
+     * @param filePath
+     *         文件路径
+     *
      * @return 文件的MD5校验码
      */
     public static byte[] getFileMD5(String filePath) throws IOException, NoSuchAlgorithmException {
@@ -1073,7 +1283,9 @@ public final class ToolFile {
     /**
      * 获取文件的MD5校验码
      *
-     * @param file 文件
+     * @param file
+     *         文件
+     *
      * @return 文件的MD5校验码
      */
     public static String getFileMD5ToString(File file) throws IOException, NoSuchAlgorithmException {
@@ -1083,7 +1295,9 @@ public final class ToolFile {
     /**
      * 获取文件的MD5校验码
      *
-     * @param file 文件
+     * @param file
+     *         文件
+     *
      * @return 文件的MD5校验码
      */
     public static byte[] getFileMD5(File file) throws NoSuchAlgorithmException, IOException {
@@ -1100,7 +1314,9 @@ public final class ToolFile {
     /**
      * 获取全路径中的最长目录
      *
-     * @param file 文件
+     * @param file
+     *         文件
+     *
      * @return filePath最长目录
      */
     public static String getDirName(File file) {
@@ -1111,7 +1327,9 @@ public final class ToolFile {
     /**
      * 获取全路径中的最长目录
      *
-     * @param filePath 文件路径
+     * @param filePath
+     *         文件路径
+     *
      * @return filePath最长目录
      */
     public static String getDirName(String filePath) {
@@ -1123,7 +1341,9 @@ public final class ToolFile {
     /**
      * 获取全路径中的文件名
      *
-     * @param file 文件
+     * @param file
+     *         文件
+     *
      * @return 文件名
      */
     public static String getFileName(File file) {
@@ -1134,7 +1354,9 @@ public final class ToolFile {
     /**
      * 获取全路径中的文件名
      *
-     * @param filePath 文件路径
+     * @param filePath
+     *         文件路径
+     *
      * @return 文件名
      */
     public static String getFileName(String filePath) {
@@ -1146,7 +1368,9 @@ public final class ToolFile {
     /**
      * 获取全路径中的不带拓展名的文件名
      *
-     * @param file 文件
+     * @param file
+     *         文件
+     *
      * @return 不带拓展名的文件名
      */
     public static String getFileNameNoExtension(File file) {
@@ -1157,7 +1381,9 @@ public final class ToolFile {
     /**
      * 获取全路径中的不带拓展名的文件名
      *
-     * @param filePath 文件路径
+     * @param filePath
+     *         文件路径
+     *
      * @return 不带拓展名的文件名
      */
     public static String getFileNameNoExtension(String filePath) {
@@ -1176,7 +1402,9 @@ public final class ToolFile {
     /**
      * 获取全路径中的文件拓展名
      *
-     * @param file 文件
+     * @param file
+     *         文件
+     *
      * @return 文件拓展名
      */
     public static String getFileExtension(File file) {
@@ -1187,7 +1415,9 @@ public final class ToolFile {
     /**
      * 获取全路径中的文件拓展名
      *
-     * @param filePath 文件路径
+     * @param filePath
+     *         文件路径
+     *
      * @return 文件拓展名
      */
     public static String getFileExtension(String filePath) {

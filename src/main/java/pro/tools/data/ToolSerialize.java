@@ -1,10 +1,12 @@
 package pro.tools.data;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import com.google.common.collect.Maps;
+import io.protostuff.LinkedBuffer;
+import io.protostuff.ProtostuffIOUtil;
+import io.protostuff.Schema;
+import io.protostuff.runtime.RuntimeSchema;
+
+import java.util.Map;
 
 /**
  * 序列化操作
@@ -17,34 +19,53 @@ public final class ToolSerialize {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
 
+    private static Map<Class<?>, Schema<?>> cachedSchema = Maps.newConcurrentMap();
+
+    private static <T> Schema<T> getSchema(Class<T> cls) {
+        Schema<T> schema = (Schema<T>) cachedSchema.get(cls);
+        if (schema == null) {
+            schema = RuntimeSchema.createFrom(cls);
+            cachedSchema.put(cls, schema);
+        }
+        return schema;
+    }
+
     /**
      * 序列化
      *
-     * @param object
+     * @param t
      *
      * @return
      */
-    public static byte[] serialize(Object object) throws IOException {
-        try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-             ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream)) {
-            // 序列化
-            objectOutputStream.writeObject(object);
-            return byteArrayOutputStream.toByteArray();
+    public static <T> byte[] serialize(T t) {
+        Class<T> cls = (Class<T>) t.getClass();
+        LinkedBuffer buffer = LinkedBuffer.allocate(LinkedBuffer.DEFAULT_BUFFER_SIZE);
+        try {
+            Schema<T> schema = getSchema(cls);
+            return ProtostuffIOUtil.toByteArray(t, schema, buffer);
+        } catch (Exception e) {
+            throw new IllegalStateException(e.getMessage(), e);
+        } finally {
+            buffer.clear();
         }
     }
 
     /**
      * 反序列化
      *
-     * @param bytes
+     * @param data
+     * @param cls
      *
      * @return
      */
-    public static Object unserialize(byte[] bytes) throws IOException, ClassNotFoundException {
-        try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
-             ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream)) {
-            // 序列化
-            return objectInputStream.readObject();
+    public static <T> T unserialize(byte[] data, Class<T> cls) {
+        try {
+            Schema<T> schema = getSchema(cls);
+            T message = schema.newMessage();
+            ProtostuffIOUtil.mergeFrom(data, message, schema);
+            return message;
+        } catch (Exception e) {
+            throw new IllegalStateException(e.getMessage(), e);
         }
     }
 

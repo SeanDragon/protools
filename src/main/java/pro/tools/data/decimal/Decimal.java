@@ -18,8 +18,10 @@ public class Decimal extends Number {
 
     //region 全局变量
     private BigDecimal bigDecimal;
-    private MathContext defaultMathContext = new MathContext(10, RoundingMode.HALF_EVEN);
+    private static MathContext defaultMathContext = MathContext.UNLIMITED;
+    private final MathContext mathContext;
     //endregion
+
 
     /**
      * region初始化模块
@@ -27,12 +29,21 @@ public class Decimal extends Number {
      * @param initValue
      */
     public Decimal(Object initValue) {
+        this.mathContext = defaultMathContext;
         init(initValue);
     }
 
     public Decimal(Object initValue, MathContext mathContext) {
-        this.defaultMathContext = mathContext;
+        this.mathContext = mathContext;
         init(initValue);
+    }
+
+    public static MathContext getDefaultMathContext() {
+        return defaultMathContext;
+    }
+
+    public static synchronized void setDefaultMathContext(MathContext defaultMathContext) {
+        Decimal.defaultMathContext = defaultMathContext;
     }
 
     /**
@@ -60,13 +71,13 @@ public class Decimal extends Number {
             bigDecimal = ToolClone.clone((BigDecimal) initValue);
         } else if (initValue instanceof BigInteger) {
             BigInteger value = (BigInteger) initValue;
-            bigDecimal = new BigDecimal(value, defaultMathContext);
+            bigDecimal = new BigDecimal(value, mathContext);
         } else if (initValue instanceof Number) {
             Number value = (Number) initValue;
-            bigDecimal = new BigDecimal(value.doubleValue(), defaultMathContext);
+            bigDecimal = new BigDecimal(value.doubleValue(), mathContext);
         } else if (initValue instanceof String) {
             String value = (String) initValue;
-            bigDecimal = new BigDecimal(value, defaultMathContext);
+            bigDecimal = new BigDecimal(value, mathContext);
         } else {
             throw new UnsupportedOperationException("初始化Decimal失败,传入值为" + ToolJson.anyToJson(initValue));
         }
@@ -90,8 +101,8 @@ public class Decimal extends Number {
      *
      * @return
      */
-    public MathContext getDefaultMathContext() {
-        return this.defaultMathContext;
+    public MathContext getMathContext() {
+        return this.mathContext;
     }
 
     /**
@@ -103,7 +114,7 @@ public class Decimal extends Number {
      * @return 结果
      */
     public Decimal getDivGetInteger(Object object) {
-        return new Decimal(this.bigDecimal.divideToIntegralValue(new Decimal(object).getBigDecimal(), defaultMathContext));
+        return new Decimal(this.bigDecimal.divideToIntegralValue(new Decimal(object).getBigDecimal(), mathContext));
     }
 
     /**
@@ -115,7 +126,7 @@ public class Decimal extends Number {
      * @return 结果
      */
     public Decimal getRemainder(Object object) {
-        return new Decimal(this.bigDecimal.remainder(new Decimal(object).getBigDecimal(), defaultMathContext));
+        return new Decimal(this.bigDecimal.remainder(new Decimal(object).getBigDecimal(), mathContext));
     }
     //endregion
 
@@ -129,7 +140,7 @@ public class Decimal extends Number {
      * @return
      */
     public Decimal add(Object object) {
-        this.bigDecimal = this.bigDecimal.add(new Decimal(object).getBigDecimal(), defaultMathContext);
+        this.bigDecimal = this.bigDecimal.add(new Decimal(object).getBigDecimal(), mathContext);
         return this;
     }
 
@@ -141,7 +152,7 @@ public class Decimal extends Number {
      * @return
      */
     public Decimal sub(Object object) {
-        this.bigDecimal = this.bigDecimal.subtract(new Decimal(object).getBigDecimal(), defaultMathContext);
+        this.bigDecimal = this.bigDecimal.subtract(new Decimal(object).getBigDecimal(), mathContext);
         return this;
     }
 
@@ -153,7 +164,7 @@ public class Decimal extends Number {
      * @return
      */
     public Decimal mul(Object object) {
-        this.bigDecimal = this.bigDecimal.multiply(new Decimal(object).getBigDecimal(), defaultMathContext);
+        this.bigDecimal = this.bigDecimal.multiply(new Decimal(object).getBigDecimal(), mathContext);
         return this;
     }
 
@@ -165,7 +176,7 @@ public class Decimal extends Number {
      * @return
      */
     public Decimal div(Object object) {
-        this.bigDecimal = this.bigDecimal.divide(new Decimal(object).getBigDecimal(), defaultMathContext);
+        this.bigDecimal = this.bigDecimal.divide(new Decimal(object).getBigDecimal(), mathContext);
         return this;
     }
 
@@ -175,7 +186,7 @@ public class Decimal extends Number {
      * @return
      */
     public Decimal abs() {
-        this.bigDecimal = this.bigDecimal.abs(defaultMathContext);
+        this.bigDecimal = this.bigDecimal.abs(mathContext);
         return this;
     }
     //endregion
@@ -191,7 +202,7 @@ public class Decimal extends Number {
      * @return 结果
      */
     public Decimal pow(int n) {
-        this.bigDecimal = this.bigDecimal.pow(n, defaultMathContext);
+        this.bigDecimal = this.bigDecimal.pow(n, mathContext);
         return this;
     }
 
@@ -204,14 +215,14 @@ public class Decimal extends Number {
      * @return 结果
      */
     public Decimal sqrt2(int scale) {
-        if (this.bigDecimal.divide(new BigDecimal(1), defaultMathContext).doubleValue() == 1.00D || this.bigDecimal.divide(new BigDecimal(2), defaultMathContext).doubleValue() == 1.00D) {
+        if (this.bigDecimal.divide(new BigDecimal(1), mathContext).doubleValue() == 1.00D || this.bigDecimal.divide(new BigDecimal(2), mathContext).doubleValue() == 1.00D) {
             this.bigDecimal = new BigDecimal(intValue());
         }
         if (scale > 13) {
-            this.bigDecimal = ToolDecimal.sqrt(this.bigDecimal, scale, defaultMathContext.getRoundingMode());
+            this.bigDecimal = ToolDecimal.sqrt(this.bigDecimal, scale, mathContext.getRoundingMode());
         } else {
             double sqrt = Math.sqrt(this.bigDecimal.doubleValue());
-            this.bigDecimal = new BigDecimal(sqrt, defaultMathContext);
+            this.bigDecimal = new BigDecimal(sqrt, mathContext);
         }
         return this;
     }
@@ -226,7 +237,7 @@ public class Decimal extends Number {
      */
     public Decimal sqrtN(int n) {
         double log = Math.pow(this.doubleValue(), 1D / n);
-        this.bigDecimal = new BigDecimal(log, defaultMathContext);
+        this.bigDecimal = new BigDecimal(log, mathContext);
         return this;
     }
     //endregion
@@ -238,13 +249,11 @@ public class Decimal extends Number {
     }
 
     public String fullStrValue() {
-        String string = this.bigDecimal.toPlainString();
-        int length = string.substring(string.indexOf('.'), string.length()).length() - 1;
-        return this.fullStrValue(length);
+        return this.bigDecimal.toPlainString();
     }
 
     public String fullStrValue(int scale) {
-        return this.fullStrValue(scale, defaultMathContext.getRoundingMode());
+        return this.fullStrValue(scale, mathContext.getRoundingMode());
     }
 
     public String fullStrValue(int scale, RoundingMode roundingMode) {
@@ -259,7 +268,7 @@ public class Decimal extends Number {
      * @return
      */
     public String moneyStrValue() {
-        return String.valueOf(moneyValue());
+        return fullStrValue(2, RoundingMode.HALF_EVEN);
     }
 
     /**
@@ -302,7 +311,7 @@ public class Decimal extends Number {
      * @return 结果
      */
     public double doubleValue(int scale) {
-        return this.doubleValue(scale, defaultMathContext.getRoundingMode());
+        return this.doubleValue(scale, mathContext.getRoundingMode());
     }
 
     /**

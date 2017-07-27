@@ -15,14 +15,19 @@ import java.math.RoundingMode;
 public class TestBUG {
     @Test
     public void test1() {
-        String d = "9999999999999999.15555555555555555445";
+        String d = "99999999999999999999999999999999.5555555555555555555555555555555555555";
         MathContext mathContext = new MathContext(Integer.MAX_VALUE, RoundingMode.HALF_EVEN);
         mathContext = MathContext.UNLIMITED;
 
-        BigDecimal bigDecimal = new BigDecimal(d, mathContext);
+        BigDecimal bigDecimal = new BigDecimal(d
+                //, mathContext
+        );
 
-        Decimal instance = Decimal.instance(d, mathContext);
+        Decimal instance = Decimal.instance(d
+                //, mathContext
+        );
 
+        System.out.println(instance.moneyStrValue());
         System.out.println(instance.fullStrValue());
         System.out.println(instance.fullStrValue(10));
         System.out.println(bigDecimal.toPlainString());

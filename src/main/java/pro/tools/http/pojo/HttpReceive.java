@@ -1,4 +1,4 @@
-package pro.tools.http.netty.pojo;
+package pro.tools.http.pojo;
 
 import com.google.common.base.MoreObjects;
 
@@ -16,7 +16,6 @@ public class HttpReceive implements java.io.Serializable {
     private Integer statusCode;
     private String statusText;
     private String responseBody;
-    private Map<String, String> responseCookie;
     private Map<String, String> responseHeader;
 
     private Boolean isDone;
@@ -85,15 +84,6 @@ public class HttpReceive implements java.io.Serializable {
         return this;
     }
 
-    public Map<String, String> getResponseCookie() {
-        return responseCookie;
-    }
-
-    public HttpReceive setResponseCookie(Map<String, String> responseCookie) {
-        this.responseCookie = responseCookie;
-        return this;
-    }
-
     public Map<String, String> getResponseHeader() {
         return responseHeader;
     }
@@ -124,7 +114,6 @@ public class HttpReceive implements java.io.Serializable {
                 .add("statusCode", statusCode)
                 .add("statusText", statusText)
                 .add("responseBody", responseBody)
-                .add("responseCookie", responseCookie)
                 .add("responseHeader", responseHeader)
                 .add("isDone", isDone)
                 .toString();

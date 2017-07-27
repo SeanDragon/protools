@@ -152,7 +152,7 @@ public final class ToolDecimal {
      * @param scale
      * @return
      */
-    public static String formatNumber_string(Double value, int scale) {
+    public static String number2Str(Double value, int scale) {
         return new BigDecimal(value).setScale(scale, RoundingMode.HALF_UP).toString();
     }
 
@@ -161,7 +161,7 @@ public final class ToolDecimal {
      * @param scale
      * @return
      */
-    public static Double formatNumber_double(Double value, int scale) {
+    public static Double number2double(Double value, int scale) {
         return new BigDecimal(value).setScale(scale, RoundingMode.HALF_UP).doubleValue();
     }
 }

@@ -9,8 +9,8 @@ import io.netty.handler.codec.http.HttpObject;
 import io.netty.handler.codec.http.HttpUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pro.tools.http.netty.pojo.HttpReceive;
-import pro.tools.http.netty.pojo.HttpSend;
+import pro.tools.http.pojo.HttpReceive;
+import pro.tools.http.pojo.HttpSend;
 
 import java.util.Map;
 

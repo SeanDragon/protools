@@ -3,8 +3,8 @@ package sd.http.twobai;
 import junit.framework.TestCase;
 import pro.tools.http.netty.clientpool.DefaultClientPool;
 import pro.tools.http.netty.exception.HttpException;
-import pro.tools.http.netty.pojo.HttpReceive;
-import pro.tools.http.netty.pojo.HttpSend;
+import pro.tools.http.pojo.HttpReceive;
+import pro.tools.http.pojo.HttpSend;
 import pro.tools.system.ToolThreadPool;
 
 import java.util.ArrayList;

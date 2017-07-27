@@ -1,8 +1,7 @@
-package pro.tools.http.netty.pojo;
+package pro.tools.http.pojo;
 
 import com.google.common.base.MoreObjects;
 import pro.tools.constant.StrConst;
-import pro.tools.http.jdk.Tool_HTTP_METHOD;
 
 import java.nio.charset.Charset;
 import java.util.Map;
@@ -15,10 +14,14 @@ import java.util.Map;
 public class HttpSend implements java.io.Serializable {
     private String url;
     private Map<String, Object> params;//参数
-    private Map<String, String> cookies;//cookie列表
     private Map<String, Object> headers;//header列表
-    private Tool_HTTP_METHOD method;     //访问方法
+    private HttpMethod method;     //访问方法
     private Charset charset;//编码
+
+    public HttpSend(String url) {
+        init();
+        this.url = url;
+    }
 
     public HttpSend(String url, Map<String, Object> params) {
         init();
@@ -26,7 +29,7 @@ public class HttpSend implements java.io.Serializable {
         this.params = params;
     }
 
-    public HttpSend(String url, Map<String, Object> params, Tool_HTTP_METHOD method) {
+    public HttpSend(String url, Map<String, Object> params, HttpMethod method) {
         init();
         this.url = url;
         this.params = params;
@@ -37,7 +40,7 @@ public class HttpSend implements java.io.Serializable {
      * 初始化
      */
     private void init() {
-        method = Tool_HTTP_METHOD.GET;
+        method = HttpMethod.GET;
         charset = StrConst.DEFAULT_CHARSET;
     }
 
@@ -62,15 +65,6 @@ public class HttpSend implements java.io.Serializable {
         return this;
     }
 
-    public Map<String, String> getCookies() {
-        return cookies;
-    }
-
-    public HttpSend setCookies(Map<String, String> cookies) {
-        this.cookies = cookies;
-        return this;
-    }
-
     public Map<String, Object> getHeaders() {
         return headers;
     }
@@ -80,11 +74,11 @@ public class HttpSend implements java.io.Serializable {
         return this;
     }
 
-    public Tool_HTTP_METHOD getMethod() {
+    public HttpMethod getMethod() {
         return method;
     }
 
-    public HttpSend setMethod(Tool_HTTP_METHOD method) {
+    public HttpSend setMethod(HttpMethod method) {
         this.method = method;
         return this;
     }
@@ -105,7 +99,6 @@ public class HttpSend implements java.io.Serializable {
         return MoreObjects.toStringHelper(this)
                 .add("url", url)
                 .add("params", params)
-                .add("cookies", cookies)
                 .add("headers", headers)
                 .add("method", method)
                 .add("charset", charset)

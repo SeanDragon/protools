@@ -3,13 +3,14 @@ package pro.tools.http.jdk;
 import com.ning.http.client.AsyncHttpClient;
 import com.ning.http.client.ListenableFuture;
 import com.ning.http.client.Response;
-import com.ning.http.client.cookie.Cookie;
 import pro.tools.data.text.ToolRegex;
 import pro.tools.format.ToolFormat;
+import pro.tools.http.pojo.HttpMethod;
+import pro.tools.http.pojo.HttpReceive;
+import pro.tools.http.pojo.HttpSend;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
@@ -25,51 +26,50 @@ public final class ToolHttp {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
 
-    public static ToolHttpReceive sendGet(String url) {
-        ToolHttpSend send = new ToolHttpSend(url)
-                .setMethod(Tool_HTTP_METHOD.GET);
+    public static HttpReceive sendGet(String url) {
+        HttpSend send = new HttpSend(url)
+                .setMethod(HttpMethod.GET);
         return sendHttp(send);
     }
 
-    public static ToolHttpReceive sendPost(String url) {
-        ToolHttpSend send = new ToolHttpSend(url)
-                .setMethod(Tool_HTTP_METHOD.POST);
+    public static HttpReceive sendPost(String url) {
+        HttpSend send = new HttpSend(url)
+                .setMethod(HttpMethod.POST);
         return sendHttp(send);
     }
 
-    public static ToolHttpReceive sendGet(String url, Map<String, Object> param) {
-        ToolHttpSend send = new ToolHttpSend(url, param, Tool_HTTP_METHOD.GET);
+    public static HttpReceive sendGet(String url, Map<String, Object> param) {
+        HttpSend send = new HttpSend(url, param, HttpMethod.GET);
         return sendHttp(send);
     }
 
-    public static ToolHttpReceive sendPost(String url, Map<String, Object> param) {
-        ToolHttpSend send = new ToolHttpSend(url, param, Tool_HTTP_METHOD.POST);
+    public static HttpReceive sendPost(String url, Map<String, Object> param) {
+        HttpSend send = new HttpSend(url, param, HttpMethod.POST);
         return sendHttp(send);
     }
 
     /**
      * 用于请求http
      *
-     * @param send 里面包含请求的信息
+     * @param send
+     *         里面包含请求的信息
+     *
      * @return 响应的信息
      */
-    public static ToolHttpReceive sendHttp(ToolHttpSend send) {
+    public static HttpReceive sendHttp(HttpSend send) {
 
-        ToolHttpReceive toolHttpReceive = new ToolHttpReceive();
-        toolHttpReceive.setHaveError(true);
+        HttpReceive httpReceive = new HttpReceive();
+        httpReceive.setHaveError(true);
 
         String url = send.getUrl();
         if (!ToolRegex.isURL(url)) {
-            if (send.isNeedErrMsg()) {
-                toolHttpReceive.setErrMsg("不是一个有效的URL");
-            }
-            return toolHttpReceive;
+            httpReceive.setErrMsg("不是一个有效的URL");
+            return httpReceive;
         }
 
-        Map<String, Object> param = send.getParam();
-        List<Cookie> cookies = send.getCookieList();
+        Map<String, Object> param = send.getParams();
         Map<String, Object> headers = send.getHeaders();
-        Tool_HTTP_METHOD method = send.getMethod();
+        HttpMethod method = send.getMethod();
         Charset charset = send.getCharset();
 
         AsyncHttpClient asyncHttpClient = builder.buildDefaultClient();
@@ -111,47 +111,35 @@ public final class ToolHttp {
             headers.forEach((key, value) -> requestBuilder.addHeader(key, value.toString()));
         }
 
-        if (cookies != null) {
-            cookies.forEach(requestBuilder::addCookie);
-        }
+        // TODO: 2017/7/27 Cookie未加入
 
         ListenableFuture<Response> future = requestBuilder.execute();
 
         try {
             Response response = future.get();
-            toolHttpReceive.setResponseCookieList(response.getCookies());
-            toolHttpReceive.setStatusCode(response.getStatusCode());
-            toolHttpReceive.setStatusText(response.getStatusText());
-            if (send.isNeedMsg()) {
-                String responseBody = response.getResponseBody();
-                toolHttpReceive.setResponseBody(responseBody);
-            }
+            httpReceive.setStatusCode(response.getStatusCode());
+            httpReceive.setStatusText(response.getStatusText());
+            httpReceive.setResponseBody(response.getResponseBody());
 
-            //将原生对象放入,方便复杂操作
-            toolHttpReceive.setResponse(response);
             //将是否有错误信息设置为无
-            toolHttpReceive.setHaveError(false);
+            httpReceive.setHaveError(false);
 
         } catch (InterruptedException e) {
-            toolHttpReceive.setErrMsg("http组件出现问题!\n" + ToolFormat.toException(e));
+            httpReceive.setErrMsg("http组件出现问题!\n" + ToolFormat.toException(e));
         } catch (IOException e) {
-            toolHttpReceive.setErrMsg("获取返回内容失败!\n" + ToolFormat.toException(e));
+            httpReceive.setErrMsg("获取返回内容失败!\n" + ToolFormat.toException(e));
         } catch (ExecutionException e) {
-            toolHttpReceive.setErrMsg("访问URL失败!\n" + ToolFormat.toException(e));
+            httpReceive.setErrMsg("访问URL失败!\n" + ToolFormat.toException(e));
         }
 
-        if (!send.isNeedErrMsg()) {
-            toolHttpReceive.setErrMsg("");
-        }
-
-        return toolHttpReceive;
+        return httpReceive;
     }
 
     public static HttpBuilder getBuilder() {
         return builder;
     }
 
-    public static void setBuilder(HttpBuilder builder) {
+    public static synchronized void setBuilder(HttpBuilder builder) {
         ToolHttp.builder = builder;
     }
 }

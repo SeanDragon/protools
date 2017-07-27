@@ -1,6 +1,5 @@
 package pro.tools.http.netty.clientpool;
 
-import com.google.common.collect.Lists;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.EventLoopGroup;
@@ -14,29 +13,24 @@ import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.HttpHeaderNames;
 import io.netty.handler.codec.http.HttpHeaderValues;
 import io.netty.handler.codec.http.HttpHeaders;
-import io.netty.handler.codec.http.HttpMethod;
 import io.netty.handler.codec.http.HttpVersion;
 import io.netty.handler.codec.http.QueryStringEncoder;
-import io.netty.handler.codec.http.cookie.ClientCookieEncoder;
-import io.netty.handler.codec.http.cookie.Cookie;
-import io.netty.handler.codec.http.cookie.DefaultCookie;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pro.tools.http.jdk.Tool_HTTP_METHOD;
 import pro.tools.http.netty.exception.HttpException;
 import pro.tools.http.netty.handler.HttpClientChannelPoolHandler;
 import pro.tools.http.netty.handler.HttpClientHandler;
 import pro.tools.http.netty.handler.HttpClientInitializer;
-import pro.tools.http.netty.pojo.HttpReceive;
-import pro.tools.http.netty.pojo.HttpSend;
+import pro.tools.http.pojo.HttpMethod;
+import pro.tools.http.pojo.HttpReceive;
+import pro.tools.http.pojo.HttpSend;
 
 import javax.net.ssl.SSLException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -163,30 +157,29 @@ public class DefaultClientPool {
     }
 
     private FullHttpRequest convertRequest(HttpSend httpSend) {
-        HttpMethod httpMethod;
-        Tool_HTTP_METHOD method = httpSend.getMethod();
+        io.netty.handler.codec.http.HttpMethod httpMethod;
+        HttpMethod method = httpSend.getMethod();
         Map<String, Object> params = httpSend.getParams();
-        Map<String, String> cookies = httpSend.getCookies();
         Map<String, Object> headers = httpSend.getHeaders();
 
         switch (method) {
             case GET:
-                httpMethod = HttpMethod.GET;
+                httpMethod = io.netty.handler.codec.http.HttpMethod.GET;
                 break;
             case POST:
-                httpMethod = HttpMethod.POST;
+                httpMethod = io.netty.handler.codec.http.HttpMethod.POST;
                 break;
             case PUT:
-                httpMethod = HttpMethod.PUT;
+                httpMethod = io.netty.handler.codec.http.HttpMethod.PUT;
                 break;
             case DELETE:
-                httpMethod = HttpMethod.DELETE;
+                httpMethod = io.netty.handler.codec.http.HttpMethod.DELETE;
                 break;
             case TRACE:
-                httpMethod = HttpMethod.TRACE;
+                httpMethod = io.netty.handler.codec.http.HttpMethod.TRACE;
                 break;
             default:
-                httpMethod = HttpMethod.POST;
+                httpMethod = io.netty.handler.codec.http.HttpMethod.POST;
                 break;
         }
 
@@ -213,17 +206,18 @@ public class DefaultClientPool {
 
         FullHttpRequest request = new DefaultFullHttpRequest(HttpVersion.HTTP_1_1, httpMethod, sendURI.toString());
 
-        if (cookies != null) {
-            List<Cookie> cookieList = Lists.newArrayListWithCapacity(cookies.size());
-            cookies.forEach((key, value) -> {
-                cookieList.add(new DefaultCookie(key, value));
-            });
-
-            request.headers().set(
-                    HttpHeaderNames.COOKIE,
-                    ClientCookieEncoder.STRICT.encode(cookieList)
-            );
-        }
+        // FIXME: 2017/7/27 暂未加Cookie
+        //if (cookies != null) {
+        //    List<Cookie> cookieList = Lists.newArrayListWithCapacity(cookies.size());
+        //    cookies.forEach((key, value) -> {
+        //        cookieList.add(new DefaultCookie(key, value));
+        //    });
+        //
+        //    request.headers().set(
+        //            HttpHeaderNames.COOKIE,
+        //            ClientCookieEncoder.STRICT.encode(cookieList)
+        //    );
+        //}
 
         request.headers().add(defaultHttpHeaders);
         if (headers != null) {

@@ -1,7 +1,7 @@
 package pro.tools.http.netty.exception;
 
-import pro.tools.http.netty.pojo.HttpReceive;
-import pro.tools.http.netty.pojo.HttpSend;
+import pro.tools.http.pojo.HttpReceive;
+import pro.tools.http.pojo.HttpSend;
 
 /**
  * @author SeanDragon

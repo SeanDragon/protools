@@ -31,8 +31,8 @@ public class Decimal extends Number {
     }
 
     public Decimal(Object initValue, MathContext mathContext) {
-        init(initValue);
         this.defaultMathContext = mathContext;
+        init(initValue);
     }
 
     /**
@@ -234,11 +234,23 @@ public class Decimal extends Number {
     //region 数据变现
     @Override
     public String toString() {
-        return moneyStrValue();
+        return fullStrValue();
     }
 
     public String fullStrValue() {
-        return this.bigDecimal.toPlainString();
+        String string = this.bigDecimal.toPlainString();
+        int length = string.substring(string.indexOf('.'), string.length()).length() - 1;
+        return this.fullStrValue(length);
+    }
+
+    public String fullStrValue(int scale) {
+        return this.fullStrValue(scale, defaultMathContext.getRoundingMode());
+    }
+
+    public String fullStrValue(int scale, RoundingMode roundingMode) {
+        DecimalFormat decimalFormat = new DecimalFormat(ToolDecimal.scale2FormatStr(scale));
+        decimalFormat.setRoundingMode(roundingMode);//设置舍入算法
+        return decimalFormat.format(this.bigDecimal);
     }
 
     /**
@@ -279,6 +291,18 @@ public class Decimal extends Number {
     @Override
     public double doubleValue() {
         return this.bigDecimal.doubleValue();
+    }
+
+    /**
+     * 传入进度和舍入原则进行double
+     *
+     * @param scale
+     *         进度
+     *
+     * @return 结果
+     */
+    public double doubleValue(int scale) {
+        return this.doubleValue(scale, defaultMathContext.getRoundingMode());
     }
 
     /**

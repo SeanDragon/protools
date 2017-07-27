@@ -3,13 +3,14 @@ package pro.tools.http.jdk;
 import com.ning.http.client.AsyncHttpClient;
 import com.ning.http.client.ListenableFuture;
 import com.ning.http.client.Response;
-import pro.tools.data.text.ToolRegex;
 import pro.tools.format.ToolFormat;
 import pro.tools.http.pojo.HttpMethod;
 import pro.tools.http.pojo.HttpReceive;
 import pro.tools.http.pojo.HttpSend;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -62,7 +63,9 @@ public final class ToolHttp {
         httpReceive.setHaveError(true);
 
         String url = send.getUrl();
-        if (!ToolRegex.isURL(url)) {
+        try {
+            new URL(url);
+        } catch (MalformedURLException ignored) {
             httpReceive.setErrMsg("不是一个有效的URL");
             return httpReceive;
         }

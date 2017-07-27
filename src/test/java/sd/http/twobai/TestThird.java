@@ -19,7 +19,7 @@ import java.util.concurrent.ExecutionException;
  */
 public class TestThird extends TestCase {
 
-    private static final HttpSend httpSend = new HttpSend("/invest", null);
+    private static final HttpSend httpSend = new HttpSend("/manage/updateThirdApiStatus/0B0D0C070939141E030B1D04311215041C4B5B-ewogICJpZCI6ICJnYWJTa2ZoZzR5RjhTYUt2MGJ5QjhsIiwKICAibmFtZSI6ICIxMTEiLAogICJuaWQiOiAiMTExIiwKICAidmFsdWUiOiAiMTExMjIyMTEiLAogICJzdGF0dXMiOiB0cnVlLAogICJ1c2VkIjogMCwKICAicmVtYXJrIjogIjExMTFmZmZmZmZmICIsCiAgImFkZFRpbWUiOiAiMjAxNy0wNy0yNyAxNDo0Mjo0NzowMDAiCn0=", null);
     private static DefaultClientPool defaultClientPool;
 
     static {

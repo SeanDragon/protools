@@ -14,8 +14,8 @@ import java.util.concurrent.ExecutionException;
 
 /**
  * @author SeanDragon
- * <p>
- * Create By 2017-07-20 19:13
+ *         <p>
+ *         Create By 2017-07-20 19:13
  */
 public class TestThird extends TestCase {
 
@@ -46,11 +46,8 @@ public class TestThird extends TestCase {
                 for (int j = 0; j < 10; j++) {
                     long begin = System.currentTimeMillis();
 
-                    HttpReceive receive = null;
-                    try {
-                        receive = defaultClientPool.request(httpSend);
-                    } catch (InterruptedException | ExecutionException ignored) {
-                    }
+                    HttpReceive receive;
+                    receive = defaultClientPool.request(httpSend);
 
                     long x = System.currentTimeMillis() - begin;
                     times.add(x);

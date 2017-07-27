@@ -7,14 +7,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.pool.ChannelPool;
 import io.netty.channel.pool.FixedChannelPool;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.http.DefaultFullHttpRequest;
-import io.netty.handler.codec.http.DefaultHttpHeaders;
-import io.netty.handler.codec.http.FullHttpRequest;
-import io.netty.handler.codec.http.HttpHeaderNames;
-import io.netty.handler.codec.http.HttpHeaderValues;
-import io.netty.handler.codec.http.HttpHeaders;
-import io.netty.handler.codec.http.HttpVersion;
-import io.netty.handler.codec.http.QueryStringEncoder;
+import io.netty.handler.codec.http.*;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
@@ -32,13 +25,12 @@ import javax.net.ssl.SSLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 /**
  * @author SeanDragon
- * <p>
- * Create By 2017-07-21 10:02
+ *         <p>
+ *         Create By 2017-07-21 10:02
  */
 public class DefaultClientPool {
     private static final Logger log = LoggerFactory.getLogger(DefaultClientPool.class);
@@ -105,11 +97,11 @@ public class DefaultClientPool {
         channelPool = new FixedChannelPool(b, new HttpClientChannelPoolHandler(), Integer.MAX_VALUE);
     }
 
-    public HttpReceive request(HttpSend httpSend) throws InterruptedException, ExecutionException {
+    public HttpReceive request(HttpSend httpSend) {
         return request(httpSend, Integer.MAX_VALUE, TimeUnit.DAYS);
     }
 
-    public HttpReceive request(HttpSend httpSend, long timeout, TimeUnit timeUnit) throws InterruptedException, ExecutionException {
+    public HttpReceive request(HttpSend httpSend, long timeout, TimeUnit timeUnit) {
         HttpReceive httpReceive = getNewHttpReceive();
         Channel channel = channelPool.acquire().syncUninterruptibly().getNow();
         try {

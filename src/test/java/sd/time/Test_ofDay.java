@@ -33,4 +33,13 @@ public class Test_ofDay {
 
         System.out.println(datePlus.toLunar());
     }
+
+    @Test
+    public void test3() {
+        DatePlus datePlus = new DatePlus(1996, 5, 5);
+
+        System.out.println(datePlus);
+
+        System.out.println(datePlus.toSolar());
+    }
 }

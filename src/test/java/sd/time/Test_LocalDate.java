@@ -2,7 +2,6 @@ package sd.time;
 
 import org.junit.Test;
 import pro.tools.time.DatePlus;
-import pro.tools.time.ToolLunar;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
@@ -121,9 +120,9 @@ public class Test_LocalDate {
 
     @Test
     public void test8() {
-        ToolLunar.Lunar lunar = new ToolLunar.Lunar(2017, 3, 12);
-        ToolLunar.Solar solar = ToolLunar.LunarToSolar(lunar);
-        System.out.println(solar);
+        //ToolLunar.Lunar lunar = new ToolLunar.Lunar(2017, 3, 12);
+        //ToolLunar.Solar solar = ToolLunar.LunarToSolar(lunar);
+        //System.out.println(solar);
     }
 
     @Test

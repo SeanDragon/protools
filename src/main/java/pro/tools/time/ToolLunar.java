@@ -81,7 +81,7 @@ public final class ToolLunar {
         return tianGan[(lunarYear - 4) % 10] + diZhi[(lunarYear - 4) % 12] + "年";
     }
 
-    private static Solar SolarFromInt(long g) {
+    private static DatePlus SolarFromInt(long g) {
         long y = (10000 * g + 14780) / 3652425;
         long ddd = g - (365 * y + y / 4 - y / 100 + y / 400);
         if (ddd < 0) {
@@ -96,7 +96,7 @@ public final class ToolLunar {
         solar.solarYear = (int) y;
         solar.solarMonth = (int) mm;
         solar.solarDay = (int) dd;
-        return solar;
+        return new DatePlus((int) y, (int) mm, (int) dd);
     }
 
     /**
@@ -105,24 +105,29 @@ public final class ToolLunar {
      * @param lunar 农历
      * @return 阴历
      */
-    public static Solar LunarToSolar(Lunar lunar) {
-        int days = lunar_month_days[lunar.lunarYear - lunar_month_days[0]];
+    public static DatePlus LunarToSolar(final DatePlus lunar) {
+        int lunarYear = lunar.getYear();
+        boolean lunarIsLeap = lunar.isLeapYear();
+        int lunarMonth = lunar.getMonth();
+        int lunarDay = lunar.getDayOfMonth();
+
+        int days = lunar_month_days[lunarYear - lunar_month_days[0]];
         int leap = getBitInt(days, 4, 13);
         int offset = 0;
         int loopend = leap;
-        if (!lunar.isLeap) {
-            if (lunar.lunarMonth <= leap || leap == 0) {
-                loopend = lunar.lunarMonth - 1;
+        if (!lunarIsLeap) {
+            if (lunarMonth <= leap || leap == 0) {
+                loopend = lunarMonth - 1;
             } else {
-                loopend = lunar.lunarMonth;
+                loopend = lunarMonth;
             }
         }
         for (int i = 0; i < loopend; i++) {
             offset += getBitInt(days, 1, 12 - i) == 1 ? 30 : 29;
         }
-        offset += lunar.lunarDay;
+        offset += lunarDay;
 
-        int solar11 = solar_1_1[lunar.lunarYear - solar_1_1[0]];
+        int solar11 = solar_1_1[lunarYear - solar_1_1[0]];
 
         int y = getBitInt(solar11, 12, 9);
         int m = getBitInt(solar11, 4, 5);

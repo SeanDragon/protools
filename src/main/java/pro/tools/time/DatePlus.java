@@ -417,8 +417,8 @@ public class DatePlus {
      *
      * @return 阴历对象
      */
-    public ToolLunar.Lunar toLunar() {
-        ToolLunar.Solar solar = new ToolLunar.Solar(this.getYear(), this.getMonth(), this.getDayOfMonth());
+    public Lunar toLunar() {
+        Solar solar = new Solar(this.getYear(), this.getMonth(), this.getDayOfMonth());
         return ToolLunar.SolarToLunar(solar);
     }
 
@@ -427,8 +427,9 @@ public class DatePlus {
      *
      * @return 公历对象
      */
-    public DatePlus toSolar() {
-        return ToolLunar.LunarToSolar(this);
+    public Solar toSolar() {
+        Lunar lunar = new Lunar(this.getYear(), this.getMonth(), this.getDayOfMonth());
+        return ToolLunar.LunarToSolar(lunar);
     }
 
     public String toString(DateTimeFormatter formatter) {

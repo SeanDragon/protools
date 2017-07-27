@@ -81,7 +81,7 @@ public final class ToolLunar {
         return tianGan[(lunarYear - 4) % 10] + diZhi[(lunarYear - 4) % 12] + "年";
     }
 
-    private static DatePlus SolarFromInt(long g) {
+    private static Solar SolarFromInt(long g) {
         long y = (10000 * g + 14780) / 3652425;
         long ddd = g - (365 * y + y / 4 - y / 100 + y / 400);
         if (ddd < 0) {
@@ -92,11 +92,7 @@ public final class ToolLunar {
         long mm = (mi + 2) % 12 + 1;
         y = y + (mi + 2) / 12;
         long dd = ddd - (mi * 306 + 5) / 10 + 1;
-        Solar solar = new Solar();
-        solar.solarYear = (int) y;
-        solar.solarMonth = (int) mm;
-        solar.solarDay = (int) dd;
-        return new DatePlus((int) y, (int) mm, (int) dd);
+        return new Solar((int) y, (int) mm, (int) dd);
     }
 
     /**
@@ -105,24 +101,23 @@ public final class ToolLunar {
      * @param lunar 农历
      * @return 阴历
      */
-    public static DatePlus LunarToSolar(final DatePlus lunar) {
-        int lunarYear = lunar.getYear();
-        boolean lunarIsLeap = lunar.isLeapYear();
-        int lunarMonth = lunar.getMonth();
-        int lunarDay = lunar.getDayOfMonth();
+    public static Solar LunarToSolar(final Lunar lunar) {
+        int lunarYear = lunar.getLunarYear();
+        int lunarMonth = lunar.getLunarMonth();
+        int lunarDay = lunar.getLunarDay();
 
         int days = lunar_month_days[lunarYear - lunar_month_days[0]];
         int leap = getBitInt(days, 4, 13);
         int offset = 0;
-        int loopend = leap;
-        if (!lunarIsLeap) {
+        int loopEnd = leap;
+        if (!lunar.getIsLeap()) {
             if (lunarMonth <= leap || leap == 0) {
-                loopend = lunarMonth - 1;
+                loopEnd = lunarMonth - 1;
             } else {
-                loopend = lunarMonth;
+                loopEnd = lunarMonth;
             }
         }
-        for (int i = 0; i < loopend; i++) {
+        for (int i = 0; i < loopEnd; i++) {
             offset += getBitInt(days, 1, 12 - i) == 1 ? 30 : 29;
         }
         offset += lunarDay;
@@ -142,19 +137,21 @@ public final class ToolLunar {
      * @param solar 公历
      * @return 阴历
      */
-    public static Lunar SolarToLunar(Solar solar) {
-        Lunar lunar = new Lunar();
-        int index = solar.solarYear - solar_1_1[0];
-        int data = (solar.solarYear << 9) | (solar.solarMonth << 5) | (solar.solarDay);
-        int solar11 = 0;
+    public static Lunar SolarToLunar(final Solar solar) {
+        int solarYear = solar.getSolarYear();
+        int solarMonth = solar.getSolarMonth();
+        int solarDay = solar.getSolarDay();
+
+        int index = solarYear - solar_1_1[0];
+        int data = (solarYear << 9) | (solarMonth << 5) | (solarDay);
         if (solar_1_1[index] > data) {
             index--;
         }
-        solar11 = solar_1_1[index];
+        int solar11 = solar_1_1[index];
         int y = getBitInt(solar11, 12, 9);
         int m = getBitInt(solar11, 4, 5);
         int d = getBitInt(solar11, 5, 0);
-        long offset = SolarToInt(solar.solarYear, solar.solarMonth, solar.solarDay) - SolarToInt(y, m, d);
+        long offset = SolarToInt(solarYear, solarMonth, solarDay) - SolarToInt(y, m, d);
 
         int days = lunar_month_days[index];
         int leap = getBitInt(days, 4, 13);
@@ -174,128 +171,17 @@ public final class ToolLunar {
             }
         }
         lunarD = (int) (offset);
-        lunar.lunarYear = lunarY;
-        lunar.lunarMonth = lunarM;
-        lunar.isLeap = false;
+
+        Lunar lunar = new Lunar(lunarY, lunarM, lunarD)
+                .setIsLeap(false);
         if (leap != 0 && lunarM > leap) {
-            lunar.lunarMonth = lunarM - 1;
+            lunar.setLunarMonth(lunarM - 1);
             if (lunarM == leap + 1) {
-                lunar.isLeap = true;
+                lunar.setIsLeap(true);
             }
         }
 
-        lunar.lunarDay = lunarD;
         return lunar;
-    }
-
-    /**
-     * 农历
-     */
-    public static class Lunar {
-        private boolean isLeap;
-        private int lunarYear;
-        private int lunarMonth;
-        private int lunarDay;
-
-        public Lunar() {
-        }
-
-        public Lunar(int lunarYear, int lunarMonth, int lunarDay) {
-            this.lunarDay = lunarDay;
-            this.lunarMonth = lunarMonth;
-            this.lunarYear = lunarYear;
-        }
-
-        public boolean isLeap() {
-            return isLeap;
-        }
-
-        public Lunar setLeap(boolean leap) {
-            isLeap = leap;
-            return this;
-        }
-
-        public int getLunarDay() {
-            return lunarDay;
-        }
-
-        public Lunar setLunarDay(int lunarDay) {
-            this.lunarDay = lunarDay;
-            return this;
-        }
-
-        public int getLunarMonth() {
-            return lunarMonth;
-        }
-
-        public Lunar setLunarMonth(int lunarMonth) {
-            this.lunarMonth = lunarMonth;
-            return this;
-        }
-
-        public int getLunarYear() {
-            return lunarYear;
-        }
-
-        public Lunar setLunarYear(int lunarYear) {
-            this.lunarYear = lunarYear;
-            return this;
-        }
-
-        @Override
-        public String toString() {
-            return String.format("阴历：%S年%S月%S日", lunarYear, lunarMonth, lunarDay) + (isLeap ? "（闰年）" : "");
-        }
-    }
-
-    /**
-     * 公历
-     */
-    public static class Solar {
-        private int solarYear;
-        private int solarMonth;
-        private int solarDay;
-
-        public Solar() {
-        }
-
-        public Solar(int solarYear, int solarMonth, int solarDay) {
-            this.solarYear = solarYear;
-            this.solarMonth = solarMonth;
-            this.solarDay = solarDay;
-        }
-
-        public int getSolarYear() {
-            return solarYear;
-        }
-
-        public Solar setSolarYear(int solarYear) {
-            this.solarYear = solarYear;
-            return this;
-        }
-
-        public int getSolarMonth() {
-            return solarMonth;
-        }
-
-        public Solar setSolarMonth(int solarMonth) {
-            this.solarMonth = solarMonth;
-            return this;
-        }
-
-        public int getSolarDay() {
-            return solarDay;
-        }
-
-        public Solar setSolarDay(int solarDay) {
-            this.solarDay = solarDay;
-            return this;
-        }
-
-        @Override
-        public String toString() {
-            return String.format("公历：%S年%S月%S日", solarYear, solarMonth, solarDay);
-        }
     }
 }
 

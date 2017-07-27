@@ -12,7 +12,7 @@ public class Test_Month {
     @Test
     public void test1() {
         DatePlus datePlus = new DatePlus();
-        int lastDayOfMonth = datePlus.getLastDayOfMonth();
+        int lastDayOfMonth = datePlus.getLastDayOfMonth().getDayOfMonth();
         System.out.println(lastDayOfMonth);
     }
 

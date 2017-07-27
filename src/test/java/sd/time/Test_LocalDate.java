@@ -7,6 +7,7 @@ import pro.tools.time.ToolLunar;
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 
 /**
  * Created on 17/4/8 18:48 星期六.
@@ -137,5 +138,12 @@ public class Test_LocalDate {
 
         System.out.println(datePlus.toString());
         System.out.println(datePlus.toString("yyyy年MM月dd日"));
+    }
+
+    @Test
+    public void test10() {
+        DatePlus datePlus = new DatePlus(2017, 5, 5);
+        LocalDateTime localDateTime = (datePlus.getLocalDateTime()).with(TemporalAdjusters.firstDayOfYear());
+        System.out.println(localDateTime);
     }
 }

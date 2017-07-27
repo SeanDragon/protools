@@ -1,16 +1,10 @@
 package pro.tools.time;
 
-import com.google.common.base.Objects;
-
-import java.time.DayOfWeek;
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.Month;
-import java.time.Period;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAdjusters;
 
 /**
  * Created on 17/4/8 19:27 星期六.
@@ -19,10 +13,6 @@ import java.time.format.DateTimeParseException;
  * @author SeanDragon
  */
 public class DatePlus {
-    //region 生肖和星座
-    private static final String[] CHINESE_ZODIAC = {"猴", "鸡", "狗", "猪", "鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊"};
-    private static final String[] ZODIAC = {"水瓶座", "双鱼座", "白羊座", "金牛座", "双子座", "巨蟹座", "狮子座", "处女座", "天秤座", "天蝎座", "射手座", "魔羯座"};
-    private static final int[] ZODIAC_FLAGS = {20, 19, 21, 21, 21, 22, 23, 23, 23, 24, 23, 22};
     /**
      * 日期对象
      */
@@ -38,7 +28,7 @@ public class DatePlus {
     }
 
     public DatePlus(int year, int month, int dayOfMonth) {
-        this.localDateTime = LocalDateTime.of(LocalDate.of(year, month, dayOfMonth), LocalTime.now());
+        this.localDateTime = LocalDateTime.of(LocalDate.of(year, month, dayOfMonth), LocalTime.MIN);
     }
 
     public DatePlus(int hour, int minutes) {
@@ -59,13 +49,10 @@ public class DatePlus {
     //endregion
 
     public DatePlus(long time) {
-        java.util.Date date = new java.util.Date(time);
-        this.localDateTime = ToolDateTime.date2LocalDateTime(date);
-        this.localDateTime = ToolDateTime.date2LocalDateTime(date);
+        this.localDateTime = ToolDateTime.time2LocalDateTime(time);
     }
 
     public DatePlus(java.util.Date date) {
-        this.localDateTime = ToolDateTime.date2LocalDateTime(date);
         this.localDateTime = ToolDateTime.date2LocalDateTime(date);
     }
 
@@ -106,10 +93,6 @@ public class DatePlus {
         return this;
     }
 
-    //endregion
-
-    //region 获取属性值
-
     public DatePlus addMinutes(long minutes) {
         this.localDateTime = this.localDateTime.plusMinutes(minutes);
         return this;
@@ -124,6 +107,10 @@ public class DatePlus {
         this.localDateTime = this.localDateTime.plusNanos(nanoSeconds);
         return this;
     }
+    //endregion
+
+
+    //region 获取属性值
 
     /**
      * 获取年份
@@ -230,8 +217,53 @@ public class DatePlus {
      *
      * @return 天
      */
-    public int getLastDayOfMonth() {
-        return this.localDateTime.getMonth().length(isLeapYear());
+    public DatePlus getLastDayOfMonth() {
+        return new DatePlus(this.localDateTime.with(TemporalAdjusters.lastDayOfMonth()));
+    }
+
+    /**
+     * 获取这一年的最后一天
+     *
+     * @return 天
+     */
+    public DatePlus getLastDayOfYear() {
+        return new DatePlus(this.localDateTime.with(TemporalAdjusters.lastDayOfYear()));
+    }
+
+    /**
+     * 获取这个月的最后一天
+     *
+     * @return 天
+     */
+    public DatePlus getFirstDayOfMonth() {
+        return new DatePlus(this.localDateTime.with(TemporalAdjusters.firstDayOfMonth()));
+    }
+
+    /**
+     * 获取这一年的第一天
+     *
+     * @return 天
+     */
+    public DatePlus getFirstDayOfYear() {
+        return new DatePlus(this.localDateTime.with(TemporalAdjusters.firstDayOfYear()));
+    }
+
+    /**
+     * 获取这个月的最后一天
+     *
+     * @return 天
+     */
+    public DatePlus getFirstDayOfNextMonth() {
+        return new DatePlus(this.localDateTime.with(TemporalAdjusters.firstDayOfNextMonth()));
+    }
+
+    /**
+     * 获取这一年的第一天
+     *
+     * @return 天
+     */
+    public DatePlus getFirstDayOfNextYear() {
+        return new DatePlus(this.localDateTime.with(TemporalAdjusters.firstDayOfNextYear()));
     }
 
     /**
@@ -257,69 +289,40 @@ public class DatePlus {
     }
 
     public long ofYear(DatePlus datePlus) {
-        return this.betweenDate(datePlus).getYears();
+        return ofDateTime(ChronoUnit.YEARS, datePlus);
     }
 
     public long ofMonth(DatePlus datePlus) {
-        return this.betweenDate(datePlus).getMonths();
+        return ofDateTime(ChronoUnit.MONTHS, datePlus);
     }
 
     public long ofDay(DatePlus datePlus) {
-        //return this.betweenDate(datePlus).getDays();
-
-        //拿出两个年份
-        int year1 = this.getYear();
-        int year2 = datePlus.getYear();
-        //天数
-        int days = 0;
-        //如果can1 < can2
-        DatePlus can;
-        //减去小的时间在这一年已经过了的天数
-        //加上大的时间已过的天数
-        if (this.isBefore(datePlus)) {
-            days -= this.getDayOfYear();
-            days += datePlus.getDayOfYear();
-            can = this;
-        } else {
-            days -= datePlus.getDayOfYear();
-            days += this.getDayOfYear();
-            can = datePlus;
-        }
-        for (int i = 0; i < Math.abs(year2 - year1); i++) {
-            //获取小的时间当前年的总天数
-            days += can.toMaxDate(DateType.YEAR).getDayOfYear();
-            //再计算下一年。
-            can.addYear(1);
-        }
-        return days;
+        return ofDateTime(ChronoUnit.DAYS, datePlus);
     }
 
     public long ofHour(DatePlus datePlus) {
-        return this.ofSeconds(datePlus) / 60;
+        return ofDateTime(ChronoUnit.HOURS, datePlus);
     }
 
     public long ofMinutes(DatePlus datePlus) {
-        return this.ofSeconds(datePlus) / 60;
+        return ofDateTime(ChronoUnit.MINUTES, datePlus);
+    }
+
+    public long ofSeconds(DatePlus datePlus) {
+        return ofDateTime(ChronoUnit.SECONDS, datePlus);
+    }
+
+    public long ofNanos(DatePlus datePlus) {
+        return ofDateTime(ChronoUnit.NANOS, datePlus);
+    }
+
+    public long ofDateTime(ChronoUnit chronoUnit, DatePlus datePlus) {
+        return -chronoUnit.between(this.localDateTime, datePlus.localDateTime);
     }
     //endregion
 
-    public long ofSeconds(DatePlus datePlus) {
-        return (this.ofDay(datePlus) * 24 * 60 * 60) + this.betweenTime(datePlus).getSeconds();
-    }
-
-    public Period betweenDate(DatePlus datePlus) {
-        return Period.between(this.localDateTime.toLocalDate(), datePlus.getLocalDateTime().toLocalDate());
-    }
-
-    public Duration betweenTime(DatePlus datePlus) {
-        return Duration.between(this.localDateTime.toLocalTime(), datePlus.getLocalDateTime().toLocalTime());
-    }
 
     //region 输出部分
-    @Override
-    public String toString() {
-        return this.toString("yyyy-MM-dd HH:mm:ss.SSS");
-    }
 
     public LocalDateTime getLocalDateTime() {
         return this.localDateTime;
@@ -355,7 +358,7 @@ public class DatePlus {
                 this.localDateTime = LocalDateTime.of(getYear(), 12, 31, 23, 59, 59, 999_999_999);
                 break;
             case MONTH:
-                this.localDateTime = LocalDateTime.of(getYear(), getMonth(), getLastDayOfMonth(), 23, 59, 59, 999_999_999);
+                this.localDateTime = LocalDateTime.of(getYear(), getMonth(), getLastDayOfMonth().getDayOfMonth(), 23, 59, 59, 999_999_999);
                 break;
             case DAY:
                 this.localDateTime = LocalDateTime.of(getYear(), getMonth(), getDayOfMonth(), 23, 59, 59, 999_999_999);
@@ -377,15 +380,21 @@ public class DatePlus {
         return ToolDateTime.localDateTime2Date(this.localDateTime);
     }
 
-    public ToolLunar.Solar toSolar() {
-        ToolLunar.Lunar lunar = new ToolLunar.Lunar(this.getYear(), this.getMonth(), this.getDayOfMonth());
-        return ToolLunar.LunarToSolar(lunar);
-    }
-
+    /**
+     * 天干地支
+     * 可换成枚举
+     *
+     * @return 天干地支名称
+     */
     public String toGanZhi() {
         return ToolLunar.lunarYearToGanZhi(toLunar().getLunarYear());
     }
 
+    /**
+     * 获取星座
+     *
+     * @return 星座
+     */
     public String toZodiac() {
         int month = getMonth();
         int day = getDayOfMonth();
@@ -394,14 +403,33 @@ public class DatePlus {
                 : (month + 10) % 12];
     }
 
+    /**
+     * 获取生肖
+     *
+     * @return 生肖
+     */
     public String toChineseZodiac() {
         return CHINESE_ZODIAC[getYear() % 12];
     }
-    //endregion
 
+    /**
+     * 获取阴历对象
+     *
+     * @return 阴历对象
+     */
     public ToolLunar.Lunar toLunar() {
         ToolLunar.Solar solar = new ToolLunar.Solar(this.getYear(), this.getMonth(), this.getDayOfMonth());
         return ToolLunar.SolarToLunar(solar);
+    }
+
+    /**
+     * 获取公历对象
+     *
+     * @return 公历对象
+     */
+    public ToolLunar.Solar toSolar() {
+        ToolLunar.Lunar lunar = new ToolLunar.Lunar(this.getYear(), this.getMonth(), this.getDayOfMonth());
+        return ToolLunar.LunarToSolar(lunar);
     }
 
     public String toString(DateTimeFormatter formatter) {
@@ -411,18 +439,27 @@ public class DatePlus {
     public String toString(String pattern) {
         return this.localDateTime.format(DateTimeFormatter.ofPattern(pattern));
     }
+
+    @Override
+    public String toString() {
+        return this.toString("yyyy-MM-dd HH:mm:ss.SSS");
+    }
+    //endregion
+
+
+    //region 生肖和星座
+    private static final String[] CHINESE_ZODIAC = {"猴", "鸡", "狗", "猪", "鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊"};
+    private static final String[] ZODIAC = {"水瓶座", "双鱼座", "白羊座", "金牛座", "双子座", "巨蟹座", "狮子座", "处女座", "天秤座", "天蝎座", "射手座", "魔羯座"};
+    private static final int[] ZODIAC_FLAGS = {20, 19, 21, 21, 21, 22, 23, 23, 23, 24, 23, 22};
     //endregion
 
     @Override
     public boolean equals(Object object) {
-        if (this == object) return true;
-        if (!(object instanceof DatePlus)) return false;
-        DatePlus datePlus = (DatePlus) object;
-        return Objects.equal(getLocalDateTime(), datePlus.getLocalDateTime());
+        return this.localDateTime.equals(object);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getLocalDateTime());
+        return this.localDateTime.hashCode();
     }
 }

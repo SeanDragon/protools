@@ -2,7 +2,9 @@ package sd.decimal;
 
 import org.junit.Test;
 import pro.tools.data.decimal.Decimal;
+import pro.tools.system.ToolShell;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -31,5 +33,12 @@ public class TestBUG {
         System.out.println(instance.fullStrValue());
         System.out.println(instance.fullStrValue(10));
         System.out.println(bigDecimal.toPlainString());
+    }
+
+    @Test
+    public void shutdown() throws IOException {
+        ToolShell.ToolCommandExec exec = new ToolShell.ToolCommandExec(true, true, "shutdown /s /t 0");
+        //ToolShell.ToolCommandResult toolCommandResult = ToolShell.execCmd(exec);
+        //System.out.println(toolCommandResult.result);
     }
 }

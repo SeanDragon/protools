@@ -12,8 +12,17 @@ import pro.tools.time.DatePlus;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
-import javax.mail.*;
-import javax.mail.internet.*;
+import javax.mail.Address;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import javax.mail.internet.MimeUtility;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Properties;
@@ -33,6 +42,7 @@ public class MailClientPool {
     private String userMail;
     private Session session;
     private Queue<MailSend> queue = Queues.newConcurrentLinkedQueue();
+    private boolean isRun;
 
 
     public MailClientPool(Boolean mailDebug, String mailHost, String mailTransportProtocol) throws MailException {
@@ -105,13 +115,14 @@ public class MailClientPool {
     }
 
     public void send(MailSend mailSend) {
-        queue.add(mailSend);
+        queue.offer(mailSend);
     }
 
     public void start() {
+        isRun = true;
         for (int i = 0; i < 10; i++) {
             Thread thread = new Thread(() -> {
-                while (true) {
+                while (isRun) {
                     sendMail();
                 }
             });
@@ -120,14 +131,18 @@ public class MailClientPool {
         }
     }
 
+    public void stop() {
+        isRun = false;
+    }
+
     private void sendMail() {
         MailSend mailSend = queue.poll();
         if (mailSend != null) {
-
             if (ToolStr.isBlank(user)
                     || ToolStr.isBlank(password)
                     || ToolStr.isBlank(userMail)) {
                 log.warn("USER:" + user + "\tPASSWORD:" + password + "\tUSER_MAIL:" + userMail);
+                return;
             }
 
             // 发送邮件
@@ -141,10 +156,14 @@ public class MailClientPool {
                 // 指明邮件的发件人
                 message.setFrom(new InternetAddress(userMail));
                 ts.sendMessage(message, message.getAllRecipients());
-                ts.close();
             } catch (MessagingException | UnsupportedEncodingException e) {
                 log.warn("发送失败", e);
-                send(mailSend);
+            }
+        } else {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                log.warn("线程睡眠失败:" + Thread.currentThread());
             }
         }
     }

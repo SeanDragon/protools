@@ -61,7 +61,7 @@ public class Test_Send {
     @Test
     public void test2() throws MailException {
         MailSend mailSend = new MailSend();
-        mailSend.setToList(Lists.newArrayList("syl8023who@gmail.com"))
+        mailSend.setToList(Lists.newArrayList("995956062@qq.com"))
                 .setSubject("标题")
                 .setContent("内容")
         //.setAttachFiles(Lists.newArrayList("/Users/sd/Pictures/archive/background/starry-sky-1654074.jpg"))

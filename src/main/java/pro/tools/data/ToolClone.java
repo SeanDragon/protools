@@ -8,8 +8,13 @@ import com.rits.cloning.Cloner;
  * @author SeanDragon
  */
 public final class ToolClone {
+    private static final Cloner cloner = new Cloner();
+
     public static <T> T clone(T src) {
-        Cloner cloner = new Cloner();
         return cloner.deepClone(src);
+    }
+
+    public static Cloner getInstance() {
+        return cloner;
     }
 }

@@ -3,6 +3,10 @@ package pro.tools.http.jdk;
 import com.ning.http.client.AsyncHttpClient;
 import com.ning.http.client.ListenableFuture;
 import com.ning.http.client.Response;
+import io.netty.handler.codec.http.HttpHeaderNames;
+import io.netty.handler.codec.http.HttpHeaderValues;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pro.tools.format.ToolFormat;
 import pro.tools.http.pojo.HttpMethod;
 import pro.tools.http.pojo.HttpReceive;
@@ -10,6 +14,8 @@ import pro.tools.http.pojo.HttpSend;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.Map;
@@ -21,6 +27,7 @@ import java.util.concurrent.ExecutionException;
  * @author SeanDragon
  */
 public final class ToolHttp {
+    private static final Logger log = LoggerFactory.getLogger(ToolHttp.class);
     private static HttpBuilder builder = new HttpBuilder();
 
     private ToolHttp() {
@@ -63,11 +70,24 @@ public final class ToolHttp {
         httpReceive.setHaveError(true);
 
         String url = send.getUrl();
+        URI uri;
         try {
-            new URL(url);
-        } catch (MalformedURLException ignored) {
-            httpReceive.setErrMsg("不是一个有效的URL");
+            uri = new URL(url).toURI();
+        } catch (MalformedURLException | URISyntaxException e) {
+            httpReceive.setErrMsg("不是一个有效的URL")
+                    .setThrowable(e);
             return httpReceive;
+        }
+
+        String scheme = uri.getScheme();
+        String host = uri.getHost();
+        int port = uri.getPort();
+        if (port == -1) {
+            if ("http".equalsIgnoreCase(scheme)) {
+                port = 80;
+            } else if ("https".equalsIgnoreCase(scheme)) {
+                port = 443;
+            }
         }
 
         Map<String, Object> param = send.getParams();
@@ -108,7 +128,14 @@ public final class ToolHttp {
         }
 
         //设置基本请求头
-        requestBuilder.addHeader("Content-Type", "application/x-www-form-urlencoded;charset=" + charset.toString());
+        requestBuilder.addHeader(HttpHeaderNames.CONTENT_TYPE.toString(), HttpHeaderValues.APPLICATION_X_WWW_FORM_URLENCODED + ";charset" + charset.toString())
+                .addHeader(HttpHeaderNames.CONNECTION.toString(), HttpHeaderValues.KEEP_ALIVE.toString())
+                .addHeader(HttpHeaderNames.ACCEPT_ENCODING.toString(), HttpHeaderValues.GZIP_DEFLATE.toString())
+                .addHeader(HttpHeaderNames.USER_AGENT.toString(), "Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html）")
+                .addHeader(HttpHeaderNames.CACHE_CONTROL.toString(), "max-age=0")
+                .addHeader(HttpHeaderNames.HOST.toString(), host + ":" + port)
+                .addHeader("DNT", "1")
+        ;
 
         if (headers != null) {
             headers.forEach((key, value) -> requestBuilder.addHeader(key, value.toString()));
@@ -120,20 +147,26 @@ public final class ToolHttp {
 
         try {
             Response response = future.get();
-            httpReceive.setStatusCode(response.getStatusCode());
-            httpReceive.setStatusText(response.getStatusText());
-            httpReceive.setResponseBody(response.getResponseBody());
-
-            //将是否有错误信息设置为无
-            httpReceive.setHaveError(false);
-
+            httpReceive.setStatusCode(response.getStatusCode())
+                    .setStatusText(response.getStatusText())
+                    .setResponseBody(response.getResponseBody())
+                    .setHaveError(false)//将是否有错误信息设置为无
+            ;
         } catch (InterruptedException e) {
-            httpReceive.setErrMsg("http组件出现问题!\n" + ToolFormat.toException(e));
+            httpReceive.setErrMsg("http组件出现问题!")
+                    .setThrowable(e);
+            log.warn(ToolFormat.toException(e), e);
         } catch (IOException e) {
-            httpReceive.setErrMsg("获取返回内容失败!\n" + ToolFormat.toException(e));
+            httpReceive.setErrMsg("获取返回内容失败!")
+                    .setThrowable(e);
+            log.warn(ToolFormat.toException(e), e);
         } catch (ExecutionException e) {
-            httpReceive.setErrMsg("访问URL失败!\n" + ToolFormat.toException(e));
+            httpReceive.setErrMsg("访问URL失败!")
+                    .setThrowable(e);
+            log.warn(ToolFormat.toException(e), e);
         }
+
+        httpReceive.setIsDone(true);
 
         return httpReceive;
     }

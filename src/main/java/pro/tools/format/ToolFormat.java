@@ -148,17 +148,17 @@ public final class ToolFormat {
     /**
      * 获取人性化的异常信息
      *
-     * @param e 异常
+     * @param throwable 异常
      * @return 信息
      */
-    public static String toException(Exception e) {
-        StackTraceElement[] stackTrace = e.getStackTrace();
+    public static String toException(Throwable throwable) {
+        StackTraceElement[] stackTrace = throwable.getStackTrace();
         StackTraceElement ste = (stackTrace != null && stackTrace.length > 0) ? stackTrace[0] : null;
         if (ste != null)
-            return String.format("%s - [%s] [%s.%s(%s)]", e.getMessage(), ste.getFileName(), ste.getClassName(), ste.getMethodName(), ste.getLineNumber());
+            return String.format("%s - [%s] [%s.%s(%s)]", throwable.getMessage(), ste.getFileName(), ste.getClassName(), ste.getMethodName(), ste.getLineNumber());
             //return String.ToolFormat("%s - [%s(%s)]", e.getMessage(), ste.getFileName(), ste.getLineNumber());
         else
-            return e.getMessage();
+            return throwable.getMessage();
     }
 
     /**

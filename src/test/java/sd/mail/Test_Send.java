@@ -68,6 +68,7 @@ public class Test_Send {
         ;
         mailClientPool.start();
         mailClientPool.send(mailSend);
+        Lists.newArrayList().toString();
         while (true) ;
     }
 

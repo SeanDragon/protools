@@ -7,12 +7,20 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.pool.ChannelPool;
 import io.netty.channel.pool.FixedChannelPool;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.http.*;
+import io.netty.handler.codec.http.DefaultFullHttpRequest;
+import io.netty.handler.codec.http.DefaultHttpHeaders;
+import io.netty.handler.codec.http.FullHttpRequest;
+import io.netty.handler.codec.http.HttpHeaderNames;
+import io.netty.handler.codec.http.HttpHeaderValues;
+import io.netty.handler.codec.http.HttpHeaders;
+import io.netty.handler.codec.http.HttpVersion;
+import io.netty.handler.codec.http.QueryStringEncoder;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pro.tools.data.text.ToolJson;
 import pro.tools.http.netty.exception.HttpException;
 import pro.tools.http.netty.handler.HttpClientChannelPoolHandler;
 import pro.tools.http.netty.handler.HttpClientHandler;
@@ -24,13 +32,14 @@ import pro.tools.http.pojo.HttpSend;
 import javax.net.ssl.SSLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.AbstractCollection;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
  * @author SeanDragon
- *         <p>
- *         Create By 2017-07-21 10:02
+ * <p>
+ * Create By 2017-07-21 10:02
  */
 public class DefaultClientPool {
     private static final Logger log = LoggerFactory.getLogger(DefaultClientPool.class);
@@ -184,7 +193,14 @@ public class DefaultClientPool {
 
         if (params != null) {
             params.forEach((key, value) -> {
-                queryStringEncoder.addParam(key, value.toString());
+                if (value instanceof AbstractCollection
+                        || value instanceof Map
+                        || value instanceof Number
+                        || value instanceof String) {
+                    queryStringEncoder.addParam(key, value.toString());
+                } else {
+                    queryStringEncoder.addParam(key, ToolJson.anyToJson(value));
+                }
             });
         }
 

@@ -18,10 +18,9 @@ public class Decimal extends Number {
 
     //region 全局变量
     private BigDecimal bigDecimal;
-    private static MathContext defaultMathContext = MathContext.UNLIMITED;
+    private static MathContext defaultMathContext = new MathContext(0, RoundingMode.HALF_EVEN);
     private final MathContext mathContext;
     //endregion
-
 
     /**
      * region初始化模块
@@ -268,7 +267,7 @@ public class Decimal extends Number {
      * @return
      */
     public String moneyStrValue() {
-        return fullStrValue(2, RoundingMode.HALF_EVEN);
+        return fullStrValue(2, this.mathContext.getRoundingMode());
     }
 
     /**
@@ -277,7 +276,7 @@ public class Decimal extends Number {
      * @return
      */
     public double moneyValue() {
-        return doubleValue(2, RoundingMode.HALF_EVEN);
+        return doubleValue(2, this.mathContext.getRoundingMode());
     }
 
     @Override

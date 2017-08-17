@@ -9,6 +9,7 @@ import io.netty.handler.codec.http.HttpObject;
 import io.netty.handler.codec.http.HttpUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pro.tools.format.ToolFormat;
 import pro.tools.http.pojo.HttpReceive;
 import pro.tools.http.pojo.HttpSend;
 
@@ -63,8 +64,11 @@ public class HttpClientHandler extends SimpleChannelInboundHandler<HttpObject> {
             DecoderResult decoderResult = response.decoderResult();
             if (decoderResult.isFailure()) {
                 httpReceive.setHaveError(true)
-                        .setErrMsg(decoderResult.cause().toString())
+                        .setErrMsg(ToolFormat.toException(decoderResult.cause()))
                         .setThrowable(decoderResult.cause());
+            } else if (response.status().code() != 200) {
+                httpReceive.setHaveError(true)
+                        .setErrMsg("本次请求响应码不是200");
             }
 
             httpReceive.setIsDone(true);

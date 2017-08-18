@@ -6,10 +6,18 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>pro.tools</groupId>
-    <artifactId>protools</artifactId>
+    <artifactId>parent</artifactId>
     <version>2.0</version>
+    <modules>
+        <module>constant</module>
+        <module>common</module>
+        <module>mail</module>
+        <module>http</module>
+        <module>security</module>
+        <module>protools</module>
+    </modules>
 
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
     <organization>
         <url>http://www.tuhaolicai.cc/</url>
@@ -67,109 +75,5 @@
             </plugin>
         </plugins>
     </build>
-
-    <dependencies>
-        <!--单元测试用-->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!--工具-->
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>21.0</version>
-        </dependency>
-        <!--json-->
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.8.0</version>
-        </dependency>
-
-        <!--http-->
-        <dependency>
-            <groupId>io.netty</groupId>
-            <artifactId>netty-all</artifactId>
-            <version>4.1.12.Final</version>
-        </dependency>
-        <dependency>
-            <groupId>com.ning</groupId>
-            <artifactId>async-http-client</artifactId>
-            <version>1.9.40</version>
-        </dependency>
-
-        <!--security-->
-        <dependency>
-            <groupId>org.bouncycastle</groupId>
-            <artifactId>bcprov-jdk15on</artifactId>
-            <version>1.55</version>
-        </dependency>
-        <dependency>
-            <groupId>org.bouncycastle</groupId>
-            <artifactId>bcprov-ext-jdk15on</artifactId>
-            <version>1.55</version>
-        </dependency>
-
-        <!--拼音-->
-        <dependency>
-            <groupId>com.belerweb</groupId>
-            <artifactId>pinyin4j</artifactId>
-            <version>2.5.1</version>
-        </dependency>
-
-        <!--javaMail-->
-        <dependency>
-            <groupId>com.sun.mail</groupId>
-            <artifactId>javax.mail</artifactId>
-            <version>1.6.0-rc1</version>
-        </dependency>
-
-        <!--barCode-->
-        <dependency>
-            <groupId>com.google.zxing</groupId>
-            <artifactId>javase</artifactId>
-            <version>3.3.0</version>
-        </dependency>
-
-        <!--rar-->
-        <dependency>
-            <groupId>com.github.junrar</groupId>
-            <artifactId>junrar</artifactId>
-            <version>0.7</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>maven-scm-api</artifactId>
-                    <groupId>org.apache.maven.scm</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>maven-scm-provider-svn-commons</artifactId>
-                    <groupId>org.apache.maven.scm</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>maven-scm-provider-svnexe</artifactId>
-                    <groupId>org.apache.maven.scm</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <!--clone-->
-        <dependency>
-            <groupId>uk.com.robust-it</groupId>
-            <artifactId>cloning</artifactId>
-            <version>1.9.3</version>
-        </dependency>
-
-        <!--serialize-->
-        <dependency>
-            <groupId>de.ruedigermoeller</groupId>
-            <artifactId>fst</artifactId>
-            <version>2.29</version>
-        </dependency>
-
-    </dependencies>
 
 </project>

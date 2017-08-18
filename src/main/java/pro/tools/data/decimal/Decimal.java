@@ -65,7 +65,7 @@ public class Decimal extends Number {
     private void init(Object initValue) {
         if (initValue instanceof Decimal) {
             Decimal value = (Decimal) initValue;
-            bigDecimal = value.getBigDecimal();
+            bigDecimal = ToolClone.clone(value.getBigDecimal());
         } else if (initValue instanceof BigDecimal) {
             bigDecimal = ToolClone.clone((BigDecimal) initValue);
         } else if (initValue instanceof BigInteger) {

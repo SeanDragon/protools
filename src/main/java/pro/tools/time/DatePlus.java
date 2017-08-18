@@ -1,14 +1,17 @@
 package pro.tools.time;
 
-import java.time.*;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
 
 /**
- * Created on 17/4/8 19:27 星期六.
- * 替代时间类的类
+ * Created on 17/4/8 19:27 星期六. 替代时间类的类
  *
  * @author SeanDragon
  */
@@ -24,7 +27,7 @@ public class DatePlus {
     }
 
     public DatePlus(LocalDateTime localDateTime) {
-        this.localDateTime = localDateTime;
+        this.localDateTime = LocalDateTime.of(localDateTime.toLocalDate(), localDateTime.toLocalTime());
     }
 
     public DatePlus(int year, int month, int dayOfMonth) {
@@ -381,8 +384,7 @@ public class DatePlus {
     }
 
     /**
-     * 天干地支
-     * 可换成枚举
+     * 天干地支 可换成枚举
      *
      * @return 天干地支名称
      */

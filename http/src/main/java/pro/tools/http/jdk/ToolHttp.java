@@ -65,7 +65,18 @@ public final class ToolHttp {
      * @return 响应的信息
      */
     public static HttpReceive sendHttp(HttpSend send) {
+        return sendHttp(send, builder);
+    }
 
+    /**
+     * 用于请求http
+     *
+     * @param send
+     *         里面包含请求的信息
+     *
+     * @return 响应的信息
+     */
+    public static HttpReceive sendHttp(HttpSend send, HttpBuilder httpBuilder) {
         HttpReceive httpReceive = new HttpReceive();
         httpReceive.setHaveError(true);
 
@@ -95,7 +106,7 @@ public final class ToolHttp {
         HttpMethod method = send.getMethod();
         Charset charset = send.getCharset();
 
-        AsyncHttpClient asyncHttpClient = builder.buildDefaultClient();
+        AsyncHttpClient asyncHttpClient = httpBuilder.buildDefaultClient();
 
         AsyncHttpClient.BoundRequestBuilder requestBuilder;
 

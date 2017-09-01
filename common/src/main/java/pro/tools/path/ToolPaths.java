@@ -31,9 +31,9 @@ import java.util.stream.Stream;
  * <p>
  * Create By 2017-09-01 11:16
  */
-public final class ToolPath {
+public final class ToolPaths {
 
-    private static final Logger log = LoggerFactory.getLogger(ToolPath.class);
+    private static final Logger log = LoggerFactory.getLogger(ToolPaths.class);
 
     public static Path getPath(String first, String... more) {
         if (ToolStr.isBlank(first)) {

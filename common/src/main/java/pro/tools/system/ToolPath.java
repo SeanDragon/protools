@@ -3,10 +3,10 @@ package pro.tools.system;
 import java.io.File;
 
 /**
- * new File("..\ToolPath\abc.txt") 中的三个方法获取路径的方法 <br>
- * 1： getPath() 获取相对路径，例如 ..\ToolPath\abc.txt <br>
- * 2： getAbslutlyPath() 获取绝对路径，但可能包含 ".." 或 "." 字符，例如D:\otherPath\..\ToolPath\abc.txt <br>
- * 3： getCanonicalPath() 获取绝对路径，但不包含 ".." 或 "." 字符，例如 D:\ToolPath\abc.txt
+ * new File("..\ToolPaths\abc.txt") 中的三个方法获取路径的方法 <br>
+ * 1： getPath() 获取相对路径，例如 ..\ToolPaths\abc.txt <br>
+ * 2： getAbslutlyPath() 获取绝对路径，但可能包含 ".." 或 "." 字符，例如D:\otherPath\..\ToolPaths\abc.txt <br>
+ * 3： getCanonicalPath() 获取绝对路径，但不包含 ".." 或 "." 字符，例如 D:\ToolPaths\abc.txt
  */
 public final class ToolPath {
 

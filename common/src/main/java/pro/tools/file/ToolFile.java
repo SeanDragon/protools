@@ -1094,7 +1094,6 @@ public final class ToolFile {
         int p = 0;
 
         try (InputStream is = new BufferedInputStream(new FileInputStream(file))) {
-
             p = (is.read() << 8) + is.read();
         }
         switch (p) {

@@ -155,7 +155,7 @@ public enum FileType {
      */
     MID("4D546864");
 
-    private String value = "";
+    private String value;
 
 
     /**

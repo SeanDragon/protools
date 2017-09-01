@@ -34,6 +34,76 @@ public final class ToolStr {
         return (s == null || s.trim().length() == 0);
     }
 
+
+    /**
+     * 字符串为 null 或者内部字符全部为 ' ' '\t' '\n' '\r' 这四类字符时返回 true
+     */
+    public static boolean isBlank(String str) {
+        if (str == null) {
+            return true;
+        }
+        int len = str.length();
+        if (len == 0) {
+            return true;
+        }
+        for (int i = 0; i < len; i++) {
+            switch (str.charAt(i)) {
+                case ' ':
+                case '\t':
+                case '\n':
+                case '\r':
+                    //case '\b':
+                    //case '\f':
+                    break;
+                default:
+                    return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 判断字符串不为空返回true
+     * @param str
+     * @return
+     */
+    public static boolean notBlank(String str) {
+        return !isBlank(str);
+    }
+
+    /**
+     * 判断多个字符串不为空字符串返回true
+     * @param strings
+     * @return
+     */
+    public static boolean notBlank(String... strings) {
+        if (strings == null) {
+            return false;
+        }
+        for (String str : strings) {
+            if (isBlank(str)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 判断多个Object对象不为null，则返回true
+     * @param paras
+     * @return
+     */
+    public static boolean notNull(Object... paras) {
+        if (paras == null) {
+            return false;
+        }
+        for (Object obj : paras) {
+            if (obj == null) {
+                return false;
+            }
+        }
+        return true;
+    }
     /**
      * 判断两字符串是否相等
      *
@@ -197,76 +267,6 @@ public final class ToolStr {
             return new String(arr);
         }
         return str;
-    }
-
-    /**
-     * 字符串为 null 或者内部字符全部为 ' ' '\t' '\n' '\r' 这四类字符时返回 true
-     */
-    public static boolean isBlank(String str) {
-        if (str == null) {
-            return true;
-        }
-        int len = str.length();
-        if (len == 0) {
-            return true;
-        }
-        for (int i = 0; i < len; i++) {
-            switch (str.charAt(i)) {
-                case ' ':
-                case '\t':
-                case '\n':
-                case '\r':
-                    //case '\b':
-                    //case '\f':
-                    break;
-                default:
-                    return false;
-            }
-        }
-        return true;
-    }
-
-    /**
-     * 判断字符串不为空返回true
-     * @param str
-     * @return
-     */
-    public static boolean notBlank(String str) {
-        return !isBlank(str);
-    }
-
-    /**
-     * 判断多个字符串不为空字符串返回true
-     * @param strings
-     * @return
-     */
-    public static boolean notBlank(String... strings) {
-        if (strings == null) {
-            return false;
-        }
-        for (String str : strings) {
-            if (isBlank(str)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
-     * 判断多个Object对象不为null，则返回true
-     * @param paras
-     * @return
-     */
-    public static boolean notNull(Object... paras) {
-        if (paras == null) {
-            return false;
-        }
-        for (Object obj : paras) {
-            if (obj == null) {
-                return false;
-            }
-        }
-        return true;
     }
 
     /**

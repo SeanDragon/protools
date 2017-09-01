@@ -18,6 +18,13 @@
             <version>1.7.24</version>
         </dependency>
 
+        <!--util-->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>21.0</version>
+        </dependency>
+
         <!--json-->
         <dependency>
             <groupId>com.google.code.gson</groupId>

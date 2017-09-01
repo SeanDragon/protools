@@ -1,26 +1,14 @@
 package pro.tools.path;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import pro.tools.constant.StrConst;
 import pro.tools.data.text.ToolStr;
 import pro.tools.file.FileType;
 import pro.tools.file.ToolFileType;
 import pro.tools.path.visit.RmrVisitor;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.URI;
-import java.nio.file.FileVisitOption;
-import java.nio.file.FileVisitor;
-import java.nio.file.Files;
-import java.nio.file.OpenOption;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
+import java.nio.file.*;
 import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
@@ -31,9 +19,7 @@ import java.util.stream.Stream;
  * <p>
  * Create By 2017-09-01 11:16
  */
-public final class ToolPaths {
-
-    private static final Logger log = LoggerFactory.getLogger(ToolPaths.class);
+public final class ToolPath {
 
     public static Path getPath(String first, String... more) {
         if (ToolStr.isBlank(first)) {

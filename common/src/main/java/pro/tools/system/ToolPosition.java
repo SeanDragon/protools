@@ -8,7 +8,7 @@ import java.io.File;
  * 2： getAbslutlyPath() 获取绝对路径，但可能包含 ".." 或 "." 字符，例如D:\otherPath\..\ToolPaths\abc.txt <br>
  * 3： getCanonicalPath() 获取绝对路径，但不包含 ".." 或 "." 字符，例如 D:\ToolPaths\abc.txt
  */
-public final class ToolPath {
+public final class ToolPosition {
 
     private static String webRootPath;
     private static String rootClassPath;
@@ -27,10 +27,10 @@ public final class ToolPath {
     public static String getRootClassPath() {
         if (rootClassPath == null) {
             try {
-                String path = ToolPath.class.getClassLoader().getResource("").toURI().getPath();
+                String path = ToolPosition.class.getClassLoader().getResource("").toURI().getPath();
                 rootClassPath = new File(path).getAbsolutePath();
             } catch (Exception e) {
-                String path = ToolPath.class.getClassLoader().getResource("").getPath();
+                String path = ToolPosition.class.getClassLoader().getResource("").getPath();
                 rootClassPath = new File(path).getAbsolutePath();
             }
         }
@@ -54,7 +54,7 @@ public final class ToolPath {
 
     private static String detectWebRootPath() {
         try {
-            String path = ToolPath.class.getResource("/").toURI().getPath();
+            String path = ToolPosition.class.getResource("/").toURI().getPath();
             return new File(path).getParentFile().getParentFile().getCanonicalPath();
         } catch (Exception e) {
             throw new RuntimeException(e);

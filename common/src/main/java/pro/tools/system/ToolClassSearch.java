@@ -23,7 +23,7 @@ public final class ToolClassSearch {
     }
 
     public static void init() {
-        String file = ToolPath.getRootClassPath();
+        String file = ToolPosition.getRootClassPath();
 
         File classFile = new File(file);
 

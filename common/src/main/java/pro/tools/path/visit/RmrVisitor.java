@@ -28,9 +28,9 @@ public class RmrVisitor implements FileVisitor<Path> {
 
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-        boolean success = rm(file);
+        boolean result = rm(file);
 
-        log.debug("删除文件:\t" + file + ",执行结果:\t" + success);
+        log.debug("删除文件:\t" + file + ",执行结果:\t" + result);
 
         return FileVisitResult.CONTINUE;
     }

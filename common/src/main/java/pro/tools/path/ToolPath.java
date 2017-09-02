@@ -8,6 +8,8 @@ import pro.tools.path.visit.RmrVisitor;
 
 import java.io.*;
 import java.net.URI;
+import java.net.URL;
+import java.net.URLConnection;
 import java.nio.file.*;
 import java.util.EnumSet;
 import java.util.Iterator;
@@ -78,8 +80,13 @@ public final class ToolPath {
     public static String getContentType(String path) throws IOException {
         return getContentType(getPath(path));
     }
+
     public static String getContentType(Path path) throws IOException {
-        return Files.probeContentType(path);
+        String type;
+        URL u = path.toUri().toURL();
+        URLConnection uc = u.openConnection();
+        type = uc.getContentType();
+        return type;
     }
 
     public static FileType getFileType(String path) throws IOException {
@@ -93,6 +100,7 @@ public final class ToolPath {
     public static long getFileLines(String path) throws IOException {
         return getFileLines(getPath(path));
     }
+
     public static long getFileLines(Path path) throws IOException {
         return Files.size(path);
     }
@@ -193,12 +201,10 @@ public final class ToolPath {
     }
 
     public static void rmr(Path path) throws IOException {
-        EnumSet<FileVisitOption> opts = EnumSet.of(FileVisitOption.FOLLOW_LINKS);
         Files.walkFileTree(path, opts, Integer.MAX_VALUE, RmrVisitor.instance);
     }
 
     public static void visitDir(Path dir, FileVisitor<Path> fileVisitor) throws IOException {
-        EnumSet<FileVisitOption> opts = EnumSet.of(FileVisitOption.FOLLOW_LINKS);
         Files.walkFileTree(dir, opts, Integer.MAX_VALUE, fileVisitor);
     }
 
@@ -298,6 +304,12 @@ public final class ToolPath {
 
     //region 文件元数据的修改
     //endregion
+
+    static {
+        opts = EnumSet.of(FileVisitOption.FOLLOW_LINKS);
+    }
+
+    public static final EnumSet<FileVisitOption> opts;
 
     public static final OpenOption[] read = new StandardOpenOption[]{StandardOpenOption.READ};
     public static final OpenOption[] write_create = new StandardOpenOption[]{StandardOpenOption.WRITE, StandardOpenOption.CREATE};

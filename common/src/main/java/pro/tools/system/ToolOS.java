@@ -37,7 +37,7 @@ public final class ToolOS {
     public static final String os_name = getOsSystemProperty("os.name"); // 操作系统的名称
     public static final String os_arch = getOsSystemProperty("os.arch"); // 操作系统的构架
     public static final String os_version = getOsSystemProperty("os.version"); // 操作系统的版本
-    public static final String file_separator = getOsSystemProperty("file.separator"); // 文件分隔符
+    public static final String file_separator = getOsSystemProperty("java.file.separator"); // 文件分隔符
     public static final String path_separator = getOsSystemProperty("path.separator"); // 路径分隔符
     public static final String line_separator = getOsSystemProperty("line.separator"); // 行分隔符
     public static final String user_name = getOsSystemProperty("user.name"); // 用户的账户名称

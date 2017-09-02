@@ -90,7 +90,6 @@ public final class ToolRandoms {
 
     /**
      * 获取原生UUID对象
-     *
      */
     public static UUID getUuid() {
         return UUID.randomUUID();
@@ -147,13 +146,14 @@ public final class ToolRandoms {
      */
     public static String getRandomStr() {
         String sum = ToolRandoms.getUuid(false);
-        StringTokenizer stringTokenizer = new StringTokenizer(sum, "-");
         StringBuilder result = new StringBuilder();
-        while (stringTokenizer.hasMoreElements()) {
-            String one = (String) stringTokenizer.nextElement();
-            Long one_long = Long.parseLong(one, 16);
+
+        StringTokenizer stringTokenizer = new StringTokenizer(sum, "-");
+        while (stringTokenizer.hasMoreTokens()) {
+            Long one_long = Long.parseLong(stringTokenizer.nextToken(), 16);
             result.append(ToolRandoms.toUnsignedString(one_long, 6));
         }
+
         return result.toString();
     }
 

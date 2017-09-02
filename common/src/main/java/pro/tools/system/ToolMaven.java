@@ -14,7 +14,7 @@ public final class ToolMaven {
     }
 
     public static boolean install(String groupId, String artifactId, String version, String fileName) throws IOException {
-        String mvnInstallStr = "mvn install:install-file -DgroupId=" + groupId + " -DartifactId=" + artifactId + " " +
+        String mvnInstallStr = "mvn install:install-java.file -DgroupId=" + groupId + " -DartifactId=" + artifactId + " " +
                 "-Dversion=" + version + " -Dfile=" + fileName + " -Dpackaging=jar -DgeneratePom=true";
         ToolShell.ToolCommandExec toolCommandExec = new ToolShell.ToolCommandExec(true, false, mvnInstallStr);
         ToolShell.ToolCommandResult toolCommandResult = ToolShell.execCmd(toolCommandExec);

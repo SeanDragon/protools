@@ -7,27 +7,18 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.pool.ChannelPool;
 import io.netty.channel.pool.FixedChannelPool;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.http.DefaultFullHttpRequest;
-import io.netty.handler.codec.http.DefaultHttpHeaders;
-import io.netty.handler.codec.http.FullHttpRequest;
-import io.netty.handler.codec.http.HttpHeaderNames;
-import io.netty.handler.codec.http.HttpHeaderValues;
-import io.netty.handler.codec.http.HttpHeaders;
-import io.netty.handler.codec.http.HttpVersion;
-import io.netty.handler.codec.http.QueryStringEncoder;
+import io.netty.handler.codec.http.*;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pro.tools.data.text.ToolJson;
-import pro.tools.http.netty.exception.HttpException;
 import pro.tools.http.netty.handler.HttpClientChannelPoolHandler;
 import pro.tools.http.netty.handler.HttpClientHandler;
 import pro.tools.http.netty.handler.HttpClientInitializer;
+import pro.tools.http.pojo.*;
 import pro.tools.http.pojo.HttpMethod;
-import pro.tools.http.pojo.HttpReceive;
-import pro.tools.http.pojo.HttpSend;
 
 import javax.net.ssl.SSLException;
 import java.net.URI;
@@ -144,13 +135,7 @@ public class DefaultClientPool {
     static {
         defaultHttpHeaders = new DefaultHttpHeaders();
 
-        //region DEFAULT
-        defaultHttpHeaders.set(HttpHeaderNames.CONNECTION, HttpHeaderValues.KEEP_ALIVE);
-        defaultHttpHeaders.set(HttpHeaderNames.ACCEPT_ENCODING, HttpHeaderValues.GZIP_DEFLATE);
-        defaultHttpHeaders.set(HttpHeaderNames.USER_AGENT, "Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html）");
-        defaultHttpHeaders.set("DNT", 1);
-        defaultHttpHeaders.set(HttpHeaderNames.CACHE_CONTROL, "max-age=0");
-        //endregion
+        HttpDefaultHeaders.getDefaultHeaders().forEach(defaultHttpHeaders::set);
     }
 
     public void stop() {

@@ -1,8 +1,10 @@
 package pro.tools.http.pojo;
 
 import com.google.common.base.MoreObjects;
+import io.netty.handler.codec.http.multipart.HttpPostRequestEncoder;
 import pro.tools.constant.StrConst;
 
+import javax.crypto.spec.OAEPParameterSpec;
 import java.nio.charset.Charset;
 import java.util.Map;
 
@@ -34,6 +36,18 @@ public class HttpSend implements java.io.Serializable {
         this.url = url;
         this.params = params;
         this.method = method;
+    }
+
+    public static HttpSend of(String url) {
+        return new HttpSend(url);
+    }
+
+    public static HttpSend of(String url, Map<String, Object> params) {
+        return new HttpSend(url, params);
+    }
+
+    public static HttpSend of(String url, Map<String, Object> params, HttpMethod method) {
+        return new HttpSend(url, params, method);
     }
 
     /**

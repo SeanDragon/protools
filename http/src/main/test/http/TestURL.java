@@ -2,6 +2,7 @@ package http;
 
 import org.junit.Test;
 import pro.tools.http.okhttp.ToolSendHttp;
+import pro.tools.http.pojo.HttpReceive;
 import pro.tools.http.pojo.HttpSend;
 
 /**
@@ -12,7 +13,10 @@ import pro.tools.http.pojo.HttpSend;
 public class TestURL {
     @Test
     public void test1() {
-        HttpSend httpSend = new HttpSend("https://baidu.com");
-        ToolSendHttp.get(httpSend);
+        String url = "https://baidu.com";
+        url = "http://192.168.15.100:92/getService";
+        HttpSend httpSend = new HttpSend(url);
+        HttpReceive send = ToolSendHttp.send(httpSend);
+        System.out.println(send);
     }
 }

@@ -48,6 +48,7 @@ public class DefaultClientPool {
         } catch (URISyntaxException | SSLException e) {
             throw new HttpException(e);
         }
+        Runtime.getRuntime().addShutdownHook(new Thread(DefaultClientPool::stopAll));
     }
 
     public static void stopAll() {

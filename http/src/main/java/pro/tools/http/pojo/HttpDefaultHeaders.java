@@ -20,7 +20,8 @@ public class HttpDefaultHeaders {
     private static void init() {
         defaultHeaders.put("connection", "keep-alive");
         defaultHeaders.put("accept-encoding", "gzip,deflate");
-        defaultHeaders.put("user-agent", "Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)");
+        // defaultHeaders.put("user-agent", "Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)");
+        defaultHeaders.put("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3191.0 Safari/537.36");
         defaultHeaders.put("DNT", 1);
         defaultHeaders.put("cache-control", "max-age=0");
     }

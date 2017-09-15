@@ -10,6 +10,7 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pro.tools.constant.StrConst;
 import pro.tools.data.text.ToolJson;
 import pro.tools.format.ToolFormat;
 import pro.tools.http.pojo.HttpException;
@@ -17,6 +18,8 @@ import pro.tools.http.pojo.HttpMethod;
 import pro.tools.http.pojo.HttpReceive;
 import pro.tools.http.pojo.HttpSend;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.AbstractCollection;
 import java.util.Map;
 import java.util.Set;
@@ -94,14 +97,20 @@ public class ToolSendHttp {
 
         if (params != null) {
             params.forEach((key, value) -> {
+                String v;
                 if (value instanceof AbstractCollection
                         || value instanceof Map
                         || value instanceof Number
                         || value instanceof String) {
-                    requestBodyBuilder.add(key, value.toString());
+                    try {
+                        v = URLDecoder.decode(value.toString(), StrConst.DEFAULT_CHARSET_NAME);
+                    } catch (UnsupportedEncodingException e) {
+                        throw new RuntimeException(e);
+                    }
                 } else {
-                    requestBodyBuilder.add(key, ToolJson.anyToJson(value));
+                    v = ToolJson.anyToJson(value);
                 }
+                requestBodyBuilder.add(key, v);
             });
         }
 

@@ -31,11 +31,11 @@ public class ToolSendHttp {
     private static final Logger log = LoggerFactory.getLogger(ToolSendHttp.class);
 
     public static HttpReceive get(String url) {
-        return send(HttpSend.of(url));
+        return send(HttpSend.of(url).setMethod(HttpMethod.GET));
     }
 
     public static HttpReceive post(String url, Map<String, Object> params) {
-        return send(HttpSend.of(url, params));
+        return send(HttpSend.of(url, params).setMethod(HttpMethod.POST));
     }
 
     public static HttpReceive send(HttpSend httpSend) {

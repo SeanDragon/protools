@@ -6,11 +6,21 @@ import pro.tools.file.FileType;
 import pro.tools.file.ToolFileType;
 import pro.tools.path.visit.RmrVisitor;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.file.*;
+import java.nio.file.FileVisitOption;
+import java.nio.file.FileVisitor;
+import java.nio.file.Files;
+import java.nio.file.OpenOption;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
@@ -200,13 +210,8 @@ public final class ToolPath {
         rmr(getPath(path));
     }
 
-    public static void rmr(Path path) throws IOException {
-        Files.walkFileTree(path, opts, Integer.MAX_VALUE, RmrVisitor.instance);
-    }
-
-    public static void visitDir(Path dir, FileVisitor<Path> fileVisitor) throws IOException {
-        Files.walkFileTree(dir, opts, Integer.MAX_VALUE, fileVisitor);
-    }
+    public static final EnumSet<FileVisitOption> OPTS;
+    public static final OpenOption[] READ = new StandardOpenOption[]{StandardOpenOption.READ};
 
     public static Iterator<Path> dirIterator(String dir) {
         return dirIterator(getPath(dir));
@@ -227,33 +232,15 @@ public final class ToolPath {
     //endregion
 
     //region 文件数据
+    public static final OpenOption[] WRITE_CREATE = new StandardOpenOption[]{StandardOpenOption.WRITE, StandardOpenOption.CREATE};
+    public static final OpenOption[] WRITE_CREATE_APPEND = new StandardOpenOption[]{StandardOpenOption.WRITE, StandardOpenOption.CREATE, StandardOpenOption.APPEND};
 
-    public static Path writeStrings(Path path, List<String> stringList, boolean append) throws IOException {
-        validWrite(path);
-
-        OpenOption[] options = append ? write_create_append : write_create;
-        return Files.write(path, stringList, StrConst.DEFAULT_CHARSET, options);
+    static {
+        OPTS = EnumSet.of(FileVisitOption.FOLLOW_LINKS);
     }
 
-    public static Path writeBytes(Path path, byte[] bytes, boolean append) throws IOException {
-        validWrite(path);
-
-        OpenOption[] options = append ? write_create_append : write_create;
-        return Files.write(path, bytes, options);
-    }
-
-    public static BufferedWriter writeWriter(Path path, boolean append) throws IOException {
-        validWrite(path);
-
-        OpenOption[] options = append ? write_create_append : write_create;
-        return Files.newBufferedWriter(path, options);
-    }
-
-    public static OutputStream writeOutputStream(Path path, boolean append) throws IOException {
-        validWrite(path);
-
-        OpenOption[] options = append ? write_create_append : write_create;
-        return Files.newOutputStream(path, options);
+    public static void rmr(Path path) throws IOException {
+        Files.walkFileTree(path, OPTS, Integer.MAX_VALUE, RmrVisitor.INSTANCE);
     }
 
     public static Stream<String> readStream(Path path) throws IOException {
@@ -280,10 +267,8 @@ public final class ToolPath {
         return Files.newBufferedReader(path);
     }
 
-    public static InputStream readInputStream(Path path) throws IOException {
-        validRead(path);
-
-        return Files.newInputStream(path, read);
+    public static void visitDir(Path dir, FileVisitor<Path> fileVisitor) throws IOException {
+        Files.walkFileTree(dir, OPTS, Integer.MAX_VALUE, fileVisitor);
     }
 
     private static void validRead(Path path) throws IOException {
@@ -305,13 +290,37 @@ public final class ToolPath {
     //region 文件元数据的修改
     //endregion
 
-    static {
-        opts = EnumSet.of(FileVisitOption.FOLLOW_LINKS);
+    public static Path writeStrings(Path path, List<String> stringList, boolean append) throws IOException {
+        validWrite(path);
+
+        OpenOption[] options = append ? WRITE_CREATE_APPEND : WRITE_CREATE;
+        return Files.write(path, stringList, StrConst.DEFAULT_CHARSET, options);
     }
 
-    public static final EnumSet<FileVisitOption> opts;
+    public static Path writeBytes(Path path, byte[] bytes, boolean append) throws IOException {
+        validWrite(path);
 
-    public static final OpenOption[] read = new StandardOpenOption[]{StandardOpenOption.READ};
-    public static final OpenOption[] write_create = new StandardOpenOption[]{StandardOpenOption.WRITE, StandardOpenOption.CREATE};
-    public static final OpenOption[] write_create_append = new StandardOpenOption[]{StandardOpenOption.WRITE, StandardOpenOption.CREATE, StandardOpenOption.APPEND};
+        OpenOption[] options = append ? WRITE_CREATE_APPEND : WRITE_CREATE;
+        return Files.write(path, bytes, options);
+    }
+
+    public static BufferedWriter writeWriter(Path path, boolean append) throws IOException {
+        validWrite(path);
+
+        OpenOption[] options = append ? WRITE_CREATE_APPEND : WRITE_CREATE;
+        return Files.newBufferedWriter(path, options);
+    }
+
+    public static OutputStream writeOutputStream(Path path, boolean append) throws IOException {
+        validWrite(path);
+
+        OpenOption[] options = append ? WRITE_CREATE_APPEND : WRITE_CREATE;
+        return Files.newOutputStream(path, options);
+    }
+
+    public static InputStream readInputStream(Path path) throws IOException {
+        validRead(path);
+
+        return Files.newInputStream(path, READ);
+    }
 }

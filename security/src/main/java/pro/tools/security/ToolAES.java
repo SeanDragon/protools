@@ -24,7 +24,7 @@ import java.security.NoSuchAlgorithmException;
  * 对于java.security.InvalidKeyException: Illegal key size or default
  * parameters异常， 去掉这种限制需要下载Java Cryptography Extension (JCE) Unlimited Strength
  * Jurisdiction Policy Files， 下载包的readme.txt
- * 有安装说明。就是替换${java_home}/jre/lib/security/
+ * 有安装说明。就是替换${JAVA_HOME}/jre/lib/security/
  * 下面的local_policy.jar和US_export_policy.jar
  */
 public final class ToolAES {

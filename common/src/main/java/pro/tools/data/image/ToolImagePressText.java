@@ -21,14 +21,16 @@ public final class ToolImagePressText {
     /**
      * 把图片印刷到图片上
      *
-     * @param pressImg  -- 水印文件
-     * @param targetImg -- 目标文件
+     * @param pressImg
+     *         -- 水印文件
+     * @param targetImg
+     *         -- 目标文件
      * @param x
      * @param y
      */
     public static void pressImage(String pressImg, String targetImg, int x, int y) throws IOException {
-        File _file = new File(targetImg);
-        Image src = ImageIO.read(_file);
+        File targetImgFile = new File(targetImg);
+        Image src = ImageIO.read(targetImgFile);
         int width = src.getWidth(null);
         int height = src.getHeight(null);
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
@@ -53,19 +55,26 @@ public final class ToolImagePressText {
     /**
      * 打印文字水印图片，右下角计算坐标
      *
-     * @param pressText --文字
-     * @param targetImg -- 目标图片
-     * @param fontName  -- 字体名
-     * @param fontStyle -- 字体样式
-     * @param color     -- 字体颜色
-     * @param fontSize  -- 字体大小
-     * @param x         -- 偏移量
+     * @param pressText
+     *         --文字
+     * @param targetImg
+     *         -- 目标图片
+     * @param fontName
+     *         -- 字体名
+     * @param fontStyle
+     *         -- 字体样式
+     * @param color
+     *         -- 字体颜色
+     * @param fontSize
+     *         -- 字体大小
+     * @param x
+     *         -- 偏移量
      * @param y
      */
     public static void pressText(String pressText, String targetImg,
                                  String fontName, int fontStyle, Color color, int fontSize, int x, int y) throws IOException {
-        File _file = new File(targetImg);
-        Image src = ImageIO.read(_file);
+        File targetImgFile = new File(targetImg);
+        Image src = ImageIO.read(targetImgFile);
         int width = src.getWidth(null);
         int height = src.getHeight(null);
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
@@ -75,12 +84,8 @@ public final class ToolImagePressText {
         g.setFont(new Font(fontName, fontStyle, fontSize));
         g.drawString(pressText, width - fontSize - x, height - fontSize / 2 - y);
         g.dispose();
-        //try (FileOutputStream out = new FileOutputStream(targetImg)) {
-        //    JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
-        //    encoder.encode(image);
-        //}
         String formatName = targetImg.substring(targetImg.lastIndexOf(".") + 1);
-        ImageIO.write(image, /*"GIF"*/ formatName /* format desired */, new File(targetImg) /* target */);
+        ImageIO.write(image, formatName, new File(targetImg));
     }
 
 

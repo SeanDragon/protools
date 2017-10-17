@@ -4,6 +4,9 @@ import java.lang.reflect.Type;
 import java.lang.reflect.WildcardType;
 import java.util.Arrays;
 
+/**
+ * @author SeanDragon
+ */
 public class WildcardTypeImpl implements WildcardType {
     private final Class[] upper;
     private final Class[] lower;
@@ -72,8 +75,12 @@ public class WildcardTypeImpl implements WildcardType {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         WildcardTypeImpl that = (WildcardTypeImpl) o;
 

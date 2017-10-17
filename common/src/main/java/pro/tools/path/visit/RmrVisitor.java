@@ -19,7 +19,7 @@ public class RmrVisitor implements FileVisitor<Path> {
 
     private static final Logger log = LoggerFactory.getLogger(RmrVisitor.class);
 
-    public static final RmrVisitor instance = new RmrVisitor();
+    public static final RmrVisitor INSTANCE = new RmrVisitor();
 
     @Override
     public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {

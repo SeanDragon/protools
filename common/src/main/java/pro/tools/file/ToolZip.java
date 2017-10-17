@@ -40,10 +40,15 @@ public final class ToolZip {
     /**
      * 批量压缩文件
      *
-     * @param resFiles    待压缩文件集合
-     * @param zipFilePath 压缩文件路径
+     * @param resFiles
+     *         待压缩文件集合
+     * @param zipFilePath
+     *         压缩文件路径
+     *
      * @return {@code true}: 压缩成功<br>{@code false}: 压缩失败
-     * @throws IOException IO错误时抛出
+     *
+     * @throws IOException
+     *         IO错误时抛出
      */
     public static boolean zipFiles(Collection<File> resFiles, String zipFilePath)
             throws IOException {
@@ -53,11 +58,17 @@ public final class ToolZip {
     /**
      * 批量压缩文件
      *
-     * @param resFiles    待压缩文件集合
-     * @param zipFilePath 压缩文件路径
-     * @param comment     压缩文件的注释
+     * @param resFiles
+     *         待压缩文件集合
+     * @param zipFilePath
+     *         压缩文件路径
+     * @param comment
+     *         压缩文件的注释
+     *
      * @return {@code true}: 压缩成功<br>{@code false}: 压缩失败
-     * @throws IOException IO错误时抛出
+     *
+     * @throws IOException
+     *         IO错误时抛出
      */
     public static boolean zipFiles(Collection<File> resFiles, String zipFilePath, String comment)
             throws IOException {
@@ -67,10 +78,15 @@ public final class ToolZip {
     /**
      * 批量压缩文件
      *
-     * @param resFiles 待压缩文件集合
-     * @param zipFile  压缩文件
+     * @param resFiles
+     *         待压缩文件集合
+     * @param zipFile
+     *         压缩文件
+     *
      * @return {@code true}: 压缩成功<br>{@code false}: 压缩失败
-     * @throws IOException IO错误时抛出
+     *
+     * @throws IOException
+     *         IO错误时抛出
      */
     public static boolean zipFiles(Collection<File> resFiles, File zipFile)
             throws IOException {
@@ -80,19 +96,29 @@ public final class ToolZip {
     /**
      * 批量压缩文件
      *
-     * @param resFiles 待压缩文件集合
-     * @param zipFile  压缩文件
-     * @param comment  压缩文件的注释
+     * @param resFiles
+     *         待压缩文件集合
+     * @param zipFile
+     *         压缩文件
+     * @param comment
+     *         压缩文件的注释
+     *
      * @return {@code true}: 压缩成功<br>{@code false}: 压缩失败
-     * @throws IOException IO错误时抛出
+     *
+     * @throws IOException
+     *         IO错误时抛出
      */
     public static boolean zipFiles(Collection<File> resFiles, File zipFile, String comment)
             throws IOException {
-        if (resFiles == null || zipFile == null) return false;
+        if (resFiles == null || zipFile == null) {
+            return false;
+        }
 
         try (ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(zipFile))) {
             for (File resFile : resFiles) {
-                if (!zipFile(resFile, "", zos, comment)) return false;
+                if (!zipFile(resFile, "", zos, comment)) {
+                    return false;
+                }
             }
             return true;
         }
@@ -101,10 +127,15 @@ public final class ToolZip {
     /**
      * 压缩文件
      *
-     * @param resFilePath 待压缩文件路径
-     * @param zipFilePath 压缩文件路径
+     * @param resFilePath
+     *         待压缩文件路径
+     * @param zipFilePath
+     *         压缩文件路径
+     *
      * @return {@code true}: 压缩成功<br>{@code false}: 压缩失败
-     * @throws IOException IO错误时抛出
+     *
+     * @throws IOException
+     *         IO错误时抛出
      */
     public static boolean zipFile(String resFilePath, String zipFilePath)
             throws IOException {
@@ -114,11 +145,17 @@ public final class ToolZip {
     /**
      * 压缩文件
      *
-     * @param resFilePath 待压缩文件路径
-     * @param zipFilePath 压缩文件路径
-     * @param comment     压缩文件的注释
+     * @param resFilePath
+     *         待压缩文件路径
+     * @param zipFilePath
+     *         压缩文件路径
+     * @param comment
+     *         压缩文件的注释
+     *
      * @return {@code true}: 压缩成功<br>{@code false}: 压缩失败
-     * @throws IOException IO错误时抛出
+     *
+     * @throws IOException
+     *         IO错误时抛出
      */
     public static boolean zipFile(String resFilePath, String zipFilePath, String comment)
             throws IOException {
@@ -128,10 +165,15 @@ public final class ToolZip {
     /**
      * 压缩文件
      *
-     * @param resFile 待压缩文件
-     * @param zipFile 压缩文件
+     * @param resFile
+     *         待压缩文件
+     * @param zipFile
+     *         压缩文件
+     *
      * @return {@code true}: 压缩成功<br>{@code false}: 压缩失败
-     * @throws IOException IO错误时抛出
+     *
+     * @throws IOException
+     *         IO错误时抛出
      */
     public static boolean zipFile(File resFile, File zipFile)
             throws IOException {
@@ -141,15 +183,23 @@ public final class ToolZip {
     /**
      * 压缩文件
      *
-     * @param resFile 待压缩文件
-     * @param zipFile 压缩文件
-     * @param comment 压缩文件的注释
+     * @param resFile
+     *         待压缩文件
+     * @param zipFile
+     *         压缩文件
+     * @param comment
+     *         压缩文件的注释
+     *
      * @return {@code true}: 压缩成功<br>{@code false}: 压缩失败
-     * @throws IOException IO错误时抛出
+     *
+     * @throws IOException
+     *         IO错误时抛出
      */
     public static boolean zipFile(File resFile, File zipFile, String comment)
             throws IOException {
-        if (resFile == null || zipFile == null) return false;
+        if (resFile == null || zipFile == null) {
+            return false;
+        }
 
         try (ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(zipFile))) {
             return zipFile(resFile, "", zos, comment);
@@ -159,12 +209,19 @@ public final class ToolZip {
     /**
      * 压缩文件
      *
-     * @param resFile  待压缩文件
-     * @param rootPath 相对于压缩文件的路径
-     * @param zos      压缩文件输出流
-     * @param comment  压缩文件的注释
+     * @param resFile
+     *         待压缩文件
+     * @param rootPath
+     *         相对于压缩文件的路径
+     * @param zos
+     *         压缩文件输出流
+     * @param comment
+     *         压缩文件的注释
+     *
      * @return {@code true}: 压缩成功<br>{@code false}: 压缩失败
-     * @throws IOException IO错误时抛出
+     *
+     * @throws IOException
+     *         IO错误时抛出
      */
     private static boolean zipFile(File resFile, String rootPath, ZipOutputStream zos, String comment)
             throws IOException {
@@ -174,21 +231,27 @@ public final class ToolZip {
             // 如果是空文件夹那么创建它，我把'/'换为StrConst.FILE_SEP测试就不成功，eggPain
             if (fileList == null || fileList.length <= 0) {
                 ZipEntry entry = new ZipEntry(rootPath + '/');
-                if (!ToolStr.isEmpty(comment)) entry.setComment(comment);
+                if (!ToolStr.isEmpty(comment)) {
+                    entry.setComment(comment);
+                }
                 zos.putNextEntry(entry);
                 zos.closeEntry();
             } else {
                 for (File file : fileList) {
                     // 如果递归返回false则返回false
-                    if (!zipFile(file, rootPath, zos, comment)) return false;
+                    if (!zipFile(file, rootPath, zos, comment)) {
+                        return false;
+                    }
                 }
             }
         } else {
             try (InputStream is = new BufferedInputStream(new FileInputStream(resFile))) {
                 ZipEntry entry = new ZipEntry(rootPath);
-                if (!ToolStr.isEmpty(comment)) entry.setComment(comment);
+                if (!ToolStr.isEmpty(comment)) {
+                    entry.setComment(comment);
+                }
                 zos.putNextEntry(entry);
-                byte buffer[] = new byte[KB];
+                byte[] buffer = new byte[KB];
                 int len;
                 while ((len = is.read(buffer, 0, KB)) != -1) {
                     zos.write(buffer, 0, len);
@@ -202,10 +265,15 @@ public final class ToolZip {
     /**
      * 批量解压文件
      *
-     * @param zipFiles    压缩文件集合
-     * @param destDirPath 目标目录路径
+     * @param zipFiles
+     *         压缩文件集合
+     * @param destDirPath
+     *         目标目录路径
+     *
      * @return {@code true}: 解压成功<br>{@code false}: 解压失败
-     * @throws IOException IO错误时抛出
+     *
+     * @throws IOException
+     *         IO错误时抛出
      */
     public static boolean unzipFiles(Collection<File> zipFiles, String destDirPath)
             throws IOException {
@@ -215,16 +283,25 @@ public final class ToolZip {
     /**
      * 批量解压文件
      *
-     * @param zipFiles 压缩文件集合
-     * @param destDir  目标目录
+     * @param zipFiles
+     *         压缩文件集合
+     * @param destDir
+     *         目标目录
+     *
      * @return {@code true}: 解压成功<br>{@code false}: 解压失败
-     * @throws IOException IO错误时抛出
+     *
+     * @throws IOException
+     *         IO错误时抛出
      */
     public static boolean unzipFiles(Collection<File> zipFiles, File destDir)
             throws IOException {
-        if (zipFiles == null || destDir == null) return false;
+        if (zipFiles == null || destDir == null) {
+            return false;
+        }
         for (File zipFile : zipFiles) {
-            if (!unzipFile(zipFile, destDir)) return false;
+            if (!unzipFile(zipFile, destDir)) {
+                return false;
+            }
         }
         return true;
     }
@@ -232,10 +309,15 @@ public final class ToolZip {
     /**
      * 解压文件
      *
-     * @param zipFilePath 待解压文件路径
-     * @param destDirPath 目标目录路径
+     * @param zipFilePath
+     *         待解压文件路径
+     * @param destDirPath
+     *         目标目录路径
+     *
      * @return {@code true}: 解压成功<br>{@code false}: 解压失败
-     * @throws IOException IO错误时抛出
+     *
+     * @throws IOException
+     *         IO错误时抛出
      */
     public static boolean unzipFile(String zipFilePath, String destDirPath)
             throws IOException {
@@ -245,10 +327,15 @@ public final class ToolZip {
     /**
      * 解压文件
      *
-     * @param zipFile 待解压文件
-     * @param destDir 目标目录
+     * @param zipFile
+     *         待解压文件
+     * @param destDir
+     *         目标目录
+     *
      * @return {@code true}: 解压成功<br>{@code false}: 解压失败
-     * @throws IOException IO错误时抛出
+     *
+     * @throws IOException
+     *         IO错误时抛出
      */
     public static boolean unzipFile(File zipFile, File destDir)
             throws IOException {
@@ -258,11 +345,17 @@ public final class ToolZip {
     /**
      * 解压带有关键字的文件
      *
-     * @param zipFilePath 待解压文件路径
-     * @param destDirPath 目标目录路径
-     * @param keyword     关键字
+     * @param zipFilePath
+     *         待解压文件路径
+     * @param destDirPath
+     *         目标目录路径
+     * @param keyword
+     *         关键字
+     *
      * @return 返回带有关键字的文件链表
-     * @throws IOException IO错误时抛出
+     *
+     * @throws IOException
+     *         IO错误时抛出
      */
     public static List<File> unzipFileByKeyword(String zipFilePath, String destDirPath, String keyword)
             throws IOException {
@@ -273,15 +366,23 @@ public final class ToolZip {
     /**
      * 解压带有关键字的文件
      *
-     * @param zipFile 待解压文件
-     * @param destDir 目标目录
-     * @param keyword 关键字
+     * @param zipFile
+     *         待解压文件
+     * @param destDir
+     *         目标目录
+     * @param keyword
+     *         关键字
+     *
      * @return 返回带有关键字的文件链表
-     * @throws IOException IO错误时抛出
+     *
+     * @throws IOException
+     *         IO错误时抛出
      */
     public static List<File> unzipFileByKeyword(File zipFile, File destDir, String keyword)
             throws IOException {
-        if (zipFile == null || destDir == null) return null;
+        if (zipFile == null || destDir == null) {
+            return null;
+        }
         List<File> files = new ArrayList<>();
         try (ZipFile zf = new ZipFile(zipFile)) {
             Enumeration<?> entries = zf.entries();
@@ -293,12 +394,16 @@ public final class ToolZip {
                     File file = new File(filePath);
                     files.add(file);
                     if (entry.isDirectory()) {
-                        if (!ToolFile.createOrExistsDir(file)) return null;
+                        if (!ToolFile.createOrExistsDir(file)) {
+                            return null;
+                        }
                     } else {
-                        if (!ToolFile.createOrExistsFile(file)) return null;
+                        if (!ToolFile.createOrExistsFile(file)) {
+                            return null;
+                        }
                         try (InputStream in = new BufferedInputStream(zf.getInputStream(entry));
                              OutputStream out = new BufferedOutputStream(new FileOutputStream(file))) {
-                            byte buffer[] = new byte[KB];
+                            byte[] buffer = new byte[KB];
                             int len;
                             while ((len = in.read(buffer)) != -1) {
                                 out.write(buffer, 0, len);
@@ -308,7 +413,7 @@ public final class ToolZip {
                 }
             }
         } catch (IllegalArgumentException e) {
-            if (e.getMessage().equals("MALFORMED")) {
+            if ("MALFORMED".equals(e.getMessage())) {
                 return unzipFileByKeyword(zipFile, destDir, keyword, Charset.forName("GBK"));
             } else {
                 e.printStackTrace();
@@ -321,15 +426,23 @@ public final class ToolZip {
     /**
      * 解压带有关键字的文件
      *
-     * @param zipFile 待解压文件
-     * @param destDir 目标目录
-     * @param keyword 关键字
+     * @param zipFile
+     *         待解压文件
+     * @param destDir
+     *         目标目录
+     * @param keyword
+     *         关键字
+     *
      * @return 返回带有关键字的文件链表
-     * @throws IOException IO错误时抛出
+     *
+     * @throws IOException
+     *         IO错误时抛出
      */
     public static List<File> unzipFileByKeyword(File zipFile, File destDir, String keyword, Charset charset)
             throws IOException {
-        if (zipFile == null || destDir == null) return null;
+        if (zipFile == null || destDir == null) {
+            return null;
+        }
         List<File> files = new ArrayList<>();
         try (ZipFile zf = new ZipFile(zipFile, charset)) {
             Enumeration<?> entries = zf.entries();
@@ -341,12 +454,16 @@ public final class ToolZip {
                     File file = new File(filePath);
                     files.add(file);
                     if (entry.isDirectory()) {
-                        if (!ToolFile.createOrExistsDir(file)) return null;
+                        if (!ToolFile.createOrExistsDir(file)) {
+                            return null;
+                        }
                     } else {
-                        if (!ToolFile.createOrExistsFile(file)) return null;
+                        if (!ToolFile.createOrExistsFile(file)) {
+                            return null;
+                        }
                         try (InputStream in = new BufferedInputStream(zf.getInputStream(entry));
                              OutputStream out = new BufferedOutputStream(new FileOutputStream(file))) {
-                            byte buffer[] = new byte[KB];
+                            byte[] buffer = new byte[KB];
                             int len;
                             while ((len = in.read(buffer)) != -1) {
                                 out.write(buffer, 0, len);
@@ -362,11 +479,17 @@ public final class ToolZip {
     /**
      * 解压rar
      *
-     * @param rarFiles    带解压压缩包列表
-     * @param destDirPath 目标目录
+     * @param rarFiles
+     *         带解压压缩包列表
+     * @param destDirPath
+     *         目标目录
+     *
      * @return 成功与否
-     * @throws IOException  IO错误抛出
-     * @throws RarException IO错误抛出
+     *
+     * @throws IOException
+     *         IO错误抛出
+     * @throws RarException
+     *         IO错误抛出
      */
     public static boolean unrarFiles(Collection<File> rarFiles, String destDirPath) throws IOException, RarException {
         return unrarFiles(rarFiles, ToolFile.getFileByPath(destDirPath));
@@ -375,16 +498,26 @@ public final class ToolZip {
     /**
      * 解压rar
      *
-     * @param rarFiles 带解压压缩包列表
-     * @param destDir  目标目录
+     * @param rarFiles
+     *         带解压压缩包列表
+     * @param destDir
+     *         目标目录
+     *
      * @return 成功与否
-     * @throws IOException  IO错误抛出
-     * @throws RarException IO错误抛出
+     *
+     * @throws IOException
+     *         IO错误抛出
+     * @throws RarException
+     *         IO错误抛出
      */
     public static boolean unrarFiles(Collection<File> rarFiles, File destDir) throws IOException, RarException {
-        if (rarFiles == null || destDir == null) return false;
+        if (rarFiles == null || destDir == null) {
+            return false;
+        }
         for (File rarFile : rarFiles) {
-            if (!unrarFile(rarFile, destDir)) return false;
+            if (!unrarFile(rarFile, destDir)) {
+                return false;
+            }
         }
         return true;
     }
@@ -392,11 +525,17 @@ public final class ToolZip {
     /**
      * 解压rar
      *
-     * @param rarFilePath 带解压压缩包列表
-     * @param destDirPath 目标目录
+     * @param rarFilePath
+     *         带解压压缩包列表
+     * @param destDirPath
+     *         目标目录
+     *
      * @return 成功与否
-     * @throws IOException  IO错误抛出
-     * @throws RarException IO错误抛出
+     *
+     * @throws IOException
+     *         IO错误抛出
+     * @throws RarException
+     *         IO错误抛出
      */
     public static boolean unrarFile(String rarFilePath, String destDirPath) throws IOException, RarException {
         return unrarFile(ToolFile.getFileByPath(rarFilePath), ToolFile.getFileByPath(destDirPath));
@@ -405,11 +544,17 @@ public final class ToolZip {
     /**
      * 解压rar
      *
-     * @param rarFile 带解压压缩包列表
-     * @param destDir 目标目录
+     * @param rarFile
+     *         带解压压缩包列表
+     * @param destDir
+     *         目标目录
+     *
      * @return 成功与否
-     * @throws IOException  IO错误抛出
-     * @throws RarException IO错误抛出
+     *
+     * @throws IOException
+     *         IO错误抛出
+     * @throws RarException
+     *         IO错误抛出
      */
     public static boolean unrarFile(File rarFile, File destDir) throws IOException, RarException {
         try (Archive archive = new Archive(rarFile)) {
@@ -443,9 +588,13 @@ public final class ToolZip {
     /**
      * 获取压缩文件中的文件路径链表
      *
-     * @param zipFilePath 压缩文件路径
+     * @param zipFilePath
+     *         压缩文件路径
+     *
      * @return 压缩文件中的文件路径链表
-     * @throws IOException IO错误时抛出
+     *
+     * @throws IOException
+     *         IO错误时抛出
      */
     public static List<String> getFilesPath(String zipFilePath)
             throws IOException {
@@ -455,13 +604,19 @@ public final class ToolZip {
     /**
      * 获取压缩文件中的文件路径链表
      *
-     * @param zipFile 压缩文件
+     * @param zipFile
+     *         压缩文件
+     *
      * @return 压缩文件中的文件路径链表
-     * @throws IOException IO错误时抛出
+     *
+     * @throws IOException
+     *         IO错误时抛出
      */
     public static List<String> getFilesPath(File zipFile)
             throws IOException {
-        if (zipFile == null) return null;
+        if (zipFile == null) {
+            return null;
+        }
         List<String> paths = new ArrayList<>();
         Enumeration<?> entries = getEntries(zipFile);
         while (entries.hasMoreElements()) {
@@ -473,9 +628,13 @@ public final class ToolZip {
     /**
      * 获取压缩文件中的注释链表
      *
-     * @param zipFilePath 压缩文件路径
+     * @param zipFilePath
+     *         压缩文件路径
+     *
      * @return 压缩文件中的注释链表
-     * @throws IOException IO错误时抛出
+     *
+     * @throws IOException
+     *         IO错误时抛出
      */
     public static List<String> getComments(String zipFilePath)
             throws IOException {
@@ -485,13 +644,19 @@ public final class ToolZip {
     /**
      * 获取压缩文件中的注释链表
      *
-     * @param zipFile 压缩文件
+     * @param zipFile
+     *         压缩文件
+     *
      * @return 压缩文件中的注释链表
-     * @throws IOException IO错误时抛出
+     *
+     * @throws IOException
+     *         IO错误时抛出
      */
     public static List<String> getComments(File zipFile)
             throws IOException {
-        if (zipFile == null) return null;
+        if (zipFile == null) {
+            return null;
+        }
         List<String> comments = new ArrayList<>();
         Enumeration<?> entries = getEntries(zipFile);
         while (entries.hasMoreElements()) {
@@ -504,9 +669,13 @@ public final class ToolZip {
     /**
      * 获取压缩文件中的文件对象
      *
-     * @param zipFilePath 压缩文件路径
+     * @param zipFilePath
+     *         压缩文件路径
+     *
      * @return 压缩文件中的文件对象
-     * @throws IOException IO错误时抛出
+     *
+     * @throws IOException
+     *         IO错误时抛出
      */
     public static Enumeration<?> getEntries(String zipFilePath)
             throws IOException {
@@ -516,13 +685,19 @@ public final class ToolZip {
     /**
      * 获取压缩文件中的文件对象
      *
-     * @param file 压缩文件
+     * @param file
+     *         压缩文件
+     *
      * @return 压缩文件中的文件对象
-     * @throws IOException IO错误时抛出
+     *
+     * @throws IOException
+     *         IO错误时抛出
      */
     public static Enumeration<?> getEntries(File file)
             throws IOException {
-        if (file == null) return null;
+        if (file == null) {
+            return null;
+        }
         Enumeration<? extends ZipEntry> entries;
         try (ZipFile zipFile = new ZipFile(file)) {
             entries = zipFile.entries();

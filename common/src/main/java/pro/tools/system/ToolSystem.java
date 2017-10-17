@@ -10,12 +10,15 @@ import java.io.File;
 public final class ToolSystem {
     private static Boolean isWindows;
     private static Boolean haveDiskD;
+
     private ToolSystem() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
 
     public static boolean isWindows() {
-        if (isWindows == null) isWindows = ToolOS.getOsName().toLowerCase().contains("windows");
+        if (isWindows == null) {
+            isWindows = ToolOS.getOsName().toLowerCase().contains("windows");
+        }
         return isWindows;
     }
 

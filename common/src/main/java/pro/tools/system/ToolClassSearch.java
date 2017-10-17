@@ -28,7 +28,7 @@ public final class ToolClassSearch {
         classSet = new HashSet<>();
         try {
             Path path = ToolPath.getPath(ToolPosition.getRootClassPath());
-            Files.walkFileTree(path, ToolPath.opts, Integer.MAX_VALUE, ClassSearchVisitor.instance);
+            Files.walkFileTree(path, ToolPath.OPTS, Integer.MAX_VALUE, ClassSearchVisitor.INSTANCE);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -68,7 +68,9 @@ public final class ToolClassSearch {
     }
 
     public static Set<Class<?>> getClazzByAnnotation(Class<?> clazz) {
-        if (!clazz.isAnnotation()) return null;
+        if (!clazz.isAnnotation()) {
+            return null;
+        }
         Set<Class<?>> returnClassList = new HashSet<>();
 
         classSet.forEach(one -> {
@@ -81,12 +83,15 @@ public final class ToolClassSearch {
     }
 
     public static Set<Class<?>> getClazzByInterface(Class<?> clazz) {
-        if (!clazz.isInterface()) return null;
+        if (!clazz.isInterface()) {
+            return null;
+        }
         Set<Class<?>> returnClassList = new HashSet<>();
 
         classSet.forEach(one -> {
             if (clazz.isAssignableFrom(one)) {
-                if (!clazz.equals(one)) {// 本身加不进去
+                // 本身加不进去
+                if (!clazz.equals(one)) {
                     returnClassList.add(one);
                 }
             }

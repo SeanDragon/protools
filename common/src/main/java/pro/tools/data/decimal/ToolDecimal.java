@@ -27,8 +27,9 @@ public final class ToolDecimal {
      * @return 结果
      */
     static BigDecimal sqrt(BigDecimal number, int scale, RoundingMode roundingMode) {
-        if (number.compareTo(BigDecimal.ZERO) < 0)
+        if (number.compareTo(BigDecimal.ZERO) < 0) {
             throw new ArithmeticException("sqrt with negative");
+        }
         BigInteger integer = number.toBigInteger();
         StringBuilder sb = new StringBuilder();
         String strInt = integer.toString();
@@ -97,8 +98,9 @@ public final class ToolDecimal {
      * @return 结果
      */
     public static int numberOfLeadingZeros(long i) {
-        if (i == 0)
+        if (i == 0) {
             return 64;
+        }
         int n = 1;
         int x = (int) (i >>> 32);
         if (x == 0) {
@@ -132,19 +134,19 @@ public final class ToolDecimal {
      * @return 结果
      */
     public static String scale2FormatStr(int scale) {
-        StringBuilder m_strFormat = new StringBuilder("##0");
+        StringBuilder mStrformat = new StringBuilder("##0");
         if (scale < 0) {
             throw new IllegalArgumentException(
                     "The scale must be a positive integer or zero");
         }
         if (scale > 0) {
-            m_strFormat.append(".");
+            mStrformat.append(".");
             for (int i = 0; i < scale; i++) {
-                m_strFormat.append("0");
+                mStrformat.append("0");
             }
         }
 
-        return m_strFormat.toString();
+        return mStrformat.toString();
     }
 
     /**

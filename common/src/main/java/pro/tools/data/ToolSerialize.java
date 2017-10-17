@@ -28,7 +28,7 @@ public final class ToolSerialize {
         return CONFIGURATION;
     }
 
-    public static synchronized void setCONFIGURATION(FSTConfiguration CONFIGURATION) {
-        ToolSerialize.CONFIGURATION = CONFIGURATION;
+    public static synchronized void setCONFIGURATION(FSTConfiguration configuration) {
+        ToolSerialize.CONFIGURATION = configuration;
     }
 }

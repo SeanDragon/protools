@@ -1,6 +1,14 @@
 package pro.tools.data.image;
 
-import com.google.zxing.*;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.BinaryBitmap;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.LuminanceSource;
+import com.google.zxing.MultiFormatReader;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.NotFoundException;
+import com.google.zxing.Result;
+import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.client.j2se.MatrixToImageConfig;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
@@ -37,6 +45,7 @@ public final class ToolBarCode {
      * @param savePath 保存路径
      */
     @SuppressWarnings({"rawtypes", "unchecked", "deprecation"})
+    @Deprecated
     public static void encode(String content, int width, int height, String fileType, String savePath) throws IOException, WriterException {
         content = new String(content.getBytes(StrConst.DEFAULT_CHARSET_NAME), StrConst.DEFAULT_CHARSET_NAME);// 二维码内容
         Hashtable hints = new Hashtable();
@@ -175,6 +184,7 @@ class MatrixToImageWriterEx {
      * @throws IOException
      */
     @SuppressWarnings({"deprecation"})
+    @Deprecated
     public static void writeToFile(BitMatrix matrix, String format, String imagePath, String logoPath) throws IOException {
         MatrixToImageWriter.writeToFile(matrix, format, new File(imagePath), new MatrixToImageConfig());
 
@@ -194,6 +204,7 @@ class MatrixToImageWriterEx {
      * @throws IOException
      */
     @SuppressWarnings({"deprecation"})
+    @Deprecated
     public static void writeToFile(BitMatrix matrix, String format, String imagePath, String logoPath, MatrixToLogoImageConfig logoConfig) throws IOException {
         MatrixToImageWriter.writeToFile(matrix, format, new File(imagePath), new MatrixToImageConfig());
 

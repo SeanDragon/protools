@@ -17,6 +17,8 @@ import java.util.TreeMap;
 
 /**
  * 辅助类
+ *
+ * @author SeanDragon
  */
 public final class ToolJson {
 
@@ -78,8 +80,9 @@ public final class ToolJson {
      * @return
      */
     public static String mapToJson(Map map) {
-        if (map == null)
+        if (map == null) {
             return "{}";
+        }
         return gson.toJson(map);
     }
 
@@ -91,8 +94,9 @@ public final class ToolJson {
      * @return
      */
     public static Map jsonToMap(String json) {
-        if (json == null)
-            return new HashMap<>();
+        if (json == null) {
+            return new HashMap<>(1);
+        }
         return gson.fromJson(json, new TypeToken<TreeMap<String, Object>>() {
         }.getType());
     }
@@ -106,8 +110,9 @@ public final class ToolJson {
      * @return String
      */
     public static <T> String modelToJson(T model) {
-        if (model == null)
+        if (model == null) {
             return "{}";
+        }
         return gson.toJson(model);
     }
 
@@ -199,7 +204,7 @@ public final class ToolJson {
      * @return List<Object>
      */
     public static <T> List<T> jsonToModelList(String sJson, Class<T> classOfT) {
-        if (ToolStr.isBlank(sJson) || sJson.equals("[]")) {
+        if (ToolStr.isBlank(sJson) || "[]".equals(sJson)) {
             return null;
         }
         List<String> jsonToArrayList = jsonToArrayList(sJson);
@@ -221,7 +226,7 @@ public final class ToolJson {
      * @return List<Object>
      */
     public static List<Map> jsonToMapList(String sJson) {
-        if (ToolStr.isBlank(sJson) || sJson.equals("[]")) {
+        if (ToolStr.isBlank(sJson) || "[]".equals(sJson)) {
             return null;
         }
         List<String> jsonToArrayList = jsonToArrayList(sJson);

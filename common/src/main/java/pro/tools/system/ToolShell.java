@@ -23,11 +23,10 @@ public final class ToolShell {
     /**
      * 是否是在root下执行命令
      *
-     * @param toolCommandExec 包含下面四个属性
-     *                        commands          命令数组
-     *                        isRoot            是否需要root权限执行
-     *                        isNeedResultMsg   是否需要结果消息
-     *                        isNeedEnter       是否需要回车
+     * @param toolCommandExec
+     *         包含下面四个属性 commands          命令数组 isRoot            是否需要root权限执行 isNeedResultMsg   是否需要结果消息 isNeedEnter
+     *         是否需要回车
+     *
      * @return ToolCommandResult
      */
     public static ToolCommandResult execCmd(ToolCommandExec toolCommandExec) throws IOException {
@@ -48,7 +47,9 @@ public final class ToolShell {
             process = Runtime.getRuntime().exec(ToolSystem.isWindows() ? "cmd" : "sh");
             try (DataOutputStream os = new DataOutputStream(process.getOutputStream())) {
                 for (String command : commands) {
-                    if (command == null) continue;
+                    if (command == null) {
+                        continue;
+                    }
                     os.write(command.getBytes());
                     os.writeBytes("\n");
                     os.flush();
@@ -115,11 +116,17 @@ public final class ToolShell {
      */
     public static class ToolCommandExec {
 
-        //命令集合
+        /**
+         * 命令集合
+         */
         private String[] commands;
-        //是否需要返回信息
+        /**
+         * 是否需要返回信息
+         */
         private boolean isNeedResultMsg;
-        //是否需要回车
+        /**
+         * 是否需要回车
+         */
         private boolean isNeedEnter;
 
         public ToolCommandExec(boolean isNeedResultMsg, boolean isNeedEnter, List<String> commandList) {

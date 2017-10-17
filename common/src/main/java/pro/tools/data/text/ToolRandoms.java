@@ -6,6 +6,8 @@ import java.util.UUID;
 
 /**
  * 随机数类
+ *
+ * @author SeanDragon
  */
 public final class ToolRandoms {
     private ToolRandoms() {
@@ -15,7 +17,7 @@ public final class ToolRandoms {
     /**
      * 定义验证码字符.去除了O、I、l、、等容易混淆的字母
      */
-    private static final char authCodeAll[] = {
+    private static final char[] AUTH_CODE_ALL = {
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y',
             'a', 'c', 'd', 'e', 'f', 'g', 'h', 'k', 'm', 'n', 'p', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y',
             '3', '4', '5', '7', '8'};
@@ -23,11 +25,11 @@ public final class ToolRandoms {
     /**
      * 定义验证码数字
      */
-    private static final char authCodeNumber[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
-    private static final int authCodeAllLength = authCodeAll.length;
-    private static final SecureRandom random = new SecureRandom();
+    private static final char[] AUTH_CODE_NUMBER = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+    private static final int AUTH_CODE_ALL_LENGTH = AUTH_CODE_ALL.length;
+    private static final SecureRandom RANDOM = new SecureRandom();
 
-    private final static char[] digits = {//32位
+    private final static char[] DIGITS = {    //32位
             '0', '1', '2', '3', '4', '5',
             '6', '7', '8', '9', 'a', 'b',
             'c', 'd', 'e', 'f', 'g', 'h',
@@ -52,7 +54,7 @@ public final class ToolRandoms {
      * 生成验证码
      */
     public static char getAuthCodeAllChar() {
-        return authCodeAll[getNumberRandom(0, authCodeAllLength)];
+        return AUTH_CODE_ALL[getNumberRandom(0, AUTH_CODE_ALL_LENGTH)];
     }
 
     /**
@@ -61,7 +63,7 @@ public final class ToolRandoms {
     public static String getAuthCodeNumber(int length) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < length; i++) {
-            sb.append(authCodeNumber[getNumberRandom(0, length)]);
+            sb.append(AUTH_CODE_NUMBER[getNumberRandom(0, length)]);
         }
         return sb.toString();
     }
@@ -72,7 +74,7 @@ public final class ToolRandoms {
     public static String getAuthCodeAll(int length) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < length; i++) {
-            sb.append(authCodeAll[getNumberRandom(0, length)]);
+            sb.append(AUTH_CODE_ALL[getNumberRandom(0, length)]);
         }
         return sb.toString();
     }
@@ -98,22 +100,27 @@ public final class ToolRandoms {
     /**
      * 产生两个数之间的随机数
      *
-     * @param min 小数
-     * @param max 比min大的数
+     * @param min
+     *         小数
+     * @param max
+     *         比min大的数
+     *
      * @return int 随机数字
      */
     public static int getNumberRandom(int min, int max) {
-        return min + random.nextInt(max - min);
+        return min + RANDOM.nextInt(max - min);
     }
 
     /**
      * 产生0--number的随机数,不包括num
      *
-     * @param number 数字
+     * @param number
+     *         数字
+     *
      * @return int 随机数字
      */
     public static int getNumberRandom(int number) {
-        return random.nextInt(number);
+        return RANDOM.nextInt(number);
     }
 
     /**
@@ -124,7 +131,7 @@ public final class ToolRandoms {
     public static int[] getRandomRgb() {
         int[] rgb = new int[3];
         for (int i = 0; i < 3; i++) {
-            rgb[i] = random.nextInt(255);
+            rgb[i] = RANDOM.nextInt(255);
         }
         return rgb;
     }
@@ -133,6 +140,7 @@ public final class ToolRandoms {
      * 通过nanotime获取随机数
      *
      * @param shift
+     *
      * @return
      */
     public static String getRandomStrByNanoTime(final boolean shift) {
@@ -150,8 +158,8 @@ public final class ToolRandoms {
 
         StringTokenizer stringTokenizer = new StringTokenizer(sum, "-");
         while (stringTokenizer.hasMoreTokens()) {
-            Long one_long = Long.parseLong(stringTokenizer.nextToken(), 16);
-            result.append(ToolRandoms.toUnsignedString(one_long, 6));
+            Long newLongToken = Long.parseLong(stringTokenizer.nextToken(), 16);
+            result.append(ToolRandoms.toUnsignedString(newLongToken, 6));
         }
 
         return result.toString();
@@ -164,23 +172,26 @@ public final class ToolRandoms {
      */
     public static long getRightNanoTime() {
         long nanoTime = System.nanoTime();
-        if (nanoTime < 0) return getRightNanoTime();
-        else return nanoTime;
+        if (nanoTime < 0) {
+            return getRightNanoTime();
+        } else {
+            return nanoTime;
+        }
     }
 
     /**
-     * shift :
-     * 5   32进制
-     * 6   64进制
-     * 放入long类型数字
+     * shift : 5   32进制 6   64进制 放入long类型数字
      *
-     * @param i     数字
-     * @param shift 2的几次幂
+     * @param i
+     *         数字
+     * @param shift
+     *         2的几次幂
+     *
      * @return 经过转换的
      */
     public static String toUnsignedString(long i, int shift) {
         shift = shift > 6 ? 6 : shift;
-        final char[] self = shift > 5 ? digits_$ : digits;
+        final char[] self = shift > 5 ? digits_$ : DIGITS;
         char[] buf = new char[64];
         int charPos = 64;
         int radix = 1 << shift;

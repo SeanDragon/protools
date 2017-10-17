@@ -15,7 +15,7 @@ import java.nio.charset.Charset;
 public final class SecurityUrl {
     public static String encode(String url, Charset charset) {
         try {
-            return URLDecoder.decode(url, charset.name());
+            return URLEncoder.encode(url, charset.name());
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
@@ -27,7 +27,7 @@ public final class SecurityUrl {
 
     public static String decode(String url, Charset charset) {
         try {
-            return URLEncoder.encode(url, charset.name());
+            return URLDecoder.decode(url, charset.name());
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }

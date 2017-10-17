@@ -10,7 +10,7 @@ public final class ToolLunar {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
 
-    /*
+    /**
      * |----4位闰月|-------------13位1为30天，0为29天|
      */
     private static int[] lunar_month_days = {1887, 0x1694, 0x16aa, 0x4ad5, 0xab6, 0xc4b7, 0x4ae, 0xa56, 0xb52a, 0x1d2a,
@@ -64,7 +64,7 @@ public final class ToolLunar {
      * @param d 日
      * @return 阳历
      */
-    private static long SolarToInt(int y, int m, int d) {
+    private static long solartoint(int y, int m, int d) {
         m = (m + 9) % 12;
         y = y - m / 10;
         return 365 * y + y / 4 - y / 100 + y / 400 + (m * 306 + 5) / 10 + (d - 1);
@@ -81,7 +81,7 @@ public final class ToolLunar {
         return tianGan[(lunarYear - 4) % 10] + diZhi[(lunarYear - 4) % 12] + "年";
     }
 
-    private static Solar SolarFromInt(long g) {
+    private static Solar solarfromint(long g) {
         long y = (10000 * g + 14780) / 3652425;
         long ddd = g - (365 * y + y / 4 - y / 100 + y / 400);
         if (ddd < 0) {
@@ -101,7 +101,7 @@ public final class ToolLunar {
      * @param lunar 农历
      * @return 阴历
      */
-    public static Solar LunarToSolar(final Lunar lunar) {
+    public static Solar lunartosolar(final Lunar lunar) {
         int lunarYear = lunar.getLunarYear();
         int lunarMonth = lunar.getLunarMonth();
         int lunarDay = lunar.getLunarDay();
@@ -128,7 +128,7 @@ public final class ToolLunar {
         int m = getBitInt(solar11, 4, 5);
         int d = getBitInt(solar11, 5, 0);
 
-        return SolarFromInt(SolarToInt(y, m, d) + offset - 1);
+        return solarfromint(solartoint(y, m, d) + offset - 1);
     }
 
     /**
@@ -137,7 +137,7 @@ public final class ToolLunar {
      * @param solar 公历
      * @return 阴历
      */
-    public static Lunar SolarToLunar(final Solar solar) {
+    public static Lunar solartolunar(final Solar solar) {
         int solarYear = solar.getSolarYear();
         int solarMonth = solar.getSolarMonth();
         int solarDay = solar.getSolarDay();
@@ -151,7 +151,7 @@ public final class ToolLunar {
         int y = getBitInt(solar11, 12, 9);
         int m = getBitInt(solar11, 4, 5);
         int d = getBitInt(solar11, 5, 0);
-        long offset = SolarToInt(solarYear, solarMonth, solarDay) - SolarToInt(y, m, d);
+        long offset = solartoint(solarYear, solarMonth, solarDay) - solartoint(y, m, d);
 
         int days = lunar_month_days[index];
         int leap = getBitInt(days, 4, 13);

@@ -57,10 +57,25 @@ public final class UnitConst {
     }
 
     public enum TimeUnit {
+        /**
+         * 毫秒
+         */
         MSEC,
+        /**
+         * 秒
+         */
         SEC,
+        /**
+         * 分钟
+         */
         MIN,
+        /**
+         * 小时
+         */
         HOUR,
+        /**
+         * 天
+         */
         DAY
     }
 }

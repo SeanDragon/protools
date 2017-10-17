@@ -16,42 +16,42 @@ import java.util.List;
  * @author SeanDragon
  */
 public final class ToolOS {
-    public static final String java_version = getOsSystemProperty("java.version"); // Java的运行环境版本
-    public static final String java_vendo = getOsSystemProperty("java.vendor"); // Java的运行环境供应商
-    public static final String java_vendo_url = getOsSystemProperty("java.vendor.url"); // Java供应商的URL
-    public static final String java_home = getOsSystemProperty("java.home"); // Java的安装路径
-    public static final String java_vm_specification_version = getOsSystemProperty("java.vm.specification.version"); // Java的虚拟机规范版本
-    public static final String java_vm_specification_vendor = getOsSystemProperty("java.vm.specification.vendor"); // Java的虚拟机规范供应商
-    public static final String java_vm_specification_name = getOsSystemProperty("java.vm.specification.name"); // Java的虚拟机规范名称
-    public static final String java_vm_version = getOsSystemProperty("java.vm.version"); // Java的虚拟机实现版本
-    public static final String java_vm_vendor = getOsSystemProperty("java.vm.vendor"); // Java的虚拟机实现供应商
-    public static final String java_vm_name = getOsSystemProperty("java.vm.name"); // Java的虚拟机实现名称
-    public static final String java_specification_version = getOsSystemProperty("java.specification.version"); // Java运行时环境规范版本
-    public static final String java_specification_vender = getOsSystemProperty("java.specification.vender"); // Java运行时环境规范供应商
-    public static final String java_specification_name = getOsSystemProperty("java.specification.name"); // Java运行时环境规范名称
-    public static final String java_class_version = getOsSystemProperty("java.class.version"); // Java的类格式版本号
-    public static final String java_class_path = getOsSystemProperty("java.class.path"); // Java的类路径
-    public static final String java_library_path = getOsSystemProperty("java.library.path"); // 加载库时搜索的路径列表
-    public static final String java_io_tmpdir = getOsSystemProperty("java.io.tmpdir"); // 默认的临时文件路径
-    public static final String java_ext_dirs = getOsSystemProperty("java.ext.dirs"); // 一个或多个扩展目录的路径
-    public static final String os_name = getOsSystemProperty("os.name"); // 操作系统的名称
-    public static final String os_arch = getOsSystemProperty("os.arch"); // 操作系统的构架
-    public static final String os_version = getOsSystemProperty("os.version"); // 操作系统的版本
-    public static final String file_separator = getOsSystemProperty("java.file.separator"); // 文件分隔符
-    public static final String path_separator = getOsSystemProperty("path.separator"); // 路径分隔符
-    public static final String line_separator = getOsSystemProperty("line.separator"); // 行分隔符
-    public static final String user_name = getOsSystemProperty("user.name"); // 用户的账户名称
-    public static final String user_home = getOsSystemProperty("user.home"); // 用户的主目录
-    public static final String user_dir = getOsSystemProperty("user.dir"); //  用户的当前工作目录
+    public static final String JAVA_VERSION = getOsSystemProperty("java.version"); // Java的运行环境版本
+    public static final String JAVA_VENDO = getOsSystemProperty("java.vendor"); // Java的运行环境供应商
+    public static final String JAVA_VENDO_URL = getOsSystemProperty("java.vendor.url"); // Java供应商的URL
+    public static final String JAVA_HOME = getOsSystemProperty("java.home"); // Java的安装路径
+    public static final String JAVA_VM_SPECIFICATION_VERSION = getOsSystemProperty("java.vm.specification.version"); // Java的虚拟机规范版本
+    public static final String JAVA_VM_SPECIFICATION_VENDOR = getOsSystemProperty("java.vm.specification.vendor"); // Java的虚拟机规范供应商
+    public static final String JAVA_VM_SPECIFICATION_NAME = getOsSystemProperty("java.vm.specification.name"); // Java的虚拟机规范名称
+    public static final String JAVA_VM_VERSION = getOsSystemProperty("java.vm.version"); // Java的虚拟机实现版本
+    public static final String JAVA_VM_VENDOR = getOsSystemProperty("java.vm.vendor"); // Java的虚拟机实现供应商
+    public static final String JAVA_VM_NAME = getOsSystemProperty("java.vm.name"); // Java的虚拟机实现名称
+    public static final String JAVA_SPECIFICATION_VERSION = getOsSystemProperty("java.specification.version"); // Java运行时环境规范版本
+    public static final String JAVA_SPECIFICATION_VENDER = getOsSystemProperty("java.specification.vender"); // Java运行时环境规范供应商
+    public static final String JAVA_SPECIFICATION_NAME = getOsSystemProperty("java.specification.name"); // Java运行时环境规范名称
+    public static final String JAVA_CLASS_VERSION = getOsSystemProperty("java.class.version"); // Java的类格式版本号
+    public static final String JAVA_CLASS_PATH = getOsSystemProperty("java.class.path"); // Java的类路径
+    public static final String JAVA_LIBRARY_PATH = getOsSystemProperty("java.library.path"); // 加载库时搜索的路径列表
+    public static final String JAVA_IO_TMPDIR = getOsSystemProperty("java.io.tmpdir"); // 默认的临时文件路径
+    public static final String JAVA_EXT_DIRS = getOsSystemProperty("java.ext.dirs"); // 一个或多个扩展目录的路径
+    public static final String OS_NAME = getOsSystemProperty("os.name"); // 操作系统的名称
+    public static final String OS_ARCH = getOsSystemProperty("os.arch"); // 操作系统的构架
+    public static final String OS_VERSION = getOsSystemProperty("os.version"); // 操作系统的版本
+    public static final String FILE_SEPARATOR = getOsSystemProperty("java.file.separator"); // 文件分隔符
+    public static final String PATH_SEPARATOR = getOsSystemProperty("path.separator"); // 路径分隔符
+    public static final String LINE_SEPARATOR = getOsSystemProperty("line.separator"); // 行分隔符
+    public static final String USER_NAME = getOsSystemProperty("user.name"); // 用户的账户名称
+    public static final String USER_HOME = getOsSystemProperty("user.home"); // 用户的主目录
+    public static final String USER_DIR = getOsSystemProperty("user.dir"); //  用户的当前工作目录
     // 系统bean
-    private static final OperatingSystemMXBean systemMxBean;
-    private static final List<GarbageCollectorMXBean> list;
+    private static final OperatingSystemMXBean SYSTEM_MX_BEAN;
+    private static final List<GarbageCollectorMXBean> LIST;
     // K转换M
     private static final long K2M = 1024L * 1024L;
 
     static {
-        systemMxBean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
-        list = ManagementFactory.getGarbageCollectorMXBeans();
+        SYSTEM_MX_BEAN = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
+        LIST = ManagementFactory.getGarbageCollectorMXBeans();
     }
 
     private ToolOS() {
@@ -98,11 +98,11 @@ public final class ToolOS {
      * @return
      */
     public static String getOsPathType() {
-        String osPathType = file_separator;
-        if (osPathType.equals("\\")) {
+        String osPathType = FILE_SEPARATOR;
+        if ("\\".equals(osPathType)) {
             return "\\\\";
         }
-        if (osPathType.equals("/")) {
+        if ("/".equals(osPathType)) {
             return "/";
         }
         return null;
@@ -114,7 +114,7 @@ public final class ToolOS {
      * @return
      */
     public static String getOsName() {
-        return systemMxBean.getName();// System.getProperty("os.name");
+        return SYSTEM_MX_BEAN.getName();// System.getProperty("os.name");
     }
 
     /**
@@ -123,7 +123,7 @@ public final class ToolOS {
      * @return
      */
     public static String getOsArch() {
-        return systemMxBean.getArch();// System.getProperty("os.arch");
+        return SYSTEM_MX_BEAN.getArch();// System.getProperty("os.arch");
     }
 
     /**
@@ -132,7 +132,7 @@ public final class ToolOS {
      * @return
      */
     public static int getOsCpuNumber() {
-        return systemMxBean.getAvailableProcessors();// Runtime.getRuntime().availableProcessors();// 获取当前电脑CPU数量
+        return SYSTEM_MX_BEAN.getAvailableProcessors();// Runtime.getRuntime().availableProcessors();// 获取当前电脑CPU数量
     }
 
     /**
@@ -141,7 +141,7 @@ public final class ToolOS {
      * @return
      */
     public static double getOsCpuRatio() {
-        return systemMxBean.getSystemCpuLoad();
+        return SYSTEM_MX_BEAN.getSystemCpuLoad();
     }
 
     /**
@@ -150,7 +150,7 @@ public final class ToolOS {
      * @return
      */
     public static long getOsPhysicalMemory() {
-        long totalMemorySize = systemMxBean.getTotalPhysicalMemorySize() / K2M; // M
+        long totalMemorySize = SYSTEM_MX_BEAN.getTotalPhysicalMemorySize() / K2M; // M
         return totalMemorySize;
     }
 
@@ -160,7 +160,7 @@ public final class ToolOS {
      * @return
      */
     public static long getOsPhysicalFreeMemory() {
-        return systemMxBean.getFreePhysicalMemorySize() / K2M;
+        return SYSTEM_MX_BEAN.getFreePhysicalMemorySize() / K2M;
     }
 
     /**
@@ -197,7 +197,7 @@ public final class ToolOS {
      */
     public static long getJvmGcCount() {
         long count = 0;
-        for (final GarbageCollectorMXBean garbageCollectorMXBean : list) {
+        for (final GarbageCollectorMXBean garbageCollectorMXBean : LIST) {
             count += garbageCollectorMXBean.getCollectionCount();
         }
         return count;

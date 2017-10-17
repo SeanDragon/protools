@@ -351,6 +351,8 @@ public class DatePlus {
             case SECONDS:
                 this.localDateTime = LocalDateTime.of(getYear(), getMonth(), getDayOfMonth(), getHour(), getMinute(), getSecond(), 0);
                 break;
+            default:
+                break;
         }
         return this;
     }
@@ -374,6 +376,8 @@ public class DatePlus {
                 break;
             case SECONDS:
                 this.localDateTime = LocalDateTime.of(getYear(), getMonth(), getDayOfMonth(), getHour(), getMinute(), getSecond(), 999_999_999);
+                break;
+            default:
                 break;
         }
         return this;
@@ -421,7 +425,7 @@ public class DatePlus {
      */
     public Lunar toLunar() {
         Solar solar = new Solar(this.getYear(), this.getMonth(), this.getDayOfMonth());
-        return ToolLunar.SolarToLunar(solar);
+        return ToolLunar.solartolunar(solar);
     }
 
     /**
@@ -431,7 +435,7 @@ public class DatePlus {
      */
     public Solar toSolar() {
         Lunar lunar = new Lunar(this.getYear(), this.getMonth(), this.getDayOfMonth());
-        return ToolLunar.LunarToSolar(lunar);
+        return ToolLunar.lunartosolar(lunar);
     }
 
     public String toString(DateTimeFormatter formatter) {

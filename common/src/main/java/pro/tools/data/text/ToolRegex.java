@@ -67,18 +67,24 @@ public final class ToolRegex {
      * @return 是返回true, 否则返回false
      */
     private static boolean NumberBo(int type, CharSequence str) {
-        if (ToolStr.isBlank(str.toString()))
+        if (ToolStr.isBlank(str.toString())) {
             return false;
+        }
         int points = 0;
         int chr;
         for (int i = str.length(); --i >= 0; ) {
             chr = str.charAt(i);
-            if (chr < 48 || chr > 57) { // 判断数字
-                if (i == 0 && chr == 45) // 判断 - 号
+            // 判断数字
+            if (chr < 48 || chr > 57) {
+                // 判断 - 号
+                if (i == 0 && chr == 45) {
                     return true;
-                if (i >= 0 && chr == 46 && type == 1) { // 判断 . 号
-                    if (++points <= 1)
+                }
+                // 判断 . 号
+                if (i >= 0 && chr == 46 && type == 1) {
+                    if (++points <= 1) {
                         continue;
+                    }
                 }
                 return false;
             }
@@ -207,8 +213,7 @@ public final class ToolRegex {
     }
 
     /**
-     * 验证用户名
-     * <p>取值范围为a-z,A-Z,0-9,"_",汉字，不能以"_"结尾,用户名必须是6-20位</p>
+     * 验证用户名 <p>取值范围为a-z,A-Z,0-9,"_",汉字，不能以"_"结尾,用户名必须是6-20位</p>
      *
      * @param input
      *         待验证文本
@@ -268,7 +273,9 @@ public final class ToolRegex {
      * @return 正则匹配的部分
      */
     public static List<String> getMatches(String regex, CharSequence input) {
-        if (input == null) return null;
+        if (input == null) {
+            return null;
+        }
         List<String> matches = new ArrayList<>();
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(input);
@@ -289,7 +296,9 @@ public final class ToolRegex {
      * @return 正则匹配分组
      */
     public static String[] getSplits(String input, String regex) {
-        if (input == null) return null;
+        if (input == null) {
+            return null;
+        }
         return input.split(regex);
     }
 
@@ -306,7 +315,9 @@ public final class ToolRegex {
      * @return 替换正则匹配的第一部分
      */
     public static String getReplaceFirst(String input, String regex, String replacement) {
-        if (input == null) return null;
+        if (input == null) {
+            return null;
+        }
         return Pattern.compile(regex).matcher(input).replaceFirst(replacement);
     }
 
@@ -323,7 +334,9 @@ public final class ToolRegex {
      * @return 替换所有正则匹配的部分
      */
     public static String getReplaceAll(String input, String regex, String replacement) {
-        if (input == null) return null;
+        if (input == null) {
+            return null;
+        }
         return Pattern.compile(regex).matcher(input).replaceAll(replacement);
     }
 }

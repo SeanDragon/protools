@@ -7,6 +7,9 @@ import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 import java.util.Arrays;
 
+/**
+ * @author SeanDragon
+ */
 @SuppressWarnings("SpellCheckingInspection")
 public class ParameterizedTypeImpl implements ParameterizedType {
     private final Class raw;
@@ -85,15 +88,19 @@ public class ParameterizedTypeImpl implements ParameterizedType {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         ParameterizedTypeImpl that = (ParameterizedTypeImpl) o;
 
-        if (!raw.equals(that.raw)) return false;
-        // Probably incorrect - comparing Object[] arrays with Arrays.equals
-        if (!Arrays.equals(args, that.args)) return false;
-        return owner != null ? owner.equals(that.owner) : that.owner == null;
+        if (!raw.equals(that.raw)) {
+            return false;
+        }
+        return Arrays.equals(args, that.args) && (owner != null ? owner.equals(that.owner) : that.owner == null);
 
     }
 

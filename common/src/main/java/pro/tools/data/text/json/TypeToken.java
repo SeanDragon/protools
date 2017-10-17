@@ -5,6 +5,9 @@ import pro.tools.data.text.json.exception.TypeException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
+/**
+ * @author SeanDragon
+ */
 public abstract class TypeToken<T> {
     private final Type type;
 

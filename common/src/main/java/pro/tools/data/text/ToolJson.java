@@ -1,12 +1,12 @@
 package pro.tools.data.text;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.reflect.TypeToken;
+import org.google.gson.Gson;
+import org.google.gson.GsonBuilder;
+import org.google.gson.JsonDeserializer;
+import org.google.gson.JsonElement;
+import org.google.gson.JsonObject;
+import org.google.gson.JsonPrimitive;
+import org.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ public final class ToolJson {
 
     static {
         gsonBuilder = new GsonBuilder()
-                .setLenient()// json宽松
+                // .setLenient()// json宽松
                 .setPrettyPrinting()//变得更好看
                 .enableComplexMapKeySerialization()//支持Map的key为复杂对象的形式
                 .setDateFormat("yyyy-MM-dd HH:mm:ss:SSS")//时间转化为特定格式

@@ -2,13 +2,18 @@ package pro.tools.data.text;
 
 import org.google.gson.Gson;
 import org.google.gson.GsonBuilder;
-import org.google.gson.JsonDeserializer;
-import org.google.gson.JsonElement;
 import org.google.gson.JsonObject;
-import org.google.gson.JsonPrimitive;
 import org.google.gson.reflect.TypeToken;
+import pro.tools.data.text.json.TypeBuilder;
+import pro.tools.data.text.json.typeadapter.BigDecimalTypeAdapter;
+import pro.tools.data.text.json.typeadapter.LocalDateTimeTypeAdapter;
+import pro.tools.data.text.json.typeadapter.LocalDateTypeAdapter;
+import pro.tools.data.text.json.typeadapter.TreeMapTypeAdapter;
 
 import java.lang.reflect.Type;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,43 +38,33 @@ public final class ToolJson {
                 .enableComplexMapKeySerialization()//支持Map的key为复杂对象的形式
                 .setDateFormat("yyyy-MM-dd HH:mm:ss:SSS")//时间转化为特定格式
                 .disableHtmlEscaping() //默认是GSON把HTML 转义的
-                .registerTypeAdapter(
-                        new TypeToken<TreeMap<String, Object>>() {
-                        }.getType(), (JsonDeserializer<TreeMap<String, Object>>) (json, typeOfT, context) -> {
-                            TreeMap<String, Object> treeMap = new TreeMap<>();
-                            json.getAsJsonObject().entrySet().forEach(entry -> {
-                                String key = entry.getKey();
-                                JsonElement value = entry.getValue();
-                                if (value instanceof JsonPrimitive && ((JsonPrimitive) value).isString()) {
-                                    treeMap.put(key, value.getAsString());
-                                } else {
-                                    treeMap.put(key, value);
-                                }
-                            });
-                            return treeMap;
-                        });
+        ;
+
+        gsonBuilder.registerTypeAdapter(TypeBuilder.newInstance(TreeMap.class)
+                        .addTypeParam(String.class)
+                        .addTypeParam(Object.class).build()
+                , new TreeMapTypeAdapter())
+                .registerTypeAdapter(LocalDate.class, new LocalDateTypeAdapter())
+                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeTypeAdapter())
+                .registerTypeAdapter(BigDecimal.class, new BigDecimalTypeAdapter());
+
 
         gson = gsonBuilder.create();
     }
 
     public static GsonBuilder buildSimpleGsonBuilder() {
-        return new GsonBuilder()
-                .enableComplexMapKeySerialization()//支持Map的key为复杂对象的形式
-                .registerTypeAdapter(
-                        new TypeToken<TreeMap<String, Object>>() {
-                        }.getType(), (JsonDeserializer<TreeMap<String, Object>>) (json, typeOfT, context) -> {
-                            TreeMap<String, Object> treeMap = new TreeMap<>();
-                            json.getAsJsonObject().entrySet().forEach(entry -> {
-                                String key = entry.getKey();
-                                JsonElement value = entry.getValue();
-                                if (value instanceof JsonPrimitive && ((JsonPrimitive) value).isString()) {
-                                    treeMap.put(key, value.getAsString());
-                                } else {
-                                    treeMap.put(key, value);
-                                }
-                            });
-                            return treeMap;
-                        });
+        GsonBuilder gsonBuilder = new GsonBuilder()
+                //支持Map的key为复杂对象的形式
+                .enableComplexMapKeySerialization();
+        gsonBuilder.registerTypeAdapter(TypeBuilder.newInstance(TreeMap.class)
+                        .addTypeParam(String.class)
+                        .addTypeParam(Object.class).build()
+                , new TreeMapTypeAdapter())
+                .registerTypeAdapter(LocalDate.class, new LocalDateTypeAdapter())
+                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeTypeAdapter())
+                .registerTypeAdapter(BigDecimal.class, new BigDecimalTypeAdapter());
+
+        return gsonBuilder;
     }
 
     /**

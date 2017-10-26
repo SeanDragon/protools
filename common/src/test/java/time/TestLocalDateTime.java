@@ -1,10 +1,12 @@
 package time;
 
 import org.junit.Test;
+import pro.tools.data.decimal.Decimal;
 import pro.tools.data.text.ToolJson;
 import pro.tools.time.DatePlus;
 import pro.tools.time.DateType;
 
+import java.math.MathContext;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -67,5 +69,14 @@ public class TestLocalDateTime {
         System.out.println(same);
         boolean after = datePlus1.isAfter(datePlus2, DateType.SECONDS);
         System.out.println(after);
+    }
+
+    @Test
+    public void test6() {
+        Decimal decimal = new Decimal(66.66, MathContext.UNLIMITED);
+        String x = ToolJson.anyToJson(decimal);
+        System.out.println(x);
+        Object o = ToolJson.jsonToAny(x, Decimal.class);
+        System.out.println(o);
     }
 }

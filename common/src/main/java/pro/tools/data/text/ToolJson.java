@@ -4,6 +4,7 @@ import org.google.gson.Gson;
 import org.google.gson.GsonBuilder;
 import org.google.gson.JsonObject;
 import org.google.gson.reflect.TypeToken;
+import pro.tools.data.decimal.Decimal;
 import pro.tools.data.text.json.TypeBuilder;
 import pro.tools.data.text.json.typeadapter.*;
 import pro.tools.time.DatePlus;
@@ -42,6 +43,7 @@ public final class ToolJson {
                 .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeTypeAdapter())
                 .registerTypeAdapter(DatePlus.class, new DatePlusTypeAdapter())
                 .registerTypeAdapter(BigDecimal.class, new BigDecimalTypeAdapter())
+                .registerTypeAdapter(Decimal.class, new DecimalTypeAdapter())
         ;
 
 
@@ -61,6 +63,7 @@ public final class ToolJson {
                 .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeTypeAdapter())
                 .registerTypeAdapter(DatePlus.class, new DatePlusTypeAdapter())
                 .registerTypeAdapter(BigDecimal.class, new BigDecimalTypeAdapter())
+                .registerTypeAdapter(Decimal.class, new DecimalTypeAdapter())
         ;
 
         return gsonBuilder;

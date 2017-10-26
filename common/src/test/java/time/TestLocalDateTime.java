@@ -2,6 +2,8 @@ package time;
 
 import org.junit.Test;
 import pro.tools.data.text.ToolJson;
+import pro.tools.time.DatePlus;
+import pro.tools.time.DateType;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -38,5 +40,32 @@ public class TestLocalDateTime {
         System.out.println(x);
         LocalDate localDate1 = ToolJson.jsonToAny(x, LocalDate.class);
         System.out.println(localDate1);
+    }
+
+    @Test
+    public void test4() {
+        DatePlus datePlus = new DatePlus();
+        System.out.println(datePlus);
+        String s = ToolJson.anyToJson(datePlus);
+        System.out.println(s);
+        DatePlus t = ToolJson.jsonToAny(s, DatePlus.class);
+        System.out.println(t);
+    }
+
+    @Test
+    public void test5() {
+        DatePlus datePlus1 = new DatePlus();
+        DatePlus datePlus2 = new DatePlus();
+
+        System.out.println(datePlus1);
+        System.out.println(datePlus2);
+        System.out.println();
+
+        boolean before = datePlus1.isBefore(datePlus2, DateType.SECONDS);
+        System.out.println(before);
+        boolean same = datePlus1.isSame(datePlus2, DateType.SECONDS);
+        System.out.println(same);
+        boolean after = datePlus1.isAfter(datePlus2, DateType.SECONDS);
+        System.out.println(after);
     }
 }

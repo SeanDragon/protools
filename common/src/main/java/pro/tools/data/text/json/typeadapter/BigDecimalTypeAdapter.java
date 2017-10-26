@@ -19,6 +19,6 @@ public class BigDecimalTypeAdapter extends ABasicTypeAdapter<BigDecimal> {
 
     @Override
     public void writing(JsonWriter jsonWriter, BigDecimal value) throws IOException {
-        jsonWriter.beginObject().name("$decimal").value(value.toString()).endObject();
+        jsonWriter.beginObject().name("value").value(value.toString()).endObject();
     }
 }

@@ -25,9 +25,9 @@ public abstract class ABasicTypeAdapter<T> extends TypeAdapter<T> {
         }
     }
 
-    public abstract T reading(JsonReader var1) throws IOException;
+    public abstract T reading(JsonReader jsonReader) throws IOException;
 
-    public abstract void writing(JsonWriter var1, T var2) throws IOException;
+    public abstract void writing(JsonWriter jsonWriter, T value) throws IOException;
 
     protected boolean compareToken(JsonToken currentToken, JsonToken targetToken) {
         return currentToken == targetToken;

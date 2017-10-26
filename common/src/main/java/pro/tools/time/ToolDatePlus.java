@@ -12,9 +12,9 @@ import java.util.Date;
  *
  * @author SeanDragon
  */
-public final class ToolDateTime {
+public final class ToolDatePlus {
 
-    private ToolDateTime() {
+    private ToolDatePlus() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
 

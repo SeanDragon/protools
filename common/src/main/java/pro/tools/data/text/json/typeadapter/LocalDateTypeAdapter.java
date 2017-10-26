@@ -13,17 +13,14 @@ public class LocalDateTypeAdapter extends ABasicTypeAdapter<LocalDate> {
 
     @Override
     public LocalDate reading(JsonReader jsonReader) throws IOException {
-        LocalDate date = null;
-        jsonReader.beginObject();
-        jsonReader.nextName();
+        LocalDate localDate;
         String value = jsonReader.nextString();
-        date = LocalDate.parse(value, DATE_FORMATTER);
-        jsonReader.endObject();
-        return date;
+        localDate = LocalDate.parse(value, DATE_FORMATTER);
+        return localDate;
     }
 
     @Override
     public void writing(JsonWriter jsonWriter, LocalDate value) throws IOException {
-        jsonWriter.beginObject().name("$date").value(value.format(DATE_FORMATTER)).endObject();
+        jsonWriter.jsonValue(value.format(DATE_FORMATTER));
     }
 }

@@ -13,14 +13,27 @@ public class LocalDateTimeTypeAdapter extends ABasicTypeAdapter<LocalDateTime> {
 
     @Override
     public LocalDateTime reading(JsonReader jsonReader) throws IOException {
-        LocalDateTime localDateTime;
+        // LocalDate localDate;
+        // LocalTime localTime;
+        // String dateValue = jsonReader.nextString();
+        // localDate = LocalDate.parse(dateValue, DATE_FORMATTER);
+        //
+        // System.out.println(jsonReader.nextString());
+        //
+        // String timeValue = jsonReader.nextString();
+        // localTime = LocalTime.parse(timeValue, TIME_FORMATTER);
+        // return LocalDateTime.of(localDate, localTime);
+
+        jsonReader.beginObject();
+        jsonReader.nextName();
         String value = jsonReader.nextString();
-        localDateTime = LocalDateTime.parse(value, DATE_TIME_FORMATTER);
-        return localDateTime;
+        LocalDateTime dateTime = LocalDateTime.parse(value, DATE_TIME_FORMATTER);
+        jsonReader.endObject();
+        return dateTime;
     }
 
     @Override
     public void writing(JsonWriter jsonWriter, LocalDateTime value) throws IOException {
-        jsonWriter.jsonValue(value.format(DATE_TIME_FORMATTER));
+        jsonWriter.beginObject().name("$timestamp").value(value.format(DATE_TIME_FORMATTER)).endObject();
     }
 }

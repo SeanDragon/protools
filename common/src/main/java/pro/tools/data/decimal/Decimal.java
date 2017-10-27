@@ -17,9 +17,11 @@ import java.text.DecimalFormat;
 public class Decimal extends Number {
 
     //region 全局变量
+
     private BigDecimal bigDecimal;
     private static MathContext defaultMathContext = MathContext.DECIMAL64;
     private final MathContext mathContext;
+
     //endregion
 
     /**
@@ -49,6 +51,7 @@ public class Decimal extends Number {
      * 便利生成方式,获取实例方法
      *
      * @param initValue
+     *
      * @return
      */
     public static Decimal instance(Object initValue) {
@@ -76,10 +79,14 @@ public class Decimal extends Number {
         } else if (initValue instanceof String) {
             String value = (String) initValue;
             bigDecimal = new BigDecimal(value, mathContext);
+        } else if (initValue == null) {
+            bigDecimal = new BigDecimal(0, mathContext);
         } else {
             throw new UnsupportedOperationException("初始化Decimal失败,传入值为" + ToolJson.anyToJson(initValue));
         }
     }
+
+
     //endregion
     //endregion
 
@@ -106,7 +113,9 @@ public class Decimal extends Number {
     /**
      * 获取该数被除后的整数
      *
-     * @param object 因数
+     * @param object
+     *         因数
+     *
      * @return 结果
      */
     public Decimal getDivGetInteger(Object object) {
@@ -116,7 +125,9 @@ public class Decimal extends Number {
     /**
      * 求余
      *
-     * @param object 因数
+     * @param object
+     *         因数
+     *
      * @return 结果
      */
     public Decimal getRemainder(Object object) {
@@ -130,6 +141,7 @@ public class Decimal extends Number {
      * 基本数值运算：加法
      *
      * @param object
+     *
      * @return
      */
     public Decimal add(Object object) {
@@ -141,6 +153,7 @@ public class Decimal extends Number {
      * 减法
      *
      * @param object
+     *
      * @return
      */
     public Decimal sub(Object object) {
@@ -152,6 +165,7 @@ public class Decimal extends Number {
      * 乘法
      *
      * @param object
+     *
      * @return
      */
     public Decimal mul(Object object) {
@@ -163,6 +177,7 @@ public class Decimal extends Number {
      * 除法
      *
      * @param object
+     *
      * @return
      */
     public Decimal div(Object object) {
@@ -186,7 +201,9 @@ public class Decimal extends Number {
     /**
      * 幂运算
      *
-     * @param n 幂数
+     * @param n
+     *         幂数
+     *
      * @return 结果
      */
     public Decimal pow(int n) {
@@ -197,7 +214,9 @@ public class Decimal extends Number {
     /**
      * 开平方
      *
-     * @param scale 精度
+     * @param scale
+     *         精度
+     *
      * @return 结果
      */
     public Decimal sqrt2(int scale) {
@@ -216,7 +235,9 @@ public class Decimal extends Number {
     /**
      * 开N次方
      *
-     * @param n 几次方
+     * @param n
+     *         几次方
+     *
      * @return 结果
      */
     public Decimal sqrtN(int n) {
@@ -289,7 +310,9 @@ public class Decimal extends Number {
     /**
      * 传入进度和舍入原则进行double
      *
-     * @param scale 进度
+     * @param scale
+     *         进度
+     *
      * @return 结果
      */
     public double doubleValue(int scale) {
@@ -299,8 +322,11 @@ public class Decimal extends Number {
     /**
      * 传入进度和舍入原则进行double
      *
-     * @param scale        进度
-     * @param roundingMode 舍入原则
+     * @param scale
+     *         进度
+     * @param roundingMode
+     *         舍入原则
+     *
      * @return 结果
      */
     public double doubleValue(int scale, RoundingMode roundingMode) {

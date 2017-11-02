@@ -102,11 +102,12 @@ public class ToolSendHttp {
                         || value instanceof Map
                         || value instanceof Number
                         || value instanceof String) {
-                    try {
-                        v = URLDecoder.decode(value.toString(), StrConst.DEFAULT_CHARSET_NAME);
-                    } catch (UnsupportedEncodingException e) {
-                        throw new RuntimeException(e);
-                    }
+                    // try {
+                    //     v = URLDecoder.decode(value.toString(), StrConst.DEFAULT_CHARSET_NAME);
+                    // } catch (UnsupportedEncodingException e) {
+                    //     throw new RuntimeException(e);
+                    // }
+                    v = value.toString();
                 } else {
                     v = ToolJson.anyToJson(value);
                 }

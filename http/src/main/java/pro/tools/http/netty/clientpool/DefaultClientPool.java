@@ -7,7 +7,14 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.pool.ChannelPool;
 import io.netty.channel.pool.FixedChannelPool;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.http.*;
+import io.netty.handler.codec.http.DefaultFullHttpRequest;
+import io.netty.handler.codec.http.DefaultHttpHeaders;
+import io.netty.handler.codec.http.FullHttpRequest;
+import io.netty.handler.codec.http.HttpHeaderNames;
+import io.netty.handler.codec.http.HttpHeaderValues;
+import io.netty.handler.codec.http.HttpHeaders;
+import io.netty.handler.codec.http.HttpVersion;
+import io.netty.handler.codec.http.QueryStringEncoder;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
@@ -17,8 +24,11 @@ import pro.tools.data.text.ToolJson;
 import pro.tools.http.netty.handler.HttpClientChannelPoolHandler;
 import pro.tools.http.netty.handler.HttpClientHandler;
 import pro.tools.http.netty.handler.HttpClientInitializer;
-import pro.tools.http.pojo.*;
+import pro.tools.http.pojo.HttpDefaultHeaders;
+import pro.tools.http.pojo.HttpException;
 import pro.tools.http.pojo.HttpMethod;
+import pro.tools.http.pojo.HttpReceive;
+import pro.tools.http.pojo.HttpSend;
 
 import javax.net.ssl.SSLException;
 import java.net.URI;
@@ -42,9 +52,9 @@ public class DefaultClientPool {
     private Integer port;
     private SslContext sslContext;
 
-    public DefaultClientPool(String URL) throws HttpException {
+    public DefaultClientPool(String url) throws HttpException {
         try {
-            init(URL);
+            init(url);
         } catch (URISyntaxException | SSLException e) {
             throw new HttpException(e);
         }
@@ -63,8 +73,8 @@ public class DefaultClientPool {
         return new HttpClientHandler(httpSend, httpReceive);
     }
 
-    private void init(String URL) throws URISyntaxException, SSLException {
-        URI uri = new URI(URL);
+    private void init(String url) throws URISyntaxException, SSLException {
+        URI uri = new URI(url);
         if (uri.getScheme() == null || uri.getHost() == null) {
             throw new IllegalArgumentException("uri不合法");
         }
@@ -131,12 +141,12 @@ public class DefaultClientPool {
         return httpReceive;
     }
 
-    private static final HttpHeaders defaultHttpHeaders;
+    private static final HttpHeaders DEFAULT_HTTP_HEADERS;
 
     static {
-        defaultHttpHeaders = new DefaultHttpHeaders();
+        DEFAULT_HTTP_HEADERS = new DefaultHttpHeaders();
 
-        HttpDefaultHeaders.getDefaultHeaders().forEach(defaultHttpHeaders::set);
+        HttpDefaultHeaders.getDefaultHeaders().forEach(DEFAULT_HTTP_HEADERS::set);
     }
 
     public void stop() {
@@ -201,7 +211,7 @@ public class DefaultClientPool {
         FullHttpRequest request = new DefaultFullHttpRequest(HttpVersion.HTTP_1_1, httpMethod, sendURI.toString());
 
         // FIXME: 2017/7/27 暂未加Cookie
-        //if (cookies != null) {
+        // if (cookies != null) {
         //    List<Cookie> cookieList = Lists.newArrayListWithCapacity(cookies.size());
         //    cookies.forEach((key, value) -> {
         //        cookieList.add(new DefaultCookie(key, value));
@@ -211,9 +221,9 @@ public class DefaultClientPool {
         //            HttpHeaderNames.COOKIE,
         //            ClientCookieEncoder.STRICT.encode(cookieList)
         //    );
-        //}
+        // }
 
-        request.headers().add(defaultHttpHeaders);
+        request.headers().add(DEFAULT_HTTP_HEADERS);
         if (headers != null) {
             headers.forEach((key, value) -> {
                 request.headers().set(key, value);

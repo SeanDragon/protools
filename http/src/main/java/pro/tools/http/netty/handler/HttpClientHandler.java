@@ -50,7 +50,8 @@ public class HttpClientHandler extends SimpleChannelInboundHandler<HttpObject> {
             if (HttpUtil.isTransferEncodingChunked(response)) {
                 log.debug("#HTTP 内容开始{");
             } else {
-                log.debug("}EOF#");
+                log.debug("#HTTP 内容开始{");
+                // log.debug("}EOF#");
             }
 
             String responseBody = response.content().toString(httpSend.getCharset());

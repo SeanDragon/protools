@@ -46,6 +46,10 @@ public class DefaultClientPool {
     private static final Logger log = LoggerFactory.getLogger(DefaultClientPool.class);
     private static final EventLoopGroup GROUP = new NioEventLoopGroup();
 
+    static {
+        Runtime.getRuntime().addShutdownHook(new Thread(DefaultClientPool::stopAll));
+    }
+
     private ChannelPool channelPool;
     private String host;
     private String scheme;
@@ -58,7 +62,6 @@ public class DefaultClientPool {
         } catch (URISyntaxException | SSLException e) {
             throw new HttpException(e);
         }
-        Runtime.getRuntime().addShutdownHook(new Thread(DefaultClientPool::stopAll));
     }
 
     public static void stopAll() {

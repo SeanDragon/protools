@@ -13,8 +13,8 @@ import io.netty.handler.codec.http.HttpObjectAggregator;
  */
 public class HttpClientChannelPoolHandler extends AbstractChannelPoolHandler {
     @Override
-    public void channelCreated(Channel channel) throws Exception {
-        ChannelPipeline p = channel.pipeline();
+    public void channelCreated(Channel channel) {
+        final ChannelPipeline p = channel.pipeline();
 
         p.addLast(new HttpClientCodec());
 

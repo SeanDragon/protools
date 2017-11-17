@@ -5,6 +5,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.DecoderResult;
 import io.netty.handler.codec.http.FullHttpResponse;
+import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.handler.codec.http.HttpObject;
 import io.netty.handler.codec.http.HttpUtil;
 import org.slf4j.Logger;
@@ -15,32 +16,35 @@ import pro.tools.http.pojo.HttpSend;
 
 import java.util.Map;
 
+/**
+ * @author SeanDragon
+ */
 public class HttpClientHandler extends SimpleChannelInboundHandler<HttpObject> {
 
     private static final Logger log = LoggerFactory.getLogger(HttpClientHandler.class);
 
     private final HttpSend httpSend;
-    private HttpReceive httpReceive;
+    private final HttpReceive httpReceive;
 
-    public HttpClientHandler(final HttpSend httpSend, HttpReceive httpReceive) {
+    public HttpClientHandler(final HttpSend httpSend, final HttpReceive httpReceive) {
         this.httpSend = httpSend;
         this.httpReceive = httpReceive;
     }
 
     @Override
-    public void channelRead0(ChannelHandlerContext ctx, HttpObject msg) {
-
+    public void channelRead0(final ChannelHandlerContext ctx, final HttpObject msg) {
         if (msg instanceof FullHttpResponse) {
-            FullHttpResponse response = (FullHttpResponse) msg;
+            final FullHttpResponse response = (FullHttpResponse) msg;
 
             httpReceive.setStatusCode(response.status().code())
                     .setStatusText(response.status().codeAsText().toString());
 
-            if (!response.headers().isEmpty()) {
+            HttpHeaders headers = response.headers();
+            if (httpSend.getNeedReceiveHeaders() && !headers.isEmpty()) {
 
-                Map<String, String> responseHeaderMap = Maps.newHashMap();
+                final Map<String, String> responseHeaderMap = Maps.newHashMapWithExpectedSize(headers.size());
 
-                response.headers().forEach(one -> {
+                headers.forEach(one -> {
                     responseHeaderMap.put(one.getKey(), one.getValue());
                 });
 
@@ -48,21 +52,29 @@ public class HttpClientHandler extends SimpleChannelInboundHandler<HttpObject> {
             }
 
             if (HttpUtil.isTransferEncodingChunked(response)) {
-                log.debug("#HTTP 内容开始{");
+                if (log.isDebugEnabled()) {
+                    log.debug("#HTTP 内容开始{");
+                }
             } else {
-                log.debug("#HTTP 内容开始{");
-                // log.debug("}EOF#");
+                if (log.isDebugEnabled()) {
+                    log.debug("#HTTP 内容开始{");
+                    // log.debug("}EOF#");
+                }
             }
 
-            String responseBody = response.content().toString(httpSend.getCharset());
+            final String responseBody = response.content().toString(httpSend.getCharset());
 
             httpReceive.setResponseBody(responseBody);
 
-            log.debug(responseBody);
+            if (log.isDebugEnabled()) {
+                log.debug(responseBody);
+            }
 
-            log.debug("}EOF#");
+            if (log.isDebugEnabled()) {
+                log.debug("}EOF#");
+            }
 
-            DecoderResult decoderResult = response.decoderResult();
+            final DecoderResult decoderResult = response.decoderResult();
             if (decoderResult.isFailure()) {
                 httpReceive.setHaveError(true)
                         .setErrMsg(ToolFormat.toException(decoderResult.cause()))
@@ -78,12 +90,12 @@ public class HttpClientHandler extends SimpleChannelInboundHandler<HttpObject> {
     }
 
     @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+    public void exceptionCaught(final ChannelHandlerContext ctx, final Throwable cause) {
         log.warn(cause.getMessage(), cause);
-        httpReceive.setIsDone(true);
-        httpReceive.setHaveError(true);
-        httpReceive.setErrMsg(cause.toString());
-        httpReceive.setThrowable(cause);
+        httpReceive.setIsDone(true)
+                .setHaveError(true)
+                .setErrMsg(cause.toString())
+                .setThrowable(cause);
         ctx.close();
     }
 }

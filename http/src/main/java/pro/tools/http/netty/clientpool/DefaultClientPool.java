@@ -53,7 +53,7 @@ public class DefaultClientPool {
     private Integer port;
     private SslContext sslContext;
 
-    public DefaultClientPool(String url) throws HttpException {
+    public DefaultClientPool(final String url) throws HttpException {
         if (!haveInit) {
             GROUP = new NioEventLoopGroup();
             Runtime.getRuntime().addShutdownHook(new Thread(DefaultClientPool::stopAll));
@@ -69,14 +69,6 @@ public class DefaultClientPool {
 
     public static void stopAll() {
         GROUP.shutdownGracefully();
-    }
-
-    private static HttpReceive getNewHttpReceive() {
-        return new HttpReceive();
-    }
-
-    private static HttpClientHandler getNewHttpClientHandler(HttpSend httpSend, HttpReceive httpReceive) {
-        return new HttpClientHandler(httpSend, httpReceive);
     }
 
     private void init(String url) throws URISyntaxException, SSLException {
@@ -96,7 +88,9 @@ public class DefaultClientPool {
         }
 
         if (!"http".equalsIgnoreCase(scheme) && !"https".equalsIgnoreCase(scheme)) {
-            System.err.println("仅有HTTP(S)是支持的.");
+            if (log.isErrorEnabled()) {
+                log.error("仅有HTTP（S）是支持的。");
+            }
             return;
         }
 
@@ -104,7 +98,7 @@ public class DefaultClientPool {
 
         this.setSSlContext(ssl);
 
-        Bootstrap b = new Bootstrap();
+        final Bootstrap b = new Bootstrap();
         b.group(GROUP)
                 .channel(NioSocketChannel.class)
                 .handler(new HttpClientInitializer(sslContext))
@@ -119,12 +113,12 @@ public class DefaultClientPool {
     }
 
     public HttpReceive request(HttpSend httpSend, long timeout, TimeUnit timeUnit) {
-        HttpReceive httpReceive = getNewHttpReceive();
-        Channel channel = channelPool.acquire().syncUninterruptibly().getNow();
+        final HttpReceive httpReceive = new HttpReceive();
+        final Channel channel = channelPool.acquire().syncUninterruptibly().getNow();
         try {
-            channel.pipeline().addLast(getNewHttpClientHandler(httpSend, httpReceive));
+            channel.pipeline().addLast(new HttpClientHandler(httpSend, httpReceive));
 
-            FullHttpRequest fullHttpRequest = convertRequest(httpSend);
+            final FullHttpRequest fullHttpRequest = convertRequest(httpSend);
 
             channel.pipeline().writeAndFlush(fullHttpRequest);
 
@@ -135,7 +129,9 @@ public class DefaultClientPool {
                 httpReceive.setErrMsg("请求已经超时");
             }
         } catch (Exception e) {
-            log.warn(e.getMessage(), e);
+            if (log.isWarnEnabled()) {
+                log.warn(e.getMessage(), e);
+            }
             httpReceive.setHaveError(true)
                     .setErrMsg(e.getMessage())
                     .setThrowable(e)

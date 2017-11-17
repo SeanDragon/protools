@@ -44,11 +44,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class DefaultClientPool {
     private static final Logger log = LoggerFactory.getLogger(DefaultClientPool.class);
-    private static final EventLoopGroup GROUP = new NioEventLoopGroup();
-
-    static {
-        Runtime.getRuntime().addShutdownHook(new Thread(DefaultClientPool::stopAll));
-    }
+    private static EventLoopGroup GROUP;
+    private static volatile boolean haveInit;
 
     private ChannelPool channelPool;
     private String host;
@@ -57,6 +54,12 @@ public class DefaultClientPool {
     private SslContext sslContext;
 
     public DefaultClientPool(String url) throws HttpException {
+        if (!haveInit) {
+            GROUP = new NioEventLoopGroup();
+            Runtime.getRuntime().addShutdownHook(new Thread(DefaultClientPool::stopAll));
+            haveInit = true;
+        }
+
         try {
             init(url);
         } catch (URISyntaxException | SSLException e) {

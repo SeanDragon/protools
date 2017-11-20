@@ -34,6 +34,7 @@ public class ToolHttpBuilder {
     private final static int DEFAULT_MAX_IDLE_CONNECTIONS = 5;
 
     private volatile static OkHttpClient.Builder defaultBuilder;
+    private volatile static OkHttpClient defaultClient;
     private volatile static ConnectionPool connectionPool;
 
     static {
@@ -63,10 +64,13 @@ public class ToolHttpBuilder {
                 .writeTimeout(DEFAULT_WRITE_TIMEOUT, TimeUnit.SECONDS)
                 .readTimeout(DEFAULT_READ_TIMEOUT, TimeUnit.SECONDS)
                 .connectionPool(connectionPool)
-                .retryOnConnectionFailure(true)//失败重连
+                //失败重连
+                .retryOnConnectionFailure(true)
                 .followRedirects(true)
                 .followSslRedirects(true)
         ;
+
+        defaultClient = defaultBuilder.build();
         Runtime.getRuntime().addShutdownHook(new Thread(() -> connectionPool.evictAll()));
     }
 
@@ -84,6 +88,14 @@ public class ToolHttpBuilder {
 
     public static OkHttpClient.Builder getDefaultBuilder() {
         return defaultBuilder;
+    }
+
+    public static OkHttpClient getDefaultClient() {
+        return defaultClient;
+    }
+
+    public static void setDefaultClient(OkHttpClient defaultClient) {
+        ToolHttpBuilder.defaultClient = defaultClient;
     }
 
     public static OkHttpClient buildOkHttpClient() {

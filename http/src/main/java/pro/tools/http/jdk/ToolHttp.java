@@ -160,8 +160,7 @@ public final class ToolHttp {
             Response response = future.get();
             int responseStatusCode = response.getStatusCode();
             if (responseStatusCode != 200) {
-                httpReceive.setHaveError(true)
-                        .setErrMsg("本次请求响应码不是200，是" + responseStatusCode)
+                httpReceive.setErrMsg("本次请求响应码不是200，是" + responseStatusCode)
                 ;
             } else {
                 httpReceive.setStatusCode(responseStatusCode)

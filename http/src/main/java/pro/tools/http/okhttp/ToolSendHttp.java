@@ -39,14 +39,13 @@ public class ToolSendHttp {
     }
 
     public static HttpReceive send(HttpSend httpSend) {
-        return send(httpSend, ToolHttpBuilder.getDefaultBuilder());
+        return send(httpSend, ToolHttpBuilder.getDefaultClient());
     }
 
-    public static HttpReceive send(HttpSend httpSend, OkHttpClient.Builder clientBuilder) {
+    public static HttpReceive send(HttpSend httpSend, OkHttpClient okHttpClient) {
         HttpReceive httpReceive = new HttpReceive();
         httpReceive.setHaveError(true);
         try {
-            OkHttpClient okHttpClient = clientBuilder.build();
             Request request = convertRequest(httpSend);
             Call call = okHttpClient.newCall(request);
             Response response = call.execute();
@@ -66,8 +65,7 @@ public class ToolSendHttp {
 
             int responseStatusCode = response.code();
             if (responseStatusCode != 200) {
-                httpReceive.setHaveError(true)
-                        .setErrMsg("本次请求响应码不是200，是" + responseStatusCode)
+                httpReceive.setErrMsg("本次请求响应码不是200，是" + responseStatusCode)
                 ;
             } else {
                 httpReceive.setResponseBody(body.string())

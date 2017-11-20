@@ -7,6 +7,9 @@ import io.netty.handler.codec.http.HttpClientCodec;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.ssl.SslContext;
 
+/**
+ * @author sd
+ */
 public class HttpClientInitializer extends ChannelInitializer<SocketChannel> {
 
     private final SslContext sslCtx;
@@ -16,6 +19,7 @@ public class HttpClientInitializer extends ChannelInitializer<SocketChannel> {
     }
 
     @Override
+    @Deprecated
     public void initChannel(SocketChannel ch) {
         ChannelPipeline p = ch.pipeline();
 
@@ -26,7 +30,7 @@ public class HttpClientInitializer extends ChannelInitializer<SocketChannel> {
 
         p.addLast(new HttpClientCodec());
 
-        p.addLast(new HttpObjectAggregator(1024 * 1024));
+        p.addLast(new HttpObjectAggregator(Integer.MAX_VALUE));
 
         //放到request真正发送的时候了
         //p.addLast(new HttpClientHandler());

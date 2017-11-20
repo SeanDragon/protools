@@ -1,39 +1,27 @@
 package pro.tools.http.netty.clientpool;
 
 import io.netty.bootstrap.Bootstrap;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.pool.ChannelPool;
 import io.netty.channel.pool.FixedChannelPool;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.http.DefaultFullHttpRequest;
-import io.netty.handler.codec.http.DefaultHttpHeaders;
-import io.netty.handler.codec.http.FullHttpRequest;
-import io.netty.handler.codec.http.HttpHeaderNames;
-import io.netty.handler.codec.http.HttpHeaderValues;
-import io.netty.handler.codec.http.HttpHeaders;
-import io.netty.handler.codec.http.HttpVersion;
-import io.netty.handler.codec.http.QueryStringEncoder;
+import io.netty.handler.codec.http.*;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pro.tools.data.text.ToolJson;
 import pro.tools.http.netty.handler.HttpClientChannelPoolHandler;
 import pro.tools.http.netty.handler.HttpClientHandler;
-import pro.tools.http.netty.handler.HttpClientInitializer;
-import pro.tools.http.pojo.HttpDefaultHeaders;
-import pro.tools.http.pojo.HttpException;
+import pro.tools.http.pojo.*;
 import pro.tools.http.pojo.HttpMethod;
-import pro.tools.http.pojo.HttpReceive;
-import pro.tools.http.pojo.HttpSend;
 
 import javax.net.ssl.SSLException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.AbstractCollection;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -101,11 +89,12 @@ public class DefaultClientPool {
         final Bootstrap b = new Bootstrap();
         b.group(GROUP)
                 .channel(NioSocketChannel.class)
-                .handler(new HttpClientInitializer(sslContext))
+                //FIXME 删除好像没有事情，走的是HttpClientChannelPoolHandler
+                //.handler(new HttpClientInitializer(sslContext))
                 .remoteAddress(host, port)
         ;
 
-        channelPool = new FixedChannelPool(b, new HttpClientChannelPoolHandler(), Integer.MAX_VALUE);
+        channelPool = new FixedChannelPool(b, new HttpClientChannelPoolHandler(sslContext), Integer.MAX_VALUE);
     }
 
     public HttpReceive request(HttpSend httpSend) {
@@ -189,16 +178,18 @@ public class DefaultClientPool {
 
         QueryStringEncoder queryStringEncoder = new QueryStringEncoder(scheme + "://" + host + ":" + port + httpSend.getUrl(), httpSend.getCharset());
 
+        StringBuffer content = new StringBuffer();
         if (params != null) {
             params.forEach((key, value) -> {
-                if (value instanceof AbstractCollection
-                        || value instanceof Map
-                        || value instanceof Number
-                        || value instanceof String) {
-                    queryStringEncoder.addParam(key, value.toString());
-                } else {
-                    queryStringEncoder.addParam(key, ToolJson.anyToJson(value));
-                }
+                content.append(key).append("=").append(value.toString()).append("&");
+                //if (value instanceof AbstractCollection
+                //        || value instanceof Map
+                //        || value instanceof Number
+                //        || value instanceof String) {
+                //    queryStringEncoder.addParam(key, value.toString());
+                //} else {
+                //    queryStringEncoder.addParam(key, ToolJson.anyToJson(value));
+                //}
             });
         }
 
@@ -210,7 +201,11 @@ public class DefaultClientPool {
             throw new RuntimeException(e);
         }
 
-        FullHttpRequest request = new DefaultFullHttpRequest(HttpVersion.HTTP_1_1, httpMethod, sendURI.toString());
+        FullHttpRequest request = new DefaultFullHttpRequest(HttpVersion.HTTP_1_1
+                , httpMethod
+                , sendURI.toString()
+                , Unpooled.copiedBuffer(content.toString().getBytes())
+        );
 
         // FIXME: 2017/7/27 暂未加Cookie
         // if (cookies != null) {

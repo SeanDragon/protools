@@ -158,11 +158,18 @@ public final class ToolHttp {
 
         try {
             Response response = future.get();
-            httpReceive.setStatusCode(response.getStatusCode())
-                    .setStatusText(response.getStatusText())
-                    .setResponseBody(response.getResponseBody())
-                    .setHaveError(false)//将是否有错误信息设置为无
-            ;
+            int responseStatusCode = response.getStatusCode();
+            if (responseStatusCode != 200) {
+                httpReceive.setHaveError(true)
+                        .setErrMsg("本次请求响应码不是200，是" + responseStatusCode)
+                ;
+            } else {
+                httpReceive.setStatusCode(responseStatusCode)
+                        .setStatusText(response.getStatusText())
+                        .setResponseBody(response.getResponseBody())
+                        .setHaveError(false)
+                ;
+            }
         } catch (InterruptedException e) {
             httpReceive.setErrMsg("http组件出现问题!")
                     .setThrowable(e);

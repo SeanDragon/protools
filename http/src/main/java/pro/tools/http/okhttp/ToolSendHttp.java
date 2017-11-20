@@ -63,12 +63,21 @@ public class ToolSendHttp {
                 String oneHeaderValue = headers.get(oneHeaderName);
                 responseHeaders.put(oneHeaderName, oneHeaderValue);
             });
-            httpReceive.setResponseBody(body.string())
-                    .setHaveError(false)
-                    .setStatusCode(response.code())
-                    .setStatusText(response.code() + "")
-                    .setResponseHeader(responseHeaders)
-            ;
+
+            int responseStatusCode = response.code();
+            if (responseStatusCode != 200) {
+                httpReceive.setHaveError(true)
+                        .setErrMsg("本次请求响应码不是200，是" + responseStatusCode)
+                ;
+            } else {
+                httpReceive.setResponseBody(body.string())
+                        .setHaveError(false)
+                        .setStatusCode(responseStatusCode)
+                        .setStatusText(responseStatusCode + "")
+                        .setResponseHeader(responseHeaders)
+                ;
+            }
+
             response.close();
             okHttpClient.dispatcher().executorService().shutdown();
         } catch (Exception e) {

@@ -81,7 +81,7 @@ public class HttpClientHandler extends SimpleChannelInboundHandler<HttpObject> {
                         .setThrowable(decoderResult.cause());
             } else if (response.status().code() != 200) {
                 httpReceive.setHaveError(true)
-                        .setErrMsg("本次请求响应码不是200");
+                        .setErrMsg("本次请求响应码不是200，是" + response.status().code());
             }
 
             httpReceive.setIsDone(true);

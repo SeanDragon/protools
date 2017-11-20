@@ -12,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pro.tools.data.text.ToolJson;
 import pro.tools.format.ToolFormat;
-import pro.tools.http.pojo.HttpException;
 import pro.tools.http.pojo.HttpMethod;
 import pro.tools.http.pojo.HttpReceive;
 import pro.tools.http.pojo.HttpSend;
@@ -91,9 +90,9 @@ public class ToolSendHttp {
         return httpReceive;
     }
 
-    private static Request convertRequest(HttpSend httpSend) throws HttpException {
+    private static Request convertRequest(HttpSend httpSend) {
         Request.Builder requestBuilder = new Request.Builder();
-        FormBody.Builder requestBodyBuilder = new FormBody.Builder();
+        FormBody.Builder formBodyBuilder = new FormBody.Builder();
 
         Map<String, Object> params = httpSend.getParams();
         String url = httpSend.getUrl();
@@ -115,7 +114,7 @@ public class ToolSendHttp {
                 } else {
                     v = ToolJson.anyToJson(value);
                 }
-                requestBodyBuilder.add(key, v);
+                formBodyBuilder.add(key, v);
             });
         }
 
@@ -132,7 +131,7 @@ public class ToolSendHttp {
             });
         }
 
-        FormBody requestBody = requestBodyBuilder.build();
+        FormBody requestBody = formBodyBuilder.build();
 
         if (httpSend.getMethod() != HttpMethod.GET) {
             return requestBuilder.url(url).method(httpSend.getMethod().name(), requestBody).build();

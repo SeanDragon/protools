@@ -18,6 +18,6 @@ public class HttpClientChannelPoolHandler extends AbstractChannelPoolHandler {
 
         p.addLast(new HttpClientCodec());
 
-        p.addLast(new HttpObjectAggregator(1024 * 1024));
+        p.addLast(new HttpObjectAggregator(Integer.MAX_VALUE));
     }
 }

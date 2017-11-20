@@ -1,6 +1,9 @@
 package http;
 
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import org.junit.Test;
+import pro.tools.constant.StrConst;
 import pro.tools.http.okhttp.ToolSendHttp;
 import pro.tools.http.pojo.HttpReceive;
 import pro.tools.http.pojo.HttpSend;
@@ -18,5 +21,11 @@ public class TestURL {
         HttpSend httpSend = new HttpSend(url);
         HttpReceive send = ToolSendHttp.send(httpSend);
         System.out.println(send);
+    }
+
+    @Test
+    public void test2() {
+        ByteBuf buffer = Unpooled.wrappedBuffer("123".getBytes());
+        System.out.println(buffer.toString(StrConst.DEFAULT_CHARSET));
     }
 }

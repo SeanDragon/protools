@@ -15,15 +15,15 @@ public class ToolHttpBuilder {
     /**
      * 读超时 秒
      */
-    private final static long DEFAULT_READ_TIMEOUT = 5;
+    private final static long DEFAULT_READ_TIMEOUT = 60;
     /**
      * 写超时 秒
      */
-    private final static long DEFAULT_WRITE_TIMEOUT = 5;
+    private final static long DEFAULT_WRITE_TIMEOUT = 60;
     /**
      * 连接超时 秒
      */
-    private final static long DEFAULT_CONNECT_TIMEOUT = 5;
+    private final static long DEFAULT_CONNECT_TIMEOUT = 60;
     /**
      * 长连接时间 分钟
      */
@@ -31,7 +31,7 @@ public class ToolHttpBuilder {
     /**
      * 最大空闲连接
      */
-    private final static int DEFAULT_MAX_IDLE_CONNECTIONS = 5;
+    private final static int DEFAULT_MAX_IDLE_CONNECTIONS = 100;
 
     private volatile static OkHttpClient.Builder defaultBuilder;
     private volatile static OkHttpClient defaultClient;

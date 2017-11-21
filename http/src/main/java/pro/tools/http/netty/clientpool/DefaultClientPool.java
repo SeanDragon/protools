@@ -8,7 +8,14 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.pool.ChannelPool;
 import io.netty.channel.pool.FixedChannelPool;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.http.*;
+import io.netty.handler.codec.http.DefaultFullHttpRequest;
+import io.netty.handler.codec.http.DefaultHttpHeaders;
+import io.netty.handler.codec.http.FullHttpRequest;
+import io.netty.handler.codec.http.HttpHeaderNames;
+import io.netty.handler.codec.http.HttpHeaderValues;
+import io.netty.handler.codec.http.HttpHeaders;
+import io.netty.handler.codec.http.HttpVersion;
+import io.netty.handler.codec.http.QueryStringEncoder;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
@@ -16,8 +23,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pro.tools.http.netty.handler.HttpClientChannelPoolHandler;
 import pro.tools.http.netty.handler.HttpClientHandler;
-import pro.tools.http.pojo.*;
+import pro.tools.http.pojo.HttpDefaultHeaders;
+import pro.tools.http.pojo.HttpException;
 import pro.tools.http.pojo.HttpMethod;
+import pro.tools.http.pojo.HttpReceive;
+import pro.tools.http.pojo.HttpSend;
 
 import javax.net.ssl.SSLException;
 import java.net.URI;
@@ -178,10 +188,11 @@ public class DefaultClientPool {
 
         QueryStringEncoder queryStringEncoder = new QueryStringEncoder(scheme + "://" + host + ":" + port + httpSend.getUrl(), httpSend.getCharset());
 
-        StringBuffer content = new StringBuffer();
+        String content = "";
         if (params != null) {
+            StringBuffer tempContent = new StringBuffer();
             params.forEach((key, value) -> {
-                content.append(key).append("=").append(value.toString()).append("&");
+                tempContent.append(key).append("=").append(value.toString()).append("&");
                 //if (value instanceof AbstractCollection
                 //        || value instanceof Map
                 //        || value instanceof Number
@@ -191,6 +202,9 @@ public class DefaultClientPool {
                 //    queryStringEncoder.addParam(key, ToolJson.anyToJson(value));
                 //}
             });
+            if (!params.isEmpty()) {
+                content = tempContent.substring(0, tempContent.length() - 1);
+            }
         }
 
         URI sendURI;
@@ -204,7 +218,7 @@ public class DefaultClientPool {
         FullHttpRequest request = new DefaultFullHttpRequest(HttpVersion.HTTP_1_1
                 , httpMethod
                 , sendURI.toString()
-                , Unpooled.copiedBuffer(content.toString().getBytes())
+                , Unpooled.copiedBuffer(content.getBytes())
         );
 
         // FIXME: 2017/7/27 暂未加Cookie

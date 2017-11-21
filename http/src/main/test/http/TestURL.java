@@ -93,4 +93,18 @@ public class TestURL {
         System.out.println(post.getErrMsg());
         System.out.println(post.getStatusCode());
     }
+
+    @Test
+    public void test5() {
+        String s = "dHKj71wpcLi8XeLO33T4Y5DoEYE3TjMPcn0tc21hNyJY4J5iOxnu2Fj3iq7xgjrkke3fYq7a6n3R\n" +
+                "6w8AEQfNxICdpKGCHp6WH67eHWdvR9ae/4j3flA36yq7qEYfszXX27I+sQmVj7fnYwg8R8CQlMwJ\n" +
+                "Iak4KAN03ggdJoYXpTI=\n";
+
+        ByteBuf byteBuf = Unpooled.copiedBuffer(s.getBytes());
+        System.out.println(byteBuf.toString(StrConst.DEFAULT_CHARSET));
+
+        StringBuffer stringBuffer = new StringBuffer("123");
+        String substring = stringBuffer.substring(0, stringBuffer.length() - 1);
+        System.out.println(substring);
+    }
 }

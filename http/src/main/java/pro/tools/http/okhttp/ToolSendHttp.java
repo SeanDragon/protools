@@ -33,12 +33,20 @@ public class ToolSendHttp {
         return send(HttpSend.of(url).setMethod(HttpMethod.GET));
     }
 
+    public static HttpReceive post(String url) {
+        return send(HttpSend.of(url).setMethod(HttpMethod.POST));
+    }
+
     public static HttpReceive post(String url, Map<String, Object> params) {
         return send(HttpSend.of(url, params).setMethod(HttpMethod.POST));
     }
 
     public static HttpReceive send(HttpSend httpSend) {
         return send(httpSend, ToolHttpBuilder.getDefaultClient());
+    }
+
+    public static HttpReceive send(HttpSend httpSend, OkHttpClient.Builder okHttpClientBuilder) {
+        return send(httpSend, okHttpClientBuilder.build());
     }
 
     public static HttpReceive send(HttpSend httpSend, OkHttpClient okHttpClient) {

@@ -15,15 +15,15 @@ public class ToolHttpBuilder {
     /**
      * 读超时 秒
      */
-    private final static long DEFAULT_READ_TIMEOUT = 60;
+    private final static long DEFAULT_READ_TIMEOUT = 5 * 60;
     /**
      * 写超时 秒
      */
-    private final static long DEFAULT_WRITE_TIMEOUT = 60;
+    private final static long DEFAULT_WRITE_TIMEOUT = 5 * 60;
     /**
      * 连接超时 秒
      */
-    private final static long DEFAULT_CONNECT_TIMEOUT = 60;
+    private final static long DEFAULT_CONNECT_TIMEOUT = 5 * 60;
     /**
      * 长连接时间 分钟
      */

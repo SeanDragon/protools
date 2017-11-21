@@ -62,13 +62,15 @@ public class ToolSendHttp {
                 throw new NullPointerException("response.body is null");
             }
 
-            Headers headers = response.headers();
-            Set<String> headerNameSet = headers.names();
             Map<String, String> responseHeaders = Maps.newHashMap();
-            headerNameSet.forEach(oneHeaderName -> {
-                String oneHeaderValue = headers.get(oneHeaderName);
-                responseHeaders.put(oneHeaderName, oneHeaderValue);
-            });
+            if(httpSend.getNeedReceiveHeaders()) {
+                Headers headers = response.headers();
+                Set<String> headerNameSet = headers.names();
+                headerNameSet.forEach(oneHeaderName -> {
+                    String oneHeaderValue = headers.get(oneHeaderName);
+                    responseHeaders.put(oneHeaderName, oneHeaderValue);
+                });
+            }
 
             int responseStatusCode = response.code();
             if (responseStatusCode != 200) {

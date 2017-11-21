@@ -1,12 +1,15 @@
 package pro.tools.http.jdk;
 
+import com.google.common.collect.Maps;
 import com.ning.http.client.AsyncHttpClient;
+import com.ning.http.client.FluentCaseInsensitiveStringsMap;
 import com.ning.http.client.ListenableFuture;
 import com.ning.http.client.Response;
 import io.netty.handler.codec.http.HttpHeaderNames;
 import io.netty.handler.codec.http.HttpHeaderValues;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pro.tools.data.text.ToolJson;
 import pro.tools.format.ToolFormat;
 import pro.tools.http.pojo.HttpMethod;
 import pro.tools.http.pojo.HttpReceive;
@@ -102,7 +105,7 @@ public final class ToolHttp {
         }
 
         Map<String, Object> param = send.getParams();
-        Map<String, Object> headers = send.getHeaders();
+        Map<String, Object> sendHeaders = send.getHeaders();
         HttpMethod method = send.getMethod();
         Charset charset = send.getCharset();
 
@@ -148,8 +151,8 @@ public final class ToolHttp {
                 .addHeader("DNT", "1")
         ;
 
-        if (headers != null) {
-            headers.forEach((key, value) -> requestBuilder.addHeader(key, value.toString()));
+        if (sendHeaders != null) {
+            sendHeaders.forEach((key, value) -> requestBuilder.addHeader(key, value.toString()));
         }
 
         // TODO: 2017/7/27 Cookie未加入
@@ -158,6 +161,19 @@ public final class ToolHttp {
 
         try {
             Response response = future.get();
+
+            Map<String, String> responseHeaderMap = Maps.newHashMap();
+            if (send.getNeedReceiveHeaders()) {
+                FluentCaseInsensitiveStringsMap responseHeaders = response.getHeaders();
+                responseHeaders.forEach((k, v) -> {
+                    if (v.size() == 1) {
+                        responseHeaderMap.put(k, v.get(0));
+                    } else {
+                        responseHeaderMap.put(k, ToolJson.anyToJson(v));
+                    }
+                });
+            }
+
             int responseStatusCode = response.getStatusCode();
             if (responseStatusCode != 200) {
                 httpReceive.setErrMsg("本次请求响应码不是200，是" + responseStatusCode)
@@ -166,6 +182,7 @@ public final class ToolHttp {
                 httpReceive.setStatusCode(responseStatusCode)
                         .setStatusText(response.getStatusText())
                         .setResponseBody(response.getResponseBody())
+                        .setResponseHeader(responseHeaderMap)
                         .setHaveError(false)
                 ;
             }

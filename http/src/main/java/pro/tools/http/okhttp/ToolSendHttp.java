@@ -50,7 +50,7 @@ public class ToolSendHttp {
     }
 
     public static HttpReceive send(HttpSend httpSend, OkHttpClient okHttpClient) {
-        HttpReceive httpReceive = new HttpReceive();
+        final HttpReceive httpReceive = new HttpReceive();
         httpReceive.setHaveError(true);
         try {
             Request request = convertRequest(httpSend);
@@ -62,12 +62,12 @@ public class ToolSendHttp {
                 throw new NullPointerException("response.body is null");
             }
 
-            Map<String, String> responseHeaders = Maps.newHashMap();
-            if(httpSend.getNeedReceiveHeaders()) {
-                Headers headers = response.headers();
-                Set<String> headerNameSet = headers.names();
+            final Map<String, String> responseHeaders = Maps.newHashMap();
+            if (httpSend.getNeedReceiveHeaders()) {
+                final Headers headers = response.headers();
+                final Set<String> headerNameSet = headers.names();
                 headerNameSet.forEach(oneHeaderName -> {
-                    String oneHeaderValue = headers.get(oneHeaderName);
+                    final String oneHeaderValue = headers.get(oneHeaderName);
                     responseHeaders.put(oneHeaderName, oneHeaderValue);
                 });
             }
@@ -101,12 +101,12 @@ public class ToolSendHttp {
     }
 
     private static Request convertRequest(HttpSend httpSend) {
-        Request.Builder requestBuilder = new Request.Builder();
-        FormBody.Builder formBodyBuilder = new FormBody.Builder();
+        final Request.Builder requestBuilder = new Request.Builder();
+        final FormBody.Builder formBodyBuilder = new FormBody.Builder();
 
-        Map<String, Object> params = httpSend.getParams();
-        String url = httpSend.getUrl();
-        Map<String, Object> headers = httpSend.getHeaders();
+        final Map<String, Object> params = httpSend.getParams();
+        final String url = httpSend.getUrl();
+        final Map<String, Object> headers = httpSend.getHeaders();
 
         if (params != null) {
             params.forEach((key, value) -> {
@@ -115,11 +115,6 @@ public class ToolSendHttp {
                         || value instanceof Map
                         || value instanceof Number
                         || value instanceof String) {
-                    // try {
-                    //     v = URLDecoder.decode(value.toString(), StrConst.DEFAULT_CHARSET_NAME);
-                    // } catch (UnsupportedEncodingException e) {
-                    //     throw new RuntimeException(e);
-                    // }
                     v = value.toString();
                 } else {
                     v = ToolJson.anyToJson(value);
@@ -141,12 +136,8 @@ public class ToolSendHttp {
             });
         }
 
-        FormBody requestBody = formBodyBuilder.build();
+        final FormBody requestBody = formBodyBuilder.build();
 
-        if (httpSend.getMethod() != HttpMethod.GET) {
-            return requestBuilder.url(url).method(httpSend.getMethod().name(), requestBody).build();
-        } else {
-            return requestBuilder.url(url).build();
-        }
+        return requestBuilder.url(url).method(httpSend.getMethod().name(), requestBody).build();
     }
 }

@@ -21,7 +21,6 @@ public class HttpClientChannelPoolHandler extends AbstractChannelPoolHandler {
         this.sslCtx = sslCtx;
     }
 
-
     @Override
     public void channelCreated(Channel channel) {
         final ChannelPipeline p = channel.pipeline();

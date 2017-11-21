@@ -93,7 +93,7 @@ public class ToolHttpBuilder {
     }
 
     public static OkHttpClient.Builder build(long connectTimeout, long readTimeout, long writeTimeout) {
-        OkHttpClient.Builder newBuilder = new OkHttpClient.Builder();
+        final OkHttpClient.Builder newBuilder = new OkHttpClient.Builder();
         newBuilder.connectTimeout(connectTimeout, TimeUnit.SECONDS)
                 .writeTimeout(writeTimeout, TimeUnit.SECONDS)
                 .readTimeout(readTimeout, TimeUnit.SECONDS)

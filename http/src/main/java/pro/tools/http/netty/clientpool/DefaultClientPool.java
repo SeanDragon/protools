@@ -29,6 +29,7 @@ import pro.tools.http.pojo.HttpDefaultHeaders;
 import pro.tools.http.pojo.HttpException;
 import pro.tools.http.pojo.HttpMethod;
 import pro.tools.http.pojo.HttpReceive;
+import pro.tools.http.pojo.HttpScheme;
 import pro.tools.http.pojo.HttpSend;
 
 import javax.net.ssl.SSLException;
@@ -74,7 +75,7 @@ public class DefaultClientPool {
         GROUP.shutdownGracefully();
     }
 
-    private void init(String url) throws URISyntaxException, SSLException {
+    private void init(String url) throws URISyntaxException, SSLException{
         URI uri = new URI(url);
         if (uri.getScheme() == null || uri.getHost() == null) {
             throw new IllegalArgumentException("uri不合法");
@@ -83,29 +84,27 @@ public class DefaultClientPool {
         host = uri.getHost();
         port = uri.getPort();
         if (port == -1) {
-            if ("http".equalsIgnoreCase(scheme)) {
+            if (HttpScheme.HTTP.equalsIgnoreCase(scheme)) {
                 port = 80;
-            } else if ("https".equalsIgnoreCase(scheme)) {
+            } else if (HttpScheme.HTTPS.equalsIgnoreCase(scheme)) {
                 port = 443;
             }
         }
 
-        if (!"http".equalsIgnoreCase(scheme) && !"https".equalsIgnoreCase(scheme)) {
+        if (!HttpScheme.HTTP.equalsIgnoreCase(scheme) && !HttpScheme.HTTPS.equalsIgnoreCase(scheme)) {
             if (log.isErrorEnabled()) {
                 log.error("仅有HTTP（S）是支持的。");
             }
             return;
         }
 
-        final boolean ssl = "https".equalsIgnoreCase(scheme);
+        final boolean ssl = HttpScheme.HTTPS.equalsIgnoreCase(scheme);
 
         this.setSSlContext(ssl);
 
         final Bootstrap b = new Bootstrap();
         b.group(GROUP)
                 .channel(NioSocketChannel.class)
-                //FIXME 删除好像没有事情，走的是HttpClientChannelPoolHandler
-                //.handler(new HttpClientInitializer(sslContext))
                 .remoteAddress(host, port)
         ;
 
@@ -151,7 +150,6 @@ public class DefaultClientPool {
 
     static {
         DEFAULT_HTTP_HEADERS = new DefaultHttpHeaders();
-
         HttpDefaultHeaders.getDefaultHeaders().forEach(DEFAULT_HTTP_HEADERS::set);
     }
 
@@ -165,26 +163,7 @@ public class DefaultClientPool {
         Map<String, Object> params = httpSend.getParams();
         Map<String, Object> headers = httpSend.getHeaders();
 
-        switch (method) {
-            case GET:
-                httpMethod = io.netty.handler.codec.http.HttpMethod.GET;
-                break;
-            case POST:
-                httpMethod = io.netty.handler.codec.http.HttpMethod.POST;
-                break;
-            case PUT:
-                httpMethod = io.netty.handler.codec.http.HttpMethod.PUT;
-                break;
-            case DELETE:
-                httpMethod = io.netty.handler.codec.http.HttpMethod.DELETE;
-                break;
-            case TRACE:
-                httpMethod = io.netty.handler.codec.http.HttpMethod.TRACE;
-                break;
-            default:
-                httpMethod = io.netty.handler.codec.http.HttpMethod.POST;
-                break;
-        }
+        httpMethod = new io.netty.handler.codec.http.HttpMethod(method.name());
 
         if (httpSend.getUrl().trim().charAt(0) != '/') {
             httpSend.setUrl("/" + httpSend.getUrl());
@@ -195,7 +174,7 @@ public class DefaultClientPool {
 
         String content = "";
         if (params != null) {
-            StringBuffer tempContent = new StringBuffer();
+            final StringBuilder tempContent = new StringBuilder();
             params.forEach((key, value) -> {
                 String v;
                 if (value instanceof AbstractCollection
@@ -209,8 +188,7 @@ public class DefaultClientPool {
 
                 try {
                     v = URLEncoder.encode(v, StrConst.DEFAULT_CHARSET_NAME);
-                } catch (UnsupportedEncodingException e) {
-                    log.warn(e.getMessage(), e);
+                } catch (UnsupportedEncodingException ignored) {
                 }
                 tempContent.append(key).append("=").append(v).append("&");
             });

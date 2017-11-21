@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import com.ning.http.client.AsyncHttpClient;
 import com.ning.http.client.FluentCaseInsensitiveStringsMap;
 import com.ning.http.client.ListenableFuture;
+import com.ning.http.client.RequestBuilder;
 import com.ning.http.client.Response;
 import io.netty.handler.codec.http.HttpHeaderNames;
 import io.netty.handler.codec.http.HttpHeaderValues;
@@ -13,6 +14,7 @@ import pro.tools.data.text.ToolJson;
 import pro.tools.format.ToolFormat;
 import pro.tools.http.pojo.HttpMethod;
 import pro.tools.http.pojo.HttpReceive;
+import pro.tools.http.pojo.HttpScheme;
 import pro.tools.http.pojo.HttpSend;
 
 import java.io.IOException;
@@ -97,9 +99,9 @@ public final class ToolHttp {
         String host = uri.getHost();
         int port = uri.getPort();
         if (port == -1) {
-            if ("http".equalsIgnoreCase(scheme)) {
+            if (HttpScheme.HTTP.equalsIgnoreCase(scheme)) {
                 port = 80;
-            } else if ("https".equalsIgnoreCase(scheme)) {
+            } else if (HttpScheme.HTTPS.equalsIgnoreCase(scheme)) {
                 port = 443;
             }
         }
@@ -111,28 +113,9 @@ public final class ToolHttp {
 
         AsyncHttpClient asyncHttpClient = httpBuilder.buildDefaultClient();
 
-        AsyncHttpClient.BoundRequestBuilder requestBuilder;
+        RequestBuilder builder = new RequestBuilder(method.name());
 
-        switch (method) {
-            case GET:
-                requestBuilder = asyncHttpClient.prepareGet(url);
-                break;
-            case POST:
-                requestBuilder = asyncHttpClient.preparePost(url);
-                break;
-            case PUT:
-                requestBuilder = asyncHttpClient.preparePut(url);
-                break;
-            case DELETE:
-                requestBuilder = asyncHttpClient.prepareDelete(url);
-                break;
-            case TRACE:
-                requestBuilder = asyncHttpClient.prepareTrace(url);
-                break;
-            default:
-                requestBuilder = asyncHttpClient.prepareGet(url);
-                break;
-        }
+        AsyncHttpClient.BoundRequestBuilder requestBuilder = asyncHttpClient.prepareRequest(builder.build());
 
         //设置编码
         requestBuilder.setBodyEncoding(charset.toString());

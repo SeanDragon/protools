@@ -172,15 +172,21 @@ public final class ToolHttp {
         } catch (InterruptedException e) {
             httpReceive.setErrMsg("http组件出现问题!")
                     .setThrowable(e);
-            log.warn(ToolFormat.toException(e), e);
+            if (log.isWarnEnabled()) {
+                log.warn(ToolFormat.toException(e), e);
+            }
         } catch (IOException e) {
             httpReceive.setErrMsg("获取返回内容失败!")
                     .setThrowable(e);
-            log.warn(ToolFormat.toException(e), e);
+            if (log.isWarnEnabled()) {
+                log.warn(ToolFormat.toException(e), e);
+            }
         } catch (ExecutionException e) {
             httpReceive.setErrMsg("访问URL失败!")
                     .setThrowable(e);
-            log.warn(ToolFormat.toException(e), e);
+            if (log.isWarnEnabled()) {
+                log.warn(ToolFormat.toException(e), e);
+            }
         }
 
         httpReceive.setIsDone(true);

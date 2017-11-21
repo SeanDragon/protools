@@ -202,7 +202,9 @@ public class DefaultClientPool {
         try {
             sendURI = new URI(queryStringEncoder.toString());
         } catch (URISyntaxException e) {
-            log.warn(e.getMessage(), e);
+            if (log.isWarnEnabled()) {
+                log.warn(e.getMessage(), e);
+            }
             throw new RuntimeException(e);
         }
 

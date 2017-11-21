@@ -91,7 +91,10 @@ public class HttpClientHandler extends SimpleChannelInboundHandler<HttpObject> {
 
     @Override
     public void exceptionCaught(final ChannelHandlerContext ctx, final Throwable cause) {
-        log.warn(cause.getMessage(), cause);
+        if (log.isWarnEnabled()) {
+            log.warn(cause.getMessage(), cause);
+        }
+
         httpReceive.setIsDone(true)
                 .setHaveError(true)
                 .setErrMsg(cause.toString())

@@ -141,7 +141,9 @@ public class MailClientPool {
             if (ToolStr.isBlank(user)
                     || ToolStr.isBlank(password)
                     || ToolStr.isBlank(userMail)) {
-                log.warn("USER:" + user + "\tPASSWORD:" + password + "\tUSER_MAIL:" + userMail);
+                if (log.isWarnEnabled()) {
+                    log.warn("USER:" + user + "\tPASSWORD:" + password + "\tUSER_MAIL:" + userMail);
+                }
                 return;
             }
 
@@ -157,13 +159,17 @@ public class MailClientPool {
                 message.setFrom(new InternetAddress(userMail));
                 ts.sendMessage(message, message.getAllRecipients());
             } catch (MessagingException | UnsupportedEncodingException e) {
-                log.warn("发送失败", e);
+                if (log.isWarnEnabled()) {
+                    log.warn("发送失败", e);
+                }
             }
         } else {
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
-                log.warn("线程睡眠失败:" + Thread.currentThread());
+                if (log.isWarnEnabled()) {
+                    log.warn("线程睡眠失败:" + Thread.currentThread());
+                }
             }
         }
     }

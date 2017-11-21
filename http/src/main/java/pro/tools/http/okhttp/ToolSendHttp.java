@@ -89,7 +89,9 @@ public class ToolSendHttp {
             okHttpClient.dispatcher().executorService().shutdown();
         } catch (Exception e) {
             e.printStackTrace();
-            log.error(ToolFormat.toException(e), e);
+            if (log.isErrorEnabled()) {
+                log.error(ToolFormat.toException(e), e);
+            }
             httpReceive.setErrMsg(ToolFormat.toException(e))
                     .setThrowable(e)
                     .setIsDone(true)

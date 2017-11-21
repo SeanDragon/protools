@@ -21,6 +21,8 @@ import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pro.tools.constant.StrConst;
+import pro.tools.data.text.ToolJson;
 import pro.tools.http.netty.handler.HttpClientChannelPoolHandler;
 import pro.tools.http.netty.handler.HttpClientHandler;
 import pro.tools.http.pojo.HttpDefaultHeaders;
@@ -30,8 +32,11 @@ import pro.tools.http.pojo.HttpReceive;
 import pro.tools.http.pojo.HttpSend;
 
 import javax.net.ssl.SSLException;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URLEncoder;
+import java.util.AbstractCollection;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -192,16 +197,24 @@ public class DefaultClientPool {
         if (params != null) {
             StringBuffer tempContent = new StringBuffer();
             params.forEach((key, value) -> {
-                tempContent.append(key).append("=").append(value.toString()).append("&");
-                //if (value instanceof AbstractCollection
-                //        || value instanceof Map
-                //        || value instanceof Number
-                //        || value instanceof String) {
-                //    queryStringEncoder.addParam(key, value.toString());
-                //} else {
-                //    queryStringEncoder.addParam(key, ToolJson.anyToJson(value));
-                //}
+                String v;
+                if (value instanceof AbstractCollection
+                        || value instanceof Map
+                        || value instanceof Number
+                        || value instanceof String) {
+                    v = value.toString();
+                } else {
+                    v = ToolJson.anyToJson(value);
+                }
+
+                try {
+                    v = URLEncoder.encode(v, StrConst.DEFAULT_CHARSET_NAME);
+                } catch (UnsupportedEncodingException e) {
+                    log.warn(e.getMessage(), e);
+                }
+                tempContent.append(key).append("=").append(v).append("&");
             });
+
             if (!params.isEmpty()) {
                 content = tempContent.substring(0, tempContent.length() - 1);
             }

@@ -13,6 +13,8 @@ import pro.tools.http.pojo.HttpMethod;
 import pro.tools.http.pojo.HttpReceive;
 import pro.tools.http.pojo.HttpSend;
 
+import java.net.URLDecoder;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -106,5 +108,54 @@ public class TestURL {
         StringBuffer stringBuffer = new StringBuffer("123");
         String substring = stringBuffer.substring(0, stringBuffer.length() - 1);
         System.out.println(substring);
+    }
+
+    @Test
+    public void test6() throws Exception {
+
+        String info = "R8Jgu2qcmomnUjeFDNnx6QQBTy6yIsQu1wFl9L7eCc4fWx3YxFSpDxZHgHg4i9FcblhWc3/L7EbZ\n" +
+                "w5Nwxm9SKSc2QFSSiOY0riEL57WLjzXdgQUQrzAIrypXN4GJGgSiGQ4oDf2lv3qInWqMIdGoFHSh\n" +
+                "KfmW8j80yIYzlW68fCQ=\n";
+
+        String request = "dHKj71wpcLi8XeLO33T4Y5DoEYE3TjMPcn0tc21hNyJY4J5iOxnu2Fj3iq7xgjrkke3fYq7a6n3R\n" +
+                "6w8AEQfNxICdpKGCHp6WH67eHWdvR9ae/4j3flA36yq7qEYfszXX27I+sQmVj7fnYwg8R8CQlMwJ\n" +
+                "Iak4KAN03ggdJoYXpTI=\n";
+
+        System.out.println(request);
+        String decode = URLDecoder.decode(request, StrConst.DEFAULT_CHARSET_NAME);
+        System.out.println(decode);
+//
+//        String received = "dHKj71wpcLi8XeLO33T4Y5DoEYE3TjMPcn0tc21hNyJY4J5iOxnu2Fj3iq7xgjrkke3fYq7a6n3R\n" +
+//                "6w8AEQfNxICdpKGCHp6WH67eHWdvR9ae/4j3flA36yq7qEYfszXX27I sQmVj7fnYwg8R8CQlMwJ\n" +
+//                "Iak4KAN03ggdJoYXpTI=\n";
+
+        DefaultClientPool defaultClientPool = new DefaultClientPool("http://192.168.15.22:8888");
+
+        Map<String, Object> map = new LinkedHashMap<>();
+//        String info = "C9C6ALCYDmivbo+eXz8ZRnLMPtXzpFiZTZKGD+K0EoA6gocrCbuofntyzPYlLwMbEUGHeZwRXvpS\n" +
+//                "xUuejkIwfCwpkUqAxZnbWwZJaWqZxJifz3kCnr2pR6gGppndU2B8xyOD7+CQAYGIfLK1zcVnWNEZ\n" +
+//                "r+gZvCFp3qee38a45BE=";
+
+//        String info = "jWcKBkO4xGnm/MCD7s9txWXgWuxTEI0DYt6HRfQUk14QMUWJTcEgmN0hlqPjdNKBGpO sb8tNgRN\n" +
+//                "j5Du2K1zullre4VWd/2MezgQcvcsHJKallmhIalj iBRk868wdDy3vL36LsXNGWKmrqb32LrjhZ2\n" +
+//                "Yv2L1XpfGtm0tt  oY8=\n";
+
+//        String info = "pSTIEx+Z9Y5E6CyHwz57XBJwhfKcQWTA5IWmLzTW/xNOjID9YWwTqk3EqaCj3nUEO1E7EPstBPPj\n" +
+//                "KOVJIENAEeriGdmHOCBF9miPuiT1gpDN812hzwRhFg3tGM7A7uqxG6KN3XsT95zSAsCoa4g967v6\n" +
+//                "N9vbPOU6OHdffhxObuA=\n";
+        map.put("data", request);
+//        map.put("data", info);
+
+//        HttpReceive post = ToolSendHttp.post("http://127.0.0.1:8888/payPlatform/balanceDecodeServlet", map);
+//        System.out.println("post:" + post.getResponseBody());
+
+        HttpSend httpSend = new HttpSend("/payPlatform/balanceDecodeServlet");
+        httpSend.setParams(map).setMethod(HttpMethod.POST);
+        HttpReceive post1 = defaultClientPool.request(httpSend);
+        System.out.println("post1:" + post1.getResponseBody());
+
+//        HttpReceive httpReceive = ToolHttp.sendGet("http://127.0.0.1:8888/payPlatform/balanceDecodeServlet", map);
+//        System.err.println("infoResult:" + httpReceive.getResponseBody());
+
     }
 }

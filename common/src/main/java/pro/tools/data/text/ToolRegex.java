@@ -92,6 +92,22 @@ public final class ToolRegex {
         return true;
     }
 
+    private static final Pattern HIDE_MOBILE_PATTERN = Pattern.compile("^[0-9]{11}$");
+    private static final String HIDE_MOBILE_REGULAR = "(?<=\\d{3})\\d(?=\\d{4})";
+
+    /**
+     * 隐藏手机号中间的4位
+     * @param phone
+     * @return
+     */
+    public static String hideMobile(String phone) {
+        Matcher matcher = HIDE_MOBILE_PATTERN.matcher(phone);
+        if (matcher.matches()) {
+            return phone.replaceAll(HIDE_MOBILE_REGULAR, "*");
+        }
+        return phone;
+    }
+
     /**
      * 判断是否为金额
      *
@@ -260,6 +276,19 @@ public final class ToolRegex {
      */
     public static boolean isMatch(String regex, CharSequence input) {
         return input != null && input.length() > 0 && Pattern.matches(regex, input);
+    }
+
+    /**
+     * 判断是否匹配正则
+     *
+     * @param pattern
+     *         已经提前编译好的Pattern
+     * @param input
+     *         要匹配的字符串
+     *
+     * @return {@code true}: 匹配<br>{@code false}: 不匹配
+     */  public static boolean isMatch(Pattern pattern,CharSequence input) {
+        return input != null && input.length() > 0 && pattern.matcher(input).matches();
     }
 
     /**

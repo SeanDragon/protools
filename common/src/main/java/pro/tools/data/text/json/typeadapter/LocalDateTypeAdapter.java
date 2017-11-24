@@ -4,6 +4,7 @@ import org.google.gson.stream.JsonReader;
 import org.google.gson.stream.JsonWriter;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -15,9 +16,14 @@ public class LocalDateTypeAdapter extends ABasicTypeAdapter<LocalDate> {
     public LocalDate reading(JsonReader jsonReader) throws IOException {
         jsonReader.beginObject();
         jsonReader.nextName();
-        LocalDate localDate;
         String value = jsonReader.nextString();
-        localDate = LocalDate.parse(value, DATE_FORMATTER);
+        LocalDate localDate = LocalDate.parse(value, DATE_FORMATTER);
+        //region 忽略时间戳属性
+        if (jsonReader.hasNext()) {
+            jsonReader.nextName();
+            jsonReader.nextString();
+        }
+        //endregion
         jsonReader.endObject();
         return localDate;
     }
@@ -25,5 +31,12 @@ public class LocalDateTypeAdapter extends ABasicTypeAdapter<LocalDate> {
     @Override
     public void writing(JsonWriter jsonWriter, LocalDate value) throws IOException {
         jsonWriter.beginObject().name("value").value(value.format(DATE_FORMATTER)).endObject();
+        jsonWriter
+                .beginObject()
+                .name("value")
+                .value(value.format(DATE_FORMATTER))
+                .name("timestamp")
+                .value(Date.valueOf(value).getTime())
+                .endObject();
     }
 }

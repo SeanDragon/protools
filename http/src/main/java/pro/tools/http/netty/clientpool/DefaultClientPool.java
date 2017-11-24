@@ -60,7 +60,7 @@ public class DefaultClientPool {
     public DefaultClientPool(final String url) throws HttpException {
         if (!haveInit) {
             GROUP = new NioEventLoopGroup();
-            Runtime.getRuntime().addShutdownHook(new Thread(DefaultClientPool::stopAll));
+            // Runtime.getRuntime().addShutdownHook(new Thread(DefaultClientPool::stopAll));
             haveInit = true;
         }
 

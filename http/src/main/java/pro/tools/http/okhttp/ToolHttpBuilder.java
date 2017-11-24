@@ -61,7 +61,7 @@ public class ToolHttpBuilder {
         ;
 
         defaultClient = defaultBuilder.build();
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> connectionPool.evictAll()));
+        // Runtime.getRuntime().addShutdownHook(new Thread(() -> connectionPool.evictAll()));
     }
 
     public synchronized static void setConnectionPool(ConnectionPool connectionPool) {

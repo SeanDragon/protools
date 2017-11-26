@@ -1,5 +1,6 @@
 package pro.tools.time;
 
+import java.io.Serializable;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -11,7 +12,7 @@ import java.time.temporal.TemporalAdjusters;
  *
  * @author SeanDragon
  */
-public class DatePlus {
+public class DatePlus implements Serializable, Cloneable {
     /**
      * 日期对象
      */
@@ -549,5 +550,10 @@ public class DatePlus {
     @Override
     public int hashCode() {
         return this.localDateTime.hashCode();
+    }
+
+    @Override
+    public Object clone() {
+        return new DatePlus(this.localDateTime);
     }
 }

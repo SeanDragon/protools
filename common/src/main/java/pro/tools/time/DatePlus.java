@@ -15,7 +15,7 @@ public class DatePlus {
     /**
      * 日期对象
      */
-    private LocalDateTime localDateTime;
+    private volatile LocalDateTime localDateTime;
 
     //region 初始化区域
     public DatePlus() {

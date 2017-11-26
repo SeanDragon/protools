@@ -18,7 +18,7 @@ public class Decimal extends Number {
 
     //region 全局变量
 
-    private BigDecimal bigDecimal;
+    private volatile BigDecimal bigDecimal;
     private static MathContext defaultMathContext = MathContext.DECIMAL64;
     private final MathContext mathContext;
 

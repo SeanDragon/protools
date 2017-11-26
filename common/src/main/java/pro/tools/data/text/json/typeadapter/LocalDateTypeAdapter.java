@@ -30,7 +30,6 @@ public class LocalDateTypeAdapter extends ABasicTypeAdapter<LocalDate> {
 
     @Override
     public void writing(JsonWriter jsonWriter, LocalDate value) throws IOException {
-        jsonWriter.beginObject().name("value").value(value.format(DATE_FORMATTER)).endObject();
         jsonWriter
                 .beginObject()
                 .name("value")

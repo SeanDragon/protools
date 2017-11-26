@@ -39,7 +39,7 @@ public class TestLocalDateTime {
     public void test3() {
         LocalDate localDate = LocalDate.now();
         String x = ToolJson.anyToJson(localDate);
-        System.out.println(x);
+        System.err.println(x);
         LocalDate localDate1 = ToolJson.jsonToAny(x, LocalDate.class);
         System.out.println(localDate1);
     }

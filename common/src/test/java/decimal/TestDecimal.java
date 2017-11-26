@@ -1,18 +1,21 @@
 package decimal;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 import pro.tools.data.decimal.Decimal;
 import pro.tools.data.text.ToolJson;
 
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 
+@RunWith(JUnit4.class)
 public class TestDecimal {
-    @Test
+    @Test(timeout = 1000)
     public void test1() {
         Decimal instance = Decimal.instance(1).div(3);
         String s = instance.fullStrValue();
-        instance.fullStrValue(2, RoundingMode.CEILING);
+        instance.fullStrValue(2, RoundingMode.HALF_EVEN);
         System.out.println(s);
     }
 

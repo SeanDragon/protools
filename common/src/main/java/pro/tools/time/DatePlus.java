@@ -58,9 +58,9 @@ public class DatePlus implements Serializable, Cloneable {
 
     public DatePlus(String dateStr, String pattern) {
         try {
-            this.localDateTime = LocalDateTime.parse(dateStr, DateTimeFormatter.ofPattern(pattern));
+            this.localDateTime = LocalDateTime.parse(dateStr, ToolDatePlus.pattern(pattern));
         } catch (DateTimeParseException e) {
-            LocalDate date = LocalDate.parse(dateStr, DateTimeFormatter.ofPattern(pattern));
+            LocalDate date = LocalDate.parse(dateStr, ToolDatePlus.pattern(pattern));
             LocalTime time = LocalTime.MIN;
             this.localDateTime = LocalDateTime.of(date, time);
         }
@@ -519,14 +519,14 @@ public class DatePlus implements Serializable, Cloneable {
         return ToolLunar.lunartosolar(lunar);
     }
 
-    private static final DateTimeFormatter DEFAULT_DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss:SSS");
+    private static final DateTimeFormatter DEFAULT_DATE_TIME_FORMATTER = ToolDatePlus.pattern("yyyy-MM-dd HH:mm:ss:SSS");
 
     public String toString(DateTimeFormatter formatter) {
         return this.localDateTime.format(formatter);
     }
 
     public String toString(String pattern) {
-        return this.localDateTime.format(DateTimeFormatter.ofPattern(pattern));
+        return this.localDateTime.format(ToolDatePlus.pattern(pattern));
     }
 
     @Override

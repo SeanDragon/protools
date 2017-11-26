@@ -19,7 +19,7 @@ public class Decimal extends Number implements Cloneable {
     //region 全局变量
 
     private BigDecimal bigDecimal;
-    private static MathContext defaultMathContext = MathContext.DECIMAL64;
+    private static volatile MathContext defaultMathContext = MathContext.DECIMAL128;
     private final MathContext mathContext;
 
     //endregion
@@ -30,8 +30,7 @@ public class Decimal extends Number implements Cloneable {
      * @param initValue
      */
     public Decimal(Object initValue) {
-        this.mathContext = defaultMathContext;
-        init(initValue);
+        this(initValue, defaultMathContext);
     }
 
     public Decimal(Object initValue, MathContext mathContext) {
@@ -43,7 +42,7 @@ public class Decimal extends Number implements Cloneable {
         return defaultMathContext;
     }
 
-    public static synchronized void setDefaultMathContext(MathContext defaultMathContext) {
+    public static void setDefaultMathContext(MathContext defaultMathContext) {
         Decimal.defaultMathContext = defaultMathContext;
     }
 
@@ -247,8 +246,7 @@ public class Decimal extends Number implements Cloneable {
     }
 
     public String fullStrValue(int scale, RoundingMode roundingMode) {
-        DecimalFormat decimalFormat = new DecimalFormat(ToolDecimal.scale2FormatStr(scale));
-        decimalFormat.setRoundingMode(roundingMode);//设置舍入算法
+        DecimalFormat decimalFormat = ToolDecimal.scale2Format(scale, roundingMode);
         return decimalFormat.format(this.bigDecimal);
     }
 
@@ -310,15 +308,24 @@ public class Decimal extends Number implements Cloneable {
      * @return 结果
      */
     public double doubleValue(int scale, RoundingMode roundingMode) {
-        DecimalFormat decimalFormat = new DecimalFormat(ToolDecimal.scale2FormatStr(scale));
-        decimalFormat.setRoundingMode(roundingMode);//设置舍入算法
-        return Double.valueOf(decimalFormat.format(doubleValue()));
+        String strValue = this.fullStrValue(scale, roundingMode);
+        return Double.valueOf(strValue);
     }
     //endregion
 
 
     @Override
-    public Object clone() {
+    public int hashCode() {
+        return bigDecimal.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this.bigDecimal.equals(new Decimal(obj, MathContext.UNLIMITED).getBigDecimal());
+    }
+
+    @Override
+    public Decimal clone() {
         return new Decimal(this.bigDecimal, this.mathContext);
     }
 }

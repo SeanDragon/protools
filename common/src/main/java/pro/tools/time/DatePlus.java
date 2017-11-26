@@ -553,7 +553,7 @@ public class DatePlus implements Serializable, Cloneable {
     }
 
     @Override
-    public Object clone() {
+    public DatePlus clone() {
         return new DatePlus(this.localDateTime);
     }
 }

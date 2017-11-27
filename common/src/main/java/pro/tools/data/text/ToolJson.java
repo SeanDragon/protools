@@ -141,6 +141,26 @@ public final class ToolJson {
         return gson.toJson(t);
     }
 
+
+    /**
+     * 将任意类型转换为任意类型
+     *
+     * @return Object
+     */
+    public static <S, T> S anyToAny(T t, Type type) {
+        String json;
+        if (t instanceof String) {
+            json = (String) t;
+        } else {
+            json = anyToJson(t);
+        }
+
+        if (type.getTypeName().equalsIgnoreCase(String.class.getTypeName())) {
+            return (S) json;
+        }
+        return jsonToAny(json, type);
+    }
+
     /**
      * 将模型进行JSON解码
      *

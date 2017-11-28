@@ -140,6 +140,10 @@ public class ToolSendHttp {
 
         final FormBody requestBody = formBodyBuilder.build();
 
-        return requestBuilder.url(url).method(httpSend.getMethod().name(), requestBody).build();
+        if (httpSend.getMethod() == HttpMethod.GET) {
+            return requestBuilder.url(url).build();
+        } else {
+            return requestBuilder.url(url).method(httpSend.getMethod().name(), requestBody).build();
+        }
     }
 }

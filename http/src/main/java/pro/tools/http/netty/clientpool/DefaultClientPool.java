@@ -3,6 +3,8 @@ package pro.tools.http.netty.clientpool;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelOption;
+import io.netty.channel.ChannelPipeline;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.pool.ChannelPool;
@@ -15,10 +17,10 @@ import io.netty.handler.codec.http.HttpHeaderNames;
 import io.netty.handler.codec.http.HttpHeaderValues;
 import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.handler.codec.http.HttpVersion;
-import io.netty.handler.codec.http.QueryStringEncoder;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
+import io.netty.util.concurrent.Future;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pro.tools.constant.StrConst;
@@ -34,6 +36,7 @@ import pro.tools.http.pojo.HttpSend;
 
 import javax.net.ssl.SSLException;
 import java.io.UnsupportedEncodingException;
+import java.net.InetSocketAddress;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
@@ -48,8 +51,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class DefaultClientPool {
     private static final Logger log = LoggerFactory.getLogger(DefaultClientPool.class);
-    private static EventLoopGroup GROUP;
-    private static volatile boolean haveInit;
+    private static final EventLoopGroup GROUP = new NioEventLoopGroup();
 
     private ChannelPool channelPool;
     private String host;
@@ -57,25 +59,23 @@ public class DefaultClientPool {
     private Integer port;
     private SslContext sslContext;
 
-    public DefaultClientPool(final String url) throws HttpException {
-        if (!haveInit) {
-            GROUP = new NioEventLoopGroup();
-            // Runtime.getRuntime().addShutdownHook(new Thread(DefaultClientPool::stopAll));
-            haveInit = true;
-        }
-
+    public DefaultClientPool(final String url, final int maxCount) throws HttpException {
         try {
-            init(url);
+            init(url, maxCount);
         } catch (URISyntaxException | SSLException e) {
             throw new HttpException(e);
         }
+    }
+
+    public DefaultClientPool(final String url) throws HttpException {
+        this(url, 10000);
     }
 
     public static void stopAll() {
         GROUP.shutdownGracefully();
     }
 
-    private void init(String url) throws URISyntaxException, SSLException{
+    private void init(String url, int maxCount) throws URISyntaxException, SSLException {
         URI uri = new URI(url);
         if (uri.getScheme() == null || uri.getHost() == null) {
             throw new IllegalArgumentException("uri不合法");
@@ -105,10 +105,12 @@ public class DefaultClientPool {
         final Bootstrap b = new Bootstrap();
         b.group(GROUP)
                 .channel(NioSocketChannel.class)
-                .remoteAddress(host, port)
+                .option(ChannelOption.TCP_NODELAY, true)
+                .option(ChannelOption.SO_KEEPALIVE, true)
+                .remoteAddress(InetSocketAddress.createUnresolved(host, port))
         ;
 
-        channelPool = new FixedChannelPool(b, new HttpClientChannelPoolHandler(sslContext), Integer.MAX_VALUE);
+        channelPool = new FixedChannelPool(b, new HttpClientChannelPoolHandler(sslContext), maxCount);
     }
 
     public HttpReceive request(HttpSend httpSend) {
@@ -117,13 +119,18 @@ public class DefaultClientPool {
 
     public HttpReceive request(HttpSend httpSend, long timeout, TimeUnit timeUnit) {
         final HttpReceive httpReceive = new HttpReceive();
-        final Channel channel = channelPool.acquire().syncUninterruptibly().getNow();
+        Future<Channel> fch = channelPool.acquire();
+        Channel channel = null;
         try {
-            channel.pipeline().addLast(new HttpClientHandler(httpSend, httpReceive));
+            // final Channel channel = fch.syncUninterruptibly().getNow();
+            channel = fch.get(timeout, timeUnit);
+            ChannelPipeline p = channel.pipeline();
+
+            p.addLast(new HttpClientHandler(httpSend, httpReceive));
 
             final FullHttpRequest fullHttpRequest = convertRequest(httpSend);
 
-            channel.pipeline().writeAndFlush(fullHttpRequest);
+            p.writeAndFlush(fullHttpRequest);
 
             channel.closeFuture().await(timeout, timeUnit);
 
@@ -140,7 +147,9 @@ public class DefaultClientPool {
                     .setThrowable(e)
                     .setIsDone(true);
         } finally {
-            channelPool.release(channel).awaitUninterruptibly(0, TimeUnit.MILLISECONDS);
+            if (channel != null) {
+                channelPool.release(channel);
+            }
         }
 
         return httpReceive;
@@ -169,12 +178,8 @@ public class DefaultClientPool {
             httpSend.setUrl("/" + httpSend.getUrl());
         }
 
-
-        QueryStringEncoder queryStringEncoder = new QueryStringEncoder(scheme + "://" + host + ":" + port + httpSend.getUrl(), httpSend.getCharset());
-
-        String content = "";
-        if (params != null) {
-            final StringBuilder tempContent = new StringBuilder();
+        final StringBuilder content = new StringBuilder();
+        if (params != null && !params.isEmpty()) {
             params.forEach((key, value) -> {
                 String v;
                 if (value instanceof AbstractCollection
@@ -190,28 +195,27 @@ public class DefaultClientPool {
                     v = URLEncoder.encode(v, StrConst.DEFAULT_CHARSET_NAME);
                 } catch (UnsupportedEncodingException ignored) {
                 }
-                tempContent.append(key).append("=").append(v).append("&");
+                content.append(key).append("=").append(v).append("&");
             });
-
-            if (!params.isEmpty()) {
-                content = tempContent.substring(0, tempContent.length() - 1);
-            }
+            content.deleteCharAt(content.length() - 1);
         }
 
-        URI sendURI;
-        try {
-            sendURI = new URI(queryStringEncoder.toString());
-        } catch (URISyntaxException e) {
-            if (log.isWarnEnabled()) {
-                log.warn(e.getMessage(), e);
-            }
-            throw new RuntimeException(e);
-        }
+        // URI sendURI;
+        // try {
+        //     sendURI = new URI(queryStringEncoder.toString());
+        // } catch (URISyntaxException e) {
+        //     if (log.isWarnEnabled()) {
+        //         log.warn(e.getMessage(), e);
+        //     }
+        //     throw new RuntimeException(e);
+        // }
 
-        FullHttpRequest request = new DefaultFullHttpRequest(HttpVersion.HTTP_1_1
+        final FullHttpRequest request = new DefaultFullHttpRequest(HttpVersion.HTTP_1_1
                 , httpMethod
-                , sendURI.toString()
-                , Unpooled.copiedBuffer(content.getBytes())
+                , scheme + "://" + host + ":" + port + httpSend.getUrl()
+                // , queryStringEncoder.toString()
+                // , sendURI.toString()
+                , Unpooled.copiedBuffer(content.toString().getBytes())
         );
 
         // FIXME: 2017/7/27 暂未加Cookie

@@ -133,11 +133,17 @@ public final class ToolPath {
     public static Path createDir(Path path, boolean replace) throws IOException {
         if (replace) {
             rmr(path);
+            if(isDir(path)) {
+                path = path.getParent();
+            }
             return Files.createDirectories(path);
         } else {
             if (isExists(path)) {
                 return path;
             } else {
+                if(isDir(path)) {
+                    path = path.getParent();
+                }
                 return Files.createDirectories(path);
             }
         }

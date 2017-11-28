@@ -3,6 +3,7 @@ package pro.tools.http.netty.handler;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.pool.AbstractChannelPoolHandler;
+import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.http.HttpClientCodec;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.ssl.SslContext;
@@ -23,7 +24,12 @@ public class HttpClientChannelPoolHandler extends AbstractChannelPoolHandler {
 
     @Override
     public void channelCreated(Channel channel) {
-        final ChannelPipeline p = channel.pipeline();
+
+        NioSocketChannel nioSocketChannel = (NioSocketChannel)channel;
+        nioSocketChannel.config().setTcpNoDelay(true).setKeepAlive(true);
+
+        // final ChannelPipeline p = channel.pipeline();
+        final ChannelPipeline p = nioSocketChannel.pipeline();
 
         //HTTPS
         if (sslCtx != null) {

@@ -9,7 +9,6 @@ import pro.tools.data.text.ToolRandoms;
 
 import java.math.MathContext;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 
 @RunWith(JUnit4.class)
@@ -66,9 +65,25 @@ public class TestDecimal {
 
     @Test
     public void test6() {
-        Decimal instance = Decimal.instance(3,MathContext.UNLIMITED);
+        Decimal instance = Decimal.instance(3, MathContext.UNLIMITED);
         Decimal sqrt2 = instance.sqrt2(10000);
         System.out.println(sqrt2);
         System.out.println(sqrt2.mul(sqrt2));
+    }
+
+    @Test
+    public void test7() {
+        Double loanAmountD = 4000D;
+        Double currentAmountD = 2000D;
+
+        Decimal canBuyAmountD = Decimal.instance(loanAmountD).sub(currentAmountD);
+
+        Decimal buyAfterAmountD = canBuyAmountD.clone().sub(2000);
+
+        System.out.println(canBuyAmountD);
+        System.out.println(buyAfterAmountD);
+
+        System.out.println(buyAfterAmountD.doubleValue() < 0.00D);
+        System.out.println(buyAfterAmountD.doubleValue() == 0.00D);
     }
 }

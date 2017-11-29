@@ -3,6 +3,7 @@ package pro.tools.data.text.json.typeadapter;
 import org.google.gson.stream.JsonReader;
 import org.google.gson.stream.JsonWriter;
 import pro.tools.time.DatePlus;
+import pro.tools.time.ToolDatePlus;
 
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
@@ -22,12 +23,24 @@ public class DatePlusTypeAdapter extends ABasicTypeAdapter<DatePlus> {
         jsonReader.nextName();
         String value = jsonReader.nextString();
         DatePlus datePlus = new DatePlus(value, DATE_TIME_FORMATTER);
+        //region 忽略时间戳属性
+        if (jsonReader.hasNext()) {
+            jsonReader.nextName();
+            jsonReader.nextString();
+        }
+        //endregion
         jsonReader.endObject();
         return datePlus;
     }
 
     @Override
     public void writing(JsonWriter jsonWriter, DatePlus value) throws IOException {
-        jsonWriter.beginObject().name("value").value(value.toString(DATE_TIME_FORMATTER)).endObject();
+        jsonWriter
+                .beginObject()
+                .name("value")
+                .value(value.toString(DATE_TIME_FORMATTER))
+                .name("timestamp")
+                .value(ToolDatePlus.localDateTime2time(value.getLocalDateTime()))
+                .endObject();
     }
 }

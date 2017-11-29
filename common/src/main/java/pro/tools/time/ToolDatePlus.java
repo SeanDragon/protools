@@ -2,12 +2,12 @@ package pro.tools.time;
 
 import com.google.common.collect.Maps;
 
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
 import java.util.Date;
 import java.util.Map;
 
@@ -37,6 +37,10 @@ public final class ToolDatePlus {
     public static Date localDateTime2Date(final LocalDateTime localDateTime) {
         Instant instant = localDateTime.atZone(DEFAULT_ZONE_ID).toInstant();
         return Date.from(instant);
+    }
+
+    public static long localDateTime2time(final LocalDateTime localDateTime) {
+        return Timestamp.valueOf(localDateTime).getTime();
     }
 
     public static String format(final Date date, final String pattern) {

@@ -19,11 +19,6 @@
             <version>1.7.9</version>
         </dependency>
 
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-        </dependency>
-
         <!--util-->
         <dependency>
             <groupId>com.google.guava</groupId>

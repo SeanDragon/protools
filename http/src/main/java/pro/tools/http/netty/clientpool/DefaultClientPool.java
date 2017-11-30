@@ -171,7 +171,7 @@ public class DefaultClientPool {
         HttpMethod method = httpSend.getMethod();
         Map<String, Object> params = httpSend.getParams();
         Map<String, Object> headers = httpSend.getHeaders();
-        
+
         httpMethod = new io.netty.handler.codec.http.HttpMethod(method.name());
 
         if (httpSend.getUrl().trim().charAt(0) != '/') {

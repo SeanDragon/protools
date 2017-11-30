@@ -1,5 +1,7 @@
 package pro.tools.data.text;
 
+import com.google.common.base.Ascii;
+
 import java.util.Objects;
 
 /**
@@ -192,10 +194,11 @@ public final class ToolStr {
      * @return 首字母大写字符串
      */
     public static String upperFirstLetter(String s) {
-        if (isEmpty(s) || !Character.isLowerCase(s.charAt(0))) {
+        char firstChar = s.charAt(0);
+        if (isEmpty(s) || !Character.isLowerCase(firstChar)) {
             return s;
         }
-        return String.valueOf((char) (s.charAt(0) - 32)) + s.substring(1);
+        return Ascii.toUpperCase(firstChar) + s.substring(1);
     }
 
     /**
@@ -207,10 +210,29 @@ public final class ToolStr {
      * @return 首字母小写字符串
      */
     public static String lowerFirstLetter(String s) {
-        if (isEmpty(s) || !Character.isUpperCase(s.charAt(0))) {
+        char firstChar = s.charAt(0);
+        if (isEmpty(s) || !Character.isUpperCase(firstChar)) {
             return s;
         }
-        return String.valueOf((char) (s.charAt(0) + 32)) + s.substring(1);
+        return Ascii.toLowerCase(firstChar) + s.substring(1);
+    }
+
+    /**
+     * 变全大写
+     * @param s
+     * @return
+     */
+    public static String toUpper(String s) {
+        return Ascii.toUpperCase(s);
+    }
+
+    /**
+     * 变全小写
+     * @param s
+     * @return
+     */
+    public static String toLower(String s) {
+        return Ascii.toLowerCase(s);
     }
 
     /**
@@ -285,33 +307,6 @@ public final class ToolStr {
             }
         }
         return new String(chars);
-    }
-
-
-    /**
-     * 首字母变小写
-     */
-    public static String firstCharToLowerCase(String str) {
-        char firstChar = str.charAt(0);
-        if (firstChar >= 'A' && firstChar <= 'Z') {
-            char[] arr = str.toCharArray();
-            arr[0] += ('a' - 'A');
-            return new String(arr);
-        }
-        return str;
-    }
-
-    /**
-     * 首字母变大写
-     */
-    public static String firstCharToUpperCase(String str) {
-        char firstChar = str.charAt(0);
-        if (firstChar >= 'a' && firstChar <= 'z') {
-            char[] arr = str.toCharArray();
-            arr[0] -= ('a' - 'A');
-            return new String(arr);
-        }
-        return str;
     }
 
     /**

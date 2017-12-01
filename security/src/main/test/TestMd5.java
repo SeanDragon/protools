@@ -5,6 +5,7 @@ import com.google.common.hash.Hashing;
 import org.bouncycastle.util.encoders.Hex;
 import org.junit.Test;
 import pro.tools.constant.StrConst;
+import pro.tools.data.text.ToolJson;
 import pro.tools.security.md.ToolMD5;
 
 import java.security.NoSuchAlgorithmException;
@@ -30,5 +31,10 @@ public class TestMd5 {
         System.out.println(System.currentTimeMillis()-begin);
         System.out.println(hash.toString());
         System.out.println(Hex.toHexString(hash.asBytes()));
+    }
+
+    @Test
+    public void test2() {
+        System.out.println(ToolJson.anyToJson(null));
     }
 }

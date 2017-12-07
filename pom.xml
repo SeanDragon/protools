@@ -57,8 +57,6 @@
 
     <!--构建和编译-->
     <build>
-        <finalName>protools-2.0</finalName>
-
         <plugins>
             <!-- java编译插件 -->
             <plugin>

@@ -21,11 +21,10 @@ public final class RegexConst {
      */
     public static final Pattern REGEX_MOBILE_SIMPLE = compile("^[1]\\d{10}$");
     /**
-     * 正则：手机号（精确） <p>移动：134(0-8)、135、136、137、138、139、147、150、151、152、157、158、159、178、182、183、184、187、188</p>
-     * <p>联通：130、131、132、145、155、156、175、176、185、186</p> <p>电信：133、153、173、177、180、181、189</p> <p>全球星：1349</p>
-     * <p>虚拟运营商：170</p>
+     * 正则：手机号（精准）
+     * 13 14 15 16 17 18 19 开头都可以
      */
-    public static final Pattern REGEX_MOBILE_EXACT = compile("^1[3|4|5|7|8|9][0-9]\\d{8}$");
+    public static final Pattern REGEX_MOBILE_EXACT = compile("^1[3|4|5|6|7|8|9][0-9]\\d{8}$");
     // public static final Pattern REGEX_MOBILE_EXACT = compile("^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|(147))\\d{8}$");
     /**
      * 正则：电话号码

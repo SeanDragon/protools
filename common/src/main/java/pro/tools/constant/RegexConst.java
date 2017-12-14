@@ -11,6 +11,9 @@ import static java.util.regex.Pattern.compile;
  */
 public final class RegexConst {
 
+    /**
+     * 正则：金额
+     */
     public static final Pattern REGEX_MONEY = compile("^(([1-9]\\d*)|0)(\\.\\d{1,2})?$");
     /**
      * 正则：英文单词或者数字

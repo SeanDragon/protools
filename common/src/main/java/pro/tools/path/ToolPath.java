@@ -250,25 +250,25 @@ public final class ToolPath {
     }
 
     public static Stream<String> readStream(Path path) throws IOException {
-        validRead(path);
+        // validRead(path);
 
         return Files.lines(path);
     }
 
     public static List<String> readStrings(Path path) throws IOException {
-        validRead(path);
+        // validRead(path);
 
         return Files.readAllLines(path);
     }
 
     public static byte[] readBytes(Path path) throws IOException {
-        validRead(path);
+        // validRead(path);
 
         return Files.readAllBytes(path);
     }
 
     public static BufferedReader readReader(Path path) throws IOException {
-        validRead(path);
+        // validRead(path);
 
         return Files.newBufferedReader(path);
     }
@@ -297,35 +297,35 @@ public final class ToolPath {
     //endregion
 
     public static Path writeStrings(Path path, List<String> stringList, boolean append) throws IOException {
-        validWrite(path);
+        // validWrite(path);
 
         OpenOption[] options = append ? WRITE_CREATE_APPEND : WRITE_CREATE;
         return Files.write(path, stringList, StrConst.DEFAULT_CHARSET, options);
     }
 
     public static Path writeBytes(Path path, byte[] bytes, boolean append) throws IOException {
-        validWrite(path);
+        // validWrite(path);
 
         OpenOption[] options = append ? WRITE_CREATE_APPEND : WRITE_CREATE;
         return Files.write(path, bytes, options);
     }
 
     public static BufferedWriter writeWriter(Path path, boolean append) throws IOException {
-        validWrite(path);
+        // validWrite(path);
 
         OpenOption[] options = append ? WRITE_CREATE_APPEND : WRITE_CREATE;
         return Files.newBufferedWriter(path, options);
     }
 
     public static OutputStream writeOutputStream(Path path, boolean append) throws IOException {
-        validWrite(path);
+        // validWrite(path);
 
         OpenOption[] options = append ? WRITE_CREATE_APPEND : WRITE_CREATE;
         return Files.newOutputStream(path, options);
     }
 
     public static InputStream readInputStream(Path path) throws IOException {
-        validRead(path);
+        // validRead(path);
 
         return Files.newInputStream(path, READ);
     }

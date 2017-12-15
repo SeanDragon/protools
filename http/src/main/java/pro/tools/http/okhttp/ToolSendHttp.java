@@ -12,10 +12,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pro.tools.data.text.ToolJson;
 import pro.tools.format.ToolFormat;
+import pro.tools.http.pojo.HttpException;
 import pro.tools.http.pojo.HttpMethod;
 import pro.tools.http.pojo.HttpReceive;
 import pro.tools.http.pojo.HttpSend;
 
+import java.io.IOException;
 import java.util.AbstractCollection;
 import java.util.Map;
 import java.util.Set;
@@ -59,7 +61,7 @@ public class ToolSendHttp {
             ResponseBody body = response.body();
 
             if (body == null) {
-                throw new NullPointerException("response.body is null");
+                throw new HttpException("发送http失败，响应体为空");
             }
 
             final Map<String, String> responseHeaders = Maps.newHashMap();
@@ -74,34 +76,41 @@ public class ToolSendHttp {
 
             int responseStatusCode = response.code();
             if (responseStatusCode != 200) {
-                httpReceive.setErrMsg("本次请求响应码不是200，是" + responseStatusCode)
-                ;
-            } else {
-                String responseBody = body.string();
-                if (log.isDebugEnabled()) {
-                    log.debug(responseBody);
-                }
-                httpReceive.setResponseBody(responseBody)
-                        .setHaveError(false)
-                        .setStatusCode(responseStatusCode)
-                        .setStatusText(responseStatusCode + "")
-                        .setResponseHeader(responseHeaders)
-                ;
+                throw new HttpException("本次请求响应码不是200，是" + responseStatusCode);
             }
+
+            String responseBody = body.string();
+            if (log.isDebugEnabled()) {
+                log.debug(responseBody);
+            }
+            httpReceive.setResponseBody(responseBody)
+                    .setHaveError(false)
+                    .setStatusCode(responseStatusCode)
+                    .setStatusText(responseStatusCode + "")
+                    .setResponseHeader(responseHeaders)
+            ;
 
             response.close();
             okHttpClient.dispatcher().executorService().shutdown();
-        } catch (Exception e) {
-            if (log.isErrorEnabled()) {
-                log.error(ToolFormat.toException(e), e);
-            }
+        } catch (IOException e) {
+            httpReceive.setErrMsg("获取返回内容失败!")
+                    .setThrowable(e)
+            ;
+        } catch (HttpException e) {
             httpReceive.setErrMsg(e.getMessage())
                     .setThrowable(e)
-                    .setIsDone(true)
             ;
         }
 
+        if (httpReceive.getHaveError()) {
+            if (log.isWarnEnabled()) {
+                Throwable throwable = httpReceive.getThrowable();
+                log.warn(ToolFormat.toException(throwable), throwable);
+            }
+        }
+
         httpReceive.setIsDone(true);
+
         return httpReceive;
     }
 

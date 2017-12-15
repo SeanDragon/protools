@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pro.tools.data.text.ToolJson;
 import pro.tools.format.ToolFormat;
+import pro.tools.http.pojo.HttpException;
 import pro.tools.http.pojo.HttpMethod;
 import pro.tools.http.pojo.HttpReceive;
 import pro.tools.http.pojo.HttpScheme;
@@ -159,33 +160,36 @@ public final class ToolHttp {
 
             int responseStatusCode = response.getStatusCode();
             if (responseStatusCode != 200) {
-                httpReceive.setErrMsg("本次请求响应码不是200，是" + responseStatusCode)
-                ;
-            } else {
-                httpReceive.setStatusCode(responseStatusCode)
-                        .setStatusText(response.getStatusText())
-                        .setResponseBody(response.getResponseBody())
-                        .setResponseHeader(responseHeaderMap)
-                        .setHaveError(false)
-                ;
+                throw new HttpException("本次请求响应码不是200，是" + responseStatusCode);
             }
+            String responseBody = response.getResponseBody();
+            if (log.isDebugEnabled()) {
+                log.debug(responseBody);
+            }
+            httpReceive.setStatusCode(responseStatusCode)
+                    .setStatusText(response.getStatusText())
+                    .setResponseBody(responseBody)
+                    .setResponseHeader(responseHeaderMap)
+                    .setHaveError(false)
+            ;
         } catch (InterruptedException e) {
             httpReceive.setErrMsg("http组件出现问题!")
                     .setThrowable(e);
-            if (log.isWarnEnabled()) {
-                log.warn(ToolFormat.toException(e), e);
-            }
         } catch (IOException e) {
             httpReceive.setErrMsg("获取返回内容失败!")
                     .setThrowable(e);
-            if (log.isWarnEnabled()) {
-                log.warn(ToolFormat.toException(e), e);
-            }
         } catch (ExecutionException e) {
             httpReceive.setErrMsg("访问URL失败!")
                     .setThrowable(e);
+        } catch (HttpException e) {
+            httpReceive.setErrMsg(e.getMessage())
+                    .setThrowable(e);
+        }
+
+        if (httpReceive.getHaveError()) {
             if (log.isWarnEnabled()) {
-                log.warn(ToolFormat.toException(e), e);
+                Throwable throwable = httpReceive.getThrowable();
+                log.warn(ToolFormat.toException(throwable), throwable);
             }
         }
 

@@ -1,7 +1,5 @@
 package pro.tools.data.text;
 
-import com.google.common.base.Ascii;
-
 import java.util.Objects;
 
 /**
@@ -194,11 +192,17 @@ public final class ToolStr {
      * @return 首字母大写字符串
      */
     public static String upperFirstLetter(String s) {
-        char firstChar = s.charAt(0);
-        if (isEmpty(s) || !Character.isLowerCase(firstChar)) {
+        if (isBlank(s)) {
+            return "";
+        }
+
+        char[] chars = s.toCharArray();
+        if (Character.isUpperCase(chars[0])) {
             return s;
         }
-        return Ascii.toUpperCase(firstChar) + s.substring(1);
+
+        chars[0] = Character.toUpperCase(chars[0]);
+        return new String(chars);
     }
 
     /**
@@ -210,29 +214,47 @@ public final class ToolStr {
      * @return 首字母小写字符串
      */
     public static String lowerFirstLetter(String s) {
-        char firstChar = s.charAt(0);
-        if (isEmpty(s) || !Character.isUpperCase(firstChar)) {
+        if (isBlank(s)) {
+            return "";
+        }
+
+        char[] chars = s.toCharArray();
+        if (Character.isLowerCase(chars[0])) {
             return s;
         }
-        return Ascii.toLowerCase(firstChar) + s.substring(1);
+
+        chars[0] = Character.toLowerCase(chars[0]);
+        return new String(chars);
     }
 
     /**
      * 变全大写
+     *
      * @param s
+     *
      * @return
      */
     public static String toUpper(String s) {
-        return Ascii.toUpperCase(s);
+        if (isBlank(s)) {
+            return "";
+        }
+
+        return s.toUpperCase();
     }
 
     /**
      * 变全小写
+     *
      * @param s
+     *
      * @return
      */
     public static String toLower(String s) {
-        return Ascii.toLowerCase(s);
+        if (isBlank(s)) {
+            return "";
+        }
+
+        return s.toLowerCase();
     }
 
     /**
@@ -245,7 +267,7 @@ public final class ToolStr {
      */
     public static String reverse(String s) {
         int len = length(s);
-        if (len <= 1) {
+        if (len == 0) {
             return s;
         }
         int mid = len >> 1;
@@ -348,8 +370,8 @@ public final class ToolStr {
      */
     public static String join(String[] stringArray) {
         StringBuilder sb = new StringBuilder();
-        for (String s : stringArray) {
-            sb.append(s);
+        for (int i = 0; i < stringArray.length; i++) {
+            sb.append(stringArray[i]);
         }
         return sb.toString();
     }

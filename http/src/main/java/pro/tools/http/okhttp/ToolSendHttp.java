@@ -77,7 +77,11 @@ public class ToolSendHttp {
                 httpReceive.setErrMsg("本次请求响应码不是200，是" + responseStatusCode)
                 ;
             } else {
-                httpReceive.setResponseBody(body.string())
+                String responseBody = body.string();
+                if (log.isDebugEnabled()) {
+                    log.debug(responseBody);
+                }
+                httpReceive.setResponseBody(responseBody)
                         .setHaveError(false)
                         .setStatusCode(responseStatusCode)
                         .setStatusText(responseStatusCode + "")
@@ -88,11 +92,10 @@ public class ToolSendHttp {
             response.close();
             okHttpClient.dispatcher().executorService().shutdown();
         } catch (Exception e) {
-            e.printStackTrace();
             if (log.isErrorEnabled()) {
                 log.error(ToolFormat.toException(e), e);
             }
-            httpReceive.setErrMsg(ToolFormat.toException(e))
+            httpReceive.setErrMsg(e.getMessage())
                     .setThrowable(e)
                     .setIsDone(true)
             ;

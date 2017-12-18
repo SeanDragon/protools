@@ -89,11 +89,16 @@ public class MailClientPool {
     }
 
     /**
-     * @param mailDebug             开启debug调试，以便在控制台查看
-     * @param mailHost              设置邮件服务器主机名
-     * @param mailTransportProtocol 发送邮件协议名称
-     * @param mailAuth              发送服务器需要身份验证
-     * @param mailSsl               开启SSL加密，否则会失败
+     * @param mailDebug
+     *         开启debug调试，以便在控制台查看
+     * @param mailHost
+     *         设置邮件服务器主机名
+     * @param mailTransportProtocol
+     *         发送邮件协议名称
+     * @param mailAuth
+     *         发送服务器需要身份验证
+     * @param mailSsl
+     *         开启SSL加密，否则会失败
      */
     private void init(Boolean mailDebug, String mailHost, String mailTransportProtocol, Boolean mailAuth, Boolean mailSsl) throws Exception {
         prop = new Properties();
@@ -214,7 +219,8 @@ public class MailClientPool {
                 mbp.setDataHandler(new DataHandler(fds));
                 //解决附件乱码
                 String filename = MimeUtility.encodeText(fds.getName());
-                mbp.setFileName(filename);  //得到文件名同样至入BodyPart
+                //得到文件名同样至入BodyPart
+                mbp.setFileName(filename);
 
                 multipart.addBodyPart(mbp);
             }

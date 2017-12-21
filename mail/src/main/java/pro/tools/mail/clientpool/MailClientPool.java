@@ -42,7 +42,7 @@ public class MailClientPool {
     private String userMail;
     private Session session;
     private Queue<MailSend> queue = Queues.newConcurrentLinkedQueue();
-    private boolean isRun;
+    private volatile boolean isRun;
 
 
     public MailClientPool(Boolean mailDebug, String mailHost, String mailTransportProtocol) throws MailException {

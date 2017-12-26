@@ -1,5 +1,7 @@
 package pro.tools.security;
 
+import com.google.common.collect.Maps;
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -17,7 +19,6 @@ import java.security.interfaces.RSAPublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -195,7 +196,7 @@ public final class ToolRSA {
         RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
 
         // 封装密钥
-        Map<String, Object> keyMap = new HashMap<>(2);
+        Map<String, Object> keyMap = Maps.newHashMapWithExpectedSize(2);
 
         keyMap.put(PUBLIC_KEY, publicKey);
         keyMap.put(PRIVATE_KEY, privateKey);

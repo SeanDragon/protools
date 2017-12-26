@@ -1,6 +1,7 @@
 package pro.tools.data.text;
 
-import java.util.ArrayList;
+import com.google.common.collect.Lists;
+
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -97,7 +98,9 @@ public final class ToolRegex {
 
     /**
      * 隐藏手机号中间的4位
+     *
      * @param phone
+     *
      * @return
      */
     public static String hideMobile(String phone) {
@@ -287,7 +290,8 @@ public final class ToolRegex {
      *         要匹配的字符串
      *
      * @return {@code true}: 匹配<br>{@code false}: 不匹配
-     */  public static boolean isMatch(Pattern pattern,CharSequence input) {
+     */
+    public static boolean isMatch(Pattern pattern, CharSequence input) {
         return input != null && input.length() > 0 && pattern.matcher(input).matches();
     }
 
@@ -305,9 +309,9 @@ public final class ToolRegex {
         if (input == null) {
             return null;
         }
-        List<String> matches = new ArrayList<>();
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(input);
+        List<String> matches = Lists.newArrayList();
         while (matcher.find()) {
             matches.add(matcher.group());
         }

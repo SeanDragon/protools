@@ -44,7 +44,6 @@ public class MailClientPool {
     private Queue<MailSend> queue = Queues.newConcurrentLinkedQueue();
     private volatile boolean isRun;
 
-
     public MailClientPool(Boolean mailDebug, String mailHost, String mailTransportProtocol) throws MailException {
         try {
             init(mailDebug, mailHost, mailTransportProtocol, false, false);

@@ -1,5 +1,7 @@
 package pro.tools.data.text;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.google.gson.Gson;
 import org.google.gson.GsonBuilder;
 import org.google.gson.JsonObject;
@@ -90,7 +92,7 @@ public final class ToolJson {
      */
     public static Map jsonToMap(String json) {
         if (json == null) {
-            return new HashMap<>(1);
+            return Maps.newHashMapWithExpectedSize(1);
         }
         return gson.fromJson(json, new TypeToken<TreeMap<String, Object>>() {
         }.getType());
@@ -215,7 +217,7 @@ public final class ToolJson {
             return null;
         }
         List<String> jsonToArrayList = jsonToArrayList(sJson);
-        List<T> list = new ArrayList<>();
+        List<T> list = Lists.newArrayList();
 
         for (String str : jsonToArrayList) {
             // 使用JSON作为传输
@@ -236,7 +238,7 @@ public final class ToolJson {
             return null;
         }
         List<String> jsonToArrayList = jsonToArrayList(sJson);
-        List<Map> list = new ArrayList<>();
+        List<Map> list = Lists.newArrayList();
 
         for (String str : jsonToArrayList) {
             // 使用JSON作为传输
@@ -259,7 +261,7 @@ public final class ToolJson {
         }.getType();
         ArrayList<JsonObject> jsonObjects = gson.fromJson(json, type);
 
-        ArrayList<T> arrayList = new ArrayList<>();
+        ArrayList<T> arrayList = Lists.newArrayList();
         for (JsonObject jsonObject : jsonObjects) {
             arrayList.add(gson.fromJson(jsonObject, clazz));
         }
@@ -277,7 +279,7 @@ public final class ToolJson {
         }.getType();
         ArrayList<JsonObject> jsonObjects = gson.fromJson(json, type);
 
-        ArrayList<String> arrayList = new ArrayList<>();
+        ArrayList<String> arrayList = Lists.newArrayList();
         for (JsonObject jsonObject : jsonObjects) {
             arrayList.add(jsonObject.toString());
         }
@@ -291,7 +293,7 @@ public final class ToolJson {
      * @return List<String>
      */
     public static List<String> dealJsonStr(String json) {
-        List<String> lst = new ArrayList<>();
+        List<String> lst = Lists.newArrayList();
         String[] sfs = json.split("\"\\},\\{\"");
         for (String str : sfs) {
             if (str.startsWith("[")) {

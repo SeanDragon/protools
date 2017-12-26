@@ -1,5 +1,6 @@
 package pro.tools.security;
 
+import com.google.common.collect.Maps;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import java.math.BigInteger;
@@ -25,7 +26,6 @@ import java.security.spec.EllipticCurve;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -109,7 +109,7 @@ public final class ToolECDSA {
         ECPrivateKey privateKey = (ECPrivateKey) keypair.getPrivate();
 
         // 封装密钥
-        Map<String, Object> map = new HashMap<String, Object>(2);
+        Map<String, Object> map = Maps.newHashMapWithExpectedSize(2);
 
         map.put(PUBLIC_KEY, publicKey);
         map.put(PRIVATE_KEY, privateKey);

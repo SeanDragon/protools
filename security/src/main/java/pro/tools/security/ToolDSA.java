@@ -1,5 +1,7 @@
 package pro.tools.security;
 
+import com.google.common.collect.Maps;
+
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.KeyFactory;
@@ -16,7 +18,6 @@ import java.security.interfaces.DSAPublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -138,7 +139,7 @@ public final class ToolDSA {
         DSAPrivateKey privateKey = (DSAPrivateKey) keys.getPrivate();
 
         // 封装密钥
-        Map<String, Object> map = new HashMap<String, Object>(2);
+        Map<String, Object> map = Maps.newHashMapWithExpectedSize(2);
 
         map.put(PUBLIC_KEY, publicKey);
         map.put(PRIVATE_KEY, privateKey);

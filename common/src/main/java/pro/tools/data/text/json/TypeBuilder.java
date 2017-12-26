@@ -1,17 +1,17 @@
 package pro.tools.data.text.json;
 
+import com.google.common.collect.Lists;
 import pro.tools.data.text.json.exception.TypeException;
 import pro.tools.data.text.json.typeimpl.ParameterizedTypeImpl;
 import pro.tools.data.text.json.typeimpl.WildcardTypeImpl;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
 public class TypeBuilder {
     private final TypeBuilder parent;
     private final Class raw;
-    private final List<Type> args = new ArrayList<>();
+    private final List<Type> args = Lists.newArrayList();
 
 
     private TypeBuilder(Class raw, TypeBuilder parent) {

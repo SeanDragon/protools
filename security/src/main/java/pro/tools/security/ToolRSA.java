@@ -23,6 +23,7 @@ import java.util.Map;
 
 /**
  * RSA安全编码组件
+ * @author SeanDragon
  */
 public final class ToolRSA {
     private ToolRSA() {

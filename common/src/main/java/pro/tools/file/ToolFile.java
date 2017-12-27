@@ -707,8 +707,9 @@ public final class ToolFile {
             return null;
         }
         File[] files = dir.listFiles();
-        List<File> list = Lists.newArrayListWithCapacity(files.length);
+        List<File> list = null;
         if (files != null && files.length != 0) {
+            list = Lists.newArrayListWithCapacity(files.length);
             for (File file : files) {
                 if (file.getName().toUpperCase().endsWith(suffix.toUpperCase())) {
                     list.add(file);

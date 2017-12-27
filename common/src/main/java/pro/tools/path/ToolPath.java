@@ -33,6 +33,21 @@ import java.util.stream.Stream;
  */
 public final class ToolPath {
 
+    /**
+     * 文件遍历的访问选项
+     */
+    private static final EnumSet<FileVisitOption> OPTS = EnumSet.of(FileVisitOption.FOLLOW_LINKS);
+
+    /**
+     * 读取选项
+     */
+    private static final OpenOption[] READ = new StandardOpenOption[]{StandardOpenOption.READ};
+    /**
+     * 写入选项
+     */
+    private static final OpenOption[] WRITE_CREATE = new StandardOpenOption[]{StandardOpenOption.WRITE, StandardOpenOption.CREATE};
+    private static final OpenOption[] WRITE_CREATE_APPEND = new StandardOpenOption[]{StandardOpenOption.WRITE, StandardOpenOption.CREATE, StandardOpenOption.APPEND};
+
     public static Path getPath(String first, String... more) {
         if (ToolStr.isBlank(first)) {
             throw new NullPointerException("first is null");
@@ -47,48 +62,24 @@ public final class ToolPath {
         return Paths.get(uri).normalize();
     }
 
-    public static boolean isExists(String path) {
-        return isExists(getPath(path));
-    }
-
     public static boolean isExists(Path path) {
         return Files.exists(path);
-    }
-
-    public static boolean isFile(String path) {
-        return isFile(getPath(path));
     }
 
     public static boolean isFile(Path path) {
         return Files.isRegularFile(path);
     }
 
-    public static boolean isDir(String path) {
-        return isDir(getPath(path));
-    }
-
     public static boolean isDir(Path path) {
         return Files.isDirectory(path);
-    }
-
-    public static boolean canRead(String path) {
-        return canRead(getPath(path));
     }
 
     public static boolean canRead(Path path) {
         return Files.isReadable(path);
     }
 
-    public static boolean canWrite(String path) {
-        return canWrite(getPath(path));
-    }
-
     public static boolean canWrite(Path path) {
         return Files.isWritable(path);
-    }
-
-    public static String getContentType(String path) throws IOException {
-        return getContentType(getPath(path));
     }
 
     public static String getContentType(Path path) throws IOException {
@@ -99,16 +90,8 @@ public final class ToolPath {
         return type;
     }
 
-    public static FileType getFileType(String path) throws IOException {
-        return getFileType(getPath(path));
-    }
-
     public static FileType getFileType(Path path) throws IOException {
         return ToolFileType.getType(path.toFile());
-    }
-
-    public static long getFileLines(String path) throws IOException {
-        return getFileLines(getPath(path));
     }
 
     public static long getFileLines(Path path) throws IOException {
@@ -117,17 +100,9 @@ public final class ToolPath {
 
     //region 基本操作 文件
 
-    public static Path reName(String path, String newName) throws IOException {
-        return reName(getPath(path), newName);
-    }
-
     public static Path reName(Path path, String newName) throws IOException {
         Path target = path.getParent().resolve(newName);
         return Files.move(path, target);
-    }
-
-    public static Path createDir(String path, boolean replace) throws IOException {
-        return createDir(getPath(path), replace);
     }
 
     public static Path createDir(Path path, boolean replace) throws IOException {
@@ -149,10 +124,6 @@ public final class ToolPath {
         }
     }
 
-    public static Path copy(String src, String dest, boolean replace) throws IOException {
-        return copy(getPath(src), getPath(dest), replace);
-    }
-
     public static Path copy(Path src, Path dest, boolean replace) throws IOException {
         dest = getPath(dest.toString(), src.getFileName().toString());
         if (replace) {
@@ -167,10 +138,6 @@ public final class ToolPath {
         }
     }
 
-    public static Path createFile(String path, boolean replace) throws IOException {
-        return createFile(getPath(path), replace);
-    }
-
     public static Path createFile(Path path, boolean replace) throws IOException {
         if (replace) {
             rmr(path);
@@ -182,10 +149,6 @@ public final class ToolPath {
                 return Files.createFile(path);
             }
         }
-    }
-
-    public static Path move(String src, String dest, boolean replace) throws IOException {
-        return move(getPath(src), getPath(dest), replace);
     }
 
     public static Path move(Path src, Path dest, boolean replace) throws IOException {
@@ -202,33 +165,18 @@ public final class ToolPath {
         }
     }
 
-    public static void rm(String path) throws IOException {
-        rm(getPath(path));
-    }
-
     public static void rm(Path path) throws IOException {
         if (isExists(path)) {
             Files.delete(path);
         }
     }
 
-    public static void rmr(String path) throws IOException {
-        rmr(getPath(path));
-    }
-
-    public static final EnumSet<FileVisitOption> OPTS;
-    public static final OpenOption[] READ = new StandardOpenOption[]{StandardOpenOption.READ};
-
-    public static Iterator<Path> dirIterator(String dir) {
-        return dirIterator(getPath(dir));
+    public static void rmr(Path path) throws IOException {
+        Files.walkFileTree(path, OPTS, Integer.MAX_VALUE, RmrVisitor.INSTANCE);
     }
 
     public static Iterator<Path> dirIterator(Path dir) {
         return dir.iterator();
-    }
-
-    public static Stream<Path> dirStream(String dir) throws IOException {
-        return dirStream(getPath(dir));
     }
 
     public static Stream<Path> dirStream(Path dir) throws IOException {
@@ -239,15 +187,8 @@ public final class ToolPath {
 
     //region 文件数据
 
-    public static final OpenOption[] WRITE_CREATE = new StandardOpenOption[]{StandardOpenOption.WRITE, StandardOpenOption.CREATE};
-    public static final OpenOption[] WRITE_CREATE_APPEND = new StandardOpenOption[]{StandardOpenOption.WRITE, StandardOpenOption.CREATE, StandardOpenOption.APPEND};
-
-    static {
-        OPTS = EnumSet.of(FileVisitOption.FOLLOW_LINKS);
-    }
-
-    public static void rmr(Path path) throws IOException {
-        Files.walkFileTree(path, OPTS, Integer.MAX_VALUE, RmrVisitor.INSTANCE);
+    public static void visitDir(Path dir, FileVisitor<Path> fileVisitor) throws IOException {
+        Files.walkFileTree(dir, OPTS, Integer.MAX_VALUE, fileVisitor);
     }
 
     public static Stream<String> readStream(Path path) throws IOException {
@@ -262,32 +203,13 @@ public final class ToolPath {
         return Files.readAllBytes(path);
     }
 
+    public static InputStream readInputStream(Path path) throws IOException {
+        return Files.newInputStream(path, READ);
+    }
+
     public static BufferedReader readReader(Path path) throws IOException {
         return Files.newBufferedReader(path);
     }
-
-    public static void visitDir(Path dir, FileVisitor<Path> fileVisitor) throws IOException {
-        Files.walkFileTree(dir, OPTS, Integer.MAX_VALUE, fileVisitor);
-    }
-
-    private static void validRead(Path path) throws IOException {
-        boolean canRead = canRead(path);
-        if (!canRead) {
-            throw new IOException("该文件无法读取");
-        }
-    }
-
-    private static void validWrite(Path path) throws IOException {
-        boolean canWrite = canWrite(path);
-        if (!canWrite) {
-            throw new IOException("该文件无法写入");
-        }
-    }
-
-    //endregion
-
-    //region 文件元数据的修改
-    //endregion
 
     public static Path writeStrings(Path path, List<String> stringList, boolean append) throws IOException {
         OpenOption[] options = append ? WRITE_CREATE_APPEND : WRITE_CREATE;
@@ -299,17 +221,18 @@ public final class ToolPath {
         return Files.write(path, bytes, options);
     }
 
-    public static BufferedWriter writeWriter(Path path, boolean append) throws IOException {
-        OpenOption[] options = append ? WRITE_CREATE_APPEND : WRITE_CREATE;
-        return Files.newBufferedWriter(path, options);
-    }
-
     public static OutputStream writeOutputStream(Path path, boolean append) throws IOException {
         OpenOption[] options = append ? WRITE_CREATE_APPEND : WRITE_CREATE;
         return Files.newOutputStream(path, options);
     }
 
-    public static InputStream readInputStream(Path path) throws IOException {
-        return Files.newInputStream(path, READ);
+    public static BufferedWriter writeWriter(Path path, boolean append) throws IOException {
+        OpenOption[] options = append ? WRITE_CREATE_APPEND : WRITE_CREATE;
+        return Files.newBufferedWriter(path, options);
     }
+    //endregion
+
+    //region 文件元数据的修改
+    //TODO
+    //endregion
 }

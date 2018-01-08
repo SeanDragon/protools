@@ -102,4 +102,19 @@ public final class ToolClassSearch {
 
         return returnClassList;
     }
+
+    public static Set<Class<?>> getClazzByParent(Class<?> clazz) {
+        Set<Class<?>> returnClassList = new HashSet<>();
+
+        classSet.forEach(one -> {
+            if (clazz.isAssignableFrom(one)) {
+                // 本身加不进去
+                if (!clazz.equals(one)) {
+                    returnClassList.add(one);
+                }
+            }
+        });
+
+        return returnClassList;
+    }
 }

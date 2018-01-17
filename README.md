@@ -29,4 +29,4 @@
 ## security
 * 封装了 jdk 和 bouncycastle 中几十种常见加密方式
 ## all
-* all 版本
+* 如果需要使用上述多个模块，可以导入all模块以使用所有模块

@@ -69,6 +69,7 @@ public final class ToolECDSA {
      * 初始化密钥
      *
      * @return Map 密钥Map
+     *
      * @throws Exception
      */
     public static Map<String, Object> initKey() throws NoSuchAlgorithmException, InvalidAlgorithmParameterException {
@@ -120,8 +121,11 @@ public final class ToolECDSA {
     /**
      * 取得私钥
      *
-     * @param keyMap 密钥Map
+     * @param keyMap
+     *         密钥Map
+     *
      * @return byte[] 私钥
+     *
      * @throws Exception
      */
     public static byte[] getPrivateKey(Map<String, Object> keyMap) {
@@ -132,8 +136,11 @@ public final class ToolECDSA {
     /**
      * 取得公钥
      *
-     * @param keyMap 密钥Map
+     * @param keyMap
+     *         密钥Map
+     *
      * @return byte[] 公钥
+     *
      * @throws Exception
      */
     public static byte[] getPublicKey(Map<String, Object> keyMap) {
@@ -144,9 +151,13 @@ public final class ToolECDSA {
     /**
      * 签名
      *
-     * @param data       待签名数据
-     * @param privateKey 私钥
+     * @param data
+     *         待签名数据
+     * @param privateKey
+     *         私钥
+     *
      * @return byte[] 数字签名
+     *
      * @throws Exception
      */
     public static byte[] sign(byte[] data, byte[] privateKey) throws NoSuchAlgorithmException, InvalidKeySpecException, InvalidKeyException, SignatureException {
@@ -178,10 +189,15 @@ public final class ToolECDSA {
     /**
      * 校验
      *
-     * @param data      待校验数据
-     * @param publicKey 公钥
-     * @param sign      数字签名
+     * @param data
+     *         待校验数据
+     * @param publicKey
+     *         公钥
+     * @param sign
+     *         数字签名
+     *
      * @return boolean 校验成功返回true 失败返回false
+     *
      * @throws Exception
      */
     public static boolean verify(byte[] data, byte[] publicKey, byte[] sign) throws NoSuchAlgorithmException, InvalidKeySpecException, InvalidKeyException, SignatureException {

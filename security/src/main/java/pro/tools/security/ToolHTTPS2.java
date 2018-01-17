@@ -22,9 +22,13 @@ public final class ToolHTTPS2 {
     /**
      * 获得KeyStore
      *
-     * @param keyStorePath 密钥库路径
-     * @param password     密码
+     * @param keyStorePath
+     *         密钥库路径
+     * @param password
+     *         密码
+     *
      * @return KeyStore 密钥库
+     *
      * @throws Exception
      */
     private static KeyStore getKeyStore(String keyStorePath, String password) throws KeyStoreException, IOException, CertificateException, NoSuchAlgorithmException {
@@ -48,10 +52,15 @@ public final class ToolHTTPS2 {
     /**
      * 获得SSLSocektFactory
      *
-     * @param password       密码
-     * @param keyStorePath   密钥库路径
-     * @param trustStorePath 信任库路径
+     * @param password
+     *         密码
+     * @param keyStorePath
+     *         密钥库路径
+     * @param trustStorePath
+     *         信任库路径
+     *
      * @return SSLSocketFactory
+     *
      * @throws Exception
      */
     private static SSLSocketFactory getSSLSocketFactory(String password, String keyStorePath, String trustStorePath) throws CertificateException, UnrecoverableKeyException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, IOException {
@@ -61,10 +70,15 @@ public final class ToolHTTPS2 {
     /**
      * 为HttpsURLConnection配置SSLSocketFactory
      *
-     * @param conn              HttpsURLConnection
-     * @param password          密码
-     * @param keyStorePath      密钥库路径
-     * @param trustKeyStorePath 信任库路径
+     * @param conn
+     *         HttpsURLConnection
+     * @param password
+     *         密码
+     * @param keyStorePath
+     *         密钥库路径
+     * @param trustKeyStorePath
+     *         信任库路径
+     *
      * @throws Exception
      */
     public static void configSSLSocketFactory(HttpsURLConnection conn, String password, String keyStorePath,

@@ -60,9 +60,13 @@ public final class ToolElGamal {
     /**
      * 用私钥解密
      *
-     * @param data 待解密数据
-     * @param key  私钥
+     * @param data
+     *         待解密数据
+     * @param key
+     *         私钥
+     *
      * @return byte[] 解密数据
+     *
      * @throws Exception
      */
     public static byte[] decryptByPrivateKey(byte[] data, byte[] key) throws NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
@@ -89,9 +93,13 @@ public final class ToolElGamal {
     /**
      * 用公钥加密
      *
-     * @param data 待加密数据
-     * @param key  公钥
+     * @param data
+     *         待加密数据
+     * @param key
+     *         公钥
+     *
      * @return byte[] 加密数据
+     *
      * @throws Exception
      */
     public static byte[] encryptByPublicKey(byte[] data, byte[] key) throws NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
@@ -119,6 +127,7 @@ public final class ToolElGamal {
      * 生成密钥
      *
      * @return Map 密钥Map
+     *
      * @throws Exception
      */
     public static Map<String, Object> initKey() throws NoSuchAlgorithmException, InvalidParameterSpecException, InvalidAlgorithmParameterException {
@@ -164,8 +173,11 @@ public final class ToolElGamal {
     /**
      * 取得私钥
      *
-     * @param keyMap 密钥Map
+     * @param keyMap
+     *         密钥Map
+     *
      * @return byte[] 私钥
+     *
      * @throws Exception
      */
     public static byte[] getPrivateKey(Map<String, Object> keyMap) {
@@ -177,7 +189,9 @@ public final class ToolElGamal {
      * 取得公钥
      *
      * @param keyMap
+     *
      * @return
+     *
      * @throws Exception
      */
     public static byte[] getPublicKey(Map<String, Object> keyMap) {

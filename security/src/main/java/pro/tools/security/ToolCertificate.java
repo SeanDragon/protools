@@ -36,10 +36,15 @@ public final class ToolCertificate {
     /**
      * 由KeyStore获得私钥
      *
-     * @param keyStorePath 密钥库路径
-     * @param alias        别名
-     * @param password     密码
+     * @param keyStorePath
+     *         密钥库路径
+     * @param alias
+     *         别名
+     * @param password
+     *         密码
+     *
      * @return PrivateKey 私钥
+     *
      * @throws Exception
      */
     private static PrivateKey getPrivateKeyByKeyStore(String keyStorePath, String alias, String password) throws CertificateException, NoSuchAlgorithmException, KeyStoreException, IOException, UnrecoverableKeyException {
@@ -55,8 +60,11 @@ public final class ToolCertificate {
     /**
      * 由Certificate获得公钥
      *
-     * @param certificatePath 证书路径
+     * @param certificatePath
+     *         证书路径
+     *
      * @return PublicKey 公钥
+     *
      * @throws Exception
      */
     private static PublicKey getPublicKeyByCertificate(String certificatePath) throws CertificateException, IOException {
@@ -72,8 +80,11 @@ public final class ToolCertificate {
     /**
      * 获得Certificate
      *
-     * @param certificatePath 证书路径
+     * @param certificatePath
+     *         证书路径
+     *
      * @return Certificate 证书
+     *
      * @throws Exception
      */
     private static Certificate getCertificate(String certificatePath) throws CertificateException, IOException {
@@ -96,10 +107,15 @@ public final class ToolCertificate {
     /**
      * 获得Certificate
      *
-     * @param keyStorePath 密钥库路径
-     * @param alias        别名
-     * @param password     密码
+     * @param keyStorePath
+     *         密钥库路径
+     * @param alias
+     *         别名
+     * @param password
+     *         密码
+     *
      * @return Certificate 证书
+     *
      * @throws Exception
      */
     private static Certificate getCertificate(String keyStorePath, String alias, String password) throws CertificateException, NoSuchAlgorithmException, KeyStoreException, IOException {
@@ -114,9 +130,13 @@ public final class ToolCertificate {
     /**
      * 获得KeyStore
      *
-     * @param keyStorePath 密钥库路径
-     * @param password     密码
+     * @param keyStorePath
+     *         密钥库路径
+     * @param password
+     *         密码
+     *
      * @return KeyStore 密钥库
+     *
      * @throws Exception
      */
     private static KeyStore getKeyStore(String keyStorePath, String password) throws CertificateException, NoSuchAlgorithmException, KeyStoreException, IOException {
@@ -126,11 +146,17 @@ public final class ToolCertificate {
     /**
      * 私钥加密
      *
-     * @param data         待加密数据
-     * @param keyStorePath 密钥库路径
-     * @param alias        别名
-     * @param password     密码
+     * @param data
+     *         待加密数据
+     * @param keyStorePath
+     *         密钥库路径
+     * @param alias
+     *         别名
+     * @param password
+     *         密码
+     *
      * @return byte[] 加密数据
+     *
      * @throws Exception
      */
     public static byte[] encryptByPrivateKey(byte[] data, String keyStorePath, String alias, String password) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, UnrecoverableKeyException, CertificateException, KeyStoreException, IOException {
@@ -149,11 +175,17 @@ public final class ToolCertificate {
     /**
      * 私钥解密
      *
-     * @param data         待解密数据
-     * @param keyStorePath 密钥库路径
-     * @param alias        别名
-     * @param password     密码
+     * @param data
+     *         待解密数据
+     * @param keyStorePath
+     *         密钥库路径
+     * @param alias
+     *         别名
+     * @param password
+     *         密码
+     *
      * @return byte[] 解密数据
+     *
      * @throws Exception
      */
     public static byte[] decryptByPrivateKey(byte[] data, String keyStorePath, String alias, String password) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, UnrecoverableKeyException, CertificateException, KeyStoreException, IOException {
@@ -172,9 +204,13 @@ public final class ToolCertificate {
     /**
      * 公钥加密
      *
-     * @param data            待加密数据
-     * @param certificatePath 证书路径
+     * @param data
+     *         待加密数据
+     * @param certificatePath
+     *         证书路径
+     *
      * @return byte[] 加密数据
+     *
      * @throws Exception
      */
     public static byte[] encryptByPublicKey(byte[] data, String certificatePath) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, CertificateException, IOException {
@@ -193,9 +229,13 @@ public final class ToolCertificate {
     /**
      * 公钥解密
      *
-     * @param data            待解密数据
-     * @param certificatePath 证书路径
+     * @param data
+     *         待解密数据
+     * @param certificatePath
+     *         证书路径
+     *
      * @return byte[] 解密数据
+     *
      * @throws Exception
      */
     public static byte[] decryptByPublicKey(byte[] data, String certificatePath) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, CertificateException, IOException {
@@ -214,10 +254,15 @@ public final class ToolCertificate {
     /**
      * 签名
      *
-     * @param keyStorePath 密钥库路径
-     * @param alias        别名
-     * @param password     密码
+     * @param keyStorePath
+     *         密钥库路径
+     * @param alias
+     *         别名
+     * @param password
+     *         密码
+     *
      * @return byte[] 签名
+     *
      * @throws Exception
      */
     public static byte[] sign(byte[] sign, String keyStorePath, String alias, String password) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException, CertificateException, KeyStoreException, IOException, UnrecoverableKeyException {
@@ -242,10 +287,15 @@ public final class ToolCertificate {
     /**
      * 验证签名
      *
-     * @param data            数据
-     * @param sign            签名
-     * @param certificatePath 证书路径
+     * @param data
+     *         数据
+     * @param sign
+     *         签名
+     * @param certificatePath
+     *         证书路径
+     *
      * @return boolean 验证通过为真
+     *
      * @throws Exception
      */
     public static boolean verify(byte[] data, byte[] sign, String certificatePath) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException, CertificateException, IOException {

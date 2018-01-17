@@ -21,8 +21,11 @@ public final class ToolMD {
     /**
      * Tiger加密
      *
-     * @param data 待加密数据
+     * @param data
+     *         待加密数据
+     *
      * @return byte[] 消息摘要
+     *
      * @throws Exception
      */
     public static byte[] encodeTiger(byte[] data) throws NoSuchAlgorithmException {
@@ -40,8 +43,11 @@ public final class ToolMD {
     /**
      * TigerHex加密
      *
-     * @param data 待加密数据
+     * @param data
+     *         待加密数据
+     *
      * @return byte[] 消息摘要
+     *
      * @throws Exception
      */
     public static String encodeTigerHex(byte[] data) throws NoSuchAlgorithmException {
@@ -56,8 +62,11 @@ public final class ToolMD {
     /**
      * Whirlpool加密
      *
-     * @param data 待加密数据
+     * @param data
+     *         待加密数据
+     *
      * @return byte[] 消息摘要
+     *
      * @throws Exception
      */
     public static byte[] encodeWhirlpool(byte[] data) throws NoSuchAlgorithmException {
@@ -75,8 +84,11 @@ public final class ToolMD {
     /**
      * WhirlpoolHex加密
      *
-     * @param data 待加密数据
+     * @param data
+     *         待加密数据
+     *
      * @return byte[] 消息摘要
+     *
      * @throws Exception
      */
     public static String encodeWhirlpoolHex(byte[] data) throws NoSuchAlgorithmException {
@@ -91,8 +103,11 @@ public final class ToolMD {
     /**
      * GOST3411加密
      *
-     * @param data 待加密数据
+     * @param data
+     *         待加密数据
+     *
      * @return byte[] 消息摘要
+     *
      * @throws Exception
      */
     public static byte[] encodeGOST3411(byte[] data) throws NoSuchAlgorithmException {
@@ -110,8 +125,11 @@ public final class ToolMD {
     /**
      * GOST3411Hex加密
      *
-     * @param data 待加密数据
+     * @param data
+     *         待加密数据
+     *
      * @return byte[] 消息摘要
+     *
      * @throws Exception
      */
     public static String encodeGOST3411Hex(byte[] data) throws NoSuchAlgorithmException {

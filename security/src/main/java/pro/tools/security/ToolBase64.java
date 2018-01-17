@@ -10,7 +10,7 @@ import java.io.IOException;
  * Base64的加密解密
  *
  * @author SeanDragon
- *         Create By 2017-04-20 14:43
+ * Create By 2017-04-20 14:43
  */
 public final class ToolBase64 {
     private ToolBase64() {
@@ -20,7 +20,9 @@ public final class ToolBase64 {
     /**
      * 功能：编码字符串
      *
-     * @param data 源字符串
+     * @param data
+     *         源字符串
+     *
      * @return String
      */
     public static String encode(String data) {
@@ -30,7 +32,9 @@ public final class ToolBase64 {
     /**
      * 功能：解码字符串
      *
-     * @param data 源字符串
+     * @param data
+     *         源字符串
+     *
      * @return String
      */
     public static String decode(String data) {
@@ -40,7 +44,9 @@ public final class ToolBase64 {
     /**
      * 功能：编码byte[]
      *
-     * @param data 源
+     * @param data
+     *         源
+     *
      * @return char[]
      */
     public static char[] encode(byte[] data) {
@@ -74,7 +80,9 @@ public final class ToolBase64 {
     /**
      * 功能：解码
      *
-     * @param data 编码后的字符数组
+     * @param data
+     *         编码后的字符数组
+     *
      * @return byte[]
      */
     public static byte[] decode(char[] data) {
@@ -132,7 +140,8 @@ public final class ToolBase64 {
     /**
      * 功能：编码文件
      *
-     * @param file 源文件
+     * @param file
+     *         源文件
      */
     public static void encode(File file) throws IOException {
         if (!file.exists()) {
@@ -147,7 +156,9 @@ public final class ToolBase64 {
     /**
      * 功能：解码文件。
      *
-     * @param file 源文件
+     * @param file
+     *         源文件
+     *
      * @throws IOException
      */
     public static void decode(File file) throws IOException {

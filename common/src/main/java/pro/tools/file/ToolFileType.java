@@ -43,8 +43,11 @@ public final class ToolFileType {
     /**
      * 得到文件头
      *
-     * @param inputStream 文件路径
+     * @param inputStream
+     *         文件路径
+     *
      * @return 文件头
+     *
      * @throws IOException
      */
     private static String getFileContent(InputStream inputStream) throws IOException {
@@ -69,7 +72,9 @@ public final class ToolFileType {
     /**
      * 判断文件类型
      *
-     * @param inputStream 文件流
+     * @param inputStream
+     *         文件流
+     *
      * @return 文件类型
      */
     public static FileType getType(InputStream inputStream) throws IOException {
@@ -95,7 +100,9 @@ public final class ToolFileType {
     /**
      * 判断文件类型
      *
-     * @param filePath 文件路径
+     * @param filePath
+     *         文件路径
+     *
      * @return 文件类型
      */
     public static FileType getType(String filePath) throws IOException {
@@ -105,10 +112,12 @@ public final class ToolFileType {
     /**
      * 判断文件类型
      *
-     * @param file 文件
+     * @param file
+     *         文件
+     *
      * @return 文件类型
      */
     public static FileType getType(File file) throws IOException {
         return getType(new FileInputStream(file));
     }
-}  
+}

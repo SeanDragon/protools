@@ -19,8 +19,11 @@ public final class ToolRipeMD {
     /**
      * RipeMD128消息摘要
      *
-     * @param data 待做消息摘要处理的数据
+     * @param data
+     *         待做消息摘要处理的数据
+     *
      * @return byte[] 消息摘要
+     *
      * @throws Exception
      */
     public static byte[] encodeRipeMD128(byte[] data) throws NoSuchAlgorithmException {
@@ -38,8 +41,11 @@ public final class ToolRipeMD {
     /**
      * RipeMD128Hex消息摘要
      *
-     * @param data 待做消息摘要处理的数据
+     * @param data
+     *         待做消息摘要处理的数据
+     *
      * @return byte[] 消息摘要
+     *
      * @throws Exception
      */
     public static String encodeRipeMD128Hex(byte[] data) throws NoSuchAlgorithmException {
@@ -54,8 +60,11 @@ public final class ToolRipeMD {
     /**
      * RipeMD160消息摘要
      *
-     * @param data 待做消息摘要处理的数据
+     * @param data
+     *         待做消息摘要处理的数据
+     *
      * @return byte[] 消息摘要
+     *
      * @throws Exception
      */
     public static byte[] encodeRipeMD160(byte[] data) throws NoSuchAlgorithmException {
@@ -73,8 +82,11 @@ public final class ToolRipeMD {
     /**
      * RipeMD160Hex消息摘要
      *
-     * @param data 待做消息摘要处理的数据
+     * @param data
+     *         待做消息摘要处理的数据
+     *
      * @return byte[] 消息摘要
+     *
      * @throws Exception
      */
     public static String encodeRipeMD160Hex(byte[] data) throws NoSuchAlgorithmException {
@@ -89,8 +101,11 @@ public final class ToolRipeMD {
     /**
      * RipeMD256消息摘要
      *
-     * @param data 待做消息摘要处理的数据
+     * @param data
+     *         待做消息摘要处理的数据
+     *
      * @return byte[] 消息摘要
+     *
      * @throws Exception
      */
     public static byte[] encodeRipeMD256(byte[] data) throws NoSuchAlgorithmException {
@@ -108,8 +123,11 @@ public final class ToolRipeMD {
     /**
      * RipeMD256Hex消息摘要
      *
-     * @param data 待做消息摘要处理的数据
+     * @param data
+     *         待做消息摘要处理的数据
+     *
      * @return byte[] 消息摘要
+     *
      * @throws Exception
      */
     public static String encodeRipeMD256Hex(byte[] data) throws NoSuchAlgorithmException {
@@ -124,8 +142,11 @@ public final class ToolRipeMD {
     /**
      * RipeMD320消息摘要
      *
-     * @param data 待做消息摘要处理的数据
+     * @param data
+     *         待做消息摘要处理的数据
+     *
      * @return byte[] 消息摘要
+     *
      * @throws Exception
      */
     public static byte[] encodeRipeMD320(byte[] data) throws NoSuchAlgorithmException {
@@ -143,8 +164,11 @@ public final class ToolRipeMD {
     /**
      * RipeMD320Hex消息摘要
      *
-     * @param data 待做消息摘要处理的数据
+     * @param data
+     *         待做消息摘要处理的数据
+     *
      * @return byte[] 消息摘要
+     *
      * @throws Exception
      */
     public static String encodeRipeMD320Hex(byte[] data) throws NoSuchAlgorithmException {

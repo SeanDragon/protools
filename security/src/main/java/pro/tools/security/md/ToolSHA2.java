@@ -18,8 +18,11 @@ public final class ToolSHA2 {
     /**
      * SHA-224加密
      *
-     * @param data 待加密数据
+     * @param data
+     *         待加密数据
+     *
      * @return byte[] 消息摘要
+     *
      * @throws Exception
      */
     public static byte[] encodeSHA224(byte[] data) throws NoSuchAlgorithmException {
@@ -36,8 +39,11 @@ public final class ToolSHA2 {
     /**
      * SHA-224加密
      *
-     * @param data 待加密数据
+     * @param data
+     *         待加密数据
+     *
      * @return byte[] 消息摘要
+     *
      * @throws Exception
      */
     public static String encodeSHA224Hex(byte[] data) throws NoSuchAlgorithmException {
@@ -51,8 +57,11 @@ public final class ToolSHA2 {
     /**
      * SHA-256加密
      *
-     * @param data 待加密数据
+     * @param data
+     *         待加密数据
+     *
      * @return byte[] 消息摘要
+     *
      * @throws Exception
      */
     public static byte[] encodeSHA256(byte[] data) throws NoSuchAlgorithmException {
@@ -66,8 +75,11 @@ public final class ToolSHA2 {
     /**
      * SHA-256加密
      *
-     * @param data 待加密数据
+     * @param data
+     *         待加密数据
+     *
      * @return byte[] 消息摘要
+     *
      * @throws Exception
      */
     public static String encodeSHA256Hex(byte[] data) throws NoSuchAlgorithmException {
@@ -81,8 +93,11 @@ public final class ToolSHA2 {
     /**
      * SHA-384加密
      *
-     * @param data 待加密数据
+     * @param data
+     *         待加密数据
+     *
      * @return byte[] 消息摘要
+     *
      * @throws Exception
      */
     public static byte[] encodeSHA384(byte[] data) throws NoSuchAlgorithmException {
@@ -96,8 +111,11 @@ public final class ToolSHA2 {
     /**
      * SHA-384加密
      *
-     * @param data 待加密数据
+     * @param data
+     *         待加密数据
+     *
      * @return byte[] 消息摘要
+     *
      * @throws Exception
      */
     public static String encodeSHA384Hex(byte[] data) throws NoSuchAlgorithmException {
@@ -111,8 +129,11 @@ public final class ToolSHA2 {
     /**
      * SHA-512加密
      *
-     * @param data 待加密数据
+     * @param data
+     *         待加密数据
+     *
      * @return byte[] 消息摘要
+     *
      * @throws Exception
      */
     public static byte[] encodeSHA512(byte[] data) throws NoSuchAlgorithmException {
@@ -126,8 +147,11 @@ public final class ToolSHA2 {
     /**
      * SHA-512加密
      *
-     * @param data 待加密数据
+     * @param data
+     *         待加密数据
+     *
      * @return byte[] 消息摘要
+     *
      * @throws Exception
      */
     public static String encodeSHA512Hex(byte[] data) throws NoSuchAlgorithmException {

@@ -21,6 +21,7 @@ public final class ToolMAC {
      * 初始化HmacMD5密钥
      *
      * @return
+     *
      * @throws Exception
      */
     public static byte[] initHmacMD5Key() throws NoSuchAlgorithmException {
@@ -38,9 +39,13 @@ public final class ToolMAC {
     /**
      * HmacMD5加密
      *
-     * @param data 待加密数据
-     * @param key  密钥
+     * @param data
+     *         待加密数据
+     * @param key
+     *         密钥
+     *
      * @return byte[] 消息摘要
+     *
      * @throws Exception
      */
     public static byte[] encodeHmacMD5(byte[] data, byte[] key) throws NoSuchAlgorithmException, InvalidKeyException {
@@ -62,6 +67,7 @@ public final class ToolMAC {
      * 初始化HmacSHA1密钥
      *
      * @return
+     *
      * @throws Exception
      */
     public static byte[] initHmacSHAKey() throws NoSuchAlgorithmException {
@@ -79,9 +85,13 @@ public final class ToolMAC {
     /**
      * HmacSHA1加密
      *
-     * @param data 待加密数据
-     * @param key  密钥
+     * @param data
+     *         待加密数据
+     * @param key
+     *         密钥
+     *
      * @return byte[] 消息摘要
+     *
      * @throws Exception
      */
     public static byte[] encodeHmacSHA(byte[] data, byte[] key) throws NoSuchAlgorithmException, InvalidKeyException {
@@ -100,12 +110,13 @@ public final class ToolMAC {
     }
 
 //	// 根据所安装的 JCE 仲裁策略文件，返回指定转换的最大密钥长度。
-//	public final static int getMaxAllowedKeyLength(String transformation) 
+//	public final static int getMaxAllowedKeyLength(String transformation)
 
     /**
      * 初始化HmacSHA256密钥
      *
      * @return
+     *
      * @throws Exception
      */
     public static byte[] initHmacSHA256Key() throws NoSuchAlgorithmException {
@@ -123,9 +134,13 @@ public final class ToolMAC {
     /**
      * HmacSHA256加密
      *
-     * @param data 待加密数据
-     * @param key  密钥
+     * @param data
+     *         待加密数据
+     * @param key
+     *         密钥
+     *
      * @return byte[] 消息摘要
+     *
      * @throws Exception
      */
     public static byte[] encodeHmacSHA256(byte[] data, byte[] key)
@@ -148,6 +163,7 @@ public final class ToolMAC {
      * 初始化HmacSHA384密钥
      *
      * @return
+     *
      * @throws Exception
      */
     public static byte[] initHmacSHA384Key() throws NoSuchAlgorithmException {
@@ -165,9 +181,13 @@ public final class ToolMAC {
     /**
      * HmacSHA384加密
      *
-     * @param data 待加密数据
-     * @param key  密钥
+     * @param data
+     *         待加密数据
+     * @param key
+     *         密钥
+     *
      * @return byte[] 消息摘要
+     *
      * @throws Exception
      */
     public static byte[] encodeHmacSHA384(byte[] data, byte[] key)
@@ -190,6 +210,7 @@ public final class ToolMAC {
      * 初始化HmacSHA512密钥
      *
      * @return
+     *
      * @throws Exception
      */
     public static byte[] initHmacSHA512Key() throws NoSuchAlgorithmException {
@@ -207,9 +228,13 @@ public final class ToolMAC {
     /**
      * HmacSHA512加密
      *
-     * @param data 待加密数据
-     * @param key  密钥
+     * @param data
+     *         待加密数据
+     * @param key
+     *         密钥
+     *
      * @return byte[] 消息摘要
+     *
      * @throws Exception
      */
     public static byte[] encodeHmacSHA512(byte[] data, byte[] key) throws NoSuchAlgorithmException, InvalidKeyException {

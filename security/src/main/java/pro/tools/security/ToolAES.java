@@ -47,8 +47,11 @@ public final class ToolAES {
     /**
      * 转换密钥
      *
-     * @param key 二进制密钥
+     * @param key
+     *         二进制密钥
+     *
      * @return Key 密钥
+     *
      * @throws Exception
      */
     private static Key toKey(byte[] key) {
@@ -61,18 +64,22 @@ public final class ToolAES {
     /**
      * 解密
      *
-     * @param data 待解密数据
-     * @param key  密钥
+     * @param data
+     *         待解密数据
+     * @param key
+     *         密钥
+     *
      * @return byte[] 解密数据
+     *
      * @throws Exception
      */
     public static byte[] decrypt(byte[] data, byte[] key) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
         // 还原密钥
         Key k = toKey(key);
 
-		/*
+        /*
          * 实例化 使用PKCS7Padding填充方式，按如下方式实现 Cipher.getInstance(CIPHER_ALGORITHM, "BC");
-		 */
+         */
         Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
 
         // 初始化，设置为解密模式
@@ -85,19 +92,23 @@ public final class ToolAES {
     /**
      * 加密
      *
-     * @param data 待加密数据
-     * @param key  密钥
+     * @param data
+     *         待加密数据
+     * @param key
+     *         密钥
+     *
      * @return byte[] 加密数据
+     *
      * @throws Exception
      */
     public static byte[] encrypt(byte[] data, byte[] key) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
         // 还原密钥
         Key k = toKey(key);
 
-		/*
+        /*
          * 实例化 使用PKCS7Padding填充方式，按如下方式实现 Cipher.getInstance(CIPHER_ALGORITHM,
-		 * "BC");
-		 */
+         * "BC");
+         */
         Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
 
         // 初始化，设置为加密模式
@@ -111,15 +122,16 @@ public final class ToolAES {
      * 生成密钥 <br>
      *
      * @return byte[] 二进制密钥
+     *
      * @throws Exception
      */
     public static byte[] initKey() throws NoSuchAlgorithmException {
         // 实例化
         KeyGenerator kg = KeyGenerator.getInstance(KEY_ALGORITHM);
 
-		/*
+        /*
          * AES 要求密钥长度为 128位、192位或 256位
-		 */
+         */
         kg.init(256);
 
         // 生成秘密密钥

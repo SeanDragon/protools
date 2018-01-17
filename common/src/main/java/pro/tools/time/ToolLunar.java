@@ -59,9 +59,13 @@ public final class ToolLunar {
     /**
      * 从1582年10月开始算
      *
-     * @param y 年
-     * @param m 月
-     * @param d 日
+     * @param y
+     *         年
+     * @param m
+     *         月
+     * @param d
+     *         日
+     *
      * @return 阳历
      */
     private static long solartoint(int y, int m, int d) {
@@ -71,7 +75,9 @@ public final class ToolLunar {
     }
 
     /**
-     * @param lunarYear 农历年份
+     * @param lunarYear
+     *         农历年份
+     *
      * @return String of Ganzhi: 甲子年 Tiangan:甲乙丙丁戊己庚辛壬癸
      * Dizhi: 子丑寅卯辰巳无为申酉戌亥
      */
@@ -98,7 +104,9 @@ public final class ToolLunar {
     /**
      * 农历转公历
      *
-     * @param lunar 农历
+     * @param lunar
+     *         农历
+     *
      * @return 阴历
      */
     public static Solar lunartosolar(final Lunar lunar) {
@@ -134,7 +142,9 @@ public final class ToolLunar {
     /**
      * 公历转农历
      *
-     * @param solar 公历
+     * @param solar
+     *         公历
+     *
      * @return 阴历
      */
     public static Lunar solartolunar(final Solar solar) {

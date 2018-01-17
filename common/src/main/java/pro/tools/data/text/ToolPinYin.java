@@ -23,6 +23,7 @@ public final class ToolPinYin {
      * 得到 全拼
      *
      * @param src
+     *
      * @return
      */
     public static String getPinYin(String src) throws BadHanyuPinyinOutputFormatCombination {
@@ -50,6 +51,7 @@ public final class ToolPinYin {
      * 得到中文首字母
      *
      * @param str
+     *
      * @return
      */
     public static String getPinYinHeadChar(String str) {
@@ -71,6 +73,7 @@ public final class ToolPinYin {
      * 将字符串转移为ASCII码
      *
      * @param cnStr
+     *
      * @return
      */
     public static String getCnASCII(String cnStr) {

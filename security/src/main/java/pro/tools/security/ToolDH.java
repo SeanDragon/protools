@@ -65,6 +65,7 @@ public final class ToolDH {
      * 初始化甲方密钥
      *
      * @return Map 甲方密钥Map
+     *
      * @throws Exception
      */
     public static Map<String, Object> initKey() throws NoSuchAlgorithmException {
@@ -96,8 +97,11 @@ public final class ToolDH {
     /**
      * 初始化乙方密钥
      *
-     * @param key 甲方公钥
+     * @param key
+     *         甲方公钥
+     *
      * @return Map 乙方密钥Map
+     *
      * @throws Exception
      */
     public static Map<String, Object> initKey(byte[] key) throws NoSuchAlgorithmException, InvalidAlgorithmParameterException, InvalidKeySpecException {
@@ -142,9 +146,13 @@ public final class ToolDH {
     /**
      * 加密
      *
-     * @param data 待加密数据
-     * @param key  密钥
+     * @param data
+     *         待加密数据
+     * @param key
+     *         密钥
+     *
      * @return byte[] 加密数据
+     *
      * @throws Exception
      */
     public static byte[] encrypt(byte[] data, byte[] key) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
@@ -163,9 +171,13 @@ public final class ToolDH {
     /**
      * 解密<br>
      *
-     * @param data 待解密数据
-     * @param key  密钥
+     * @param data
+     *         待解密数据
+     * @param key
+     *         密钥
+     *
      * @return byte[] 解密数据
+     *
      * @throws Exception
      */
     public static byte[] decrypt(byte[] data, byte[] key) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
@@ -184,9 +196,13 @@ public final class ToolDH {
     /**
      * 构建密钥
      *
-     * @param publicKey  公钥
-     * @param privateKey 私钥
+     * @param publicKey
+     *         公钥
+     * @param privateKey
+     *         私钥
+     *
      * @return byte[] 本地密钥
+     *
      * @throws Exception
      */
     public static byte[] getSecretKey(byte[] publicKey, byte[] privateKey) throws InvalidKeySpecException, NoSuchAlgorithmException, InvalidKeyException {
@@ -225,8 +241,11 @@ public final class ToolDH {
     /**
      * 取得私钥
      *
-     * @param keyMap 密钥Map
+     * @param keyMap
+     *         密钥Map
+     *
      * @return byte[] 私钥
+     *
      * @throws Exception
      */
     public static byte[] getPrivateKey(Map<String, Object> keyMap) {
@@ -239,8 +258,11 @@ public final class ToolDH {
     /**
      * 取得公钥
      *
-     * @param keyMap 密钥Map
+     * @param keyMap
+     *         密钥Map
+     *
      * @return byte[] 公钥
+     *
      * @throws Exception
      */
     public static byte[] getPublicKey(Map<String, Object> keyMap) {

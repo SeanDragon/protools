@@ -25,6 +25,7 @@ public final class ToolHmacRipeMD {
      * 初始化HmacRipeMD128密钥
      *
      * @return byte[] 密钥
+     *
      * @throws NoSuchAlgorithmException
      */
     public static byte[] initHmacRipeMD128Key() throws NoSuchAlgorithmException {
@@ -45,9 +46,13 @@ public final class ToolHmacRipeMD {
     /**
      * HmacRipeMD128消息摘要
      *
-     * @param data 待做消息摘要处理的数据
-     * @param key  密钥
+     * @param data
+     *         待做消息摘要处理的数据
+     * @param key
+     *         密钥
+     *
      * @return byte[] 消息摘要
+     *
      * @throws Exception
      */
     public static byte[] encodeHmacRipeMD128(byte[] data, byte[] key) throws NoSuchAlgorithmException, InvalidKeyException {
@@ -71,9 +76,13 @@ public final class ToolHmacRipeMD {
     /**
      * HmacRipeMD128Hex消息摘要
      *
-     * @param data 待做消息摘要处理的数据
-     * @param key  密钥
+     * @param data
+     *         待做消息摘要处理的数据
+     * @param key
+     *         密钥
+     *
      * @return byte[] 消息摘要
+     *
      * @throws Exception
      */
     public static String encodeHmacRipeMD128Hex(byte[] data, byte[] key) throws InvalidKeyException, NoSuchAlgorithmException {
@@ -89,6 +98,7 @@ public final class ToolHmacRipeMD {
      * 初始化HmacRipeMD160密钥
      *
      * @return byte[] 密钥
+     *
      * @throws Exception
      */
     public static byte[] initHmacRipeMD160Key() throws NoSuchAlgorithmException {
@@ -109,9 +119,13 @@ public final class ToolHmacRipeMD {
     /**
      * HmacRipeMD160消息摘要
      *
-     * @param data 待做消息摘要处理的数据
-     * @param key  密钥
+     * @param data
+     *         待做消息摘要处理的数据
+     * @param key
+     *         密钥
+     *
      * @return byte[] 消息摘要
+     *
      * @throws Exception
      */
     public static byte[] encodeHmacRipeMD160(byte[] data, byte[] key) throws NoSuchAlgorithmException, InvalidKeyException {
@@ -135,9 +149,13 @@ public final class ToolHmacRipeMD {
     /**
      * HmacRipeMD160Hex消息摘要
      *
-     * @param data 待做消息摘要处理的数据
-     * @param key  密钥
+     * @param data
+     *         待做消息摘要处理的数据
+     * @param key
+     *         密钥
+     *
      * @return String 消息摘要
+     *
      * @throws Exception
      */
     public static String encodeHmacRipeMD160Hex(byte[] data, byte[] key) throws InvalidKeyException, NoSuchAlgorithmException {

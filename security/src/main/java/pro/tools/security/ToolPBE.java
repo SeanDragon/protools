@@ -59,6 +59,7 @@ public final class ToolPBE {
      * 盐长度必须为8字节
      *
      * @return byte[] 盐
+     *
      * @throws Exception
      */
     public static byte[] initSalt() {
@@ -69,8 +70,11 @@ public final class ToolPBE {
     /**
      * 转换密钥
      *
-     * @param password 密码
+     * @param password
+     *         密码
+     *
      * @return Key 密钥
+     *
      * @throws Exception
      */
     private static Key toKey(String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
@@ -89,10 +93,15 @@ public final class ToolPBE {
     /**
      * 加密
      *
-     * @param data     数据
-     * @param password 密码
-     * @param salt     盐
+     * @param data
+     *         数据
+     * @param password
+     *         密码
+     * @param salt
+     *         盐
+     *
      * @return byte[] 加密数据
+     *
      * @throws Exception
      */
     public static byte[] encrypt(byte[] data, String password, byte[] salt) throws InvalidKeySpecException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
@@ -117,10 +126,15 @@ public final class ToolPBE {
     /**
      * 解密
      *
-     * @param data     数据
-     * @param password 密码
-     * @param salt     盐
+     * @param data
+     *         数据
+     * @param password
+     *         密码
+     * @param salt
+     *         盐
+     *
      * @return byte[] 解密数据
+     *
      * @throws Exception
      */
     public static byte[] decrypt(byte[] data, String password, byte[] salt) throws InvalidKeySpecException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {

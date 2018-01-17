@@ -14,7 +14,7 @@ import java.security.Security;
 public final class ToolMD {
 
     private ToolMD() {
-        throw new UnsupportedOperationException("u can't instantiate me...");
+        throw new UnsupportedOperationException("我是工具类，别初始化我。。。");
     }
 
 

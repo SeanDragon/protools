@@ -12,7 +12,7 @@ import java.security.Security;
  */
 public final class ToolMD4 {
     private ToolMD4() {
-        throw new UnsupportedOperationException("u can't instantiate me...");
+        throw new UnsupportedOperationException("我是工具类，别初始化我。。。");
     }
 
     /**

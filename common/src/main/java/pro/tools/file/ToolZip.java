@@ -34,7 +34,7 @@ import static pro.tools.constant.UnitConst.KB;
 public final class ToolZip {
 
     private ToolZip() {
-        throw new UnsupportedOperationException("u can't instantiate me...");
+        throw new UnsupportedOperationException("我是工具类，别初始化我。。。");
     }
 
     /**

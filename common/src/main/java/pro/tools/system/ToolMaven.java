@@ -10,7 +10,7 @@ import java.io.IOException;
  */
 public final class ToolMaven {
     private ToolMaven() {
-        throw new UnsupportedOperationException("u can't instantiate me...");
+        throw new UnsupportedOperationException("我是工具类，别初始化我。。。");
     }
 
     public static boolean install(String groupId, String artifactId, String version, String fileName) throws IOException {

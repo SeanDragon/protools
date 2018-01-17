@@ -12,7 +12,7 @@ package pro.tools.constant;
 public final class UnitConst {
 
     private UnitConst() {
-        throw new UnsupportedOperationException("u can't instantiate me...");
+        throw new UnsupportedOperationException("我是工具类，别初始化我。。。");
     }
 
     //region 存储相关常量

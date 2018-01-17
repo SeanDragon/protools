@@ -10,7 +10,7 @@ import java.security.NoSuchAlgorithmException;
  */
 public final class ToolMD2 {
     private ToolMD2() {
-        throw new UnsupportedOperationException("u can't instantiate me...");
+        throw new UnsupportedOperationException("我是工具类，别初始化我。。。");
     }
 
     /**

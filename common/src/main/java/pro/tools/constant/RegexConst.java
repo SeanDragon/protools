@@ -114,7 +114,7 @@ public final class RegexConst {
     public static final Pattern REGEX_NEGATIVE_FLOAT = compile("^-[1-9]\\d*\\.\\d*|-0\\.\\d*[1-9]\\d*$");
 
     private RegexConst() {
-        throw new UnsupportedOperationException("u can't instantiate me...");
+        throw new UnsupportedOperationException("我是工具类，别初始化我。。。");
     }
     //endregion
 

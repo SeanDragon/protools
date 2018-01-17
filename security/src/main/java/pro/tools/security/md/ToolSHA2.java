@@ -12,7 +12,7 @@ import java.security.Security;
  */
 public final class ToolSHA2 {
     private ToolSHA2() {
-        throw new UnsupportedOperationException("u can't instantiate me...");
+        throw new UnsupportedOperationException("我是工具类，别初始化我。。。");
     }
 
     /**

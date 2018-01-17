@@ -8,8 +8,8 @@
 
 - [protools](#protools)
     - [common](#common)
-    - [http](#common)
-    - [mail](#common)
+    - [http](#http)
+    - [mail](#mail)
     - [security](#common)
     - [all](#all)
 

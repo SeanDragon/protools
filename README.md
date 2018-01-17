@@ -1,5 +1,10 @@
 # protools
+
+[![Build Status](https://travis-ci.org/SeanDragon/protools.svg?branch=master)](https://travis-ci.org/SeanDragon/protools)
+
 历经开发周期两年，并且应用过千万级别项目的工具箱
+
+### 目录
 
 - [protools](#protools)
     - [common](#common)

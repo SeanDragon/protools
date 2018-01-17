@@ -42,4 +42,3 @@ hs_err_pid*
 target/
 *.iml
 logs/
-.gitignore

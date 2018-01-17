@@ -1,11 +1,15 @@
 package pro.tools.script;
 
+import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pro.tools.path.ToolPath;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.Map;
 
 /**
@@ -83,7 +87,11 @@ public final class ToolScript {
      */
     public static void makeHtml(String tlPath, Map<String, Object> paramMap, String htmlPath) throws ScriptException {
         String html = render(tlPath, paramMap);
-        //ToolDirFile.createFile(htmlPath, html);
+        try {
+            ToolPath.writeStrings(Paths.get(htmlPath), Lists.newArrayList(html), false);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

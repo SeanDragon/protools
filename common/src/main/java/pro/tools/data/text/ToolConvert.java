@@ -1,5 +1,6 @@
 package pro.tools.data.text;
 
+import com.google.common.collect.Maps;
 import pro.tools.constant.UnitConst;
 
 import java.io.ByteArrayInputStream;
@@ -8,7 +9,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
 
@@ -518,7 +518,7 @@ public final class ToolConvert {
 
     public static Map<String, String> str2map(String str, String tokenStr, String splitStr) {
         StringTokenizer tokenSTK = new StringTokenizer(str, tokenStr);
-        Map<String, String> result = new HashMap<>(tokenSTK.countTokens());
+        Map<String, String> result = Maps.newHashMapWithExpectedSize(tokenSTK.countTokens());
         while (tokenSTK.hasMoreTokens()) {
             String nextStr = tokenSTK.nextToken();
             StringTokenizer splitSTK = new StringTokenizer(nextStr, splitStr);

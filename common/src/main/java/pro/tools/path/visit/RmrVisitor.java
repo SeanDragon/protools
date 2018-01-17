@@ -29,9 +29,9 @@ public class RmrVisitor implements FileVisitor<Path> {
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
         boolean result = rm(file);
-
-        log.debug("删除文件:\t" + file + ",执行结果:\t" + result);
-
+        if (log.isDebugEnabled()) {
+            log.debug("删除文件:\t" + file + ",执行结果:\t" + result);
+        }
         return FileVisitResult.CONTINUE;
     }
 
@@ -44,7 +44,9 @@ public class RmrVisitor implements FileVisitor<Path> {
     public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
         if (exc == null) {
             boolean success = rm(dir);
-            log.debug("删除文件夹:\t" + dir + ",执行结果:\t" + success);
+            if (log.isDebugEnabled()) {
+                log.debug("删除文件夹:\t" + dir + ",执行结果:\t" + success);
+            }
         } else {
             throw exc;
         }

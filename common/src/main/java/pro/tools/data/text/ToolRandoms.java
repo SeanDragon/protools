@@ -26,7 +26,9 @@ public final class ToolRandoms {
      * 定义验证码数字
      */
     private static final char[] AUTH_CODE_NUMBER = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+
     private static final int AUTH_CODE_ALL_LENGTH = AUTH_CODE_ALL.length;
+    private static final int AUTH_CODE_NUMBER_LENGTH = AUTH_CODE_NUMBER.length;
     private static final SecureRandom RANDOM = new SecureRandom();
 
     private final static char[] DIGITS = {    //32位
@@ -63,7 +65,7 @@ public final class ToolRandoms {
     public static String getAuthCodeNumber(int length) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < length; i++) {
-            sb.append(AUTH_CODE_NUMBER[getNumberRandom(0, length)]);
+            sb.append(AUTH_CODE_NUMBER[getNumberRandom(0, AUTH_CODE_NUMBER_LENGTH)]);
         }
         return sb.toString();
     }
@@ -74,7 +76,7 @@ public final class ToolRandoms {
     public static String getAuthCodeAll(int length) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < length; i++) {
-            sb.append(AUTH_CODE_ALL[getNumberRandom(0, length)]);
+            sb.append(AUTH_CODE_ALL[getNumberRandom(0, AUTH_CODE_ALL_LENGTH)]);
         }
         return sb.toString();
     }

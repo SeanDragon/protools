@@ -26,7 +26,7 @@ public class ClassSearchVisitor implements FileVisitor<Path> {
     private static final String TEST_CLASS_PATH = StrConst.FILE_SEP + "test-classes" + StrConst.FILE_SEP;
 
     @Override
-    public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+    public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) {
         return FileVisitResult.CONTINUE;
     }
 
@@ -58,17 +58,17 @@ public class ClassSearchVisitor implements FileVisitor<Path> {
     }
 
     @Override
-    public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
+    public FileVisitResult visitFileFailed(Path file, IOException exc) {
         return FileVisitResult.CONTINUE;
     }
 
     @Override
-    public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+    public FileVisitResult postVisitDirectory(Path dir, IOException exc) {
         return FileVisitResult.CONTINUE;
     }
 
     @Override
-    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
 
         String pathString = file.toString();
         if (!pathString.contains(CLASS_CONTENT_TYPE)) {
@@ -77,7 +77,9 @@ public class ClassSearchVisitor implements FileVisitor<Path> {
 
         boolean result = getClass(pathString);
 
-        log.debug("将Class文件转换为类:\t" + file + ",执行结果:\t" + result);
+        if (log.isDebugEnabled()) {
+            log.debug("将Class文件转换为类:\t" + file + ",执行结果:\t" + result);
+        }
 
         return FileVisitResult.CONTINUE;
     }

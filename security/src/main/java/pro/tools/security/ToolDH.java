@@ -1,5 +1,7 @@
 package pro.tools.security;
 
+import com.google.common.collect.Maps;
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -22,7 +24,6 @@ import java.security.PublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -84,7 +85,7 @@ public final class ToolDH {
         DHPrivateKey privateKey = (DHPrivateKey) keyPair.getPrivate();
 
         // 将密钥对存储在Map中
-        Map<String, Object> keyMap = new HashMap<String, Object>(2);
+        Map<String, Object> keyMap = Maps.newHashMapWithExpectedSize(2);
 
         keyMap.put(PUBLIC_KEY, publicKey);
         keyMap.put(PRIVATE_KEY, privateKey);
@@ -130,7 +131,7 @@ public final class ToolDH {
         DHPrivateKey privateKey = (DHPrivateKey) keyPair.getPrivate();
 
         // 将密钥对存储在Map中
-        Map<String, Object> keyMap = new HashMap<String, Object>(2);
+        Map<String, Object> keyMap = Maps.newHashMapWithExpectedSize(2);
 
         keyMap.put(PUBLIC_KEY, publicKey);
         keyMap.put(PRIVATE_KEY, privateKey);

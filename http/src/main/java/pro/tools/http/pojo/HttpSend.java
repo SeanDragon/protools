@@ -1,10 +1,7 @@
 package pro.tools.http.pojo;
 
-import com.google.common.base.MoreObjects;
-import io.netty.handler.codec.http.multipart.HttpPostRequestEncoder;
 import pro.tools.constant.StrConst;
 
-import javax.crypto.spec.OAEPParameterSpec;
 import java.nio.charset.Charset;
 import java.util.Map;
 
@@ -13,12 +10,31 @@ import java.util.Map;
  * <p>
  * Create By 2017-07-20 13:50
  */
-public class HttpSend implements java.io.Serializable {
+public class HttpSend {
+    /**
+     * 地址
+     */
     private String url;
-    private Map<String, Object> params;//参数
-    private Map<String, Object> headers;//header列表
-    private HttpMethod method;     //访问方法
-    private Charset charset;//编码
+    /**
+     * 传入的参数
+     */
+    private Map<String, Object> params;
+    /**
+     * header列表
+     */
+    private Map<String, Object> headers;
+    /**
+     * 访问方法
+     */
+    private HttpMethod method;
+    /**
+     * 编码
+     */
+    private Charset charset;
+    /**
+     * 是否需要返回header列表
+     */
+    private Boolean needReceiveHeaders;
 
     public HttpSend(String url) {
         init();
@@ -56,10 +72,8 @@ public class HttpSend implements java.io.Serializable {
     private void init() {
         method = HttpMethod.GET;
         charset = StrConst.DEFAULT_CHARSET;
+        needReceiveHeaders = false;
     }
-
-    //region GetterSetter
-
 
     public String getUrl() {
         return url;
@@ -105,17 +119,13 @@ public class HttpSend implements java.io.Serializable {
         this.charset = charset;
         return this;
     }
-    //endregion
 
+    public Boolean getNeedReceiveHeaders() {
+        return needReceiveHeaders;
+    }
 
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("url", url)
-                .add("params", params)
-                .add("headers", headers)
-                .add("method", method)
-                .add("charset", charset)
-                .toString();
+    public HttpSend setNeedReceiveHeaders(Boolean needReceiveHeaders) {
+        this.needReceiveHeaders = needReceiveHeaders;
+        return this;
     }
 }

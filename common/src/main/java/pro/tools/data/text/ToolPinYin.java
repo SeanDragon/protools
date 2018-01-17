@@ -13,9 +13,9 @@ import pro.tools.constant.StrConst;
  *
  * @author SeanDragon
  */
-public final class ToolPinYin4J {
+public final class ToolPinYin {
 
-    private ToolPinYin4J() {
+    private ToolPinYin() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
 

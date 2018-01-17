@@ -3,6 +3,7 @@ package pro.tools.file;
 import com.github.junrar.Archive;
 import com.github.junrar.exception.RarException;
 import com.github.junrar.rarfile.FileHeader;
+import com.google.common.collect.Lists;
 import pro.tools.constant.StrConst;
 import pro.tools.data.text.ToolStr;
 
@@ -15,7 +16,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.List;
@@ -383,7 +383,7 @@ public final class ToolZip {
         if (zipFile == null || destDir == null) {
             return null;
         }
-        List<File> files = new ArrayList<>();
+        List<File> files = Lists.newArrayList();
         try (ZipFile zf = new ZipFile(zipFile)) {
             Enumeration<?> entries = zf.entries();
             while (entries.hasMoreElements()) {
@@ -443,7 +443,7 @@ public final class ToolZip {
         if (zipFile == null || destDir == null) {
             return null;
         }
-        List<File> files = new ArrayList<>();
+        List<File> files = Lists.newArrayList();
         try (ZipFile zf = new ZipFile(zipFile, charset)) {
             Enumeration<?> entries = zf.entries();
             while (entries.hasMoreElements()) {
@@ -617,7 +617,7 @@ public final class ToolZip {
         if (zipFile == null) {
             return null;
         }
-        List<String> paths = new ArrayList<>();
+        List<String> paths = Lists.newArrayList();
         Enumeration<?> entries = getEntries(zipFile);
         while (entries.hasMoreElements()) {
             paths.add(((ZipEntry) entries.nextElement()).getName());
@@ -657,7 +657,7 @@ public final class ToolZip {
         if (zipFile == null) {
             return null;
         }
-        List<String> comments = new ArrayList<>();
+        List<String> comments = Lists.newArrayList();
         Enumeration<?> entries = getEntries(zipFile);
         while (entries.hasMoreElements()) {
             ZipEntry entry = ((ZipEntry) entries.nextElement());

@@ -3,8 +3,10 @@ package pro.tools.system;
 import pro.tools.path.ToolPath;
 
 import java.io.IOException;
+import java.nio.file.FileVisitOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,6 +16,7 @@ import java.util.Set;
  * @author sd
  */
 public final class ToolClassSearch {
+    public static final EnumSet<FileVisitOption> OPTS = EnumSet.of(FileVisitOption.FOLLOW_LINKS);
     private static Set<Class> classSet;
 
     static {
@@ -28,7 +31,7 @@ public final class ToolClassSearch {
         classSet = new HashSet<>();
         try {
             Path path = ToolPath.getPath(ToolPosition.getRootClassPath());
-            Files.walkFileTree(path, ToolPath.OPTS, Integer.MAX_VALUE, ClassSearchVisitor.INSTANCE);
+            Files.walkFileTree(path, OPTS, Integer.MAX_VALUE, ClassSearchVisitor.INSTANCE);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -86,6 +89,21 @@ public final class ToolClassSearch {
         if (!clazz.isInterface()) {
             return null;
         }
+        Set<Class<?>> returnClassList = new HashSet<>();
+
+        classSet.forEach(one -> {
+            if (clazz.isAssignableFrom(one)) {
+                // 本身加不进去
+                if (!clazz.equals(one)) {
+                    returnClassList.add(one);
+                }
+            }
+        });
+
+        return returnClassList;
+    }
+
+    public static Set<Class<?>> getClazzByParent(Class<?> clazz) {
         Set<Class<?>> returnClassList = new HashSet<>();
 
         classSet.forEach(one -> {

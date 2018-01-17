@@ -1,5 +1,6 @@
 package pro.tools.time;
 
+import java.io.Serializable;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -15,7 +16,7 @@ import java.time.temporal.TemporalAdjusters;
  *
  * @author SeanDragon
  */
-public class DatePlus {
+public class DatePlus implements Serializable, Cloneable {
     /**
      * 日期对象
      */
@@ -52,22 +53,31 @@ public class DatePlus {
     //endregion
 
     public DatePlus(long time) {
-        this.localDateTime = ToolDateTime.time2LocalDateTime(time);
+        this.localDateTime = ToolDatePlus.time2LocalDateTime(time);
     }
 
     public DatePlus(java.util.Date date) {
-        this.localDateTime = ToolDateTime.date2LocalDateTime(date);
+        this.localDateTime = ToolDatePlus.date2LocalDateTime(date);
     }
 
     public DatePlus(String dateStr, String pattern) {
         try {
-            this.localDateTime = LocalDateTime.parse(dateStr, DateTimeFormatter.ofPattern(pattern));
+            this.localDateTime = LocalDateTime.parse(dateStr, ToolDatePlus.pattern(pattern));
         } catch (DateTimeParseException e) {
-            LocalDate date = LocalDate.parse(dateStr, DateTimeFormatter.ofPattern(pattern));
+            LocalDate date = LocalDate.parse(dateStr, ToolDatePlus.pattern(pattern));
             LocalTime time = LocalTime.MIN;
             this.localDateTime = LocalDateTime.of(date, time);
         }
+    }
 
+    public DatePlus(String dateStr, DateTimeFormatter dateTimeFormatter) {
+        try {
+            this.localDateTime = LocalDateTime.parse(dateStr, dateTimeFormatter);
+        } catch (DateTimeParseException e) {
+            LocalDate date = LocalDate.parse(dateStr, dateTimeFormatter);
+            LocalTime time = LocalTime.MIN;
+            this.localDateTime = LocalDateTime.of(date, time);
+        }
     }
 
     //region 添加属性值
@@ -204,7 +214,6 @@ public class DatePlus {
     public int getSecond() {
         return this.localDateTime.getSecond();
     }
-    //endregion
 
     /**
      * 获取纳秒数
@@ -269,6 +278,8 @@ public class DatePlus {
         return new DatePlus(this.localDateTime.with(TemporalAdjusters.firstDayOfNextYear()));
     }
 
+    //endregion
+
     /**
      * 是否是闰年
      *
@@ -279,16 +290,91 @@ public class DatePlus {
     }
 
     //region 属性的比较
-    public boolean isBefore(DatePlus datePlus) {
-        return this.localDateTime.isBefore(datePlus.getLocalDateTime());
+    public boolean isBefore(DatePlus datePlus, DateType dateType) {
+        boolean isBefore;
+        switch (dateType) {
+            case YEAR:
+                isBefore = ofYear(datePlus) < 0;
+                break;
+            case MONTH:
+                isBefore = ofMonth(datePlus) < 0;
+                break;
+            case DAY:
+                isBefore = ofDay(datePlus) < 0;
+                break;
+            case HOUR:
+                isBefore = ofHour(datePlus) < 0;
+                break;
+            case MINUTES:
+                isBefore = ofMinutes(datePlus) < 0;
+                break;
+            case SECONDS:
+                isBefore = ofSeconds(datePlus) < 0;
+                break;
+            default:
+                isBefore = ofSeconds(datePlus) < 0;
+                break;
+        }
+        return isBefore;
+        //return this.localDateTime.isBefore(datePlus.getLocalDateTime());
     }
 
-    public boolean isSame(DatePlus datePlus) {
-        return this.localDateTime.isEqual(datePlus.getLocalDateTime());
+    public boolean isSame(DatePlus datePlus, DateType dateType) {
+        boolean isSame;
+        switch (dateType) {
+            case YEAR:
+                isSame = ofYear(datePlus) == 0;
+                break;
+            case MONTH:
+                isSame = ofMonth(datePlus) == 0;
+                break;
+            case DAY:
+                isSame = ofDay(datePlus) == 0;
+                break;
+            case HOUR:
+                isSame = ofHour(datePlus) == 0;
+                break;
+            case MINUTES:
+                isSame = ofMinutes(datePlus) == 0;
+                break;
+            case SECONDS:
+                isSame = ofSeconds(datePlus) == 0;
+                break;
+            default:
+                isSame = ofSeconds(datePlus) == 0;
+                break;
+        }
+        return isSame;
+        //return this.localDateTime.isEqual(datePlus.getLocalDateTime());
     }
 
-    public boolean isAfter(DatePlus datePlus) {
-        return this.localDateTime.isAfter(datePlus.getLocalDateTime());
+    public boolean isAfter(DatePlus datePlus, DateType dateType) {
+        boolean isAfter;
+        switch (dateType) {
+            case YEAR:
+                isAfter = ofYear(datePlus) > 0;
+                break;
+            case MONTH:
+                isAfter = ofMonth(datePlus) > 0;
+                break;
+            case DAY:
+                isAfter = ofDay(datePlus) > 0;
+                break;
+            case HOUR:
+                isAfter = ofHour(datePlus) > 0;
+                break;
+            case MINUTES:
+                isAfter = ofMinutes(datePlus) > 0;
+                break;
+            case SECONDS:
+                isAfter = ofSeconds(datePlus) > 0;
+                break;
+            default:
+                isAfter = ofSeconds(datePlus) > 0;
+                break;
+        }
+        return isAfter;
+        //return this.localDateTime.isAfter(datePlus.getLocalDateTime());
     }
 
     public long ofYear(DatePlus datePlus) {
@@ -384,7 +470,7 @@ public class DatePlus {
     }
 
     public java.util.Date toDate() {
-        return ToolDateTime.localDateTime2Date(this.localDateTime);
+        return ToolDatePlus.localDateTime2Date(this.localDateTime);
     }
 
     /**
@@ -438,17 +524,19 @@ public class DatePlus {
         return ToolLunar.lunartosolar(lunar);
     }
 
+    private static final DateTimeFormatter DEFAULT_DATE_TIME_FORMATTER = ToolDatePlus.pattern("yyyy-MM-dd HH:mm:ss:SSS");
+
     public String toString(DateTimeFormatter formatter) {
         return this.localDateTime.format(formatter);
     }
 
     public String toString(String pattern) {
-        return this.localDateTime.format(DateTimeFormatter.ofPattern(pattern));
+        return this.localDateTime.format(ToolDatePlus.pattern(pattern));
     }
 
     @Override
     public String toString() {
-        return this.toString("yyyy-MM-dd HH:mm:ss.SSS");
+        return this.toString(DEFAULT_DATE_TIME_FORMATTER);
     }
     //endregion
 
@@ -467,5 +555,10 @@ public class DatePlus {
     @Override
     public int hashCode() {
         return this.localDateTime.hashCode();
+    }
+
+    @Override
+    public DatePlus clone() {
+        return new DatePlus(this.localDateTime);
     }
 }

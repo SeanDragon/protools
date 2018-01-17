@@ -1,0 +1,9 @@
+language: java
+
+java:
+  - 1.8
+
+sudo: false
+
+install:
+  - mvn clean install

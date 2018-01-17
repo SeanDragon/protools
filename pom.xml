@@ -94,4 +94,12 @@
         </plugins>
     </build>
 
+    <repositories>
+        <repository>
+            <id>our</id>
+            <name>Nexus Repository</name>
+            <url>http://maven.asyou.cc:8081/repository/maven-public/</url>
+        </repository>
+    </repositories>
+
 </project>

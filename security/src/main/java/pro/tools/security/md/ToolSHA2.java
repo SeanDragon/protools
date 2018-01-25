@@ -9,6 +9,8 @@ import java.security.Security;
 
 /**
  * SHA-2 的变种 SHA- 224、 SHA- 256、 SHA-384 、 SHA-512
+ *
+ * @author SeanDragon
  */
 public final class ToolSHA2 {
     private ToolSHA2() {

@@ -15,6 +15,8 @@ import java.security.spec.InvalidKeySpecException;
 
 /**
  * DESede安全编码组件
+ *
+ * @author SeanDragon
  */
 public final class ToolDESede {
     private ToolDESede() {

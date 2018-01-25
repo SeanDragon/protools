@@ -16,6 +16,8 @@ import java.security.spec.InvalidKeySpecException;
 
 /**
  * DES安全编码组件
+ *
+ * @author SeanDragon
  */
 public final class ToolDES {
 
@@ -125,16 +127,13 @@ public final class ToolDES {
     public static byte[] initKey() throws NoSuchAlgorithmException {
 
         /*
-         * 实例化密钥生成器
-         *
-         * 若要使用64bit密钥注意替换 将下述代码中的KeyGenerator.getInstance(CIPHER_ALGORITHM);
-         * 替换为KeyGenerator.getInstance(CIPHER_ALGORITHM, "BC");
-         */
+        实例化密钥生成器
+        若要使用64bit密钥注意替换 将下述代码中的KeyGenerator.getInstance(CIPHER_ALGORITHM);
+        替换为KeyGenerator.getInstance(CIPHER_ALGORITHM, "BC");
+        */
         KeyGenerator kg = KeyGenerator.getInstance(KEY_ALGORITHM);
 
-        /*
-         * 初始化密钥生成器 若要使用64bit密钥注意替换 将下述代码kg.init(56); 替换为kg.init(64);
-         */
+        /*初始化密钥生成器 若要使用64bit密钥注意替换 将下述代码kg.init(56); 替换为kg.init(64);*/
         kg.init(56, new SecureRandom());
 
         // 生成秘密密钥

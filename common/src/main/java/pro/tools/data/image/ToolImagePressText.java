@@ -44,12 +44,8 @@ public final class ToolImagePressText {
         int readHeight = read.getHeight(null);
         g.drawImage(read, width - readWidth - x, height - readHeight - y, readWidth, readHeight, null);
         g.dispose();
-        //try (FileOutputStream out = new FileOutputStream(targetImg)) {
-        //    JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
-        //    encoder.encode(image);
-        //}
         String formatName = targetImg.substring(targetImg.lastIndexOf(".") + 1);
-        ImageIO.write(image, /*"GIF"*/ formatName /* format desired */, new File(targetImg) /* target */);
+        ImageIO.write(image, formatName, new File(targetImg));
     }
 
     /**

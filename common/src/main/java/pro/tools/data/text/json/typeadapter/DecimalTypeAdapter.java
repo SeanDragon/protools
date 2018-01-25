@@ -6,7 +6,10 @@ import pro.tools.data.decimal.Decimal;
 
 import java.io.IOException;
 
-public class DecimalTypeAdapter extends ABasicTypeAdapter<Decimal> {
+/**
+ * @author SeanDragon
+ */
+public class DecimalTypeAdapter extends BaseTypeAdapter<Decimal> {
 
     @Override
     public Decimal reading(JsonReader jsonReader) throws IOException {

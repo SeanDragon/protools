@@ -17,6 +17,8 @@ import java.security.cert.CertificateException;
 
 /**
  * HTTPS组件
+ *
+ * @author SeanDragon
  */
 public final class ToolHTTPS {
     private ToolHTTPS() {

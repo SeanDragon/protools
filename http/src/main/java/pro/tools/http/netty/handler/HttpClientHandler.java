@@ -58,7 +58,6 @@ public class HttpClientHandler extends SimpleChannelInboundHandler<HttpObject> {
             } else {
                 if (log.isDebugEnabled()) {
                     log.debug("#HTTP 内容开始{");
-                    // log.debug("}EOF#");
                 }
             }
 

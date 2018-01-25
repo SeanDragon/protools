@@ -22,6 +22,8 @@ import java.security.cert.X509Certificate;
 
 /**
  * 证书组件
+ *
+ * @author SeanDragon
  */
 public final class ToolCertificate {
     private ToolCertificate() {

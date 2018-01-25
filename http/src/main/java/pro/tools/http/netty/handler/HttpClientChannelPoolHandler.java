@@ -28,7 +28,6 @@ public class HttpClientChannelPoolHandler extends AbstractChannelPoolHandler {
         NioSocketChannel nioSocketChannel = (NioSocketChannel) channel;
         nioSocketChannel.config().setTcpNoDelay(true).setKeepAlive(true);
 
-        // final ChannelPipeline p = channel.pipeline();
         final ChannelPipeline p = nioSocketChannel.pipeline();
 
         //HTTPS

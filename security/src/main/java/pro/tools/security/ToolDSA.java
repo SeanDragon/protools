@@ -22,6 +22,8 @@ import java.util.Map;
 
 /**
  * DSA安全编码组件
+ *
+ * @author SeanDragon
  */
 public final class ToolDSA {
     private ToolDSA() {

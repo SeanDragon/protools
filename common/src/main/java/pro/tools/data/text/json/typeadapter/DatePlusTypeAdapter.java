@@ -13,7 +13,7 @@ import java.time.format.DateTimeFormatter;
  *
  * @author sd
  */
-public class DatePlusTypeAdapter extends ABasicTypeAdapter<DatePlus> {
+public class DatePlusTypeAdapter extends BaseTypeAdapter<DatePlus> {
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss:SSS");
 

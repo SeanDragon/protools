@@ -8,7 +8,10 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class LocalDateTypeAdapter extends ABasicTypeAdapter<LocalDate> {
+/**
+ * @author SeanDragon
+ */
+public class LocalDateTypeAdapter extends BaseTypeAdapter<LocalDate> {
 
     public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 

@@ -10,6 +10,8 @@ import java.security.Security;
 /**
  * MD系列加密组件<br>
  * Tiger、Whirlpool和GOST3411共3种算法
+ *
+ * @author SeanDragon
  */
 public final class ToolMD {
 

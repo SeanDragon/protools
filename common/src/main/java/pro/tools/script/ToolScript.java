@@ -71,7 +71,6 @@ public final class ToolScript {
 //		}
 
         // 取js变量值
-
         return (String) engine.get("output");
     }
 

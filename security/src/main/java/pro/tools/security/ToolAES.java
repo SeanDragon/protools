@@ -26,6 +26,8 @@ import java.security.NoSuchAlgorithmException;
  * Jurisdiction Policy Files， 下载包的readme.txt
  * 有安装说明。就是替换${JAVA_HOME}/jre/lib/security/
  * 下面的local_policy.jar和US_export_policy.jar
+ *
+ * @author SeanDragon
  */
 public final class ToolAES {
     private ToolAES() {

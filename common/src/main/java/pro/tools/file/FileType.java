@@ -2,6 +2,8 @@ package pro.tools.file;
 
 /**
  * 文件类型枚取
+ *
+ * @author SeanDragon
  */
 public enum FileType {
 

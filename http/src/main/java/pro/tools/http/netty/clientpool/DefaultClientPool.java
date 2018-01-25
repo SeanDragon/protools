@@ -122,7 +122,6 @@ public class DefaultClientPool {
         Future<Channel> fch = channelPool.acquire();
         Channel channel = null;
         try {
-            // final Channel channel = fch.syncUninterruptibly().getNow();
             channel = fch.get(timeout, timeUnit);
             ChannelPipeline p = channel.pipeline();
 
@@ -200,16 +199,6 @@ public class DefaultClientPool {
             content.deleteCharAt(content.length() - 1);
         }
 
-        // URI sendURI;
-        // try {
-        //     sendURI = new URI(queryStringEncoder.toString());
-        // } catch (URISyntaxException e) {
-        //     if (log.isWarnEnabled()) {
-        //         log.warn(e.getMessage(), e);
-        //     }
-        //     throw new RuntimeException(e);
-        // }
-
         final FullHttpRequest request = new DefaultFullHttpRequest(HttpVersion.HTTP_1_1
                 , httpMethod
                 , scheme + "://" + host + ":" + port + httpSend.getUrl()
@@ -217,19 +206,6 @@ public class DefaultClientPool {
                 // , sendURI.toString()
                 , Unpooled.copiedBuffer(content.toString().getBytes())
         );
-
-        // FIXME: 2017/7/27 暂未加Cookie
-        // if (cookies != null) {
-        //    List<Cookie> cookieList = Lists.newArrayListWithCapacity(cookies.size());
-        //    cookies.forEach((key, value) -> {
-        //        cookieList.add(new DefaultCookie(key, value));
-        //    });
-        //
-        //    request.headers().set(
-        //            HttpHeaderNames.COOKIE,
-        //            ClientCookieEncoder.STRICT.encode(cookieList)
-        //    );
-        // }
 
         request.headers().add(DEFAULT_HTTP_HEADERS);
         if (headers != null) {

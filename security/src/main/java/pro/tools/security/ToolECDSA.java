@@ -30,6 +30,8 @@ import java.util.Map;
 
 /**
  * ECDSA安全编码组件
+ *
+ * @author SeanDragon
  */
 public final class ToolECDSA {
     private ToolECDSA() {

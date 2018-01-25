@@ -20,6 +20,8 @@ import java.security.Security;
  * IDEA安全编码组件
  * <p>
  * 国际数据加密标准---IDEA：完全是新突破，几乎同时和AES出现
+ *
+ * @author SeanDragon
  */
 public final class ToolIDEA {
     private ToolIDEA() {

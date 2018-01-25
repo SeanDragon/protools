@@ -14,6 +14,8 @@ import java.security.Security;
 /**
  * HmacRipeMD系列加密组件<br>
  * HmacRipeMD128、HmacRipeMD160共2种算法
+ *
+ * @author SeanDragon
  */
 public final class ToolHmacRipeMD {
 

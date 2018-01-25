@@ -9,6 +9,8 @@ import java.security.Security;
 
 /**
  * MD5加密组件
+ *
+ * @author SeanDragon
  */
 public final class ToolMD5 {
     private ToolMD5() {

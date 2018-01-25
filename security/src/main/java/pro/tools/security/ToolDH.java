@@ -28,6 +28,8 @@ import java.util.Map;
 
 /**
  * DH安全编码组件
+ *
+ * @author SeanDragon
  */
 public final class ToolDH {
     private ToolDH() {

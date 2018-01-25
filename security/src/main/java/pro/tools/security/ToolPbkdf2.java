@@ -20,6 +20,8 @@ import java.util.Arrays;
  * 2.当认证用户的时候，从数据库中取出盐和密文，将他们和明文密码同时传给authenticate()，根据返回结果判断是否认证成功。
  * <p>
  * 3.当用户修改密码的时候，仍然可以使用原来的盐，只需要调用getEncryptedPassword()方法重新生成密文就可以了。
+ *
+ * @author SeanDragon
  */
 public final class ToolPbkdf2 {
     private ToolPbkdf2() {

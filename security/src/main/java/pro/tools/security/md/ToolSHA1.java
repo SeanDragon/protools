@@ -7,6 +7,8 @@ import java.security.NoSuchAlgorithmException;
 
 /**
  * SHA-1加密
+ *
+ * @author SeanDragon
  */
 public final class ToolSHA1 {
     private ToolSHA1() {

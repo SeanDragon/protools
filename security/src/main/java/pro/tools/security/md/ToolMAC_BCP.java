@@ -13,6 +13,8 @@ import java.security.Security;
 
 /**
  * MAC消息摘要组件
+ *
+ * @author SeanDragon
  */
 public final class ToolMAC_BCP {
 

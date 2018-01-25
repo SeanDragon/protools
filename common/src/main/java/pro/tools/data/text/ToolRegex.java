@@ -41,7 +41,7 @@ public final class ToolRegex {
      * @return 是返回true, 否则返回false
      */
     public static boolean isInteger(CharSequence input) {
-        return NumberBo(0, input);
+        return isNumber(0, input);
     }
 
     /**
@@ -53,7 +53,7 @@ public final class ToolRegex {
      * @return 是返回true, 否则返回false
      */
     public static boolean isDecimal(CharSequence input) {
-        return NumberBo(1, input);
+        return isNumber(1, input);
     }
 
 
@@ -67,7 +67,7 @@ public final class ToolRegex {
      *
      * @return 是返回true, 否则返回false
      */
-    private static boolean NumberBo(int type, CharSequence str) {
+    private static boolean isNumber(int type, CharSequence str) {
         if (ToolStr.isBlank(str.toString())) {
             return false;
         }

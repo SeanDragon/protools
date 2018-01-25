@@ -18,6 +18,9 @@ package pro.tools.system;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * @author SeanDragon
+ */
 public class NamedThreadFactory implements ThreadFactory {
     private static final AtomicInteger POOL_SEQ = new AtomicInteger(1);
 

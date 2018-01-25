@@ -2,10 +2,10 @@ package pro.tools.data.text;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import org.google.gson.Gson;
-import org.google.gson.GsonBuilder;
-import org.google.gson.JsonObject;
-import org.google.gson.reflect.TypeToken;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import pro.tools.data.decimal.Decimal;
 import pro.tools.data.text.json.TypeBuilder;
 import pro.tools.data.text.json.typeadapter.BigDecimalTypeAdapter;

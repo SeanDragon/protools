@@ -1,7 +1,7 @@
 package pro.tools.data.text.json.typeadapter;
 
-import org.google.gson.stream.JsonReader;
-import org.google.gson.stream.JsonWriter;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 
 import java.io.IOException;
 import java.sql.Date;

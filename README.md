@@ -10,7 +10,7 @@
 
 大家如果想使用可以先执行mvn clean install即可在本地的其他maven项目中使用
 
-## 更新日志
+## [更新日志](https://github.com/SeanDragon/protools/blob/master/changelog.txt)
 - 简单过了一遍阿里的规范手册，把一些显而易见的代码优化了。
 
 ## 开发计划

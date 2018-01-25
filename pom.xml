@@ -8,6 +8,10 @@
     <groupId>pro.tools</groupId>
     <artifactId>protools</artifactId>
     <version>3.0</version>
+    <name>protools</name>
+    <description>历经开发周期两年，并且应用过千万级别项目的工具箱</description>
+    <url>https://github.com/SeanDragon/protools</url>
+
     <modules>
         <module>common</module>
         <module>mail</module>

@@ -10,6 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
+import java.util.Date;
 
 /**
  * Created on 17/4/8 19:27 星期六. 替代时间类的类
@@ -243,7 +244,7 @@ public class DatePlus implements Serializable, Cloneable {
     }
 
     /**
-     * 获取这个月的最后一天
+     * 获取这个月的第一天
      *
      * @return 天
      */
@@ -261,7 +262,7 @@ public class DatePlus implements Serializable, Cloneable {
     }
 
     /**
-     * 获取这个月的最后一天
+     * 获取下个月的第一天
      *
      * @return 天
      */
@@ -469,7 +470,7 @@ public class DatePlus implements Serializable, Cloneable {
         return this;
     }
 
-    public java.util.Date toDate() {
+    public Date toDate() {
         return ToolDatePlus.localDateTime2Date(this.localDateTime);
     }
 

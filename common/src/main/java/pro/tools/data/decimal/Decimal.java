@@ -12,7 +12,8 @@ import java.text.DecimalFormat;
 /**
  * 数值类型封装类
  *
- * @author SeanDragon Create By 2017-04-13 14:22
+ * @author SeanDragon
+ * Create By 2017-04-13 14:22
  */
 public class Decimal extends Number implements Cloneable {
 

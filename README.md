@@ -4,6 +4,10 @@
 [![License](http://img.shields.io/:license-apache-blue.svg)](https://github.com/SeanDragon/protools/blob/master/LICENSE)
 [![JDK 1.8](https://img.shields.io/badge/JDK-1.8-blue.svg)](#protools)
 
+[![GitHub stars](https://img.shields.io/github/stars/SeanDragon/protools.svg?style=flat&label=Star)](https://github.com/SeanDragon/protools/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/SeanDragon/protools.svg?style=flat&label=Fork)](https://github.com/SeanDragon/protools/fork)
+[![GitHub watchers](https://img.shields.io/github/watchers/SeanDragon/protools.svg?style=flat&label=Watch)](https://github.com/SeanDragon/protools/watchers)
+
 历经开发周期两年，并且应用过千万级别项目的工具箱
 
 我也吸收了[https://www.v2ex.com/t/423700](https://www.v2ex.com/t/423700)该贴中v友对我的建议和意见，项目和我都会变得更好，谢谢大家

@@ -1,19 +1,12 @@
 package pro.tools.data.image;
 
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.BinaryBitmap;
-import com.google.zxing.EncodeHintType;
-import com.google.zxing.LuminanceSource;
-import com.google.zxing.MultiFormatReader;
-import com.google.zxing.MultiFormatWriter;
-import com.google.zxing.NotFoundException;
-import com.google.zxing.Result;
-import com.google.zxing.WriterException;
+import com.google.zxing.*;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.client.j2se.MatrixToImageConfig;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.HybridBinarizer;
+import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import pro.tools.constant.StrConst;
 
@@ -22,8 +15,13 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.CharBuffer;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetEncoder;
 import java.nio.file.Paths;
 import java.util.Hashtable;
+
+import static com.google.zxing.BarcodeFormat.QR_CODE;
 
 /**
  * 条码处理
@@ -39,43 +37,36 @@ public final class ToolBarCode {
     /**
      * 生成二维码
      *
-     * @param content
-     *         条码文本内容
-     * @param width
-     *         条码宽度
-     * @param height
-     *         条码高度
-     * @param fileType
-     *         文件类型，如png
-     * @param savePath
-     *         保存路径
+     * @param content  条码文本内容
+     * @param width    条码宽度
+     * @param height   条码高度
+     * @param fileType 文件类型，如png
+     * @param savePath 保存路径
      */
     @SuppressWarnings({"rawtypes", "unchecked", "deprecation"})
-    @Deprecated
     public static void encode(String content, int width, int height, String fileType, String savePath) throws IOException, WriterException {
-        content = new String(content.getBytes(StrConst.DEFAULT_CHARSET_NAME), StrConst.DEFAULT_CHARSET_NAME);// 二维码内容
-        Hashtable hints = new Hashtable();
-        hints.put(EncodeHintType.CHARACTER_SET, StrConst.DEFAULT_CHARSET_NAME);
-        BitMatrix bitMatrix = new MultiFormatWriter().encode(content, BarcodeFormat.QR_CODE, width, height, hints);
+        Charset charset = Charset.forName("UTF-8");
+        CharsetEncoder encoder = charset.newEncoder();
+
+        byte[] b = encoder.encode(CharBuffer.wrap(content)).array();
+        String data = new String(b, "iso8859-1");
+
+        Writer writer = new QRCodeWriter();
+        BitMatrix matrix = writer.encode(data, QR_CODE, width, height);
         File file = new File(savePath);
-        MatrixToImageWriter.writeToPath(bitMatrix, fileType, file.toPath());
+        MatrixToImageWriter.writeToFile(matrix, fileType, file);
     }
+
 
     /**
      * 生成带logo的二维码
      *
-     * @param content
-     *         条码文本内容
-     * @param width
-     *         条码宽度
-     * @param height
-     *         条码高度
-     * @param logoPath
-     *         条码中logo的路径
-     * @param fileType
-     *         文件类型，如png
-     * @param savePath
-     *         保存路径
+     * @param content  条码文本内容
+     * @param width    条码宽度
+     * @param height   条码高度
+     * @param logoPath 条码中logo的路径
+     * @param fileType 文件类型，如png
+     * @param savePath 保存路径
      */
     public static void encodeLogo(String content, int width, int height, String logoPath, String fileType, String savePath) throws IOException {
         BitMatrix matrix = MatrixToImageWriterEx.createQRCode(content, width, height);
@@ -87,22 +78,16 @@ public final class ToolBarCode {
      * 解码
      *
      * @param filePath
-     *
      * @return
      */
     @SuppressWarnings({"rawtypes", "unchecked"})
     public static String decode(String filePath) throws IOException, NotFoundException {
-        BufferedImage image;
-        image = ImageIO.read(new File(filePath));
-        if (image == null) {
-            return "Could not decode image";
-        }
+        BufferedImage image = ImageIO.read(new File(filePath));
         LuminanceSource source = new BufferedImageLuminanceSource(image);
         BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
-        Result result;
-        Hashtable hints = new Hashtable();
-        hints.put(EncodeHintType.CHARACTER_SET, StrConst.DEFAULT_CHARSET_NAME);
-        result = new MultiFormatReader().decode(bitmap, hints);
+        Hashtable<DecodeHintType, Object> hints = new Hashtable<>();
+        hints.put(DecodeHintType.CHARACTER_SET, "UTF-8");
+        Result result = new MultiFormatReader().decode(bitmap, hints);
         return result.getText();
     }
 
@@ -167,13 +152,9 @@ class MatrixToImageWriterEx {
     /**
      * 根据内容生成二维码数据
      *
-     * @param content
-     *         二维码文字内容[为了信息安全性，一般都要先进行数据加密]
-     * @param width
-     *         二维码照片宽度
-     * @param height
-     *         二维码照片高度
-     *
+     * @param content 二维码文字内容[为了信息安全性，一般都要先进行数据加密]
+     * @param width   二维码照片宽度
+     * @param height  二维码照片高度
      * @return
      */
     public static BitMatrix createQRCode(String content, int width, int height) {
@@ -184,7 +165,7 @@ class MatrixToImageWriterEx {
         hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
         BitMatrix matrix = null;
         try {
-            matrix = new MultiFormatWriter().encode(content, BarcodeFormat.QR_CODE, width, height, hints);
+            matrix = new MultiFormatWriter().encode(content, QR_CODE, width, height, hints);
         } catch (WriterException e) {
             e.printStackTrace();
         }
@@ -194,15 +175,10 @@ class MatrixToImageWriterEx {
     /**
      * 写入二维码、以及将照片logo写入二维码中
      *
-     * @param matrix
-     *         要写入的二维码
-     * @param format
-     *         二维码照片格式
-     * @param imagePath
-     *         二维码照片保存路径
-     * @param logoPath
-     *         logo路径
-     *
+     * @param matrix    要写入的二维码
+     * @param format    二维码照片格式
+     * @param imagePath 二维码照片保存路径
+     * @param logoPath  logo路径
      * @throws IOException
      */
     public static void writeToFile(BitMatrix matrix, String format, String imagePath, String logoPath) throws IOException {
@@ -216,17 +192,11 @@ class MatrixToImageWriterEx {
     /**
      * 写入二维码、以及将照片logo写入二维码中
      *
-     * @param matrix
-     *         要写入的二维码
-     * @param format
-     *         二维码照片格式
-     * @param imagePath
-     *         二维码照片保存路径
-     * @param logoPath
-     *         logo路径
-     * @param logoConfig
-     *         logo配置对象
-     *
+     * @param matrix     要写入的二维码
+     * @param format     二维码照片格式
+     * @param imagePath  二维码照片保存路径
+     * @param logoPath   logo路径
+     * @param logoConfig logo配置对象
      * @throws IOException
      */
     public static void writeToFile(BitMatrix matrix, String format, String imagePath, String logoPath, MatrixToLogoImageConfig logoConfig) throws IOException {
@@ -240,14 +210,10 @@ class MatrixToImageWriterEx {
     /**
      * 将照片logo添加到二维码中间
      *
-     * @param image
-     *         生成的二维码照片对象
-     * @param imagePath
-     *         照片保存路径
-     * @param logoPath
-     *         logo照片路径
-     * @param formate
-     *         照片格式
+     * @param image     生成的二维码照片对象
+     * @param imagePath 照片保存路径
+     * @param logoPath  logo照片路径
+     * @param formate   照片格式
      */
     public static void overlapImage(BufferedImage image, String formate, String imagePath, String logoPath, MatrixToLogoImageConfig logoConfig) throws IOException {
         BufferedImage logo = ImageIO.read(new File(logoPath));

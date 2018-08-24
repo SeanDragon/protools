@@ -53,8 +53,7 @@ public final class ToolBarCode {
 
         Writer writer = new QRCodeWriter();
         BitMatrix matrix = writer.encode(data, QR_CODE, width, height);
-        File file = new File(savePath);
-        MatrixToImageWriter.writeToFile(matrix, fileType, file);
+        MatrixToImageWriter.writeToPath(matrix, fileType, Paths.get(savePath));
     }
 
 
@@ -68,10 +67,22 @@ public final class ToolBarCode {
      * @param fileType 文件类型，如png
      * @param savePath 保存路径
      */
-    public static void encodeLogo(String content, int width, int height, String logoPath, String fileType, String savePath) throws IOException {
-        BitMatrix matrix = MatrixToImageWriterEx.createQRCode(content, width, height);
-        MatrixToLogoImageConfig logoConfig = new MatrixToLogoImageConfig(Color.BLUE, 4);
+    public static void encodeLogo(String content, int width, int height, String logoPath, String fileType, String savePath) throws IOException, WriterException {
+        Charset charset = Charset.forName("UTF-8");
+        CharsetEncoder encoder = charset.newEncoder();
+
+        byte[] b = encoder.encode(CharBuffer.wrap(content)).array();
+        String data = new String(b, "iso8859-1");
+
+        Writer writer = new QRCodeWriter();
+        BitMatrix matrix = writer.encode(data, QR_CODE, width, height);
+        MatrixToLogoImageConfig logoConfig = new MatrixToLogoImageConfig(Color.BLACK, 10);
         MatrixToImageWriterEx.writeToFile(matrix, fileType, savePath, logoPath, logoConfig);
+
+
+//        BitMatrix matrix = MatrixToImageWriterEx.createQRCode(content, width, height);
+//        MatrixToLogoImageConfig logoConfig = new MatrixToLogoImageConfig(Color.BLUE, 4);
+//        MatrixToImageWriterEx.writeToFile(matrix, fileType, savePath, logoPath, logoConfig);
     }
 
     /**

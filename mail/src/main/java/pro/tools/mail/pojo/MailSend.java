@@ -9,13 +9,21 @@ import java.util.List;
  */
 public class MailSend implements java.io.Serializable {
 
-    //接受方邮箱地址列表
+    /**
+     * 接受方邮箱地址列表
+     */
     private List<String> toList;
-    //标题
+    /**
+     * 标题
+     */
     private String subject;
-    //内容
+    /**
+     * 内容
+     */
     private String content;
-    //附件文件列表
+    /**
+     * 附件文件列表
+     */
     private List<String> attachFiles;
 
 

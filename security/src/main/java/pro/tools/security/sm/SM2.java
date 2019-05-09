@@ -168,8 +168,9 @@ public class SM2 {
             byte[] last = sm3hash(Z, SM3.toByteArray(ct));
             if (klen % 32 == 0) {
                 baos.write(last);
-            } else
+            } else {
                 baos.write(last, 0, klen % 32);
+            }
             return baos.toByteArray();
         } catch (Exception e) {
             e.printStackTrace();
@@ -185,8 +186,9 @@ public class SM2 {
      */
     private boolean allZero(byte[] buffer) {
         for (byte aBuffer : buffer) {
-            if (aBuffer != 0)
+            if (aBuffer != 0) {
                 return false;
+            }
         }
         return true;
     }
@@ -219,8 +221,9 @@ public class SM2 {
             BigInteger h = ecc_bc_spec.getH();
             if (h != null) {
                 ECPoint S = publicKey.multiply(h);
-                if (S.isInfinity())
+                if (S.isInfinity()) {
                     throw new IllegalStateException();
+                }
             }
 
             /* 4 计算 [k]PB = (x2, y2) */
@@ -278,8 +281,9 @@ public class SM2 {
         BigInteger h = ecc_bc_spec.getH();
         if (h != null) {
             ECPoint S = C1.multiply(h);
-            if (S.isInfinity())
+            if (S.isInfinity()) {
                 throw new IllegalStateException();
+            }
         }
         /* 计算[dB]C1 = (x2, y2) */
         ECPoint dBC1 = C1.multiply(privateKey).normalize();
@@ -392,8 +396,9 @@ public class SM2 {
     public void exportPublicKey(ECPoint publicKey, String path) {
         File file = new File(path);
         try {
-            if (!file.exists())
+            if (!file.exists()) {
                 file.createNewFile();
+            }
             byte buffer[] = publicKey.getEncoded(false);
             FileOutputStream fos = new FileOutputStream(file);
             fos.write(buffer);
@@ -412,8 +417,9 @@ public class SM2 {
     public ECPoint importPublicKey(String path) {
         File file = new File(path);
         try {
-            if (!file.exists())
+            if (!file.exists()) {
                 return null;
+            }
             FileInputStream fis = new FileInputStream(file);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
@@ -439,8 +445,9 @@ public class SM2 {
     public void exportPrivateKey(BigInteger privateKey, String path) {
         File file = new File(path);
         try {
-            if (!file.exists())
+            if (!file.exists()) {
                 file.createNewFile();
+            }
             ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
             oos.writeObject(privateKey);
             oos.close();
@@ -458,8 +465,9 @@ public class SM2 {
     public BigInteger importPrivateKey(String path) {
         File file = new File(path);
         try {
-            if (!file.exists())
+            if (!file.exists()) {
                 return null;
+            }
             FileInputStream fis = new FileInputStream(file);
             ObjectInputStream ois = new ObjectInputStream(fis);
             BigInteger res = (BigInteger) (ois.readObject());
@@ -513,31 +521,35 @@ public class SM2 {
      * @return true or false
      */
     public boolean verify(String M, Signature signature, String IDA, ECPoint aPublicKey) {
-        if (!between(signature.r, BigInteger.ONE, n))
+        if (!between(signature.r, BigInteger.ONE, n)) {
             return false;
-        if (!between(signature.s, BigInteger.ONE, n))
+        }
+        if (!between(signature.s, BigInteger.ONE, n)) {
             return false;
+        }
 
         byte[] M_ = join(ZA(IDA, aPublicKey), M.getBytes());
         BigInteger e = new BigInteger(1, sm3hash(M_));
         BigInteger t = signature.r.add(signature.s).mod(n);
 
-        if (t.equals(BigInteger.ZERO))
+        if (t.equals(BigInteger.ZERO)) {
             return false;
+        }
 
         ECPoint p1 = G.multiply(signature.s).normalize();
         ECPoint p2 = aPublicKey.multiply(t).normalize();
         BigInteger x1 = p1.add(p2).normalize().getXCoord().toBigInteger();
         BigInteger R = e.add(x1).mod(n);
-        if (R.equals(signature.r))
+        if (R.equals(signature.r)) {
             return true;
+        }
         return false;
     }
 
     /**
      * 传输实体类
      *
-     * @author Potato
+     * @author SeanDragon
      */
     private static class TransportEntity implements Serializable {
         final byte[] R; //R点
@@ -556,7 +568,7 @@ public class SM2 {
     /**
      * 密钥协商辅助类
      *
-     * @author Potato
+     * @author SeanDragon
      */
     public static class KeyExchange {
         BigInteger rA;
@@ -614,8 +626,9 @@ public class SM2 {
             ECPoint aPublicKey = curve.decodePoint(entity.K).normalize();
             ECPoint temp = aPublicKey.add(RA.multiply(x1).normalize()).normalize();
             ECPoint V = temp.multiply(ecc_bc_spec.getH().multiply(tB)).normalize();
-            if (V.isInfinity())
+            if (V.isInfinity()) {
                 throw new IllegalStateException();
+            }
             this.V = V;
 
             byte[] xV = V.getXCoord().toBigInteger().toByteArray();
@@ -649,8 +662,9 @@ public class SM2 {
             ECPoint bPublicKey = curve.decodePoint(entity.K).normalize();
             ECPoint temp = bPublicKey.add(RB.multiply(x2).normalize()).normalize();
             ECPoint U = temp.multiply(ecc_bc_spec.getH().multiply(tA)).normalize();
-            if (U.isInfinity())
+            if (U.isInfinity()) {
                 throw new IllegalStateException();
+            }
             this.V = U;
 
             byte[] xU = U.getXCoord().toBigInteger().toByteArray();
@@ -664,10 +678,11 @@ public class SM2 {
                     sm3hash(xU, this.Z, entity.Z, RA.getXCoord().toBigInteger().toByteArray(),
                             RA.getYCoord().toBigInteger().toByteArray(), RB.getXCoord().toBigInteger().toByteArray(),
                             RB.getYCoord().toBigInteger().toByteArray()));
-            if (Arrays.equals(entity.S, s1))
+            if (Arrays.equals(entity.S, s1)) {
                 System.out.println("B->A 密钥确认成功");
-            else
+            } else {
                 System.out.println("B->A 密钥确认失败");
+            }
             byte[] sA = sm3hash(new byte[]{0x03}, yU,
                     sm3hash(xU, this.Z, entity.Z, RA.getXCoord().toBigInteger().toByteArray(),
                             RA.getYCoord().toBigInteger().toByteArray(), RB.getXCoord().toBigInteger().toByteArray(),
@@ -689,10 +704,11 @@ public class SM2 {
                     sm3hash(xV, entity.Z, this.Z, RA.getXCoord().toBigInteger().toByteArray(),
                             RA.getYCoord().toBigInteger().toByteArray(), this.RA.getXCoord().toBigInteger().toByteArray(),
                             this.RA.getYCoord().toBigInteger().toByteArray()));
-            if (Arrays.equals(entity.S, s2))
+            if (Arrays.equals(entity.S, s2)) {
                 System.out.println("A->B 密钥确认成功");
-            else
+            } else {
                 System.out.println("A->B 密钥确认失败");
+            }
         }
     }
 
@@ -705,6 +721,7 @@ public class SM2 {
             this.s = s;
         }
 
+        @Override
         public String toString() {
             return r.toString(16) + "," + s.toString(16);
         }

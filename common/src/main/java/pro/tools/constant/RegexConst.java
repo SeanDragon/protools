@@ -7,7 +7,8 @@ import static java.util.regex.Pattern.compile;
 /**
  * 正则的常量
  *
- * @author SeanDragon Create By 2017-04-17 10:13
+ * @author SeanDragon
+ * @date 2017-04-17 10:13
  */
 public final class RegexConst {
 

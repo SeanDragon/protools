@@ -15,7 +15,7 @@
   </tr>
   <tr>
     <td><img src="https://img1.github.io/tmp/4.jpg" height="80" width="82"></td>
-    <td><img src="https://img.shields.io/github/stars/SeanDragon/protools.svg?style=social"></td>
+    <td><a href="https://github.com/SeanDragon/protools"><img src="https://img.shields.io/github/stars/SeanDragon/protools.svg?style=social"></a></td>
     <td><img src="https://img1.github.io/tmp/6.jpg" height="82" width="82"></td>
   </tr>
    <tr>

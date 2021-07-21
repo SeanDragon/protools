@@ -63,3 +63,8 @@
 * 封装了 jdk 和 bouncycastle 中几十种常见加密方式
 ### all
 * 如果需要使用上述多个模块，可以导入all模块以使用所有模块
+
+
+### 感谢  
+  - 感谢  **JetBrains**  对开源项目的支持<br/>
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0714/114152_d335c2f1_416720.png "jetbrains.png")

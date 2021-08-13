@@ -32,6 +32,6 @@
     </dependencies>
 
     <properties>
-        <jdk15on.version>1.58</jdk15on.version>
+        <jdk15on.version>1.67</jdk15on.version>
     </properties>
 </project>

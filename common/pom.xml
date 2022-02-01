@@ -90,7 +90,7 @@
     </dependencies>
 
     <properties>
-        <junrar.version>1.0.1</junrar.version>
+        <junrar.version>7.4.1</junrar.version>
         <fst.version>2.56</fst.version>
         <cloning.version>1.9.6</cloning.version>
         <pinyin4j.version>2.5.1</pinyin4j.version>

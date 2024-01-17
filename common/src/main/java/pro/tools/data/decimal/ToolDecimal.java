@@ -25,9 +25,13 @@ public final class ToolDecimal {
     /**
      * 自己实现的开平方
      *
-     * @param number       数值
-     * @param scale        精度
-     * @param roundingMode 舍入方法
+     * @param number
+     *         数值
+     * @param scale
+     *         精度
+     * @param roundingMode
+     *         舍入方法
+     *
      * @return 结果
      */
     static BigDecimal sqrt(BigDecimal number, int scale, RoundingMode roundingMode) {
@@ -98,7 +102,9 @@ public final class ToolDecimal {
      * <p>
      * 此方法返回零位的最高位(“最左侧”)前在指定的int值的二进制补码表示法，或32个1位的数量，如果该值为零。
      *
-     * @param i 数字
+     * @param i
+     *         数字
+     *
      * @return 结果
      */
     public static int numberOfLeadingZeros(long i) {
@@ -134,7 +140,9 @@ public final class ToolDecimal {
     /**
      * 设置给DecimalFormat用的精度字符创
      *
-     * @param scale 精度
+     * @param scale
+     *         精度
+     *
      * @return 结果
      */
     public static String scale2FormatStr(int scale) {
@@ -174,6 +182,7 @@ public final class ToolDecimal {
     /**
      * @param value
      * @param scale
+     *
      * @return
      */
     public static String number2Str(Double value, int scale) {
@@ -183,6 +192,7 @@ public final class ToolDecimal {
     /**
      * @param value
      * @param scale
+     *
      * @return
      */
     public static Double number2double(Double value, int scale) {

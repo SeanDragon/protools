@@ -44,8 +44,11 @@ public final class ToolIDEA {
     /**
      * 转换密钥
      *
-     * @param key 二进制密钥
+     * @param key
+     *         二进制密钥
+     *
      * @return Key 密钥
+     *
      * @throws Exception
      */
     private static Key toKey(byte[] key) {
@@ -58,9 +61,13 @@ public final class ToolIDEA {
     /**
      * 解密
      *
-     * @param data 待解密数据
-     * @param key  密钥
+     * @param data
+     *         待解密数据
+     * @param key
+     *         密钥
+     *
      * @return byte[] 解密数据
+     *
      * @throws Exception
      */
     public static byte[] decrypt(byte[] data, byte[] key) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException, NoSuchPaddingException, NoSuchAlgorithmException {
@@ -80,9 +87,13 @@ public final class ToolIDEA {
     /**
      * 加密
      *
-     * @param data 待加密数据
-     * @param key  密钥
+     * @param data
+     *         待加密数据
+     * @param key
+     *         密钥
+     *
      * @return byte[] 加密数据
+     *
      * @throws Exception
      */
     public static byte[] encrypt(byte[] data, byte[] key) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
@@ -103,6 +114,7 @@ public final class ToolIDEA {
      * 生成密钥 <br>
      *
      * @return byte[] 二进制密钥
+     *
      * @throws Exception
      */
     public static byte[] initKey() throws NoSuchAlgorithmException {

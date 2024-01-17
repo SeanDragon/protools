@@ -16,8 +16,11 @@ public final class ToolSHA1 {
     /**
      * SHA-1加密
      *
-     * @param data 待加密数据
+     * @param data
+     *         待加密数据
+     *
      * @return byte[] 消息摘要
+     *
      * @throws Exception
      */
     public static byte[] encodeSHA(byte[] data) throws NoSuchAlgorithmException {
@@ -31,8 +34,11 @@ public final class ToolSHA1 {
     /**
      * SHA-1加密
      *
-     * @param data 待加密数据
+     * @param data
+     *         待加密数据
+     *
      * @return byte[] 消息摘要
+     *
      * @throws Exception
      */
     public static String encodeSHAHex(byte[] data) throws NoSuchAlgorithmException {

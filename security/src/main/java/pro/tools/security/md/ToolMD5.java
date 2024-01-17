@@ -18,8 +18,11 @@ public final class ToolMD5 {
     /**
      * MD5加密
      *
-     * @param data 待加密数据
+     * @param data
+     *         待加密数据
+     *
      * @return byte[] 消息摘要
+     *
      * @throws NoSuchAlgorithmException
      */
     public static byte[] encodeMD5(byte[] data) throws NoSuchAlgorithmException {
@@ -36,8 +39,11 @@ public final class ToolMD5 {
     /**
      * MD5加密
      *
-     * @param data 待加密数据
+     * @param data
+     *         待加密数据
+     *
      * @return String 消息摘要
+     *
      * @throws NoSuchAlgorithmException
      */
     public static String encodeMD5Hex(byte[] data) throws NoSuchAlgorithmException {

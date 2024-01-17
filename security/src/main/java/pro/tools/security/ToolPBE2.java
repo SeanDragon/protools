@@ -39,26 +39,35 @@ public final class ToolPBE2 {
     /**
      * 对输入的密码进行验证
      *
-     * @param attemptedPassword 待验证的密码
-     * @param encryptedPassword 密文
-     * @param salt              盐值
+     * @param attemptedPassword
+     *         待验证的密码
+     * @param encryptedPassword
+     *         密文
+     * @param salt
+     *         盐值
+     *
      * @return 是否验证成功
+     *
      * @throws NoSuchAlgorithmException
      * @throws InvalidKeySpecException
      */
     public static boolean authenticate(String attemptedPassword, String encryptedPassword, String salt) throws InvalidKeySpecException, NoSuchAlgorithmException {
-        // 用相同的盐值对用户输入的密码进行加密  
+        // 用相同的盐值对用户输入的密码进行加密
         String encryptedAttemptedPassword = getEncryptedPassword(attemptedPassword, salt);
-        // 把加密后的密文和原密文进行比较，相同则验证成功，否则失败  
+        // 把加密后的密文和原密文进行比较，相同则验证成功，否则失败
         return encryptedAttemptedPassword.equals(encryptedPassword);
     }
 
     /**
      * 生成密文
      *
-     * @param password 明文密码
-     * @param salt     盐值
+     * @param password
+     *         明文密码
+     * @param salt
+     *         盐值
+     *
      * @return
+     *
      * @throws NoSuchAlgorithmException
      * @throws InvalidKeySpecException
      */
@@ -73,6 +82,7 @@ public final class ToolPBE2 {
      * 通过提供加密的强随机数生成器 生成盐
      *
      * @return
+     *
      * @throws NoSuchAlgorithmException
      */
     public static String generateSalt() throws NoSuchAlgorithmException {
@@ -85,7 +95,9 @@ public final class ToolPBE2 {
     /**
      * 十六进制字符串转二进制字符串
      *
-     * @param hex the hex string
+     * @param hex
+     *         the hex string
+     *
      * @return the hex string decoded into a byte array
      */
     private static byte[] fromHex(String hex) {
@@ -99,7 +111,9 @@ public final class ToolPBE2 {
     /**
      * 二进制字符串转十六进制字符串
      *
-     * @param array the byte array to ToolJson
+     * @param array
+     *         the byte array to ToolJson
+     *
      * @return a length*2 character string encoding the byte array
      */
     private static String toHex(byte[] array) {

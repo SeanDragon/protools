@@ -25,7 +25,7 @@ public class HttpClientChannelPoolHandler extends AbstractChannelPoolHandler {
     @Override
     public void channelCreated(Channel channel) {
 
-        NioSocketChannel nioSocketChannel = (NioSocketChannel)channel;
+        NioSocketChannel nioSocketChannel = (NioSocketChannel) channel;
         nioSocketChannel.config().setTcpNoDelay(true).setKeepAlive(true);
 
         // final ChannelPipeline p = channel.pipeline();

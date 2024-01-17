@@ -38,11 +38,16 @@ public final class ToolBarCode {
     /**
      * 生成二维码
      *
-     * @param content  条码文本内容
-     * @param width    条码宽度
-     * @param height   条码高度
-     * @param fileType 文件类型，如png
-     * @param savePath 保存路径
+     * @param content
+     *         条码文本内容
+     * @param width
+     *         条码宽度
+     * @param height
+     *         条码高度
+     * @param fileType
+     *         文件类型，如png
+     * @param savePath
+     *         保存路径
      */
     @SuppressWarnings({"rawtypes", "unchecked", "deprecation"})
     @Deprecated
@@ -58,12 +63,18 @@ public final class ToolBarCode {
     /**
      * 生成带logo的二维码
      *
-     * @param content  条码文本内容
-     * @param width    条码宽度
-     * @param height   条码高度
-     * @param logoPath 条码中logo的路径
-     * @param fileType 文件类型，如png
-     * @param savePath 保存路径
+     * @param content
+     *         条码文本内容
+     * @param width
+     *         条码宽度
+     * @param height
+     *         条码高度
+     * @param logoPath
+     *         条码中logo的路径
+     * @param fileType
+     *         文件类型，如png
+     * @param savePath
+     *         保存路径
      */
     public static void encodeLogo(String content, int width, int height, String logoPath, String fileType, String savePath) throws IOException {
         BitMatrix matrix = MatrixToImageWriterEx.createQRCode(content, width, height);
@@ -75,6 +86,7 @@ public final class ToolBarCode {
      * 解码
      *
      * @param filePath
+     *
      * @return
      */
     @SuppressWarnings({"rawtypes", "unchecked"})
@@ -154,9 +166,13 @@ class MatrixToImageWriterEx {
     /**
      * 根据内容生成二维码数据
      *
-     * @param content 二维码文字内容[为了信息安全性，一般都要先进行数据加密]
-     * @param width   二维码照片宽度
-     * @param height  二维码照片高度
+     * @param content
+     *         二维码文字内容[为了信息安全性，一般都要先进行数据加密]
+     * @param width
+     *         二维码照片宽度
+     * @param height
+     *         二维码照片高度
+     *
      * @return
      */
     public static BitMatrix createQRCode(String content, int width, int height) {
@@ -177,10 +193,15 @@ class MatrixToImageWriterEx {
     /**
      * 写入二维码、以及将照片logo写入二维码中
      *
-     * @param matrix    要写入的二维码
-     * @param format    二维码照片格式
-     * @param imagePath 二维码照片保存路径
-     * @param logoPath  logo路径
+     * @param matrix
+     *         要写入的二维码
+     * @param format
+     *         二维码照片格式
+     * @param imagePath
+     *         二维码照片保存路径
+     * @param logoPath
+     *         logo路径
+     *
      * @throws IOException
      */
     @SuppressWarnings({"deprecation"})
@@ -196,11 +217,17 @@ class MatrixToImageWriterEx {
     /**
      * 写入二维码、以及将照片logo写入二维码中
      *
-     * @param matrix     要写入的二维码
-     * @param format     二维码照片格式
-     * @param imagePath  二维码照片保存路径
-     * @param logoPath   logo路径
-     * @param logoConfig logo配置对象
+     * @param matrix
+     *         要写入的二维码
+     * @param format
+     *         二维码照片格式
+     * @param imagePath
+     *         二维码照片保存路径
+     * @param logoPath
+     *         logo路径
+     * @param logoConfig
+     *         logo配置对象
+     *
      * @throws IOException
      */
     @SuppressWarnings({"deprecation"})
@@ -216,10 +243,14 @@ class MatrixToImageWriterEx {
     /**
      * 将照片logo添加到二维码中间
      *
-     * @param image     生成的二维码照片对象
-     * @param imagePath 照片保存路径
-     * @param logoPath  logo照片路径
-     * @param formate   照片格式
+     * @param image
+     *         生成的二维码照片对象
+     * @param imagePath
+     *         照片保存路径
+     * @param logoPath
+     *         logo照片路径
+     * @param formate
+     *         照片格式
      */
     public static void overlapImage(BufferedImage image, String formate, String imagePath, String logoPath, MatrixToLogoImageConfig logoConfig) throws IOException {
         BufferedImage logo = ImageIO.read(new File(logoPath));

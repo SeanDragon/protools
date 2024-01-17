@@ -14,7 +14,7 @@ import java.util.TreeMap;
  * <p>
  * Create By 2017-10-24 17:14
  */
-public class TreeMapTypeAdapter implements JsonDeserializer<TreeMap<String,Object>> {
+public class TreeMapTypeAdapter implements JsonDeserializer<TreeMap<String, Object>> {
 
     @Override
     public TreeMap<String, Object> deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {

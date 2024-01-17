@@ -38,8 +38,11 @@ public final class ToolDES {
     /**
      * 转换密钥
      *
-     * @param key 二进制密钥
+     * @param key
+     *         二进制密钥
+     *
      * @return Key 密钥
+     *
      * @throws Exception
      */
     private static Key toKey(byte[] key) throws InvalidKeyException, NoSuchAlgorithmException, InvalidKeySpecException {
@@ -59,9 +62,13 @@ public final class ToolDES {
     /**
      * 解密
      *
-     * @param data 待解密数据
-     * @param key  密钥
+     * @param data
+     *         待解密数据
+     * @param key
+     *         密钥
+     *
      * @return byte[] 解密数据
+     *
      * @throws Exception
      */
     public static byte[] decrypt(byte[] data, byte[] key) throws NoSuchAlgorithmException, InvalidKeyException, InvalidKeySpecException, NoSuchPaddingException, BadPaddingException, IllegalBlockSizeException {
@@ -82,9 +89,13 @@ public final class ToolDES {
     /**
      * 加密
      *
-     * @param data 待加密数据
-     * @param key  密钥
+     * @param data
+     *         待加密数据
+     * @param key
+     *         密钥
+     *
      * @return byte[] 加密数据
+     *
      * @throws Exception
      */
     public static byte[] encrypt(byte[] data, byte[] key) throws NoSuchAlgorithmException, InvalidKeyException, InvalidKeySpecException, NoSuchPaddingException, BadPaddingException, IllegalBlockSizeException {
@@ -108,21 +119,22 @@ public final class ToolDES {
      * Bouncy Castle 支持64bit密钥 <br>
      *
      * @return byte[] 二进制密钥
+     *
      * @throws Exception
      */
     public static byte[] initKey() throws NoSuchAlgorithmException {
 
-		/*
+        /*
          * 实例化密钥生成器
-		 * 
-		 * 若要使用64bit密钥注意替换 将下述代码中的KeyGenerator.getInstance(CIPHER_ALGORITHM);
-		 * 替换为KeyGenerator.getInstance(CIPHER_ALGORITHM, "BC");
-		 */
+         *
+         * 若要使用64bit密钥注意替换 将下述代码中的KeyGenerator.getInstance(CIPHER_ALGORITHM);
+         * 替换为KeyGenerator.getInstance(CIPHER_ALGORITHM, "BC");
+         */
         KeyGenerator kg = KeyGenerator.getInstance(KEY_ALGORITHM);
 
-		/*
+        /*
          * 初始化密钥生成器 若要使用64bit密钥注意替换 将下述代码kg.init(56); 替换为kg.init(64);
-		 */
+         */
         kg.init(56, new SecureRandom());
 
         // 生成秘密密钥

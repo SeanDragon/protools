@@ -18,8 +18,11 @@ public final class ToolMD4 {
     /**
      * MD4加密
      *
-     * @param data 待加密数据
+     * @param data
+     *         待加密数据
+     *
      * @return byte[] 消息摘要
+     *
      * @throws Exception
      */
     public static byte[] encodeMD4(byte[] data) throws NoSuchAlgorithmException {
@@ -37,8 +40,11 @@ public final class ToolMD4 {
     /**
      * MD4加密
      *
-     * @param data 待加密数据
+     * @param data
+     *         待加密数据
+     *
      * @return String 消息摘要
+     *
      * @throws Exception
      */
     public static String encodeMD4Hex(byte[] data) throws NoSuchAlgorithmException {

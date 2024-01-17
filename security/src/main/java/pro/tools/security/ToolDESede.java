@@ -35,8 +35,11 @@ public final class ToolDESede {
     /**
      * 转换密钥
      *
-     * @param key 二进制密钥
+     * @param key
+     *         二进制密钥
+     *
      * @return Key 密钥
+     *
      * @throws Exception
      */
     private static Key toKey(byte[] key) throws InvalidKeyException, NoSuchAlgorithmException, InvalidKeySpecException {
@@ -56,9 +59,13 @@ public final class ToolDESede {
     /**
      * 解密
      *
-     * @param data 待解密数据
-     * @param key  密钥
+     * @param data
+     *         待解密数据
+     * @param key
+     *         密钥
+     *
      * @return byte[] 解密数据
+     *
      * @throws Exception
      */
     public static byte[] decrypt(byte[] data, byte[] key) throws NoSuchAlgorithmException, InvalidKeyException, InvalidKeySpecException, NoSuchPaddingException, BadPaddingException, IllegalBlockSizeException {
@@ -66,9 +73,9 @@ public final class ToolDESede {
         // 还原密钥
         Key k = toKey(key);
 
-		/*
+        /*
          * 实例化 使用PKCS7Padding填充方式 Cipher.getInstance(CIPHER_ALGORITHM, "BC");
-		 */
+         */
         Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
 
         // 初始化，设置为解密模式
@@ -81,9 +88,13 @@ public final class ToolDESede {
     /**
      * 加密
      *
-     * @param data 待加密数据
-     * @param key  密钥
+     * @param data
+     *         待加密数据
+     * @param key
+     *         密钥
+     *
      * @return byte[] 加密数据
+     *
      * @throws Exception
      */
     public static byte[] encrypt(byte[] data, byte[] key) throws NoSuchAlgorithmException, InvalidKeyException, InvalidKeySpecException, NoSuchPaddingException, BadPaddingException, IllegalBlockSizeException {
@@ -91,9 +102,9 @@ public final class ToolDESede {
         // 还原密钥
         Key k = toKey(key);
 
-		/*
+        /*
          * 实例化 使用PKCS7Padding填充方式 Cipher.getInstance(CIPHER_ALGORITHM, "BC");
-		 */
+         */
         Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
 
         // 初始化，设置为加密模式
@@ -107,6 +118,7 @@ public final class ToolDESede {
      * 生成密钥 <br>
      *
      * @return byte[] 二进制密钥
+     *
      * @throws Exception
      */
     public static byte[] initKey() throws NoSuchAlgorithmException {
@@ -114,9 +126,9 @@ public final class ToolDESede {
         // 实例化
         KeyGenerator kg = KeyGenerator.getInstance(KEY_ALGORITHM);
 
-		/*
+        /*
          * DESede 要求密钥长度为 112位或168位
-		 */
+         */
         kg.init(168);
 
         // 生成秘密密钥

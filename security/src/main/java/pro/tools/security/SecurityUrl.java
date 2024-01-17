@@ -22,7 +22,7 @@ public final class SecurityUrl {
     }
 
     public static String encode(String url) {
-        return encode(url,StrConst.DEFAULT_CHARSET);
+        return encode(url, StrConst.DEFAULT_CHARSET);
     }
 
     public static String decode(String url, Charset charset) {

@@ -50,6 +50,7 @@ public class Decimal extends Number implements Cloneable {
      * 便利生成方式,获取实例方法
      *
      * @param initValue
+     *
      * @return
      */
     public static Decimal instance(Object initValue) {
@@ -111,7 +112,9 @@ public class Decimal extends Number implements Cloneable {
     /**
      * 获取该数被除后的整数
      *
-     * @param object 因数
+     * @param object
+     *         因数
+     *
      * @return 结果
      */
     public Decimal getDivGetInteger(Object object) {
@@ -121,7 +124,9 @@ public class Decimal extends Number implements Cloneable {
     /**
      * 求余
      *
-     * @param object 因数
+     * @param object
+     *         因数
+     *
      * @return 结果
      */
     public Decimal getRemainder(Object object) {
@@ -135,6 +140,7 @@ public class Decimal extends Number implements Cloneable {
      * 基本数值运算：加法
      *
      * @param object
+     *
      * @return
      */
     public Decimal add(Object object) {
@@ -146,6 +152,7 @@ public class Decimal extends Number implements Cloneable {
      * 减法
      *
      * @param object
+     *
      * @return
      */
     public Decimal sub(Object object) {
@@ -157,6 +164,7 @@ public class Decimal extends Number implements Cloneable {
      * 乘法
      *
      * @param object
+     *
      * @return
      */
     public Decimal mul(Object object) {
@@ -168,6 +176,7 @@ public class Decimal extends Number implements Cloneable {
      * 除法
      *
      * @param object
+     *
      * @return
      */
     public Decimal div(Object object) {
@@ -191,7 +200,9 @@ public class Decimal extends Number implements Cloneable {
     /**
      * 幂运算
      *
-     * @param n 幂数
+     * @param n
+     *         幂数
+     *
      * @return 结果
      */
     public Decimal pow(int n) {
@@ -202,7 +213,9 @@ public class Decimal extends Number implements Cloneable {
     /**
      * 开平方
      *
-     * @param scale 精度
+     * @param scale
+     *         精度
+     *
      * @return 结果
      */
     public Decimal sqrt2(int scale) {
@@ -221,7 +234,9 @@ public class Decimal extends Number implements Cloneable {
     /**
      * 开N次方
      *
-     * @param n 几次方
+     * @param n
+     *         几次方
+     *
      * @return 结果
      */
     public Decimal sqrtN(int n) {
@@ -293,7 +308,9 @@ public class Decimal extends Number implements Cloneable {
     /**
      * 传入进度和舍入原则进行double
      *
-     * @param scale 进度
+     * @param scale
+     *         进度
+     *
      * @return 结果
      */
     public double doubleValue(int scale) {
@@ -303,8 +320,11 @@ public class Decimal extends Number implements Cloneable {
     /**
      * 传入进度和舍入原则进行double
      *
-     * @param scale        进度
-     * @param roundingMode 舍入原则
+     * @param scale
+     *         进度
+     * @param roundingMode
+     *         舍入原则
+     *
      * @return 结果
      */
     public double doubleValue(int scale, RoundingMode roundingMode) {

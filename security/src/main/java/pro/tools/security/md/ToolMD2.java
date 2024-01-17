@@ -16,8 +16,11 @@ public final class ToolMD2 {
     /**
      * MD2加密
      *
-     * @param data 待加密数据
+     * @param data
+     *         待加密数据
+     *
      * @return byte[] 消息摘要
+     *
      * @throws Exception
      */
     public static byte[] encodeMD2(byte[] data) throws NoSuchAlgorithmException {
@@ -31,8 +34,11 @@ public final class ToolMD2 {
     /**
      * MD2加密
      *
-     * @param data 待加密数据
+     * @param data
+     *         待加密数据
+     *
      * @return byte[] 消息摘要
+     *
      * @throws Exception
      */
     public static String encodeMD2Hex(byte[] data) throws NoSuchAlgorithmException {

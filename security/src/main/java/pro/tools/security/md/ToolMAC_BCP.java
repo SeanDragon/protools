@@ -24,6 +24,7 @@ public final class ToolMAC_BCP {
      * 初始化HmacMD2密钥
      *
      * @return byte[] 密钥
+     *
      * @throws Exception
      */
     public static byte[] initHmacMD2Key() throws NoSuchAlgorithmException {
@@ -44,9 +45,13 @@ public final class ToolMAC_BCP {
     /**
      * HmacMD2消息摘要
      *
-     * @param data 待做消息摘要处理的数据
-     * @param key  密钥
+     * @param data
+     *         待做消息摘要处理的数据
+     * @param key
+     *         密钥
+     *
      * @return byte[] 消息摘要
+     *
      * @throws Exception
      */
     public static byte[] encodeHmacMD2(byte[] data, byte[] key) throws NoSuchAlgorithmException, InvalidKeyException {
@@ -70,9 +75,13 @@ public final class ToolMAC_BCP {
     /**
      * HmacMD2Hex消息摘要
      *
-     * @param data 待做消息摘要处理的数据
-     * @param key  密钥
+     * @param data
+     *         待做消息摘要处理的数据
+     * @param key
+     *         密钥
+     *
      * @return byte[] 消息摘要
+     *
      * @throws Exception
      */
     public static String encodeHmacMD2Hex(byte[] data, byte[] key) throws InvalidKeyException, NoSuchAlgorithmException {
@@ -88,6 +97,7 @@ public final class ToolMAC_BCP {
      * 初始化HmacMD4密钥
      *
      * @return byte[] 密钥
+     *
      * @throws Exception
      */
     public static byte[] initHmacMD4Key() throws NoSuchAlgorithmException {
@@ -108,9 +118,13 @@ public final class ToolMAC_BCP {
     /**
      * HmacMD4消息摘要
      *
-     * @param data 待做消息摘要处理的数据
-     * @param key  密钥
+     * @param data
+     *         待做消息摘要处理的数据
+     * @param key
+     *         密钥
+     *
      * @return byte[] 消息摘要
+     *
      * @throws Exception
      */
     public static byte[] encodeHmacMD4(byte[] data, byte[] key)
@@ -135,9 +149,13 @@ public final class ToolMAC_BCP {
     /**
      * HmacMD4Hex消息摘要
      *
-     * @param data 待做消息摘要处理的数据
-     * @param key  密钥
+     * @param data
+     *         待做消息摘要处理的数据
+     * @param key
+     *         密钥
+     *
      * @return String 消息摘要
+     *
      * @throws Exception
      */
     public static String encodeHmacMD4Hex(byte[] data, byte[] key) throws InvalidKeyException, NoSuchAlgorithmException {
@@ -153,6 +171,7 @@ public final class ToolMAC_BCP {
      * 初始化HmacSHA224密钥
      *
      * @return byte[] 密钥
+     *
      * @throws Exception
      */
     public static byte[] initHmacSHA224Key() throws NoSuchAlgorithmException {
@@ -173,9 +192,13 @@ public final class ToolMAC_BCP {
     /**
      * HmacSHA224消息摘要
      *
-     * @param data 待做消息摘要处理的数据
-     * @param key  密钥
+     * @param data
+     *         待做消息摘要处理的数据
+     * @param key
+     *         密钥
+     *
      * @return byte[] 消息摘要
+     *
      * @throws NoSuchAlgorithmException
      * @throws InvalidKeyException
      */
@@ -200,9 +223,13 @@ public final class ToolMAC_BCP {
     /**
      * HmacSHA224Hex消息摘要
      *
-     * @param data 待做消息摘要处理的数据
-     * @param key  密钥
+     * @param data
+     *         待做消息摘要处理的数据
+     * @param key
+     *         密钥
+     *
      * @return String 消息摘要
+     *
      * @throws Exception
      */
     public static String encodeHmacSHA224Hex(byte[] data, byte[] key) throws InvalidKeyException, NoSuchAlgorithmException {

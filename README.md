@@ -16,6 +16,8 @@
 * 日期对象的封装DatePlus
 * 数值对象的封装Decimal
 ## http
+* 统一发送对象为HttpSend
+* 统一接收对象为HttpReceive
 * 三个版本的 http 客户端（Jdk、Netty 和 OkHttp）
 ## mail
 * 封装 JavaMail，并采用了队列等方法提高性能，并简化了发送过程

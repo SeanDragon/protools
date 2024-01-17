@@ -192,10 +192,17 @@ public final class ToolStr {
      * @return 首字母大写字符串
      */
     public static String upperFirstLetter(String s) {
-        if (isEmpty(s) || !Character.isLowerCase(s.charAt(0))) {
+        if (isBlank(s)) {
+            return "";
+        }
+
+        char[] chars = s.toCharArray();
+        if (Character.isUpperCase(chars[0])) {
             return s;
         }
-        return String.valueOf((char) (s.charAt(0) - 32)) + s.substring(1);
+
+        chars[0] = Character.toUpperCase(chars[0]);
+        return new String(chars);
     }
 
     /**
@@ -207,10 +214,47 @@ public final class ToolStr {
      * @return 首字母小写字符串
      */
     public static String lowerFirstLetter(String s) {
-        if (isEmpty(s) || !Character.isUpperCase(s.charAt(0))) {
+        if (isBlank(s)) {
+            return "";
+        }
+
+        char[] chars = s.toCharArray();
+        if (Character.isLowerCase(chars[0])) {
             return s;
         }
-        return String.valueOf((char) (s.charAt(0) + 32)) + s.substring(1);
+
+        chars[0] = Character.toLowerCase(chars[0]);
+        return new String(chars);
+    }
+
+    /**
+     * 变全大写
+     *
+     * @param s
+     *
+     * @return
+     */
+    public static String toUpper(String s) {
+        if (isBlank(s)) {
+            return "";
+        }
+
+        return s.toUpperCase();
+    }
+
+    /**
+     * 变全小写
+     *
+     * @param s
+     *
+     * @return
+     */
+    public static String toLower(String s) {
+        if (isBlank(s)) {
+            return "";
+        }
+
+        return s.toLowerCase();
     }
 
     /**
@@ -223,7 +267,7 @@ public final class ToolStr {
      */
     public static String reverse(String s) {
         int len = length(s);
-        if (len <= 1) {
+        if (len == 0) {
             return s;
         }
         int mid = len >> 1;
@@ -287,33 +331,6 @@ public final class ToolStr {
         return new String(chars);
     }
 
-
-    /**
-     * 首字母变小写
-     */
-    public static String firstCharToLowerCase(String str) {
-        char firstChar = str.charAt(0);
-        if (firstChar >= 'A' && firstChar <= 'Z') {
-            char[] arr = str.toCharArray();
-            arr[0] += ('a' - 'A');
-            return new String(arr);
-        }
-        return str;
-    }
-
-    /**
-     * 首字母变大写
-     */
-    public static String firstCharToUpperCase(String str) {
-        char firstChar = str.charAt(0);
-        if (firstChar >= 'a' && firstChar <= 'z') {
-            char[] arr = str.toCharArray();
-            arr[0] -= ('a' - 'A');
-            return new String(arr);
-        }
-        return str;
-    }
-
     /**
      * 将带（下划线）_的字符串格式化驼峰命名法
      *
@@ -353,8 +370,8 @@ public final class ToolStr {
      */
     public static String join(String[] stringArray) {
         StringBuilder sb = new StringBuilder();
-        for (String s : stringArray) {
-            sb.append(s);
+        for (int i = 0; i < stringArray.length; i++) {
+            sb.append(stringArray[i]);
         }
         return sb.toString();
     }

@@ -1,5 +1,6 @@
 package pro.tools.file;
 
+import com.google.common.collect.Lists;
 import pro.tools.constant.StrConst;
 import pro.tools.data.text.ToolConvert;
 import pro.tools.data.text.ToolStr;
@@ -21,7 +22,6 @@ import java.nio.charset.Charset;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -623,7 +623,7 @@ public final class ToolFile {
         if (isRecursive) {
             return listFilesInDir(dir);
         }
-        List<File> list = new ArrayList<>();
+        List<File> list = Lists.newArrayList();
         File[] files = dir.listFiles();
         if (files != null && files.length != 0) {
             Collections.addAll(list, files);
@@ -652,20 +652,23 @@ public final class ToolFile {
      * @return 文件链表
      */
     public static List<File> listFilesInDir(File dir) {
-        if (!isDir(dir)) {
-            return null;
-        }
-        List<File> list = new ArrayList<>();
         File[] files = dir.listFiles();
-        if (files != null && files.length != 0) {
-            for (File file : files) {
-                list.add(file);
-                if (file.isDirectory()) {
-                    list.addAll(listFilesInDir(file));
+        if (isDir(dir) && files != null) {
+            List<File> list = Lists.newArrayListWithCapacity(files.length);
+            if (files.length != 0) {
+                for (File file : files) {
+                    list.add(file);
+                    if (file.isDirectory()) {
+                        List<File> fileList = listFilesInDir(file);
+                        if (fileList != null) {
+                            list.addAll(fileList);
+                        }
+                    }
                 }
             }
+            return list;
         }
-        return list;
+        return null;
     }
 
     /**
@@ -703,9 +706,10 @@ public final class ToolFile {
         if (dir == null || !isDir(dir)) {
             return null;
         }
-        List<File> list = new ArrayList<>();
         File[] files = dir.listFiles();
+        List<File> list = null;
         if (files != null && files.length != 0) {
+            list = Lists.newArrayListWithCapacity(files.length);
             for (File file : files) {
                 if (file.getName().toUpperCase().endsWith(suffix.toUpperCase())) {
                     list.add(file);
@@ -743,7 +747,7 @@ public final class ToolFile {
         if (dir == null || !isDir(dir)) {
             return null;
         }
-        List<File> list = new ArrayList<>();
+        List<File> list = Lists.newArrayList();
         File[] files = dir.listFiles();
         if (files != null && files.length != 0) {
             for (File file : files) {
@@ -793,7 +797,7 @@ public final class ToolFile {
         if (dir == null || !isDir(dir)) {
             return null;
         }
-        List<File> list = new ArrayList<>();
+        List<File> list = Lists.newArrayList();
         File[] files = dir.listFiles();
         if (files != null && files.length != 0) {
             for (File file : files) {
@@ -833,7 +837,7 @@ public final class ToolFile {
         if (dir == null || !isDir(dir)) {
             return null;
         }
-        List<File> list = new ArrayList<>();
+        List<File> list = Lists.newArrayList();
         File[] files = dir.listFiles();
         if (files != null && files.length != 0) {
             for (File file : files) {
@@ -876,7 +880,7 @@ public final class ToolFile {
         if (dir == null || !isDir(dir)) {
             return null;
         }
-        List<File> list = new ArrayList<>();
+        List<File> list = Lists.newArrayList();
         File[] files = dir.listFiles();
         if (files != null && files.length != 0) {
             for (File file : files) {
@@ -1055,7 +1059,7 @@ public final class ToolFile {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), charsetName))) {
             String line;
             int curLine = 1;
-            List<String> list = new ArrayList<>();
+            List<String> list = Lists.newArrayList();
 
             while ((line = reader.readLine()) != null) {
                 if (curLine > end) {

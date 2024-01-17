@@ -15,15 +15,15 @@ public class ToolHttpBuilder {
     /**
      * 读超时 秒
      */
-    private final static long DEFAULT_READ_TIMEOUT = 5;
+    private final static long DEFAULT_READ_TIMEOUT = 5 * 60;
     /**
      * 写超时 秒
      */
-    private final static long DEFAULT_WRITE_TIMEOUT = 5;
+    private final static long DEFAULT_WRITE_TIMEOUT = 5 * 60;
     /**
      * 连接超时 秒
      */
-    private final static long DEFAULT_CONNECT_TIMEOUT = 5;
+    private final static long DEFAULT_CONNECT_TIMEOUT = 5 * 60;
     /**
      * 长连接时间 分钟
      */
@@ -31,43 +31,37 @@ public class ToolHttpBuilder {
     /**
      * 最大空闲连接
      */
-    private final static int DEFAULT_MAX_IDLE_CONNECTIONS = 5;
+    private final static int DEFAULT_MAX_IDLE_CONNECTIONS = 100;
 
     private volatile static OkHttpClient.Builder defaultBuilder;
+    private volatile static OkHttpClient defaultClient;
     private volatile static ConnectionPool connectionPool;
 
     static {
         init();
     }
 
-    public static OkHttpClient.Builder build(long connectTimeout, long readTimeout, long writeTimeout) {
-        OkHttpClient.Builder newBuilder = new OkHttpClient.Builder();
-        newBuilder.connectTimeout(connectTimeout, TimeUnit.SECONDS)
-                .writeTimeout(writeTimeout, TimeUnit.SECONDS)
-                .readTimeout(readTimeout, TimeUnit.SECONDS)
-                .connectionPool(connectionPool)
-                .retryOnConnectionFailure(true)
-                .followRedirects(true)
-                .followSslRedirects(true);
-        return newBuilder;
-    }
-
     private static void init() {
-        defaultBuilder = new OkHttpClient.Builder();
         //连接池
         connectionPool = new ConnectionPool(DEFAULT_MAX_IDLE_CONNECTIONS
                 , DEFAULT_KEEP_ALIVE_DURATION, TimeUnit.MINUTES);
+
+        //客户端构建对象
+        defaultBuilder = new OkHttpClient.Builder();
 
         //设置超时时间
         defaultBuilder.connectTimeout(DEFAULT_CONNECT_TIMEOUT, TimeUnit.SECONDS)
                 .writeTimeout(DEFAULT_WRITE_TIMEOUT, TimeUnit.SECONDS)
                 .readTimeout(DEFAULT_READ_TIMEOUT, TimeUnit.SECONDS)
                 .connectionPool(connectionPool)
-                .retryOnConnectionFailure(true)//失败重连
+                //失败重连
+                .retryOnConnectionFailure(true)
                 .followRedirects(true)
                 .followSslRedirects(true)
         ;
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> connectionPool.evictAll()));
+
+        defaultClient = defaultBuilder.build();
+        // Runtime.getRuntime().addShutdownHook(new Thread(() -> connectionPool.evictAll()));
     }
 
     public synchronized static void setConnectionPool(ConnectionPool connectionPool) {
@@ -86,7 +80,27 @@ public class ToolHttpBuilder {
         return defaultBuilder;
     }
 
+    public synchronized static void setDefaultClient(OkHttpClient defaultClient) {
+        ToolHttpBuilder.defaultClient = defaultClient;
+    }
+
+    public static OkHttpClient getDefaultClient() {
+        return defaultClient;
+    }
+
     public static OkHttpClient buildOkHttpClient() {
         return defaultBuilder.build();
+    }
+
+    public static OkHttpClient.Builder build(long connectTimeout, long readTimeout, long writeTimeout) {
+        final OkHttpClient.Builder newBuilder = new OkHttpClient.Builder();
+        newBuilder.connectTimeout(connectTimeout, TimeUnit.SECONDS)
+                .writeTimeout(writeTimeout, TimeUnit.SECONDS)
+                .readTimeout(readTimeout, TimeUnit.SECONDS)
+                .connectionPool(connectionPool)
+                .retryOnConnectionFailure(true)
+                .followRedirects(true)
+                .followSslRedirects(true);
+        return newBuilder;
     }
 }

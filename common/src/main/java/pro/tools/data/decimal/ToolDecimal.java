@@ -1,14 +1,18 @@
 package pro.tools.data.decimal;
 
+import com.google.common.collect.Maps;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.util.Map;
 
 /**
  * 浮点数特殊方法工具
  *
  * @author SeanDragon
- *         Create By 2017-04-13 15:29
+ * Create By 2017-04-13 15:29
  */
 public final class ToolDecimal {
 
@@ -147,6 +151,24 @@ public final class ToolDecimal {
         }
 
         return mStrformat.toString();
+    }
+
+    private static final RoundingMode DEFAULT_RM = RoundingMode.HALF_EVEN;
+    private static final Map<String, DecimalFormat> DECIMAL_FORMAT_MAP = Maps.newConcurrentMap();
+
+    public static DecimalFormat scale2Format(final int scale) {
+        return scale2Format(scale, DEFAULT_RM);
+    }
+
+    public static DecimalFormat scale2Format(final int scale, final RoundingMode roundingMode) {
+        final String cacheKey = scale + roundingMode.name();
+        DecimalFormat result = DECIMAL_FORMAT_MAP.get(cacheKey);
+        if (result == null) {
+            result = new DecimalFormat(scale2FormatStr(scale));
+            result.setRoundingMode(roundingMode);
+            DECIMAL_FORMAT_MAP.put(cacheKey, result);
+        }
+        return result;
     }
 
     /**

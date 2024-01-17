@@ -14,12 +14,14 @@ import java.text.DecimalFormat;
  *
  * @author SeanDragon Create By 2017-04-13 14:22
  */
-public class Decimal extends Number {
+public class Decimal extends Number implements Cloneable {
 
     //region 全局变量
+
     private BigDecimal bigDecimal;
-    private static MathContext defaultMathContext = new MathContext(0, RoundingMode.HALF_EVEN);
+    private static volatile MathContext defaultMathContext = MathContext.DECIMAL128;
     private final MathContext mathContext;
+
     //endregion
 
     /**
@@ -28,8 +30,7 @@ public class Decimal extends Number {
      * @param initValue
      */
     public Decimal(Object initValue) {
-        this.mathContext = defaultMathContext;
-        init(initValue);
+        this(initValue, defaultMathContext);
     }
 
     public Decimal(Object initValue, MathContext mathContext) {
@@ -41,7 +42,7 @@ public class Decimal extends Number {
         return defaultMathContext;
     }
 
-    public static synchronized void setDefaultMathContext(MathContext defaultMathContext) {
+    public static void setDefaultMathContext(MathContext defaultMathContext) {
         Decimal.defaultMathContext = defaultMathContext;
     }
 
@@ -49,7 +50,6 @@ public class Decimal extends Number {
      * 便利生成方式,获取实例方法
      *
      * @param initValue
-     *
      * @return
      */
     public static Decimal instance(Object initValue) {
@@ -70,17 +70,21 @@ public class Decimal extends Number {
             bigDecimal = ToolClone.clone((BigDecimal) initValue);
         } else if (initValue instanceof BigInteger) {
             BigInteger value = (BigInteger) initValue;
-            bigDecimal = new BigDecimal(value, mathContext);
+            bigDecimal = new BigDecimal(ToolClone.clone(value), mathContext);
         } else if (initValue instanceof Number) {
             Number value = (Number) initValue;
-            bigDecimal = new BigDecimal(value.doubleValue(), mathContext);
+            bigDecimal = new BigDecimal(value.toString(), mathContext);
         } else if (initValue instanceof String) {
             String value = (String) initValue;
             bigDecimal = new BigDecimal(value, mathContext);
+        } else if (initValue == null) {
+            bigDecimal = new BigDecimal(0, mathContext);
         } else {
             throw new UnsupportedOperationException("初始化Decimal失败,传入值为" + ToolJson.anyToJson(initValue));
         }
     }
+
+
     //endregion
     //endregion
 
@@ -107,9 +111,7 @@ public class Decimal extends Number {
     /**
      * 获取该数被除后的整数
      *
-     * @param object
-     *         因数
-     *
+     * @param object 因数
      * @return 结果
      */
     public Decimal getDivGetInteger(Object object) {
@@ -119,9 +121,7 @@ public class Decimal extends Number {
     /**
      * 求余
      *
-     * @param object
-     *         因数
-     *
+     * @param object 因数
      * @return 结果
      */
     public Decimal getRemainder(Object object) {
@@ -135,7 +135,6 @@ public class Decimal extends Number {
      * 基本数值运算：加法
      *
      * @param object
-     *
      * @return
      */
     public Decimal add(Object object) {
@@ -147,7 +146,6 @@ public class Decimal extends Number {
      * 减法
      *
      * @param object
-     *
      * @return
      */
     public Decimal sub(Object object) {
@@ -159,7 +157,6 @@ public class Decimal extends Number {
      * 乘法
      *
      * @param object
-     *
      * @return
      */
     public Decimal mul(Object object) {
@@ -171,7 +168,6 @@ public class Decimal extends Number {
      * 除法
      *
      * @param object
-     *
      * @return
      */
     public Decimal div(Object object) {
@@ -195,9 +191,7 @@ public class Decimal extends Number {
     /**
      * 幂运算
      *
-     * @param n
-     *         幂数
-     *
+     * @param n 幂数
      * @return 结果
      */
     public Decimal pow(int n) {
@@ -208,9 +202,7 @@ public class Decimal extends Number {
     /**
      * 开平方
      *
-     * @param scale
-     *         精度
-     *
+     * @param scale 精度
      * @return 结果
      */
     public Decimal sqrt2(int scale) {
@@ -229,9 +221,7 @@ public class Decimal extends Number {
     /**
      * 开N次方
      *
-     * @param n
-     *         几次方
-     *
+     * @param n 几次方
      * @return 结果
      */
     public Decimal sqrtN(int n) {
@@ -256,8 +246,7 @@ public class Decimal extends Number {
     }
 
     public String fullStrValue(int scale, RoundingMode roundingMode) {
-        DecimalFormat decimalFormat = new DecimalFormat(ToolDecimal.scale2FormatStr(scale));
-        decimalFormat.setRoundingMode(roundingMode);//设置舍入算法
+        DecimalFormat decimalFormat = ToolDecimal.scale2Format(scale, roundingMode);
         return decimalFormat.format(this.bigDecimal);
     }
 
@@ -304,9 +293,7 @@ public class Decimal extends Number {
     /**
      * 传入进度和舍入原则进行double
      *
-     * @param scale
-     *         进度
-     *
+     * @param scale 进度
      * @return 结果
      */
     public double doubleValue(int scale) {
@@ -316,17 +303,29 @@ public class Decimal extends Number {
     /**
      * 传入进度和舍入原则进行double
      *
-     * @param scale
-     *         进度
-     * @param roundingMode
-     *         舍入原则
-     *
+     * @param scale        进度
+     * @param roundingMode 舍入原则
      * @return 结果
      */
     public double doubleValue(int scale, RoundingMode roundingMode) {
-        DecimalFormat decimalFormat = new DecimalFormat(ToolDecimal.scale2FormatStr(scale));
-        decimalFormat.setRoundingMode(roundingMode);//设置舍入算法
-        return Double.valueOf(decimalFormat.format(doubleValue()));
+        String strValue = this.fullStrValue(scale, roundingMode);
+        return Double.valueOf(strValue);
     }
     //endregion
+
+
+    @Override
+    public int hashCode() {
+        return bigDecimal.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this.bigDecimal.equals(new Decimal(obj, MathContext.UNLIMITED).getBigDecimal());
+    }
+
+    @Override
+    public Decimal clone() {
+        return new Decimal(this.bigDecimal, this.mathContext);
+    }
 }

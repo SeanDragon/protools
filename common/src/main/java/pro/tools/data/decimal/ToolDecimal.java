@@ -17,7 +17,7 @@ import java.util.Map;
 public final class ToolDecimal {
 
     private ToolDecimal() {
-        throw new UnsupportedOperationException("u can't instantiate me...");
+        throw new UnsupportedOperationException("我是工具类，别初始化我。。。");
     }
 
     private final static BigInteger HUNDRED = BigInteger.valueOf(100);

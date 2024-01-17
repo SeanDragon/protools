@@ -12,7 +12,7 @@ public final class ToolSystem {
     private static Boolean haveDiskD;
 
     private ToolSystem() {
-        throw new UnsupportedOperationException("u can't instantiate me...");
+        throw new UnsupportedOperationException("我是工具类，别初始化我。。。");
     }
 
     public static boolean isWindows() {

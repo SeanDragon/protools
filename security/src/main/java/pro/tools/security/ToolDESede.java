@@ -18,7 +18,7 @@ import java.security.spec.InvalidKeySpecException;
  */
 public final class ToolDESede {
     private ToolDESede() {
-        throw new UnsupportedOperationException("u can't instantiate me...");
+        throw new UnsupportedOperationException("我是工具类，别初始化我。。。");
     }
 
     /**

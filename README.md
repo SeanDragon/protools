@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/SeanDragon/protools.svg?branch=master)](https://travis-ci.org/SeanDragon/protools)
 [![License](http://img.shields.io/:license-apache-blue.svg)](https://github.com/SeanDragon/protools/blob/master/LICENSE)
-[![JDK 1.8](https://img.shields.io/badge/JDK-1.8-blue.svg)]()
+[![JDK 1.8](https://img.shields.io/badge/JDK-1.8-blue.svg)]
 
 历经开发周期两年，并且应用过千万级别项目的工具箱
 

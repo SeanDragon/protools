@@ -2,7 +2,6 @@ package file;
 
 import com.google.common.collect.Lists;
 import org.junit.Test;
-import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 import pro.tools.data.text.ToolJson;
 import pro.tools.data.text.ToolRandoms;
 import pro.tools.data.text.json.TypeBuilder;
@@ -22,8 +21,8 @@ import java.util.Map;
  */
 public class TestBasic {
 
-    public static final String fileName = "d:/2.txt";
-    public static final String dirName = "d:/2";
+    public static final Path fileName = Paths.get("d:/2.txt");
+    public static final Path dirName = Paths.get("d:/2");
 
     @Test
     public void testFileIs() {

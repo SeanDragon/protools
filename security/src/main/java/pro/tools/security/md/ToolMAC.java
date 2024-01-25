@@ -10,6 +10,8 @@ import java.security.NoSuchAlgorithmException;
 
 /**
  * MAC加密组件
+ *
+ * @author SeanDragon
  */
 public final class ToolMAC {
 
@@ -108,9 +110,6 @@ public final class ToolMAC {
         // 执行消息摘要
         return mac.doFinal(data);
     }
-
-//	// 根据所安装的 JCE 仲裁策略文件，返回指定转换的最大密钥长度。
-//	public final static int getMaxAllowedKeyLength(String transformation)
 
     /**
      * 初始化HmacSHA256密钥

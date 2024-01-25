@@ -329,9 +329,11 @@ public final class ToolConvert {
         int byteLen = bits.length() / 8;
         // 不是8的倍数前面补0
         if (lenMod != 0) {
+            StringBuilder bitsBuilder = new StringBuilder(bits);
             for (int i = lenMod; i < 8; i++) {
-                bits = "0" + bits;
+                bitsBuilder.insert(0, "0");
             }
+            bits = bitsBuilder.toString();
             byteLen++;
         }
         byte[] bytes = new byte[byteLen];

@@ -29,6 +29,8 @@ import java.util.Map;
 
 /**
  * ElGamal安全编码组件
+ *
+ * @author SeanDragon
  */
 public final class ToolElGamal {
     private ToolElGamal() {

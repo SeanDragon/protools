@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 /**
  * @author SeanDragon
  */
-public class LocalDateTimeTypeAdapter extends ABasicTypeAdapter<LocalDateTime> {
+public class LocalDateTimeTypeAdapter extends BaseTypeAdapter<LocalDateTime> {
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss:SSS");
 

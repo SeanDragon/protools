@@ -7,6 +7,8 @@ import java.security.NoSuchAlgorithmException;
 
 /**
  * MD加密组件
+ *
+ * @author SeanDragon
  */
 public final class ToolMD2 {
     private ToolMD2() {

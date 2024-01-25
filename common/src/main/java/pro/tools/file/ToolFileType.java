@@ -9,6 +9,8 @@ import java.io.InputStream;
 
 /**
  * 文件类型判断类
+ *
+ * @author SeanDragon
  */
 public final class ToolFileType {
     /**
@@ -16,29 +18,6 @@ public final class ToolFileType {
      */
     private ToolFileType() {
     }
-
-    ///**
-    // * 将文件头转换成16进制字符串
-    // *
-    // * @param src
-    // * @return 16进制字符串
-    // */
-    //private static String bytesToHexString(byte[] src){
-    //
-    //    StringBuilder stringBuilder = new StringBuilder();
-    //    if (src == null || src.length <= 0) {
-    //        return null;
-    //    }
-    //    for (byte aSrc : src) {
-    //        int v = aSrc & 0xFF;
-    //        String hv = Integer.toHexString(v);
-    //        if (hv.length() < 2) {
-    //            stringBuilder.append(0);
-    //        }
-    //        stringBuilder.append(hv);
-    //    }
-    //    return stringBuilder.toString();
-    //}
 
     /**
      * 得到文件头

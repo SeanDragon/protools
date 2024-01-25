@@ -2,6 +2,8 @@ package pro.tools.time;
 
 /**
  * 公历
+ *
+ * @author SeanDragon
  */
 public class Solar {
     private int solarYear;

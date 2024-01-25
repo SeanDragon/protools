@@ -8,6 +8,9 @@ import pro.tools.data.text.json.typeimpl.WildcardTypeImpl;
 import java.lang.reflect.Type;
 import java.util.List;
 
+/**
+ * @author SeanDragon
+ */
 public class TypeBuilder {
     private final TypeBuilder parent;
     private final Class raw;

@@ -13,6 +13,8 @@ import java.security.cert.CertificateException;
 
 /**
  * HTTPS组件
+ *
+ * @author SeanDragon
  */
 public final class ToolHTTPS2 {
     private ToolHTTPS2() {
@@ -35,7 +37,6 @@ public final class ToolHTTPS2 {
 
         // 实例化密钥库
         KeyStore ks = KeyStore.getInstance("PKCS12");
-        // KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
 
         // 获得密钥库文件流
         FileInputStream is = new FileInputStream(keyStorePath);

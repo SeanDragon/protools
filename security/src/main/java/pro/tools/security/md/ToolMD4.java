@@ -9,6 +9,8 @@ import java.security.Security;
 
 /**
  * MD4加密组件
+ *
+ * @author SeanDragon
  */
 public final class ToolMD4 {
     private ToolMD4() {

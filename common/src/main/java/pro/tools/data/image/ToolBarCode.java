@@ -22,6 +22,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.Hashtable;
 
 /**
@@ -57,7 +58,7 @@ public final class ToolBarCode {
         hints.put(EncodeHintType.CHARACTER_SET, StrConst.DEFAULT_CHARSET_NAME);
         BitMatrix bitMatrix = new MultiFormatWriter().encode(content, BarcodeFormat.QR_CODE, width, height, hints);
         File file = new File(savePath);
-        MatrixToImageWriter.writeToFile(bitMatrix, fileType, file);
+        MatrixToImageWriter.writeToPath(bitMatrix, fileType, file.toPath());
     }
 
     /**
@@ -204,10 +205,8 @@ class MatrixToImageWriterEx {
      *
      * @throws IOException
      */
-    @SuppressWarnings({"deprecation"})
-    @Deprecated
     public static void writeToFile(BitMatrix matrix, String format, String imagePath, String logoPath) throws IOException {
-        MatrixToImageWriter.writeToFile(matrix, format, new File(imagePath), new MatrixToImageConfig());
+        MatrixToImageWriter.writeToPath(matrix, format, Paths.get(imagePath), new MatrixToImageConfig());
 
         // 添加logo图片, 此处一定需要重新进行读取，而不能直接使用二维码的BufferedImage 对象
         BufferedImage img = ImageIO.read(new File(imagePath));
@@ -230,10 +229,8 @@ class MatrixToImageWriterEx {
      *
      * @throws IOException
      */
-    @SuppressWarnings({"deprecation"})
-    @Deprecated
     public static void writeToFile(BitMatrix matrix, String format, String imagePath, String logoPath, MatrixToLogoImageConfig logoConfig) throws IOException {
-        MatrixToImageWriter.writeToFile(matrix, format, new File(imagePath), new MatrixToImageConfig());
+        MatrixToImageWriter.writeToPath(matrix, format, Paths.get(imagePath), new MatrixToImageConfig());
 
         // 添加logo图片, 此处一定需要重新进行读取，而不能直接使用二维码的BufferedImage 对象
         BufferedImage img = ImageIO.read(new File(imagePath));

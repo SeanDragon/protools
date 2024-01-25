@@ -50,9 +50,21 @@ public final class UnitConst {
     //endregion
 
     public enum MemoryUnit {
+        /**
+         * 字节
+         */
         BYTE,
+        /**
+         * KB
+         */
         KB,
+        /**
+         * MB = 1024 * KB
+         */
         MB,
+        /**
+         * GB = 1024 * MB
+         */
         GB
     }
 

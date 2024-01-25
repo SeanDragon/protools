@@ -8,7 +8,7 @@ import java.lang.reflect.Type;
 /**
  * @author SeanDragon
  */
-public abstract class TypeToken<T> {
+public final class TypeToken {
     private final Type type;
 
     public TypeToken() {

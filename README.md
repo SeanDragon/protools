@@ -12,6 +12,7 @@
 
 ## [更新日志](https://github.com/SeanDragon/protools/blob/master/changelog.txt)
 - 简单过了一遍阿里的规范手册，把一些显而易见的代码优化了。
+- 去除私库中的包，替换为官方包。
 
 ## 开发计划
 - 使用阿里的规范手册整理规范所有代码

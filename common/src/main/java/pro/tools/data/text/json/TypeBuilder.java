@@ -36,7 +36,7 @@ public class TypeBuilder {
         return newInstance(raw, this);
     }
 
-    public TypeBuilder endSubType() {
+    public TypeBuilder endSubType() throws TypeException {
         if (parent == null) {
             throw new TypeException("expect beginSubType() before endSubType()");
         }

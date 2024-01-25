@@ -3,7 +3,7 @@ package pro.tools.data.text.json.exception;
 /**
  * @author SeanDragon
  */
-public class TypeException extends Exception {
+public class TypeException extends RuntimeException {
     public TypeException() {
     }
 

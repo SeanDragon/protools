@@ -15,19 +15,23 @@
         <dependency>
             <groupId>pro.tools</groupId>
             <artifactId>common</artifactId>
-            <version>3.0</version>
+            <version>${project.version}</version>
         </dependency>
 
         <!--security-->
         <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcprov-jdk15on</artifactId>
-            <version>1.58</version>
+            <version>${jdk15on.version}</version>
         </dependency>
         <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcprov-ext-jdk15on</artifactId>
-            <version>1.58</version>
+            <version>${jdk15on.version}</version>
         </dependency>
     </dependencies>
+
+    <properties>
+        <jdk15on.version>1.58</jdk15on.version>
+    </properties>
 </project>

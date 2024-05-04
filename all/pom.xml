@@ -17,28 +17,32 @@
         <dependency>
             <groupId>pro.tools</groupId>
             <artifactId>http</artifactId>
-            <version>3.0</version>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
             <groupId>pro.tools</groupId>
             <artifactId>mail</artifactId>
-            <version>3.0</version>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
             <groupId>pro.tools</groupId>
             <artifactId>security</artifactId>
-            <version>3.0</version>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
+
+    <properties>
+        <shade-plugin.version>1.4</shade-plugin.version>
+    </properties>
 
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>1.4</version>
+                <version>${shade-plugin.version}</version>
                 <executions>
                     <execution>
                         <phase>package</phase>

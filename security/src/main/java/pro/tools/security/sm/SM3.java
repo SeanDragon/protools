@@ -8,7 +8,7 @@ import java.util.Arrays;
 /**
  * SM3杂凑算法实现
  *
- * @author Potato
+ * @author SeanDragon
  */
 public class SM3 {
 
@@ -47,9 +47,9 @@ public class SM3 {
     private static Integer GG(Integer x, Integer y, Integer z, int j) {
         if (j >= 0 && j <= 15) {
             return x ^ y ^ z;
-        } else if (j >= 16 && j <= 63) return (x & y)
-                | (~x & z);
-        else {
+        } else if (j >= 16 && j <= 63) {
+            return (x & y) | (~x & z);
+        } else {
             throw new RuntimeException("data invalid");
         }
     }
@@ -189,8 +189,9 @@ public class SM3 {
 
     private static String byteToHexString(byte b) {
         int n = b;
-        if (n < 0)
+        if (n < 0) {
             n = 256 + n;
+        }
         int d1 = n / 16;
         int d2 = n % 16;
         return "" + hexDigits[d1] + hexDigits[d2];

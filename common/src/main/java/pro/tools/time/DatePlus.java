@@ -1,11 +1,7 @@
 package pro.tools.time;
 
 import java.io.Serializable;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.Month;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
@@ -24,6 +20,7 @@ public class DatePlus implements Serializable, Cloneable {
     private LocalDateTime localDateTime;
 
     //region 初始化区域
+
     public DatePlus() {
         this.localDateTime = LocalDateTime.now();
     }
@@ -82,6 +79,7 @@ public class DatePlus implements Serializable, Cloneable {
     }
 
     //region 添加属性值
+
     public DatePlus addYear(long year) {
         this.localDateTime = this.localDateTime.plusYears(year);
         return this;
@@ -291,6 +289,7 @@ public class DatePlus implements Serializable, Cloneable {
     }
 
     //region 属性的比较
+
     public boolean isBefore(DatePlus datePlus, DateType dateType) {
         boolean isBefore;
         switch (dateType) {
@@ -346,7 +345,6 @@ public class DatePlus implements Serializable, Cloneable {
                 break;
         }
         return isSame;
-        //return this.localDateTime.isEqual(datePlus.getLocalDateTime());
     }
 
     public boolean isAfter(DatePlus datePlus, DateType dateType) {
@@ -375,7 +373,6 @@ public class DatePlus implements Serializable, Cloneable {
                 break;
         }
         return isAfter;
-        //return this.localDateTime.isAfter(datePlus.getLocalDateTime());
     }
 
     public long ofYear(DatePlus datePlus) {
@@ -409,6 +406,7 @@ public class DatePlus implements Serializable, Cloneable {
     public long ofDateTime(ChronoUnit chronoUnit, DatePlus datePlus) {
         return -chronoUnit.between(this.localDateTime, datePlus.localDateTime);
     }
+
     //endregion
 
 
@@ -543,9 +541,17 @@ public class DatePlus implements Serializable, Cloneable {
 
 
     //region 生肖和星座
+
+    /**
+     * 生肖
+     */
     private static final String[] CHINESE_ZODIAC = {"猴", "鸡", "狗", "猪", "鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊"};
+    /**
+     * 星座
+     */
     private static final String[] ZODIAC = {"水瓶座", "双鱼座", "白羊座", "金牛座", "双子座", "巨蟹座", "狮子座", "处女座", "天秤座", "天蝎座", "射手座", "魔羯座"};
     private static final int[] ZODIAC_FLAGS = {20, 19, 21, 21, 21, 22, 23, 23, 23, 24, 23, 22};
+
     //endregion
 
     @Override

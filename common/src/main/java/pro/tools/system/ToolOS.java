@@ -43,10 +43,14 @@ public final class ToolOS {
     public static final String USER_NAME = getOsSystemProperty("user.name"); // 用户的账户名称
     public static final String USER_HOME = getOsSystemProperty("user.home"); // 用户的主目录
     public static final String USER_DIR = getOsSystemProperty("user.dir"); //  用户的当前工作目录
-    // 系统bean
+    /**
+     * 系统Bean
+     */
     private static final OperatingSystemMXBean SYSTEM_MX_BEAN;
     private static final List<GarbageCollectorMXBean> LIST;
-    // K转换M
+    /**
+     * K转换M
+     */
     private static final long K2M = 1024L * 1024L;
 
     static {

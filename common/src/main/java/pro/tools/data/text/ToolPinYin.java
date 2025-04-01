@@ -41,7 +41,7 @@ public final class ToolPinYin {
                 t2 = PinyinHelper.toHanyuPinyinStringArray(aT1, t3);
                 t4.append(t2[0]);
             } else {
-                t4.append(Character.toString(aT1));
+                t4.append(aT1);
             }
         }
         return t4.toString();

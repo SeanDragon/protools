@@ -5,19 +5,7 @@ import pro.tools.constant.StrConst;
 import pro.tools.data.text.ToolConvert;
 import pro.tools.data.text.ToolStr;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.FilenameFilter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
@@ -1107,7 +1095,8 @@ public final class ToolFile {
 
             String line;
             while ((line = reader.readLine()) != null) {
-                sb.append(line).append("\r\n");// windows系统换行为\r\n，Linux为\n
+                // windows系统换行为\r\n，Linux为\n
+                sb.append(line).append("\r\n");
             }
             // 要去除最后的换行符
             return sb.delete(sb.length() - 2, sb.length()).toString();

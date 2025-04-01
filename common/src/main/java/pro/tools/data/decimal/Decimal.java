@@ -245,9 +245,11 @@ public class Decimal extends Number implements Cloneable {
         this.bigDecimal = new BigDecimal(log, mathContext);
         return this;
     }
+
     //endregion
 
     //region 数据变现
+
     @Override
     public String toString() {
         return fullStrValue();
@@ -287,13 +289,11 @@ public class Decimal extends Number implements Cloneable {
     @Override
     public int intValue() {
         return (int) doubleValue();
-        //return this.bigDecimal.intValueExact();
     }
 
     @Override
     public long longValue() {
         return (long) doubleValue();
-        //return this.bigDecimal.longValueExact();
     }
 
     @Override
@@ -332,6 +332,7 @@ public class Decimal extends Number implements Cloneable {
         String strValue = this.fullStrValue(scale, roundingMode);
         return Double.valueOf(strValue);
     }
+
     //endregion
 
 

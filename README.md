@@ -25,7 +25,7 @@
   </tr>
 </table>
 
-[![Stargazers Over Time](https://starcharts.herokuapp.com/SeanDragon/protools.svg)](https://starcharts.herokuapp.com/SeanDragon/protools)
+[![Star History Chart](https://api.star-history.com/svg?repos=SeanDragon/protools&type=Date)](https://www.star-history.com/#SeanDragon/protools&Date)
 
 历经开发周期两年，并且应用过千万级别项目的工具箱
 
